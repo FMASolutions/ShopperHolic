@@ -11,6 +11,9 @@ import { AboutComponent } from './components/about/about.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactComponent } from './components/contact/contact.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AuthGuard } from './services/auth.guard';
+import { AuthService } from './services/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +31,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

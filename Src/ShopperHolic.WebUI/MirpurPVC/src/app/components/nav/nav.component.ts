@@ -16,6 +16,10 @@ export class NavComponent implements OnInit {
   }
   ngOnInit() {
   }
+  getUserName(){
+    if(this.authService.currentUser && this.authService.currentUser.isAuthenticated) { return this.authService.currentUser.username;}
+    else { return ""; }
+  }
 
   logout() {
     this.authService.logoutExistingUser();
