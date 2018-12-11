@@ -5,7 +5,9 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.3.0" />
     <ProjectReference Include="C:/1 - Programming Projects/Git/FMASolutionsCore/DataServices/CryptoHelper/CryptoHelper.csproj" />    
   </ItemGroup>
 </Project>
