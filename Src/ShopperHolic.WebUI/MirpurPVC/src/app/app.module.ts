@@ -9,7 +9,8 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ContactComponent } from './components/contact/contact.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
     NavComponent,
     LoginComponent,
     HomeComponent,
-    AboutComponent
+    AboutComponent,
+    ContactComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -28,4 +31,5 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}

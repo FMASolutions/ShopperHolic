@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService} from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -8,15 +8,17 @@ import { AuthService} from '../../services/auth.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
-    this._authService = authService;
-  }
+  constructor(private authService: AuthService) { }
   pageTitle: string = "Mirpur PVC";
-  _authService: AuthService;
-  getLoginStatus(){
-    return this._authService.userIsLoggedIn;
+  getLoginStatus() {
+    if (this.authService.currentUser && this.authService.currentUser.isAuthenticated) { return true; }
+    else { return false; }
   }
   ngOnInit() {
+  }
+
+  logout() {
+    this.authService.logoutExistingUser();
   }
 
 }

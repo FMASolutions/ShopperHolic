@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShopperHolic.API.ShopperAPI.Models.Security;
+using System.Collections.Generic;
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -28,6 +29,20 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             {
                 return result;
             }
+        }
+
+        [HttpGet]
+        [Route("~/api/Auth/GetUserClaims")]
+        public ActionResult<IEnumerable<UserClaim>> GetUserClaims([FromQuery] string username)
+        {
+            if(!string.IsNullOrEmpty(username))
+            {
+                SecurityManager secManager = new SecurityManager(_jwtSettings);
+                var result = secManager.GetUserClaims(username);
+                if(result != null || result.Count > 0)
+                    return result;
+            }            
+            return BadRequest();
         }
     } 
 }

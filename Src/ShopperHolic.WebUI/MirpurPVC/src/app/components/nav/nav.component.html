@@ -2,11 +2,14 @@
     <li class="nav-item">
         <a class="nav-link" routerLink="/about">About</a> 
     </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLink="/contact">Contact</a> 
+    </li>
     <li class="nav-item" *ngIf='getLoginStatus()'>
         <a class="nav-link" routerLink="/adminPanel">Admin Panel</a>
     </li>
     <li class="nav-item" *ngIf='getLoginStatus()'>
-        <a class="nav-link" routerLink="/logout" >Logout</a>
+        <a class="nav-link" (click)="logout()">Logout</a>
     </li>
     <li class="nav-item" *ngIf='!getLoginStatus()'>
         <a class="nav-link" routerLink="/login" >Login</a>
