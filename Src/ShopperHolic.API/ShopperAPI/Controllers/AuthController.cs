@@ -1,30 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
-using ShopperHolic.API.ShopperAPI.Models;
+using ShopperHolic.API.ShopperAPI.Models.Security;
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
-    {        
+    {      
+        public AuthController(JWTSettings settings)
+        {
+            _jwtSettings = settings;
+        }
+        
+        private JWTSettings _jwtSettings = null; 
+
         [HttpPost]
         [Route("~/api/Auth/AttemptAuthentication")]
-        public ActionResult<object> AttemptAuthentication([FromBody] AttemptAuthModel inputModel)
+        public ActionResult<AuthenticatedUserModel> AttemptAuthentication([FromBody] AttemptAuthModel inputModel)
         {
-            string result = inputModel.PerformAuthentication();
-            if(string.IsNullOrEmpty(result))
+            SecurityManager secManager = new SecurityManager(_jwtSettings);
+            var result = secManager.PerformAuthentication(inputModel.UsernameInput, inputModel.PasswordInput);
+            if(result == null || result.IsAuthenticated == false)
             {
                 this.Response.Headers.Add("AuthFailed","AuthFailedForUser" + inputModel.UsernameInput);
                 return Unauthorized();
             }
             else
             {
-                AccessToken accessToken = new AccessToken();
-                accessToken.Token = result;
-                accessToken.IssueDateTime = System.DateTime.Now;
-                return accessToken;
+                return result;
             }
         }
-
-
     } 
 }

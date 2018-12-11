@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Cors;
+using ShopperHolic.API.ShopperAPI.Models.Security;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ShopperHolic.API.ShopperAPI
 {
@@ -28,20 +30,48 @@ namespace ShopperHolic.API.ShopperAPI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors();
+
+            //Add JWTSettings into the service collection for dependency injection.
+            JWTSettings jwtSettings = GetJWTSettings();
+            services.AddSingleton<JWTSettings>(jwtSettings);
+
+            //Configure Authentication to use JwtBearer and set the Allowed parameters.
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            })
+            .AddJwtBearer("JwtBearer", jwtBearerOptions =>
+             {
+                 jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtSettings.Key)),
+                     ValidateIssuer = true,
+                     ValidIssuer = jwtSettings.Issuer,
+
+                     ValidateAudience = true,
+                     ValidAudience = jwtSettings.Audience,
+
+                     ValidateLifetime = true,
+                     ClockSkew = TimeSpan.FromMinutes(jwtSettings.MinutesToExpiration)
+                 };
+             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
-            app.UseMvc(routes => 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+            app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "ActionApi",
                     template: "api/{controller}/{action}/{id}"
                 );
                 routes.MapRoute(
-                    name:"default",
+                    name: "default",
                     template: "api/{controller}/{id}"
                 );
             });
@@ -54,8 +84,18 @@ namespace ShopperHolic.API.ShopperAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             app.UseMvc();
+        }
+
+        private JWTSettings GetJWTSettings()
+        {
+            var settings = new JWTSettings();
+            settings.Key = Configuration["JWTSettings:key"];
+            settings.Audience = Configuration["JWTSettings:audience"];
+            settings.Issuer = Configuration["JWTSettings:issuer"];
+            settings.MinutesToExpiration = Convert.ToInt32(Configuration["JWTSettings:minutesToExpiration"]);
+            return settings;
         }
     }
 }
