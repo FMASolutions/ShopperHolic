@@ -1,0 +1,38 @@
+<div class="container rounded">
+  <form class="form-signin">
+      <div class="row">
+          <div class="col-sm-12">
+              <div class="text-left">
+                  <h3>Login</h3>            
+              </div>        
+          </div>
+      </div>
+    
+      <div class="row">
+          <div class="col-sm-6">
+              <div class="text-left">
+                <input  [(ngModel)]='usernameInput' type = "text" placeholder="Username" class="form-control mb-2" name="usernameInput">                   
+              </div>
+          </div>
+           <div class="col-sm-6">
+              <div class="text-left">
+                    <input [(ngModel)]='passwordInput' type = "password" placeholder="Password" class="form-control mb-2" name="passwordInput">
+              </div>
+          </div>  
+      </div>     
+      <div class="row">
+          <div class="col-sm-12">
+              <div class="checkbox mb-3">
+                  <label><input type="checkbox" id="remember-me" value="remember-me">Stay Logged In</label>
+              </div>              
+          </div>
+      </div>           
+      <div class="row">
+          <div class="col-sm-12"><button class="btn btn-outline-dark btn-block mb-3" (click)="attemptLogin()">Login</button></div>
+      </div>
+      <div class="row">
+          <div class="col-sm-6 pr-2"><a href="/UserAccount/Register" class="btn btn-outline-dark btn-block mb-3">New User</a></div>
+          <div class="col-sm-6 pl-2"><a href="#" class="btn btn-outline-dark btn-block mb-4">Forgot Password</a></div>
+      </div>
+  </form>
+</div>
