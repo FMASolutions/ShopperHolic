@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
       if (this.returnUrl) {this.router.navigateByUrl(this.returnUrl);}
       else {this.router.navigateByUrl("/home");}
     }, (error) => {
-      console.log("caught error: " + error);
       this.returnMessage = "Invalid Credentials. Please try again";
     })
   }

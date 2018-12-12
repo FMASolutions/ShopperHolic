@@ -20,10 +20,6 @@ export class AuthService {
       this.currentUser.bearerToken = storedUser.bearerToken;
       this.currentUser.username = storedUser.username;
       this.currentUser.userClaims = storedUser.userClaims;
-      console.log(existingToken);
-      console.log(this.currentUser.bearerToken);
-      console.log("hellow");
-      console.log(this.currentUser);
     }
   }
 
@@ -71,8 +67,6 @@ export class AuthService {
     returnObject.isAuthenticated = true;
     returnObject.username = localStorage.getItem("username");
     returnObject.userClaims = JSON.parse(localStorage.getItem("userClaims"));
-    console.log("UserClaims from storage converted =");
-    console.log(returnObject.userClaims);
     return returnObject;
 
   }
