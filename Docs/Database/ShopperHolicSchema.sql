@@ -33,6 +33,11 @@ DROP TABLE SubGroups
 DROP TABLE ProductGroups
 DROP TABLE AuditLogs
 DROP TABLE AuditLogTypes
+DROP TABLE UserRoles
+DROP TABLE UserClaims
+DROP TABLE UserRoleTypes
+DROP TABLE UserClaimTypes
+DROP TABLE Users
 DROP PROCEDURE dbo.DeliverExistingItems
 DROP PROCEDURE dbo.GenerateInvoiceForOrder 
 
@@ -184,6 +189,37 @@ CREATE TABLE AuditLogs(
     AuditLogNewValue VARCHAR(500),
     AuditLogDateChanged DATETIME NOT NULL,
     AuditLogChangedByID INT NOT NULL
+)
+GO
+CREATE TABLE UserClaimTypes(
+    UserClaimTypeID INT IDENTITY(1,1) PRIMARY KEY,
+    UserClaimTypeName VARCHAR(50) NOT NULL
+)
+GO
+CREATE TABLE UserRoleTypes(
+    UserRoleTypeID INT IDENTITY(1,1) PRIMARY KEY,
+    UserRoleName VARCHAR(100),
+)
+GO
+CREATE TABLE Users(
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    Username VARCHAR(100) NOT NULL UNIQUE,
+    EncryptedPassword VARCHAR(MAX) NOT NULL,    
+    KnownAs VARCHAR(100) NOT NULL,
+    EmailAddress VARCHAR(150) NOT NULL,
+)
+GO
+CREATE TABLE UserClaims(
+    UserClaimID INT IDENTITY(1,1) PRIMARY KEY,
+    UserClaimTypeID INT FOREIGN KEY REFERENCES UserClaimTypes(UserClaimTypeID),
+    UserID INT FOREIGN KEY REFERENCES Users(UserID),
+    ClaimValue VARCHAR(50)
+)
+GO
+CREATE TABLE UserRoles(
+    UserRoleID INT IDENTITY(1,1) PRIMARY KEY,
+    UserRoleTypeID INT FOREIGN KEY REFERENCES UserRoleTypes(UserRoleTypeID),
+    UserID INT FOREIGN KEY REFERENCES Users(UserID)
 )
 GO
 

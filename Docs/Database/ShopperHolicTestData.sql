@@ -192,6 +192,59 @@ Exec GenerateInvoiceForOrder 2
 GO
 Exec GenerateInvoiceForOrder 3
 GO
+/*-------------------------------------
+Security:
+Users
+UserRoleTypes
+UserClaimTypes
+UserRoles
+UserClaims
+-------------------------------------*/
+INSERT INTO UserClaimTypes
+    (UserClaimTypeName)
+VALUES
+    ('IsAdminUser'),
+    ('CanAmendProducts')
+GO
+
+INSERT INTO UserRoleTypes
+    (UserRoleName)
+VALUES
+    ('Administrator'),
+    ('Customer'),
+    ('TillOperator')
+GO
+
+INSERT INTO Users
+    (Username, EncryptedPassword, KnownAs, EmailAddress)
+VALUES
+    ('Faisal', 'testencryptedpassword', 'chinkey', 'faisal@ahmedmail.info'),
+    ('Zulkar','testencryptedpassword','zal','zal@hotmail.com'),
+    ('TestCustomer','testencryptedpassword','tester1','tester1@ahmedmail.info'),
+    ('Minaccess','testencryptedpassword','tester2','tester2@ahmedmail.info')
+GO
+
+INSERT INTO UserClaims
+    (UserClaimTypeID, UserID, ClaimValue)
+VALUES
+    (1,1,'true'), -- IsAdminUser / Faisal 
+    (2,1,'true'), -- CanAmendProducts / Faisal
+    (1,2,'true'), -- IsAdminUser / Zulkar
+    (2,2,'true'), -- CanAmendProducts / Zulkar
+    (1,3,'false'), -- IsAdminUser / TestCustomer
+    (2,3,'false'), -- CanAmendProducts / TestCustomer
+    (1,4,'false'), -- IsAdminUser / MinAccess
+    (2,4,'false') -- CanAmendProducts / MinAccess
+GO
+
+INSERT INTO UserRoles
+    (UserRoleTypeID,UserID)
+VALUES
+    (1,1), --Administrator / Faisal
+    (1,2), -- Administrator / Zulkar
+    (2,3), -- Customer / TestCustomer
+    (3,4) -- TillOperator / Minaccess
+GO
 /*----------------------------------
 RETRIEVE DATA FOR VIEWING PLEASURE
 ----------------------------------*/
@@ -216,3 +269,10 @@ SELECT * FROM DeliveryNotes
 SELECT * FROM DeliveryNoteItems
 SELECT * FROM InvoiceHeaders
 SELECT * FROM InvoiceItems
+
+SELECT * FROM UserClaimTypes
+SELECT * FROM UserRoleTypes
+SELECT * FROM Users
+SELECT * FROM UserRoles
+SELECT * FROM UserClaims
+GO
