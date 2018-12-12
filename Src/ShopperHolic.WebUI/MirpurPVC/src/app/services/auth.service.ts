@@ -23,6 +23,7 @@ export class AuthService {
 
   baseURL: string = 'https://localhost:5001/api/Auth/';
   currentUser: AuthenticatedUserModel = null;
+
   attemptLogin(username, password): Observable<AuthenticatedUserModel> {
     let authRequestObject = {
       usernameInput: username,
@@ -30,23 +31,22 @@ export class AuthService {
     };
 
     return this.http.post<AuthenticatedUserModel>(this.baseURL + "AttemptAuthentication", authRequestObject).pipe(tap(resp => {
-      if (this.currentUser)
-        Object.assign(this.currentUser, resp);
-      else
-        this.currentUser = resp;
-      this.getUserClaims(this.currentUser.username);
+      if (this.currentUser) { Object.assign(this.currentUser, resp); }
+      else { this.currentUser = resp; }
       localStorage.setItem("bearerToken", resp.bearerToken);
       localStorage.setItem("username", resp.username);
+      this.getUserClaims(this.currentUser.username);
     }));
   }
 
   getUserClaims(username): Observable<UserClaim[]> {
-    return this.http.get<UserClaim[]>(this.baseURL + "GetUserClaims/?username=\"" + username + "\"").pipe(tap(resp => {
-      if (this.currentUser.userClaims)
-        Object.assign(this.currentUser.userClaims, resp);
-      else
-        this.currentUser.userClaims = resp;
-      return resp;      
+    let authHeader = new HttpHeaders()
+    .set('Authorization', 'Bearer ' + this.currentUser.bearerToken);
+    let formattedURL = this.baseURL + "GetUserClaims/?username=\"" + username + "\""
+    return this.http.get<UserClaim[]>(formattedURL, { headers : authHeader }).pipe(tap(resp => {
+      if (this.currentUser.userClaims) { Object.assign(this.currentUser.userClaims, resp); }
+      else { this.currentUser.userClaims = resp; }
+      return resp;
     }));
   }
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopperHolic.API.ShopperAPI.Models.Security;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
                 return result;
             }
         }
-
+        
+        [Authorize]
         [HttpGet]
         [Route("~/api/Auth/GetUserClaims")]
         public ActionResult<IEnumerable<UserClaim>> GetUserClaims([FromQuery] string username)
