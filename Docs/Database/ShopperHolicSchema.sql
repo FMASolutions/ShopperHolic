@@ -105,10 +105,11 @@ GO
 CREATE TABLE Customers(
     CustomerID INT IDENTITY(1,1) PRIMARY KEY,
     CustomerTypeID INT FOREIGN KEY REFERENCES CustomerTypes(CustomerTypeID),
+    DefaultAddressID INT FOREIGN KEY REFERENCES AddressLocations(AddressLocationID),
     CustomerCode VARCHAR(7) NOT NULL UNIQUE,
     CustomerName VARCHAR(250) NOT NULL,
     CustomerContactNumber VARCHAR(30) NOT NULL,
-    CustomerEmailAddress VARCHAR(250) NULL    
+    CustomerEmailAddress VARCHAR(250) NULL
 )
 GO
 CREATE TABLE OrderStatus(

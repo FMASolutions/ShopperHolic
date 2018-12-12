@@ -107,11 +107,11 @@ VALUES
 GO
 
 INSERT INTO Customers
-    (CustomerTypeID ,CustomerCode   ,CustomerName           ,CustomerContactNumber  ,CustomerEmailAddress)
+    (CustomerTypeID ,DefaultAddressID   ,CustomerCode   ,CustomerName           ,CustomerContactNumber  ,CustomerEmailAddress)
 VALUES
-    (1              ,'CASH'         ,'Cash Customer'        ,'N/A'                  ,'N/A'),
-    (2              ,'FMALTD'       ,'FMA Solutions LTD'    ,'07532282222'          ,'faisal@ahmedmail.info'),
-    (2              ,'ZAL'          ,'Zulkar Ltd'           ,'+92 533 572127'       ,'Zalk@Yahoo.com')
+    (1              ,3                  ,'CASH'         ,'Cash Customer'        ,'N/A'                  ,'N/A'),
+    (2              ,1                  ,'FMALTD'       ,'FMA Solutions LTD'    ,'07532282222'          ,'faisal@ahmedmail.info'),
+    (2              ,2                  ,'ZAL'          ,'Zulkar Ltd'           ,'+92 533 572127'       ,'Zalk@Yahoo.com')
 GO
 /*-------------------------------------
 ORDERS:
