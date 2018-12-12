@@ -14,12 +14,8 @@ export class AuthGuard implements CanActivate {
     let claimType: string = next.data["claimType"];
     let hasAccess: boolean = false;
     if (this.authService.currentUser)
-      if (this.authService.currentUser.userClaims)
-        this.authService.currentUser.userClaims.forEach(claim => {
-          if (claim.claimType === claimType)
-            if (claim.claimValue === "true")
-              hasAccess = true;
-        });
+      if (this.authService.currentUser.userClaims && this.authService.hasClaim(claimType))
+        hasAccess = true;
     if (hasAccess) { return true; }
     else if (this.authService.currentUser && this.authService.currentUser.isAuthenticated) {this.router.navigate(['unauthorized']); }
     else

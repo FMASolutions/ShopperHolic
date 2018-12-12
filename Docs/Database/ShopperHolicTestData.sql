@@ -204,12 +204,13 @@ INSERT INTO UserClaimTypes
     (UserClaimTypeName)
 VALUES
     ('IsAdminUser'),
-    ('CanAmendProducts')
+    ('CanAmendProducts'),
+    ('IsAuthenticated')
 GO
 
 INSERT INTO UserRoleTypes
     (UserRoleName)
-VALUES
+VALUES  
     ('Administrator'),
     ('Customer'),
     ('TillOperator')

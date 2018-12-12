@@ -16,7 +16,6 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         private JWTSettings _jwtSettings = null; 
 
         [HttpPost]
-        [Route("~/api/Auth/AttemptAuthentication")]
         public ActionResult<AuthenticatedUserModel> AttemptAuthentication([FromBody] AttemptAuthModel inputModel)
         {
             SecurityManager secManager = new SecurityManager(_jwtSettings);
@@ -32,11 +31,11 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             }
         }
         
-        [Authorize]
+        
         [HttpGet]
-        [Route("~/api/Auth/GetUserClaims")]
+        [Authorize]
         public ActionResult<IEnumerable<UserClaim>> GetUserClaims([FromQuery] string username)
-        {
+        {  
             if(!string.IsNullOrEmpty(username))
             {
                 SecurityManager secManager = new SecurityManager(_jwtSettings);
