@@ -8,9 +8,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
             IsAuthenticated = false;
             UserClaims = new List<UserClaim>();
         }
-        public string Username {get;set;}
-        public string BearerToken {get;set;}
-        public bool IsAuthenticated {get;set;}
-        public List<UserClaim> UserClaims {get;set;}
+        public string Username { get; set; }
+        public string BearerToken { get; set; }
+        public bool IsAuthenticated { get; set; }
+        public List<UserClaim> UserClaims { get; set; }
     }
 }

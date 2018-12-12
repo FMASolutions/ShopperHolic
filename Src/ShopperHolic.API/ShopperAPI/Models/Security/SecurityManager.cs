@@ -61,9 +61,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
             //Standard Claims
             jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Username));
             jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            
+
             //Default IsAuthenticated 
-            jwtClaims.Add(new Claim("IsAuthenticated",user.IsAuthenticated.ToString().ToLower()));
+            jwtClaims.Add(new Claim("IsAuthenticated", user.IsAuthenticated.ToString().ToLower()));
 
             //Add Custom Claims from DB
             foreach (var userClaim in user.UserClaims)

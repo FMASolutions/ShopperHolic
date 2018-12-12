@@ -59,7 +59,7 @@ namespace ShopperHolic.API.ShopperAPI
              });
 
             //Add Claim based Authorization (NOTE; Claim Type And Claim Value and BOTH CASE SENSITIVE)
-            services.AddAuthorization(config => 
+            services.AddAuthorization(config =>
             {
                 config.AddPolicy("IsAdminUser", policyBuilder => policyBuilder.RequireClaim("IsAdminUser", "true"));
                 config.AddPolicy("CanDeleteProducts", policyBuilder => policyBuilder.RequireClaim("CanDeleteProducts", "true"));

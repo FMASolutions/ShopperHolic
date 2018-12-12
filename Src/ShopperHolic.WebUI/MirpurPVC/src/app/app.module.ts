@@ -38,5 +38,5 @@ import { HasClaimDirective } from './services/has-claim.directive';
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 }

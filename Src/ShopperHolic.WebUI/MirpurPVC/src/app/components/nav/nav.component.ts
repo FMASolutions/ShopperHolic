@@ -11,7 +11,7 @@ import { AuthenticatedUserModel } from 'src/app/models/authenticatedUserModel';
 export class NavComponent implements OnInit {
 
   currentUser: AuthenticatedUserModel = null;
-  constructor(private authService: AuthService, private router: Router) { 
+  constructor(private authService: AuthService, private router: Router) {
     this.currentUser = this.authService.currentUser;
   }
 
@@ -19,8 +19,8 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
   }
-  getUserName(){
-    if(this.authService.currentUser && this.authService.currentUser.isAuthenticated) { return this.authService.currentUser.username;}
+  getUserName() {
+    if (this.authService.currentUser && this.authService.currentUser.isAuthenticated) { return this.authService.currentUser.username; }
     else { return ""; }
   }
   logout() {

@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
   attemptLogin() {
     this.authService.attemptLogin(this.usernameInput, this.passwordInput).subscribe(resp => {
       this.currentUser = resp;
-      if (this.returnUrl) {this.router.navigateByUrl(this.returnUrl);}
-      else {this.router.navigateByUrl("/home");}
+      if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl); }
+      else { this.router.navigateByUrl("/home"); }
     }, (error) => {
       this.returnMessage = "Invalid Credentials. Please try again";
     })

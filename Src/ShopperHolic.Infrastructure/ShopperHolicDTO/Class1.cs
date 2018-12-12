@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShopperHolicDTOProvider
+namespace ShopperHolicDTO
 {
     public class Class1
     {

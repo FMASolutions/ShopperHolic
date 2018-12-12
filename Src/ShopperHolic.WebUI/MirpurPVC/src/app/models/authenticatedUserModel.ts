@@ -1,4 +1,4 @@
-import {UserClaim} from './userClaim';
+import { UserClaim } from './userClaim';
 
 export class AuthenticatedUserModel {
     username: string = "";

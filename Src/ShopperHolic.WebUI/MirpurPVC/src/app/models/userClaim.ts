@@ -1,5 +1,4 @@
-export class UserClaim  {
-    claimType: string = "";
-    claimValue: string = "";
-  }
-  
+export class UserClaim {
+  claimType: string = "";
+  claimValue: string = "";
+}

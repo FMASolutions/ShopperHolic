@@ -8,31 +8,31 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  { 
-    path: 'home', 
-    component: HomeComponent 
+  {
+    path: 'home',
+    component: HomeComponent
   },
-  { 
-    path: 'login', 
+  {
+    path: 'login',
     component: LoginComponent
   },
-  { 
-    path: 'about', 
+  {
+    path: 'about',
     component: AboutComponent
   },
-  { 
-    path: 'contact', 
+  {
+    path: 'contact',
     component: ContactComponent
   },
-  { 
-    path: 'adminPanel', 
+  {
+    path: 'adminPanel',
     component: AdminPanelComponent,
-    canActivate: [AuthGuard], 
-    data: { claimType: 'IsAdminUser' } 
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
   },
-  { 
-    path : '', 
-    component: HomeComponent 
+  {
+    path: '',
+    component: HomeComponent
   }
 ];
 
