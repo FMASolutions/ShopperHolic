@@ -21,7 +21,6 @@ DROP TABLE OrderItems
 DROP TABLE OrderHeaders
 DROP TABLE OrderStatus
 DROP TABLE InvoiceStatus
-DROP TABLE CustomerAddresses
 DROP TABLE Customers
 DROP TABLE CustomerTypes
 DROP TABLE AddressLocations
@@ -112,14 +111,6 @@ CREATE TABLE Customers(
     CustomerEmailAddress VARCHAR(250) NULL    
 )
 GO
-CREATE TABLE CustomerAddresses(
-    CustomerAddressID INT IDENTITY(1,1) PRIMARY KEY,    
-    CustomerID INT FOREIGN KEY REFERENCES Customers(CustomerID),
-    AddressLocationID INT FOREIGN KEY REFERENCES AddressLocations(AddressLocationID),
-    IsDefaultAddress BIT NOT NULL,
-    CustomerAddressDescription VARCHAR(100) NOT NULL,
-)
-GO
 CREATE TABLE OrderStatus(
     OrderStatusID INT IDENTITY(1,1) PRIMARY KEY,
     OrderstatusValue VARCHAR(20) NOT NULL
@@ -133,7 +124,7 @@ GO
 CREATE TABLE OrderHeaders(
     OrderHeaderID INT IDENTITY(1,1) PRIMARY KEY,
     CustomerID INT FOREIGN KEY REFERENCES Customers(CustomerID),
-    CustomerAddressID INT FOREIGN KEY REFERENCES CustomerAddresses(CustomerAddressID),
+    AddressID INT FOREIGN KEY REFERENCES AddressLocations(AddressLocationID),
     OrderStatusID INT FOREIGN KEY REFERENCES OrderStatus(OrderStatusID),
     OrderDate DATETIME NOT NULL,
     DeliveryDate DATETIME NOT NULL

@@ -96,7 +96,6 @@ VALUES
 GO
 /*-------------------------------------
 CUSTOMERS
-CustomerAddresses
 Customers
 CustomerTypes
 -------------------------------------*/
@@ -113,13 +112,6 @@ VALUES
     (1              ,'CASH'         ,'Cash Customer'        ,'N/A'                  ,'N/A'),
     (2              ,'FMALTD'       ,'FMA Solutions LTD'    ,'07532282222'          ,'faisal@ahmedmail.info'),
     (2              ,'ZAL'          ,'Zulkar Ltd'           ,'+92 533 572127'       ,'Zalk@Yahoo.com')
-GO
-
-INSERT INTO CustomerAddresses
-    (CustomerID ,AddressLocationID  ,IsDefaultAddress   ,CustomerAddressDescription)
-VALUES
-    (2          ,1                  ,1                  ,'FMA Solutions HQ'),
-    (3          ,5                  ,1                  ,'Zulkar Ltd HQ')
 GO
 /*-------------------------------------
 ORDERS:
@@ -149,13 +141,13 @@ VALUES
 GO 
 
 INSERT INTO OrderHeaders
-    (CustomerID ,CustomerAddressID  ,OrderStatusID  ,OrderDate                  ,DeliveryDate)
+    (CustomerID ,AddressLocationID  ,OrderStatusID  ,OrderDate                  ,DeliveryDate)
 VALUES
     (2          ,1                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Complete Order
-    (2          ,1                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Estimate Order
-    (1          ,2                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Delivered ()
-    (3          ,2                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Delivered
-    (3          ,2                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate()))  --MIX LOTS OF ITEMS!!!!
+    (2          ,2                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Estimate Order
+    (1          ,3                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Delivered ()
+    (3          ,4                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Delivered
+    (3          ,5                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate()))  --MIX LOTS OF ITEMS!!!!
 GO
 
 INSERT INTO OrderItems
@@ -260,7 +252,6 @@ SELECT * FROM AddressLocations
 
 SELECT * FROM CustomerTypes
 SELECT * FROM Customers
-SELECT * FROM CustomerAddresses
 
 SELECT * FROM InvoiceStatus
 SELECT * FROM OrderStatus
