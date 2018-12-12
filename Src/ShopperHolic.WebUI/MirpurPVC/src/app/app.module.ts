@@ -13,6 +13,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
+import { UnathorisedComponent } from './components/unathorised/unathorised.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AuthService } from './services/auth.service';
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    UnathorisedComponent
   ],
   imports: [
     BrowserModule,

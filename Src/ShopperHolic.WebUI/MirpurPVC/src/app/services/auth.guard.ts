@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -7,22 +7,23 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      let claimType: string = next.data["claimType"];
-      let hasAccess: boolean = false;
-      if(this.authService.currentUser)
-        if(this.authService.currentUser.userClaims)
-          this.authService.currentUser.userClaims.forEach(claim => 
-          {  
-            if (claim.claimType === claimType)
-              if(claim.claimValue === "true")
-                hasAccess = true;
-          });
-      return this.authService.currentUser 
-        && this.authService.currentUser.isAuthenticated 
-        && hasAccess;
+    let claimType: string = next.data["claimType"];
+    let hasAccess: boolean = false;
+    if (this.authService.currentUser)
+      if (this.authService.currentUser.userClaims)
+        this.authService.currentUser.userClaims.forEach(claim => {
+          if (claim.claimType === claimType)
+            if (claim.claimValue === "true")
+              hasAccess = true;
+        });
+    if (hasAccess) { return true; }
+    else if (this.authService.currentUser && this.authService.currentUser.isAuthenticated) {this.router.navigate(['unauthorised']); }
+    else
+      this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
+    return false;
   }
 }
