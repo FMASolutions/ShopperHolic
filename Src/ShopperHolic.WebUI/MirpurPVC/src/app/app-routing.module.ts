@@ -6,7 +6,7 @@ import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AuthGuard } from './services/auth.guard';
-import { UnathorisedComponent } from './components/unathorised/unathorised.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 const routes: Routes = [
   { 
@@ -32,8 +32,8 @@ const routes: Routes = [
     data: { claimType: 'IsAdminUser' } 
   },
   {
-    path: 'unauthorised',
-    component: UnathorisedComponent
+    path: 'unathorized',
+    component: UnauthorizedComponent
   },
   { 
     path : '', 

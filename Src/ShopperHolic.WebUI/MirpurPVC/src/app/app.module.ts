@@ -14,6 +14,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
 import { UnathorisedComponent } from './components/unathorised/unathorised.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UnathorisedComponent } from './components/unathorised/unathorised.compo
     AboutComponent,
     ContactComponent,
     AdminPanelComponent,
-    UnathorisedComponent
+    UnathorisedComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
