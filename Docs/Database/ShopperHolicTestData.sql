@@ -6,6 +6,7 @@ Items
 SubGroups
 ProductGroups
 -------------------------------------*/
+print 'Insert Product Groups'
 INSERT INTO ProductGroups       
     (ProductGroupCode   ,ProductGroupName   ,ProductGroupDescription)
 VALUES      
@@ -14,6 +15,7 @@ VALUES
     ('ACCESS'           ,'Accessorie'      ,'Accessories')
 GO
 
+print 'Insert Sub Groups'
 INSERT INTO SUBGROUPS
     (SubGroupCode   ,ProductGroupID ,SubGroupName      ,SubGroupDescription)
 VALUES
@@ -25,6 +27,7 @@ VALUES
     ('GLUE'         ,3              ,'Tile Glue'       ,'Tile Glue')
 GO
 
+print 'Insert Items'
 INSERT INTO ITEMS
     (  ItemCode   ,SubGroupID ,ItemName               ,ItemDescription                ,ItemUnitPrice  ,ItemUnitPriceWithMaxDiscount   ,ItemAvailableQty   ,ItemReorderQtyReminder ,ItemImageFilename)
 VALUES
@@ -40,9 +43,9 @@ VALUES
 /*10*/('PNLSCRW'  ,5          ,'Panel Screws'         ,'Panel Screws 10 Pack'         ,0.49           ,0.39                           ,200                ,50                     ,'Random.jpeg'),
 /*11*/('TILGLUE'  ,6          ,'Tile Glue'            ,'Tile Glue 500ML'              ,1.29           ,0.99                           ,75                 ,25                     ,'Random.jpeg'),
 /*12*/('PNLGLUE'  ,6          ,'Panel Glue'           ,'Panel Glue 500ML'             ,1.29           ,0.99                           ,75                 ,25                     ,'Random.jpeg')
-
-
 GO
+
+
 /*-------------------------------------
 ADDRESS:
 AddressLocations
@@ -50,6 +53,7 @@ CityAreas
 Cities
 Countries
 -------------------------------------*/
+print 'Insert Countries'
 INSERT INTO Countries
     (CountryCode    ,CountryName)
 VALUES
@@ -57,6 +61,7 @@ VALUES
     ('PK'           ,'Pakistan')
 GO
 
+print 'Insert Cities'
 INSERT INTO Cities
     (CityCode   ,CountryID  ,CityName)
 VALUES
@@ -66,6 +71,7 @@ VALUES
     ('GUJRAT'   ,2          ,'Gujrat')
 GO
 
+print 'Insert CityAreas'
 INSERT INTO CityAreas(
     CityAreaCode    ,CityID ,CityAreaName)
 VALUES
@@ -82,6 +88,7 @@ VALUES
 /*11*/('BZGWL'        ,4      ,'Buzrgwal')
 GO
 
+print 'Insert AddressLocations'
 INSERT INTO AddressLocations
     (AddressLine1   ,AddressLine2           ,CityAreaID ,PostCode)
 VALUES
@@ -99,6 +106,7 @@ CUSTOMERS
 Customers
 CustomerTypes
 -------------------------------------*/
+print 'Insert CustomerTypes'
 INSERT INTO CustomerTypes
     (CustomerTypeCode   ,CustomerTypeName)
 VALUES
@@ -106,6 +114,7 @@ VALUES
     ('ACCT'             ,'Account Customer')
 GO
 
+print 'Insert Customers'
 INSERT INTO Customers
     (CustomerTypeID ,DefaultAddressID   ,CustomerCode   ,CustomerName           ,CustomerContactNumber  ,CustomerEmailAddress)
 VALUES
@@ -124,6 +133,7 @@ OrderHeaders
 OrderStatus
 InvoiceStatus
 -------------------------------------*/
+print 'Insert Order Status'
 INSERT INTO OrderStatus
     (OrderStatusValue)
 VALUES
@@ -132,6 +142,7 @@ VALUES
     ('Complete')
 GO
 
+print 'Insert InvoiceStatus'
 INSERT INTO InvoiceStatus
     (InvoiceStatusValue)
 VALUES
@@ -140,16 +151,18 @@ VALUES
     ('Paid')
 GO 
 
+print 'Insert OrderHeaders'
 INSERT INTO OrderHeaders
-    (CustomerID ,AddressLocationID  ,OrderStatusID  ,OrderDate                  ,DeliveryDate)
+    (CustomerID ,AddressID  ,OrderStatusID  ,OrderDate                  ,DeliveryDate)
 VALUES
-    (2          ,1                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Complete Order
-    (2          ,2                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Estimate Order
-    (1          ,3                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Delivered ()
-    (3          ,4                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Delivered
-    (3          ,5                  ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate()))  --MIX LOTS OF ITEMS!!!!
+    (2          ,1          ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Complete Order
+    (2          ,2          ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Estimate Order
+    (1          ,3          ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Delivered ()
+    (3          ,4          ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())), --Delivered
+    (3          ,5          ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate()))  --MIX LOTS OF ITEMS!!!!
 GO
 
+print 'Insert OrderItems'
 INSERT INTO OrderItems
     (OrderHeaderID  ,ItemID ,OrderItemStatusID  ,OrderItemUnitPrice ,OrderItemUnitPriceAfterDiscount    ,OrderItemQty   ,OrderItemDescription)
 VALUES
@@ -170,18 +183,25 @@ VALUES
     (5              ,7      ,1                  ,11.99              ,12.99                              ,7              ,'Random Diff 7'),
     (5              ,8      ,1                  ,12.99              ,13.99                              ,8              ,'Random Diff 8')
 GO
+print 'Delivery Order 1'
 Exec DeliverExistingItems 1 
 GO
+print 'Delivery Order 2'
 Exec DeliverExistingItems 2 
 GO
+print 'Delivery Order 3'
 Exec DeliverExistingItems 3 
 GO
+print 'Delivery Order 4'
 Exec DeliverExistingItems 4 
 GO
+print 'Gen Invoice Order 1'
 Exec GenerateInvoiceForOrder 1
 GO
+print 'Gen Invoice Order 2'
 Exec GenerateInvoiceForOrder 2
 GO
+print 'Gen Invoice Order 3'
 Exec GenerateInvoiceForOrder 3
 GO
 /*-------------------------------------
@@ -192,6 +212,7 @@ UserClaimTypes
 UserRoles
 UserClaims
 -------------------------------------*/
+print 'Insert UserClaimTypes'
 INSERT INTO UserClaimTypes
     (UserClaimTypeName)
 VALUES
@@ -200,6 +221,7 @@ VALUES
     ('IsAuthenticated')
 GO
 
+print 'Insert UserRolesTypes'
 INSERT INTO UserRoleTypes
     (UserRoleName)
 VALUES  
@@ -208,6 +230,7 @@ VALUES
     ('TillOperator')
 GO
 
+print 'Insert Users'
 INSERT INTO Users
     (Username, EncryptedPassword, KnownAs, EmailAddress)
 VALUES
@@ -217,6 +240,7 @@ VALUES
     ('Minaccess','testencryptedpassword','tester2','tester2@ahmedmail.info')
 GO
 
+print 'Insert UserClaims'
 INSERT INTO UserClaims
     (UserClaimTypeID, UserID, ClaimValue)
 VALUES
@@ -230,6 +254,7 @@ VALUES
     (2,4,'false') -- CanAmendProducts / MinAccess
 GO
 
+print 'Insert UserRoles'
 INSERT INTO UserRoles
     (UserRoleTypeID,UserID)
 VALUES
@@ -237,6 +262,14 @@ VALUES
     (1,2), -- Administrator / Zulkar
     (2,3), -- Customer / TestCustomer
     (3,4) -- TillOperator / Minaccess
+GO
+
+print 'Insert CustomerLogins'
+INSERT INTO CustomerLogins
+    (CustomerID, UserID)
+VALUES
+    (2,1), -- FMASolutionsLtd / Faisal
+    (3,2)   -- Zulkar Ltd / Zulkar
 GO
 /*----------------------------------
 RETRIEVE DATA FOR VIEWING PLEASURE
@@ -267,4 +300,5 @@ SELECT * FROM UserRoleTypes
 SELECT * FROM Users
 SELECT * FROM UserRoles
 SELECT * FROM UserClaims
+SELECT * FROM CustomerLogins
 GO

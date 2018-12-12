@@ -21,6 +21,7 @@ DROP TABLE OrderItems
 DROP TABLE OrderHeaders
 DROP TABLE OrderStatus
 DROP TABLE InvoiceStatus
+DROP TABLE CustomerLogins
 DROP TABLE Customers
 DROP TABLE CustomerTypes
 DROP TABLE AddressLocations
@@ -38,28 +39,31 @@ DROP TABLE UserRoleTypes
 DROP TABLE UserClaimTypes
 DROP TABLE Users
 DROP PROCEDURE dbo.DeliverExistingItems
-DROP PROCEDURE dbo.GenerateInvoiceForOrder 
+DROP PROCEDURE dbo.GenerateInvoiceForOrder
 
 
-CREATE TABLE ProductGroups(
+CREATE TABLE ProductGroups
+(
     ProductGroupID INT IDENTITY(1,1) PRIMARY KEY,
-    ProductGroupCode VARCHAR(7) NOT NULL UNIQUE,    
+    ProductGroupCode VARCHAR(7) NOT NULL UNIQUE,
     ProductGroupName VARCHAR(50) NOT NULL,
     ProductGroupDescription VARCHAR(250) NOT NULL
 )
 GO
-CREATE TABLE SubGroups(
+CREATE TABLE SubGroups
+(
     SubGroupID INT IDENTITY(1,1) PRIMARY KEY,
     SubGroupCode VARCHAR(7) NOT NULL UNIQUE,
-    ProductGroupID INT FOREIGN KEY REFERENCES ProductGroups(ProductGroupID),    
-    SubGroupName VARCHAR(100) NOT NULL,    
+    ProductGroupID INT FOREIGN KEY REFERENCES ProductGroups(ProductGroupID),
+    SubGroupName VARCHAR(100) NOT NULL,
     SubGroupDescription VARCHAR(250) NOT NULL
 )
-CREATE TABLE Items(
+CREATE TABLE Items
+(
     ItemID INT IDENTITY(1,1) PRIMARY KEY,
-    ItemCode VARCHAR(7) NOT NULL UNIQUE,    
-    SubGroupID INT FOREIGN KEY REFERENCES SubGroups(SubGroupID),    
-    ItemName VARCHAR(100) NOT NULL,    
+    ItemCode VARCHAR(7) NOT NULL UNIQUE,
+    SubGroupID INT FOREIGN KEY REFERENCES SubGroups(SubGroupID),
+    ItemName VARCHAR(100) NOT NULL,
     ItemDescription VARCHAR(250) NOT NULL,
     ItemUnitPrice DECIMAL(12,4) NOT NULL,
     ItemUnitPriceWithMaxDiscount DECIMAL(12,4) NOT NULL,
@@ -68,41 +72,47 @@ CREATE TABLE Items(
     ItemImageFilename VARCHAR(500) NOT NULL
 )
 GO
-CREATE TABLE Countries(
+CREATE TABLE Countries
+(
     CountryID INT IDENTITY(1,1) PRIMARY KEY,
     CountryCode VARCHAR(7) NOT NULL UNIQUE,
     CountryName VARCHAR(100) NOT NULL
 )
 GO
-CREATE TABLE Cities(
+CREATE TABLE Cities
+(
     CityID INT IDENTITY(1,1) PRIMARY KEY,
     CityCode VARCHAR(7) NOT NULL UNIQUE,
     CountryID INT FOREIGN KEY REFERENCES Countries(CountryID),
     CityName VARCHAR(100) NOT NULL
 )
 GO
-CREATE TABLE CityAreas(
+CREATE TABLE CityAreas
+(
     CityAreaID INT IDENTITY(1,1) PRIMARY KEY,
     CityAreaCode VARCHAR(7) NOT NULL UNIQUE,
     CityID INT FOREIGN KEY REFERENCES Cities(CityID),
     CityAreaName VARCHAR(100) NOT NULL
 )
 GO
-CREATE TABLE AddressLocations(
-    AddressLocationID INT IDENTITY(1,1) PRIMARY KEY,    
+CREATE TABLE AddressLocations
+(
+    AddressLocationID INT IDENTITY(1,1) PRIMARY KEY,
     AddressLine1 VARCHAR(100) NOT NULL,
     AddressLine2 VARCHAR(100) NULL,
     CityAreaID INT FOREIGN KEY REFERENCES CityAreas(CityAreaID),
     PostCode VARCHAR(10) NULL
 )
 GO
-CREATE TABLE CustomerTypes(
+CREATE TABLE CustomerTypes
+(
     CustomerTypeID INT IDENTITY(1,1) PRIMARY KEY,
     CustomerTypeCode VARCHAR(7) NOT NULL UNIQUE,
     CustomerTypeName VARCHAR(100) NOT NULL
 )
 GO
-CREATE TABLE Customers(
+CREATE TABLE Customers
+(
     CustomerID INT IDENTITY(1,1) PRIMARY KEY,
     CustomerTypeID INT FOREIGN KEY REFERENCES CustomerTypes(CustomerTypeID),
     DefaultAddressID INT FOREIGN KEY REFERENCES AddressLocations(AddressLocationID),
@@ -112,17 +122,20 @@ CREATE TABLE Customers(
     CustomerEmailAddress VARCHAR(250) NULL
 )
 GO
-CREATE TABLE OrderStatus(
+CREATE TABLE OrderStatus
+(
     OrderStatusID INT IDENTITY(1,1) PRIMARY KEY,
     OrderstatusValue VARCHAR(20) NOT NULL
 )
 GO
-CREATE TABLE InvoiceStatus(
+CREATE TABLE InvoiceStatus
+(
     InvoiceStatusID INT IDENTITY(1,1) PRIMARY KEY,
     InvoiceStatusValue VARCHAR(20) NOT NULL
 )
 GO
-CREATE TABLE OrderHeaders(
+CREATE TABLE OrderHeaders
+(
     OrderHeaderID INT IDENTITY(1,1) PRIMARY KEY,
     CustomerID INT FOREIGN KEY REFERENCES Customers(CustomerID),
     AddressID INT FOREIGN KEY REFERENCES AddressLocations(AddressLocationID),
@@ -131,7 +144,8 @@ CREATE TABLE OrderHeaders(
     DeliveryDate DATETIME NOT NULL
 )
 GO
-CREATE TABLE  OrderItems(
+CREATE TABLE OrderItems
+(
     OrderItemID INT IDENTITY(1,1) PRIMARY KEY,
     OrderHeaderID INT FOREIGN KEY REFERENCES OrderHeaders(OrderHeaderID),
     ItemID INT FOREIGN KEY REFERENCES Items(ItemID),
@@ -139,40 +153,46 @@ CREATE TABLE  OrderItems(
     OrderItemUnitPrice DECIMAL(12,4) NOT NULL,
     OrderItemUnitPriceAfterDiscount DECIMAL(12,4) NOT NULL,
     OrderItemQty INT NOT NULL,
-    OrderItemDescription VARCHAR(100) NOT NULL    
+    OrderItemDescription VARCHAR(100) NOT NULL
 )
 GO
-CREATE TABLE InvoiceHeaders(
+CREATE TABLE InvoiceHeaders
+(
     InvoiceHeaderID INT IDENTITY(1,1) PRIMARY KEY,
     OrderHeaderID INT FOREIGN KEY REFERENCES OrderHeaders(OrderHeaderID),
     InvoiceStatusID INT FOREIGN KEY REFERENCES InvoiceStatus(InvoiceStatusID),
     InvoiceDate DATETIME NOT NULL
 )
 GO
-CREATE TABLE InvoiceItems(
+CREATE TABLE InvoiceItems
+(
     InvoiceItemID INT IDENTITY(1,1) PRIMARY KEY,
     InvoiceHeaderID INT FOREIGN KEY REFERENCES InvoiceHeaders(InvoiceHeaderID),
     OrderItemID INT FOREIGN KEY REFERENCES OrderItems(OrderItemID),
-    InvoiceItemStatusID INT FOREIGN KEY REFERENCES InvoiceStatus(InvoiceStatusID),    
-    InvoiceItemQty INT NOT NULL    
+    InvoiceItemStatusID INT FOREIGN KEY REFERENCES InvoiceStatus(InvoiceStatusID),
+    InvoiceItemQty INT NOT NULL
 )
 GO
-CREATE TABLE DeliveryNotes(
+CREATE TABLE DeliveryNotes
+(
     DeliveryNoteID INT IDENTITY(1,1) PRIMARY KEY,
     OrderHeaderID INT FOREIGN KEY REFERENCES OrderHeaders(OrderHeaderID),
-    DeliveryDate DATETIME NOT NULL    
+    DeliveryDate DATETIME NOT NULL
 )
-CREATE TABLE DeliveryNoteItems(
+CREATE TABLE DeliveryNoteItems
+(
     DeliveryNoteItemID INT IDENTITY(1,1) PRIMARY KEY,
     DeliveryNoteID INT FOREIGN KEY REFERENCES DeliveryNotes(DeliveryNoteID),
     OrderItemID INT FOREIGN KEY REFERENCES OrderItems(OrderItemID)
 )
-CREATE TABLE AuditLogTypes(
+CREATE TABLE AuditLogTypes
+(
     AuditLogTypeID INT IDENTITY(1,1) PRIMARY KEY,
     AuditLogTypeName VARCHAR(100) NOT NULL
 )
 GO
-CREATE TABLE AuditLogs(
+CREATE TABLE AuditLogs
+(
     AuditLogID INT IDENTITY(1,1) PRIMARY KEY,
     AuditLogTypeID INT FOREIGN KEY REFERENCES AuditLogTypes(AuditLogTypeID),
     AuditLogIdentifier INT NOT NULL,
@@ -183,109 +203,137 @@ CREATE TABLE AuditLogs(
     AuditLogChangedByID INT NOT NULL
 )
 GO
-CREATE TABLE UserClaimTypes(
+CREATE TABLE UserClaimTypes
+(
     UserClaimTypeID INT IDENTITY(1,1) PRIMARY KEY,
     UserClaimTypeName VARCHAR(50) NOT NULL
 )
 GO
-CREATE TABLE UserRoleTypes(
+CREATE TABLE UserRoleTypes
+(
     UserRoleTypeID INT IDENTITY(1,1) PRIMARY KEY,
     UserRoleName VARCHAR(100),
 )
 GO
-CREATE TABLE Users(
+CREATE TABLE Users
+(
     UserID INT IDENTITY(1,1) PRIMARY KEY,
     Username VARCHAR(100) NOT NULL UNIQUE,
-    EncryptedPassword VARCHAR(MAX) NOT NULL,    
+    EncryptedPassword VARCHAR(MAX) NOT NULL,
     KnownAs VARCHAR(100) NOT NULL,
-    EmailAddress VARCHAR(150) NOT NULL,
+    EmailAddress VARCHAR(150) NOT NULL UNIQUE,
 )
 GO
-CREATE TABLE UserClaims(
+CREATE TABLE UserClaims
+(
     UserClaimID INT IDENTITY(1,1) PRIMARY KEY,
     UserClaimTypeID INT FOREIGN KEY REFERENCES UserClaimTypes(UserClaimTypeID),
     UserID INT FOREIGN KEY REFERENCES Users(UserID),
     ClaimValue VARCHAR(50)
 )
 GO
-CREATE TABLE UserRoles(
+CREATE TABLE UserRoles
+(
     UserRoleID INT IDENTITY(1,1) PRIMARY KEY,
     UserRoleTypeID INT FOREIGN KEY REFERENCES UserRoleTypes(UserRoleTypeID),
     UserID INT FOREIGN KEY REFERENCES Users(UserID)
 )
 GO
+CREATE TABLE CustomerLogins
+(
+    CustomerLoginID INT IDENTITY(1,1) PRIMARY KEY,
+    CustomerID INT FOREIGN KEY REFERENCES Customers(CustomerID),
+    UserID INT FOREIGN KEY REFERENCES Users(UserID)
+)
+GO
 
-CREATE PROCEDURE dbo.DeliverExistingItems 
-@OrderHeaderID INT
+CREATE PROCEDURE dbo.DeliverExistingItems
+    @OrderHeaderID INT
 AS
-IF EXISTS(SELECT 1 FROM OrderItems WHERE OrderHeaderID = @OrderHeaderID and OrderItemStatusID = 1)
+IF EXISTS(SELECT 1
+FROM OrderItems
+WHERE OrderHeaderID = @OrderHeaderID and OrderItemStatusID = 1)
 BEGIN
-	INSERT INTO DeliveryNotes(OrderHeaderID,DeliveryDate)
-	VALUES(@OrderHeaderID,GetDate())
+    INSERT INTO DeliveryNotes
+        (OrderHeaderID,DeliveryDate)
+    VALUES(@OrderHeaderID, GetDate())
 
-	DECLARE @CurrentDeliveryNoteID INT
-	SET @CurrentDeliveryNoteID = (SELECT TOP 1 DeliveryNoteID FROM DeliveryNotes WHERE OrderHeaderID = @OrderHeaderID ORDER BY DeliveryNoteID DESC)
+    DECLARE @CurrentDeliveryNoteID INT
+    SET @CurrentDeliveryNoteID = (SELECT TOP 1
+        DeliveryNoteID
+    FROM DeliveryNotes
+    WHERE OrderHeaderID = @OrderHeaderID
+    ORDER BY DeliveryNoteID DESC)
 
-	INSERT INTO DeliveryNoteItems(DeliveryNoteID, OrderItemID)
-	SELECT @CurrentDeliveryNoteID, OrderItemID
-	FROM OrderItems
-	WHERE OrderHeaderID = @OrderHeaderID
-	AND OrderItemStatusID = 1
-	
-	UPDATE i
+    INSERT INTO DeliveryNoteItems
+        (DeliveryNoteID, OrderItemID)
+    SELECT @CurrentDeliveryNoteID, OrderItemID
+    FROM OrderItems
+    WHERE OrderHeaderID = @OrderHeaderID
+        AND OrderItemStatusID = 1
+
+    UPDATE i
 	SET i.ItemAvailableQty = i.ItemAvailableQty - oi.OrderItemQty
 	FROM OrderItems oi
-	INNER JOIN Items i on oi.ItemID = i.ItemID
+        INNER JOIN Items i on oi.ItemID = i.ItemID
 	WHERE oi.OrderHeaderID = @OrderHeaderID
-	AND oi.OrderItemStatusID = 1	   
-	       
-	UPDATE OrderItems
+        AND oi.OrderItemStatusID = 1
+
+    UPDATE OrderItems
 	SET OrderItemStatusID = 2
 	WHERE OrderHeaderID = @OrderHeaderID
-	AND OrderItemStatusID = 1
+        AND OrderItemStatusID = 1
 
-	UPDATE OrderHeaders
+    UPDATE OrderHeaders
 	SET OrderStatusID = 2
 	WHERE OrderHeaderID = @OrderHeaderID
 
-	SELECT @CurrentDeliveryNoteID
+    SELECT @CurrentDeliveryNoteID
 END
 ELSE
 BEGIN
-	SELECT 0
+    SELECT 0
 END
 GO
 
-CREATE PROCEDURE [dbo].[GenerateInvoiceForOrder] 
-@OrderHeaderID INT
+CREATE PROCEDURE [dbo].[GenerateInvoiceForOrder]
+    @OrderHeaderID INT
 AS
-IF EXISTS(SELECT 1 FROM OrderItems WHERE OrderHeaderID = @OrderHeaderID and OrderItemStatusID = 2)
+IF EXISTS(SELECT 1
+FROM OrderItems
+WHERE OrderHeaderID = @OrderHeaderID and OrderItemStatusID = 2)
 BEGIN
-	INSERT INTO InvoiceHeaders(OrderHeaderID,InvoiceDate,InvoiceStatusID)
-	VALUES(@OrderHeaderID,GetDate(),1)
+    INSERT INTO InvoiceHeaders
+        (OrderHeaderID,InvoiceDate,InvoiceStatusID)
+    VALUES(@OrderHeaderID, GetDate(), 1)
 
-	DECLARE @CurrentInvoiceID INT
-	SET @CurrentInvoiceID = (SELECT TOP 1 InvoiceHeaderID FROM InvoiceHeaders WHERE OrderHeaderID = @OrderHeaderID ORDER BY InvoiceHeaderID DESC)
+    DECLARE @CurrentInvoiceID INT
+    SET @CurrentInvoiceID = (SELECT TOP 1
+        InvoiceHeaderID
+    FROM InvoiceHeaders
+    WHERE OrderHeaderID = @OrderHeaderID
+    ORDER BY InvoiceHeaderID DESC)
 
-	INSERT INTO InvoiceItems(InvoiceHeaderID, OrderItemID, InvoiceItemStatusID, InvoiceItemQty)
-	SELECT @CurrentInvoiceID, OrderItemID, 1, OrderItemQty
-	FROM OrderItems
-	WHERE OrderHeaderID = @OrderHeaderID
-	AND OrderItemStatusID = 2
-	       
-	UPDATE OrderItems
+    INSERT INTO InvoiceItems
+        (InvoiceHeaderID, OrderItemID, InvoiceItemStatusID, InvoiceItemQty)
+    SELECT @CurrentInvoiceID, OrderItemID, 1, OrderItemQty
+    FROM OrderItems
+    WHERE OrderHeaderID = @OrderHeaderID
+        AND OrderItemStatusID = 2
+
+    UPDATE OrderItems
 	SET OrderItemStatusID = 3
 	WHERE OrderHeaderID = @OrderHeaderID
-	AND OrderItemStatusID = 2
+        AND OrderItemStatusID = 2
 
-	UPDATE OrderHeaders
+    UPDATE OrderHeaders
 	SET OrderStatusID = 3
 	WHERE OrderHeaderID = @OrderHeaderID
 
-	SELECT @CurrentInvoiceID
+    SELECT @CurrentInvoiceID
 END
 ELSE
 BEGIN
-	SELECT 0
+    SELECT 0
 END
 GO
