@@ -43,7 +43,13 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
                 ClaimType = "IsAdminUser",
                 ClaimValue = "true"
             };
+            UserClaim claim2 = new UserClaim
+            {
+                ClaimType = "IsAuthenticated",
+                ClaimValue = "true"
+            };
             claims.Add(testClaim);
+            claims.Add(claim2);
             return claims;
         }
 

@@ -13,11 +13,10 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let claimType: string = next.data["claimType"];
     let hasAccess: boolean = false;
-    if (this.authService.currentUser)
-      if (this.authService.currentUser.userClaims && this.authService.hasClaim(claimType))
-        hasAccess = true;
+    if (this.authService.currentUser) {
+      if (this.authService.currentUser.userClaims && this.authService.hasClaim(claimType)) { hasAccess = true; }
+    }
     if (hasAccess) { return true; }
-    else if (this.authService.currentUser && this.authService.currentUser.isAuthenticated) {this.router.navigate(['unauthorized']); }
     else
       this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
     return false;

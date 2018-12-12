@@ -6,7 +6,6 @@ import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AuthGuard } from './services/auth.guard';
-import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 const routes: Routes = [
   { 
@@ -30,10 +29,6 @@ const routes: Routes = [
     component: AdminPanelComponent,
     canActivate: [AuthGuard], 
     data: { claimType: 'IsAdminUser' } 
-  },
-  {
-    path: 'unathorized',
-    component: UnauthorizedComponent
   },
   { 
     path : '', 

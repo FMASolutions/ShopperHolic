@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { AuthenticatedUserModel } from './models/authenticatedUserModel';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Mirpur PVC';
+  currentUser: AuthenticatedUserModel = null;
+
+  constructor(private authService: AuthService) {
+    this.currentUser = authService.currentUser;
+  }
+
+  logout(): void {
+    this.authService.logoutExistingUser();
+  }
 }

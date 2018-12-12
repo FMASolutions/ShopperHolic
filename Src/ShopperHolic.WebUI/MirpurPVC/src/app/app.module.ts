@@ -13,8 +13,8 @@ import { ContactComponent } from './components/contact/contact.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
-import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { HttpInterceptorModule } from './services/http-interceptor';
+import { HasClaimDirective } from './services/has-claim.directive';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { HttpInterceptorModule } from './services/http-interceptor';
     AboutComponent,
     ContactComponent,
     AdminPanelComponent,
-    UnauthorizedComponent
+    HasClaimDirective
   ],
   imports: [
     BrowserModule,
