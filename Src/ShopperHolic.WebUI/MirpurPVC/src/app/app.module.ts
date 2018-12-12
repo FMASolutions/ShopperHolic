@@ -14,6 +14,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { HttpInterceptorModule } from './services/http-interceptor';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpInterceptorModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

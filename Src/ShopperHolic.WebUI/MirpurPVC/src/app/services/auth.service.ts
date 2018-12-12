@@ -40,10 +40,10 @@ export class AuthService {
   }
 
   getUserClaims(username): Observable<UserClaim[]> {
-    let authHeader = new HttpHeaders()
-    .set('Authorization', 'Bearer ' + this.currentUser.bearerToken);
+    /*let authHeader = new HttpHeaders()
+    .set('Authorization', 'Bearer ' + this.currentUser.bearerToken);*/
     let formattedURL = this.baseURL + "GetUserClaims/?username=\"" + username + "\""
-    return this.http.get<UserClaim[]>(formattedURL, { headers : authHeader }).pipe(tap(resp => {
+    return this.http.get<UserClaim[]>(formattedURL).pipe(tap(resp => {
       if (this.currentUser.userClaims) { Object.assign(this.currentUser.userClaims, resp); }
       else { this.currentUser.userClaims = resp; }
       return resp;
