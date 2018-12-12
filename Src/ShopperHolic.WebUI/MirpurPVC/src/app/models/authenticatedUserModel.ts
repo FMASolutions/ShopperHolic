@@ -4,5 +4,5 @@ export class AuthenticatedUserModel {
     username: string = "";
     bearerToken: string = "";
     isAuthenticated: boolean = false;
-    claims: UserClaim[] = [];
+    userClaims: UserClaim[] = [];
 }

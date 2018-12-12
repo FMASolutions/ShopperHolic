@@ -24,7 +24,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
                 authUser.IsAuthenticated = true;
                 UserClaim testClaim = new UserClaim
                 {
-                    ClaimType = "TestClaimType",
+                    ClaimType = "IsAdminUser",
                     ClaimValue = "true"
                 };
                 authUser.UserClaims.Add(testClaim);
@@ -40,7 +40,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
             List<UserClaim> claims = new List<UserClaim>();
             UserClaim testClaim = new UserClaim
             {
-                ClaimType = "TestClaimType",
+                ClaimType = "IsAdminUser",
                 ClaimValue = "true"
             };
             claims.Add(testClaim);

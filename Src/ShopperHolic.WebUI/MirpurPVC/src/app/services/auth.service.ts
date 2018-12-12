@@ -17,7 +17,7 @@ export class AuthService {
       this.currentUser.isAuthenticated = true;
       this.currentUser.bearerToken = existingToken;
       this.currentUser.username = localStorage.getItem("username");
-      this.getUserClaims(this.currentUser.username).subscribe(resp => { this.currentUser.claims = resp; });
+      this.getUserClaims(this.currentUser.username).subscribe(resp => { this.currentUser.userClaims = resp; });
     }
   }
 
@@ -34,17 +34,19 @@ export class AuthService {
         Object.assign(this.currentUser, resp);
       else
         this.currentUser = resp;
+      this.getUserClaims(this.currentUser.username);
       localStorage.setItem("bearerToken", resp.bearerToken);
       localStorage.setItem("username", resp.username);
     }));
   }
 
   getUserClaims(username): Observable<UserClaim[]> {
-    return this.http.get<UserClaim[]>(this.baseURL + "GetUserClaims").pipe(tap(resp => {
-      if (this.currentUser.claims)
-        Object.assign(this.currentUser.claims, resp);
+    return this.http.get<UserClaim[]>(this.baseURL + "GetUserClaims/?username=\"" + username + "\"").pipe(tap(resp => {
+      if (this.currentUser.userClaims)
+        Object.assign(this.currentUser.userClaims, resp);
       else
-        this.currentUser.claims = resp; 
+        this.currentUser.userClaims = resp;
+      return resp;      
     }));
   }
 
