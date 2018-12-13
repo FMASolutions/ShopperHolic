@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Cors;
 using ShopperHolic.API.ShopperAPI.Models.Security;
 using Microsoft.IdentityModel.Tokens;
+using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 
 namespace ShopperHolic.API.ShopperAPI
 {
@@ -28,12 +29,17 @@ namespace ShopperHolic.API.ShopperAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Dependency Injection
+            MvcServiceCollectionExtensions.AddMvc(services);
+
+            //Compatibility and Cors
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors();
 
             //Add JWTSettings into the service collection for dependency injection.
             JWTSettings jwtSettings = GetJWTSettings();
             services.AddSingleton<JWTSettings>(jwtSettings);
+            
 
             //Configure Authentication to use JwtBearer and set the Allowed parameters.
             services.AddAuthentication(options =>
@@ -65,6 +71,10 @@ namespace ShopperHolic.API.ShopperAPI
                 config.AddPolicy("CanDeleteProducts", policyBuilder => policyBuilder.RequireClaim("CanDeleteProducts", "true"));
                 config.AddPolicy("CanAmendProducts", policyBuilder => policyBuilder.RequireClaim("CanAmendProducts", "true"));
             });
+            
+            //Add Service Dependency Injection
+            string connectionString = Configuration["ShopperHolicDBConnection"];
+            services.AddTransient<ISecurityService>(s => new SecurityService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

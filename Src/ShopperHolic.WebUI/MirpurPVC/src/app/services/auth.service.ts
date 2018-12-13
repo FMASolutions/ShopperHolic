@@ -33,6 +33,7 @@ export class AuthService {
     return this.http.post<AuthenticatedUserModel>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(resp => {
       if (this.currentUser) { Object.assign(this.currentUser, resp); }
       else { this.currentUser = resp; }
+      console.log(resp);
       this.storeUserLocally(resp);
     }));
   }

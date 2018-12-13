@@ -3,54 +3,46 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
-
+using ShopperHolic.BusinessServices.ShopperHolicService.Services;
+using ShopperHolic.Infrastructure.ShopperHolicDTO;
 namespace ShopperHolic.API.ShopperAPI.Models.Security
 {
     public class SecurityManager
     {
-        public SecurityManager(JWTSettings jwtSettings)
+        public SecurityManager(JWTSettings jwtSettings, ISecurityService securityService)
         {
             _jwtSettings = jwtSettings;
+            _securityService = securityService;
         }
 
         private JWTSettings _jwtSettings = null;
+        private ISecurityService _securityService = null;
 
         public AuthenticatedUserModel PerformAuthentication(string username, string password)
         {
-            if (username == "faisal" && password == "password123")
+            AuthenticatedUserModel returnValue = null;
+            AttemptLoginDTO mappedDTO = new AttemptLoginDTO();
+            mappedDTO.Username = username;
+            mappedDTO.UserInputPasswordPlainText = password;
+            var userClaimDTO = _securityService.AttemptUserLogin(new AttemptLoginDTO { Username = username, UserInputPasswordPlainText = password } );
+            if(userClaimDTO != null)
             {
-                AuthenticatedUserModel authUser = new AuthenticatedUserModel();
-                authUser.Username = username;
-                authUser.IsAuthenticated = true;
-                UserClaim testClaim = new UserClaim
+                returnValue = new AuthenticatedUserModel();
+                bool firstIteration = true;
+                foreach(var claim in userClaimDTO)
                 {
-                    ClaimType = "IsAdminUser",
-                    ClaimValue = "true"
-                };
-                authUser.UserClaims.Add(testClaim);
-                authUser.BearerToken = BuildJwtToken(authUser);
-
-                return authUser;
+                    if(firstIteration)
+                    {
+                        returnValue.IsAuthenticated = true;
+                        returnValue.Username = claim.Username;
+                    }
+                    returnValue.UserClaims.Add(new UserClaim{ ClaimType = claim.ClaimType, ClaimValue = claim.ClaimValue});
+                }
+                
+                //Finally create the JWT based on the current claims.
+                returnValue.BearerToken = BuildJwtToken(returnValue);
             }
-            else
-                return null;
-        }
-        public List<UserClaim> GetUserClaims(string username)
-        {
-            List<UserClaim> claims = new List<UserClaim>();
-            UserClaim testClaim = new UserClaim
-            {
-                ClaimType = "IsAdminUser",
-                ClaimValue = "true"
-            };
-            UserClaim claim2 = new UserClaim
-            {
-                ClaimType = "IsAuthenticated",
-                ClaimValue = "true"
-            };
-            claims.Add(testClaim);
-            claims.Add(claim2);
-            return claims;
+            return returnValue;
         }
 
         protected string BuildJwtToken(AuthenticatedUserModel user)

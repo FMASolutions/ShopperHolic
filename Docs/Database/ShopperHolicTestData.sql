@@ -217,8 +217,9 @@ INSERT INTO UserClaimTypes
     (UserClaimTypeName)
 VALUES
     ('IsAdminUser'),
-    ('CanAmendProducts'),
-    ('IsAuthenticated')
+    ('UserCanEditItems'),
+    ('UserCanAddItemsToEstimate'),
+    ('UserCanRemoveItemsFromEstimate')
 GO
 
 print 'Insert UserRolesTypes'
@@ -245,13 +246,15 @@ INSERT INTO UserClaims
     (UserClaimTypeID, UserID, ClaimValue)
 VALUES
     (1,1,'true'), -- IsAdminUser / Faisal 
-    (2,1,'true'), -- CanAmendProducts / Faisal
+    (2,1,'true'), -- UserCanEditItems / Faisal
+    (3,1,'true'), -- UserCanAddItemsToEstimate / Faisal
+    (4,1,'true'), -- UserCanRemoveItemsFromEstimate / Faisal
     (1,2,'true'), -- IsAdminUser / Zulkar
-    (2,2,'true'), -- CanAmendProducts / Zulkar
+    (2,2,'true'), -- UserCanEditItems / Zulkar
     (1,3,'false'), -- IsAdminUser / TestCustomer
-    (2,3,'false'), -- CanAmendProducts / TestCustomer
+    (2,3,'false'), -- UserCanEditItems / TestCustomer
     (1,4,'false'), -- IsAdminUser / MinAccess
-    (2,4,'false') -- CanAmendProducts / MinAccess
+    (2,4,'false') -- UserCanEditItems / MinAccess
 GO
 
 print 'Insert UserRoles'

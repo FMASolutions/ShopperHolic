@@ -3,5 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="../../ShopperHolic.Infrastructure/ShopperHolicDTO/ShopperHolicDTO.csproj" />
+    <ProjectReference Include="../../ShopperHolic.Persistence/ShopperHolicDataProvider/ShopperHolicDataProvider.csproj" />
+  </ItemGroup>
 </Project>
