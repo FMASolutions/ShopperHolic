@@ -31,6 +31,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             catch( Exception ex)
             {
                 //TODO: LOG ERROR
+                System.Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -48,6 +49,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             catch ( Exception ex)
             {
                 //TODO: LOG ERROR
+                System.Console.WriteLine(ex.Message);
                 return null;
             }
         }
