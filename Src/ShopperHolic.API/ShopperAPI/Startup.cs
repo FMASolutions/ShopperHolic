@@ -14,7 +14,8 @@ using Microsoft.AspNetCore.Cors;
 using ShopperHolic.API.ShopperAPI.Models.Security;
 using Microsoft.IdentityModel.Tokens;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
-
+using ShopperHolic.BusinessServices.ShopperHolicService;
+using ShopperHolic.Persistence.ShopperHolicDataProvider;
 namespace ShopperHolic.API.ShopperAPI
 {
     public class Startup
@@ -74,7 +75,8 @@ namespace ShopperHolic.API.ShopperAPI
             
             //Add Service Dependency Injection
             string connectionString = Configuration["ShopperHolicDBConnection"];
-            services.AddTransient<ISecurityService>(s => new SecurityService(connectionString));
+            IUnitOfWork uow = new UnitOfWork(connectionString);
+            services.AddTransient<ISecurityService>(s => new SecurityService(uow));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

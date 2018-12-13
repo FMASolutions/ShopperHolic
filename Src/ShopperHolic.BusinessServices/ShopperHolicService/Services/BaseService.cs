@@ -2,11 +2,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
     public abstract class BaseService
     {
-        public BaseService(string connectionString)
-        {
-            UOW = new UnitOfWork(connectionString);
-        }
-        internal BaseService(IUnitOfWork uow)
+        public BaseService(IUnitOfWork uow)
         {
             UOW = uow;
         }

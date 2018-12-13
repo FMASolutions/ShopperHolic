@@ -6,8 +6,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
     public class SecurityService : BaseService, ISecurityService
     {
-        public SecurityService(string connectionString) : base(connectionString) { }
-        internal SecurityService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public SecurityService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
         public IEnumerable<UserClaimDTO> AttemptUserLogin(AttemptLoginDTO inputDTO)
         {
             IEnumerable<UserClaimDTO> returnValue = null;

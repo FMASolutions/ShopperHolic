@@ -4,7 +4,7 @@ using ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories;
 
 namespace ShopperHolic.BusinessServices.ShopperHolicService
 {
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         public UnitOfWork(string connectionString)
         {
