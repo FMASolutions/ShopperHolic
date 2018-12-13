@@ -3,6 +3,7 @@ import { AuthenticatedUserModel } from '../models/authenticatedUserModel';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
     let existingToken = localStorage.getItem("bearerToken");
     if (existingToken) { //PROBABLY SHOULD CHECK THE EXPIRY TIME ON THE TOKEN>>>>>>>>>
-      let storedUser: AuthenticatedUserModel = this.getUserFromStorage();
-      this.currentUser = new AuthenticatedUserModel();
-      this.currentUser.isAuthenticated = storedUser.isAuthenticated;
-      this.currentUser.bearerToken = storedUser.bearerToken;
-      this.currentUser.username = storedUser.username;
-      this.currentUser.userClaims = storedUser.userClaims;
+      this.currentUser = this.getUserFromStorage();
     }
   }
 
@@ -33,8 +29,9 @@ export class AuthService {
     return this.http.post<AuthenticatedUserModel>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(resp => {
       if (this.currentUser) { Object.assign(this.currentUser, resp); }
       else { this.currentUser = resp; }
+      console.log("user from API: ");
       console.log(resp);
-      this.storeUserLocally(resp);
+      this.storeUserToStorage(resp);
     }));
   }
 
@@ -43,15 +40,18 @@ export class AuthService {
     this.currentUser.userClaims = [];
     this.currentUser.isAuthenticated = false;
     this.currentUser.bearerToken = "";
-    localStorage.removeItem("bearerToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("userClaims");
   }
 
-  storeUserLocally(userToStore: AuthenticatedUserModel) {
+  storeUserToStorage(userToStore: AuthenticatedUserModel) {
     localStorage.setItem("bearerToken", userToStore.bearerToken);
     localStorage.setItem("username", userToStore.username);
     localStorage.setItem("userClaims", JSON.stringify(userToStore.userClaims));
+  }
+
+  removeUserFromStorage(){
+    localStorage.removeItem("bearerToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userClaims");
   }
 
   getUserFromStorage(): AuthenticatedUserModel {
@@ -60,11 +60,14 @@ export class AuthService {
     returnObject.isAuthenticated = true;
     returnObject.username = localStorage.getItem("username");
     returnObject.userClaims = JSON.parse(localStorage.getItem("userClaims"));
+    console.log("User from storage: ");
+    console.log(returnObject);
     return returnObject;
   }
 
   logoutExistingUser() {
     this.resetCurrentUser();
+    this.removeUserFromStorage();
   }
 
   /*-----------------------------------------------

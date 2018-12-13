@@ -242,6 +242,7 @@ VALUES
 GO
 
 print 'Insert UserClaims'
+--TODO FILL OUT ALL CLAIMS FOR ALL USERS
 INSERT INTO UserClaims
     (UserClaimTypeID, UserID, ClaimValue)
 VALUES

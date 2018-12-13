@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
       this.currentUser = resp;
       if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl); }
       else { this.router.navigateByUrl("/home"); }
+      location.reload();
     }, (error) => {
       this.returnMessage = "Invalid Credentials. Please try again";
     })
