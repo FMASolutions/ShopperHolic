@@ -31,13 +31,17 @@ DROP TABLE Countries
 DROP TABLE Items
 DROP TABLE SubGroups
 DROP TABLE ProductGroups
-DROP TABLE AuditLogs
-DROP TABLE AuditLogTypes
+DROP TABLE RefreshTokens
+DROP TABLE AuthorizedApplications
+DROP TABLE AccessKeys
+DROP TABLE Tokens
 DROP TABLE UserRoles
 DROP TABLE UserClaims
 DROP TABLE UserRoleTypes
 DROP TABLE UserClaimTypes
 DROP TABLE Users
+DROP TABLE AuditLogs
+DROP TABLE AuditLogTypes
 DROP PROCEDURE dbo.DeliverExistingItems
 DROP PROCEDURE dbo.GenerateInvoiceForOrder
 
@@ -246,7 +250,36 @@ CREATE TABLE CustomerLogins
     UserID INT FOREIGN KEY REFERENCES Users(UserID)
 )
 GO
-
+CREATE TABLE AuthorizedApplications
+(
+    AppID INT IDENTITY(1,1) PRIMARY KEY,
+    AppName VARCHAR(100) NOT NULL,
+    AppSecret VARCHAR(MAX) NOT NULL,
+)
+CREATE TABLE AccessKeys
+(
+    AccessKeyID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT FOREIGN KEY REFERENCES Users(UserID),
+    AccessKey VARCHAR(MAX) NOT NULL,
+    AccessKeyIssueDate DATETIME NOT NULL,
+    AccessKeyExpiryDate DATETIME NOT NULL
+)
+CREATE TABLE Tokens
+(
+    TokenID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT FOREIGN KEY REFERENCES Users(UserID),
+    Token VARCHAR(MAX) NOT NULL,
+    TokenIssueDate DATETIME NOT NULL,
+    TokenExpiryDate DATETIME NOT NULL
+)
+GO
+CREATE TABLE RefreshTokens
+(
+    RefreshTokenID INT IDENTITY(1,1) PRIMARY KEY,
+    AppID INT FOREIGN KEY REFERENCES AuthorizedApplications(AppID),
+    RefreshToken VARCHAR(MAX) NOT NULL
+)
+GO
 CREATE PROCEDURE dbo.DeliverExistingItems
     @OrderHeaderID INT
 AS

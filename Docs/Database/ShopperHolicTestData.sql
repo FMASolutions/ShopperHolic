@@ -6,7 +6,7 @@ Items
 SubGroups
 ProductGroups
 -------------------------------------*/
-print 'Insert Product Groups'
+PRINT 'Insert Product Groups'
 INSERT INTO ProductGroups       
     (ProductGroupCode   ,ProductGroupName   ,ProductGroupDescription)
 VALUES      
@@ -15,7 +15,7 @@ VALUES
     ('ACCESS'           ,'Accessorie'      ,'Accessories')
 GO
 
-print 'Insert Sub Groups'
+PRINT 'Insert Sub Groups'
 INSERT INTO SUBGROUPS
     (SubGroupCode   ,ProductGroupID ,SubGroupName      ,SubGroupDescription)
 VALUES
@@ -27,7 +27,7 @@ VALUES
     ('GLUE'         ,3              ,'Tile Glue'       ,'Tile Glue')
 GO
 
-print 'Insert Items'
+PRINT 'Insert Items'
 INSERT INTO ITEMS
     (  ItemCode   ,SubGroupID ,ItemName               ,ItemDescription                ,ItemUnitPrice  ,ItemUnitPriceWithMaxDiscount   ,ItemAvailableQty   ,ItemReorderQtyReminder ,ItemImageFilename)
 VALUES
@@ -53,7 +53,7 @@ CityAreas
 Cities
 Countries
 -------------------------------------*/
-print 'Insert Countries'
+PRINT 'Insert Countries'
 INSERT INTO Countries
     (CountryCode    ,CountryName)
 VALUES
@@ -61,7 +61,7 @@ VALUES
     ('PK'           ,'Pakistan')
 GO
 
-print 'Insert Cities'
+PRINT 'Insert Cities'
 INSERT INTO Cities
     (CityCode   ,CountryID  ,CityName)
 VALUES
@@ -71,7 +71,7 @@ VALUES
     ('GUJRAT'   ,2          ,'Gujrat')
 GO
 
-print 'Insert CityAreas'
+PRINT 'Insert CityAreas'
 INSERT INTO CityAreas(
     CityAreaCode    ,CityID ,CityAreaName)
 VALUES
@@ -88,7 +88,7 @@ VALUES
 /*11*/('BZGWL'        ,4      ,'Buzrgwal')
 GO
 
-print 'Insert AddressLocations'
+PRINT 'Insert AddressLocations'
 INSERT INTO AddressLocations
     (AddressLine1   ,AddressLine2           ,CityAreaID ,PostCode)
 VALUES
@@ -106,7 +106,7 @@ CUSTOMERS
 Customers
 CustomerTypes
 -------------------------------------*/
-print 'Insert CustomerTypes'
+PRINT 'Insert CustomerTypes'
 INSERT INTO CustomerTypes
     (CustomerTypeCode   ,CustomerTypeName)
 VALUES
@@ -114,7 +114,7 @@ VALUES
     ('ACCT'             ,'Account Customer')
 GO
 
-print 'Insert Customers'
+PRINT 'Insert Customers'
 INSERT INTO Customers
     (CustomerTypeID ,DefaultAddressID   ,CustomerCode   ,CustomerName           ,CustomerContactNumber  ,CustomerEmailAddress)
 VALUES
@@ -133,7 +133,7 @@ OrderHeaders
 OrderStatus
 InvoiceStatus
 -------------------------------------*/
-print 'Insert Order Status'
+PRINT 'Insert Order Status'
 INSERT INTO OrderStatus
     (OrderStatusValue)
 VALUES
@@ -142,7 +142,7 @@ VALUES
     ('Complete')
 GO
 
-print 'Insert InvoiceStatus'
+PRINT 'Insert InvoiceStatus'
 INSERT INTO InvoiceStatus
     (InvoiceStatusValue)
 VALUES
@@ -151,7 +151,7 @@ VALUES
     ('Paid')
 GO 
 
-print 'Insert OrderHeaders'
+PRINT 'Insert OrderHeaders'
 INSERT INTO OrderHeaders
     (CustomerID ,AddressID  ,OrderStatusID  ,OrderDate                  ,DeliveryDate)
 VALUES
@@ -162,7 +162,7 @@ VALUES
     (3          ,5          ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate()))  --MIX LOTS OF ITEMS!!!!
 GO
 
-print 'Insert OrderItems'
+PRINT 'Insert OrderItems'
 INSERT INTO OrderItems
     (OrderHeaderID  ,ItemID ,OrderItemStatusID  ,OrderItemUnitPrice ,OrderItemUnitPriceAfterDiscount    ,OrderItemQty   ,OrderItemDescription)
 VALUES
@@ -183,36 +183,36 @@ VALUES
     (5              ,7      ,1                  ,11.99              ,12.99                              ,7              ,'Random Diff 7'),
     (5              ,8      ,1                  ,12.99              ,13.99                              ,8              ,'Random Diff 8')
 GO
-print 'Delivery Order 1'
+PRINT 'Delivery Order 1'
 Exec DeliverExistingItems 1 
 GO
-print 'Delivery Order 2'
+PRINT 'Delivery Order 2'
 Exec DeliverExistingItems 2 
 GO
-print 'Delivery Order 3'
+PRINT 'Delivery Order 3'
 Exec DeliverExistingItems 3 
 GO
-print 'Delivery Order 4'
+PRINT 'Delivery Order 4'
 Exec DeliverExistingItems 4 
 GO
-print 'Gen Invoice Order 1'
+PRINT 'Gen Invoice Order 1'
 Exec GenerateInvoiceForOrder 1
 GO
-print 'Gen Invoice Order 2'
+PRINT 'Gen Invoice Order 2'
 Exec GenerateInvoiceForOrder 2
 GO
-print 'Gen Invoice Order 3'
+PRINT 'Gen Invoice Order 3'
 Exec GenerateInvoiceForOrder 3
 GO
 /*-------------------------------------
-Security:
+User Security:
 Users
 UserRoleTypes
 UserClaimTypes
 UserRoles
 UserClaims
 -------------------------------------*/
-print 'Insert UserClaimTypes'
+PRINT 'Insert UserClaimTypes'
 INSERT INTO UserClaimTypes
     (UserClaimTypeName)
 VALUES
@@ -222,7 +222,7 @@ VALUES
     ('UserCanRemoveItemsFromEstimate')
 GO
 
-print 'Insert UserRolesTypes'
+PRINT 'Insert UserRolesTypes'
 INSERT INTO UserRoleTypes
     (UserRoleName)
 VALUES  
@@ -231,7 +231,7 @@ VALUES
     ('TillOperator')
 GO
 
-print 'Insert Users'
+PRINT 'Insert Users'
 INSERT INTO Users
     (Username, EncryptedPassword, KnownAs, EmailAddress)
 VALUES
@@ -241,7 +241,7 @@ VALUES
     ('Minaccess','testencryptedpassword','tester2','tester2@ahmedmail.info')
 GO
 
-print 'Insert UserClaims'
+PRINT 'Insert UserClaims'
 --TODO FILL OUT ALL CLAIMS FOR ALL USERS
 INSERT INTO UserClaims
     (UserClaimTypeID, UserID, ClaimValue)
@@ -258,7 +258,7 @@ VALUES
     (2,4,'false') -- UserCanEditItems / MinAccess
 GO
 
-print 'Insert UserRoles'
+PRINT 'Insert UserRoles'
 INSERT INTO UserRoles
     (UserRoleTypeID,UserID)
 VALUES
@@ -268,12 +268,30 @@ VALUES
     (3,4) -- TillOperator / Minaccess
 GO
 
-print 'Insert CustomerLogins'
+PRINT 'Insert CustomerLogins'
 INSERT INTO CustomerLogins
     (CustomerID, UserID)
 VALUES
     (2,1), -- FMASolutionsLtd / Faisal
     (3,2)   -- Zulkar Ltd / Zulkar
+GO
+/*-------------------------------------
+App Security:
+AuthorizedApplications
+RefreshTokens
+-------------------------------------*/
+PRINT 'Insert AuthorizedApplications'
+INSERT INTO AuthorizedApplications
+    (AppName, AppSecret)
+VALUES
+    ('MirpurPVC','ThisIsAVeryLongSecretForTestingPurposesOnlyChangedOnLiveServerAlsoEncryptAtSomePoint')
+GO
+
+PRINT 'Insert RefreshTokens'
+INSERT INTO RefreshTokens
+    (AppID, RefreshToken)
+VALUES
+    (1, NewID())
 GO
 /*----------------------------------
 RETRIEVE DATA FOR VIEWING PLEASURE
@@ -305,4 +323,9 @@ SELECT * FROM Users
 SELECT * FROM UserRoles
 SELECT * FROM UserClaims
 SELECT * FROM CustomerLogins
+
+SELECT * FROM AuthorizedApplications
+SELECT * FROM RefreshTokens
+SELECT * FROM Tokens
+SELECT * FROM AccessKeys
 GO
