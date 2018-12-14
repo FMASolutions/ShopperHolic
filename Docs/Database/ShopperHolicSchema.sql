@@ -44,6 +44,8 @@ DROP TABLE AuditLogs
 DROP TABLE AuditLogTypes
 DROP PROCEDURE dbo.DeliverExistingItems
 DROP PROCEDURE dbo.GenerateInvoiceForOrder
+DROP PROCEDURE dbo.AuthenticateUserAndGetExchangeKey
+DROP PROCEDURE dbo.VerifyAccessKey
 
 
 CREATE TABLE ProductGroups
@@ -369,4 +371,62 @@ ELSE
 BEGIN
     SELECT 0
 END
+GO
+
+CREATE PROCEDURE [dbo].AuthenticateUserAndGetExchangeKey
+	@UsernameInput VARCHAR(100), @EncryptedPasswordInput VARCHAR(MAX)
+AS
+	DECLARE @UserID INT;
+	DECLARE @AccessKeyGenerated VARCHAR(MAX);
+	DECLARE @AccessKeyID INT
+	SET @UserID = 0;
+	SET @AccessKeyGenerated = '';
+	SET @AccessKeyID = 0;
+
+	IF EXISTS(
+		SELECT 1
+		FROM Users
+		WHERE Username = @UsernameInput
+		AND EncryptedPassword = @EncryptedPasswordInput
+	)
+	BEGIN
+		SELECT @UserID = UserID
+		FROM Users
+		WHERE Username = @UsernameInput
+		AND EncryptedPassword = @EncryptedPasswordInput
+	
+		INSERT INTO AccessKeys(UserID, AccessKey, AccessKeyIssueDate, AccessKeyExpiryDate)
+		VALUES(@UserID, NewID(), GetDate(), DATEADD(MINUTE,1,GetDate()));
+	
+		SET @AccessKeyID = (SELECT SCOPE_IDENTITY());
+		SET @AccessKeyGenerated = (SELECT AccessKey FROM AccessKeys WHERE AccessKeyID = @AccessKeyID);
+	END
+	ELSE
+	BEGIN
+		SET @AccessKeyGenerated = ''
+	END
+
+    SELECT @AccessKeyGenerated
+GO
+
+CREATE PROCEDURE [dbo].VerifyAccessKey
+	@AccessKeyInput VARCHAR(MAX)
+AS
+	DECLARE @Success INT;
+	SET @Success = 0;
+	IF EXISTS(
+		SELECT 1
+		FROM AccessKeys
+		WHERE AccessKey = @AccessKeyInput
+		AND AccessKeyExpiryDate > GetDate()
+	)
+	BEGIN
+		SET @Success = 1
+	END
+	ELSE
+	BEGIN
+		SET @Success = 0
+	END
+
+	SELECT @Success
 GO

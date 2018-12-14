@@ -6,6 +6,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
     public interface ISecurityService
     {
-        IEnumerable<UserClaimDTO> AttemptUserLogin(AttemptLoginDTO inputDTO);  
+        string AttemptUserAuthenticationAndGetAccessKey(AttemptLoginDTO inputDTO);  
+        bool VerifyAccessKey(string exchangeKey);       
+        IEnumerable<UserClaimDTO> GetUserClaims(string username);
+        bool StoreToken(TokenStorageDTO tokenToStore);
+        UserProfileDTO GetUserProfile(string username);
     } 
 }

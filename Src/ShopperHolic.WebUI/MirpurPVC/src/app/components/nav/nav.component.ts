@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/security/auth.service';
 import { AuthenticatedUserModel } from 'src/app/models/authenticatedUserModel';
 
 @Component({
@@ -8,7 +8,7 @@ import { AuthenticatedUserModel } from 'src/app/models/authenticatedUserModel';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
 
   currentUser: AuthenticatedUserModel = null;
   constructor(private authService: AuthService, private router: Router) {
@@ -17,13 +17,11 @@ export class NavComponent implements OnInit {
 
   pageTitle: string = "Mirpur PVC";
 
-  ngOnInit() {
+  getUserName() : string {
+    let returnString = this.authService.currentUser.isAuthenticated ? this.authService.currentUser.username : "";
+    return returnString;
   }
-  getUserName() {
-    if (this.authService.currentUser && this.authService.currentUser.isAuthenticated) { return this.authService.currentUser.username; }
-    else { return ""; }
-  }
-  logout() {
+  logout() : void {
     this.authService.logoutExistingUser();
     this.router.navigateByUrl('/home');
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthenticatedUserModel } from '../models/authenticatedUserModel';
+import { AuthenticatedUserModel } from '../../models/authenticatedUserModel';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
@@ -12,27 +12,34 @@ export class AuthService {
 
   authURL: string = 'https://localhost:5001/api/Auth/';
   currentUser: AuthenticatedUserModel = new AuthenticatedUserModel();
-
+  private lastUsernameRequested: string = "";
   constructor(private http: HttpClient) {
     let existingToken = localStorage.getItem("bearerToken");
-    if (existingToken) { //PROBABLY SHOULD CHECK THE EXPIRY TIME ON THE TOKEN>>>>>>>>>
-      this.currentUser = this.getUserFromStorage();
+    if (existingToken) { 
+      //PROBABLY SHOULD CHECK THE EXPIRY TIME ON THE TOKEN>>>>>>>>>
+      Object.assign(this.currentUser,this.getUserFromStorage());
     }
   }
 
-  attemptLogin(username, password): Observable<AuthenticatedUserModel> {
+  attemptLogin(username, password): Observable<string> {
     let authRequestObject = {
-      usernameInput: username,
-      passwordInput: password
+      Username: username,
+      UserInputPasswordPlainText: password
     };
-
-    return this.http.post<AuthenticatedUserModel>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(resp => {
-      if (this.currentUser) { Object.assign(this.currentUser, resp); }
-      else { this.currentUser = resp; }
-      console.log("user from API: ");
-      console.log(resp);
-      this.storeUserToStorage(resp);
+    this.lastUsernameRequested = username;
+    return this.http.post<string>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(resp => {
     }));
+  }
+
+  exchangeKeyForToken(key: string): Observable<AuthenticatedUserModel> {
+    return this.http.get<AuthenticatedUserModel>(this.authURL + "TokenExchange?exchangeKey=" + key + "&username=" + this.lastUsernameRequested)
+      .pipe(tap(resp => {
+        //Use Object.assigs so external services / components which 
+        //have registered their current user reference to 
+        //the authService.currentUser by doing "this.currentUser = resp" 
+        Object.assign(this.currentUser, resp);
+        this.storeUserToStorage(resp);
+      }));
   }
 
   resetCurrentUser() {
@@ -48,7 +55,7 @@ export class AuthService {
     localStorage.setItem("userClaims", JSON.stringify(userToStore.userClaims));
   }
 
-  removeUserFromStorage(){
+  removeUserFromStorage() {
     localStorage.removeItem("bearerToken");
     localStorage.removeItem("username");
     localStorage.removeItem("userClaims");
@@ -60,8 +67,6 @@ export class AuthService {
     returnObject.isAuthenticated = true;
     returnObject.username = localStorage.getItem("username");
     returnObject.userClaims = JSON.parse(localStorage.getItem("userClaims"));
-    console.log("User from storage: ");
-    console.log(returnObject);
     return returnObject;
   }
 

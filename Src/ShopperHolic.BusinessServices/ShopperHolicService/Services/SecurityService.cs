@@ -7,16 +7,28 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
     public class SecurityService : BaseService, ISecurityService
     {
         public SecurityService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
-        public IEnumerable<UserClaimDTO> AttemptUserLogin(AttemptLoginDTO inputDTO)
+        public UserProfileDTO GetUserProfile(string username)
         {
-            IEnumerable<UserClaimDTO> returnValue = null;
-            var searchResult = UOW.SecurityRepo.GetUserLoginInfo(inputDTO.Username);
-            //TODO: ENCRYPT USER INPUT STRING TO ENCRYPTED PASSWORD
-            if (searchResult != null)
-                //TODO : COMPARE ENCRYPTED PASSWORD TO ENCRYPTED PASSWORD 
-                if (inputDTO.UserInputPasswordPlainText == searchResult.EncryptedPassword)
-                    returnValue = UOW.SecurityRepo.GetUserClaims(searchResult.Username);
-            return returnValue;
+            return UOW.SecurityRepo.GetUserProfileDTO(username);   
+        }
+        public string AttemptUserAuthenticationAndGetAccessKey(AttemptLoginDTO inputDTO)
+        {
+            string returnAccessKey = UOW.SecurityRepo.AuthenticateUserAndGetExchangeKey(inputDTO);
+            if(!string.IsNullOrEmpty(returnAccessKey))
+                UOW.SaveChanges();
+            return returnAccessKey;
+        }
+        public bool VerifyAccessKey(string exchangeKey)
+        {
+            return UOW.SecurityRepo.VerifyAccessKey(exchangeKey);
+        }
+        public IEnumerable<UserClaimDTO> GetUserClaims(string username)
+        {
+            return UOW.SecurityRepo.GetUserClaims(username);
+        }
+        public bool StoreToken(TokenStorageDTO tokenToStore)
+        {
+            return UOW.SecurityRepo.StoreToken(tokenToStore);
         }
     }
 }

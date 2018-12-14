@@ -1,17 +1,17 @@
 using System.Collections.Generic;
-namespace ShopperHolic.API.ShopperAPI.Models.Security
+namespace ShopperHolic.Infrastructure.ShopperHolicDTO
 {
     //TDO: CHANGE THIS TO A DTO STILL ENSURING THE MAPPING TO THE ANGULAR UI AuthenticatedUser REMAINS
-    public class AuthenticatedUserModel
+    public class AuthenticatedUserDTO
     {
-        public AuthenticatedUserModel()
+        public AuthenticatedUserDTO()
         {
+            UserClaims = new List<UserClaimDTO>();
             IsAuthenticated = false;
-            UserClaims = new List<UserClaim>();
         }
         public string Username { get; set; }
         public string BearerToken { get; set; }
         public bool IsAuthenticated { get; set; }
-        public List<UserClaim> UserClaims { get; set; }
+        public List<UserClaimDTO> UserClaims { get; set; }
     }
 }

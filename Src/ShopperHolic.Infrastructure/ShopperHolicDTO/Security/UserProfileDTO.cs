@@ -1,10 +1,10 @@
 namespace ShopperHolic.Infrastructure.ShopperHolicDTO
 {
-    public class UserClaimDTO
+    public class UserProfileDTO
     {
         public int UserID {get;set;}
         public string Username {get;set;}
-        public string ClaimType {get;set;}
-        public string ClaimValue {get;set;}
+        public string EmailAddress {get;set;}
+        public string EncryptedPassword {get;set;}
     }
 }

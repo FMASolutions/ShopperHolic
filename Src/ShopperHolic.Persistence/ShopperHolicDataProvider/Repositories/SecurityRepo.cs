@@ -11,16 +11,61 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
     {
         public SecurityRepo(IDbTransaction transaction) : base(transaction) { }
 
-        public int CreateUser(UserEntity entityToCreate)
+
+        public UserProfileDTO GetUserProfileDTO(string username)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"
+                SELECT UserID, Username, EmailAddress, EncryptedPassword
+                FROM Users
+                WHERE Username = @Username
+                ";
+                return Connection.QueryFirst<UserProfileDTO>(query, new { Username = username }, transaction: Transaction);
+            }
+            catch (Exception ex)
+            {
+                //TODO: LOG ERROR
+                System.Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public string AuthenticateUserAndGetExchangeKey(AttemptLoginDTO userInput)
+        {
+            try
+            {
+                var spParameters = new DynamicParameters();
+                spParameters.Add("@UsernameInput", userInput.Username);
+                //TODO Encrypt Password before sending to Stored Proc
+                spParameters.Add("@EncryptedPasswordInput", userInput.UserInputPasswordPlainText);
+                return Connection.QueryFirst<string>("AuthenticateUserAndGetExchangeKey", spParameters, Transaction, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                return string.Empty;
+            }
+        }
+        public bool VerifyAccessKey(string accessKey)
+        {
+            try
+            {
+                var spParameters = new DynamicParameters();
+                spParameters.Add("@AccessKeyInput", accessKey);
+                return Connection.QueryFirst<bool>("VerifyAccessKey", spParameters, Transaction, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                return false;
+            }
         }
         public IEnumerable<UserClaimDTO> GetUserClaims(string username)
         {
             try
             {
                 string query = @"
-                SELECT usr.UserID, usr.Username, ct.UserClaimTypeName AS [ClaimType], uclaims.ClaimValue
+                SELECT ct.UserClaimTypeName AS [ClaimType], uclaims.ClaimValue
                 FROM Users usr
                 INNER JOIN UserClaims uclaims on usr.UserID = uclaims.UserID
                 INNER JOIN UserClaimTypes ct on ct.UserClaimTypeID = uclaims.UserClaimTypeID
@@ -35,24 +80,51 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 return null;
             }
         }
-        public UserLoginDTO GetUserLoginInfo(string username)
+        public bool StoreToken(TokenStorageDTO inputDTO)
         {
             try
             {
                 string query = @"
-                SELECT UserID, Username, EmailAddress, EncryptedPassword
-                FROM Users
-                WHERE Username = @Username
+                INSERT INTO Tokens (UserID, Token, TokenIssueDate, TokenExpiryDate)
+                VALUES (@UserID, @Token, @TokenIssueDate, @TokenExpiryDate)
                 ";
-                return Connection.QueryFirst<UserLoginDTO>(query, new { Username = username} ,transaction: Transaction);
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@UserID", inputDTO.UserID);
+                queryParameters.Add("@Token", inputDTO.Token);
+                queryParameters.Add("@TokenIssueDate", inputDTO.TokenIssueDate);
+                queryParameters.Add("TokenExpiryDate", inputDTO.TokenExpiryDate);
+                int returnValue = Connection.Execute(query, queryParameters, transaction: Transaction);
+                if (returnValue > 0) { return true; }
+                else { return false; }
             }
-            catch ( Exception ex)
+            catch (Exception ex)
+            {
+                //TODO: LOG ERROR
+                System.Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+        public string RetrieveValidToken(string username)
+        {
+            try
+            {
+                string query = @"
+                SELECT TOP 1 t.Token
+                FROM Users u
+                INNER JOIN Tokens t ON u.UserID = t.UserID
+                WHERE u.Username = @Username
+                AND t.TokenExpiryDate > GetDate()
+                ORDER BY t.TokenExpiryDate DESC
+                ";
+                return Connection.QueryFirst<string>(query, new { Username = username }, transaction: Transaction);
+            }
+            catch (Exception ex)
             {
                 //TODO: LOG ERROR
                 System.Console.WriteLine(ex.Message);
                 return null;
             }
         }
-
     }
 }

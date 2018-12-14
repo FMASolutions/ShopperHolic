@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using ShopperHolic.API.ShopperAPI.Models.Security;
 using System.Collections.Generic;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
+using ShopperHolic.Infrastructure.ShopperHolicDTO;
+using Newtonsoft.Json;
 
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
@@ -14,18 +16,27 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         {
             _jwtSettings = settings;
             _securityService = securityService;
+            _securityManager = new SecurityManager(_jwtSettings, _securityService);
         }
 
         private JWTSettings _jwtSettings = null;
         private ISecurityService _securityService = null;
+        private SecurityManager _securityManager = null;
 
         [HttpPost]
-        public ActionResult<AuthenticatedUserModel> AttemptAuthentication([FromBody] AttemptAuthModel inputModel)
+        public ActionResult<string> AttemptAuthentication([FromBody] AttemptLoginDTO inputModel)
         {
-            SecurityManager secManager = new SecurityManager(_jwtSettings, _securityService);
-            var result = secManager.PerformAuthentication(inputModel.UsernameInput, inputModel.PasswordInput);
-            if (result == null || result.IsAuthenticated == false) { return Unauthorized(); }
-            else { return result; }
+            var result = _securityManager.AuthUserAndGetExchangeKey(inputModel);
+            if (string.IsNullOrEmpty(result)) { return NotFound(); }
+            else { return JsonConvert.SerializeObject(result); }
+        }
+
+        [HttpGet]
+        public ActionResult<AuthenticatedUserDTO> TokenExchange([FromQuery]string exchangeKey,[FromQuery] string username)
+        {
+            var authenticatedUserDTO = _securityManager.ExchangeKeyForToken(exchangeKey, username);
+            if(authenticatedUserDTO.IsAuthenticated & !string.IsNullOrEmpty(authenticatedUserDTO.BearerToken)) { return authenticatedUserDTO; }
+            return NotFound();
         }
     }
 }

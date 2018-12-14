@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/security/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticatedUserModel } from 'src/app/models/authenticatedUserModel';
 
@@ -10,7 +10,13 @@ import { AuthenticatedUserModel } from 'src/app/models/authenticatedUserModel';
 })
 export class LoginComponent implements OnInit {
   currentUser: AuthenticatedUserModel = null;
+  usernameInput: string = "";
+  passwordInput: string = "";
+  returnMessage: string = "";
+  returnUrl: string = "";
+
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+    this.currentUser = this.authService.currentUser;
   }
 
   ngOnInit() {
@@ -18,20 +24,14 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
   }
 
-  usernameInput: string = "";
-  passwordInput: string = "";
-  returnMessage: string = "";
-  returnUrl: string = "";
-
   attemptLogin() {
     this.authService.attemptLogin(this.usernameInput, this.passwordInput).subscribe(resp => {
-      this.currentUser = resp;
-      if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl); }
-      else { this.router.navigateByUrl("/home"); }
-      location.reload();
-    }, (error) => {
-      this.returnMessage = "Invalid Credentials. Please try again";
-    })
+      this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
+        this.returnUrl ? this.router.navigateByUrl(this.returnUrl) : this.router.navigateByUrl("/home");
+      }
+        , (tokenExchangeError) => { this.returnMessage = "Login Failed. Please retry shortly"; }
+      )
+    }, (loginError) => { this.returnMessage = "Invalid User Credentials"; });
+    this.returnMessage = "Processing Login Request...";
   }
-
 }

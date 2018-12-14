@@ -11,10 +11,9 @@ import { AboutComponent } from './components/about/about.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactComponent } from './components/contact/contact.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import { AuthGuard } from './services/auth.guard';
-import { AuthService } from './services/auth.service';
-import { HttpInterceptorModule } from './services/http-interceptor';
-import { HasClaimDirective } from './services/has-claim.directive';
+import { AuthGuard } from './services/security/auth.guard';
+import { AuthService } from './services/security/auth.service';
+import { HttpInterceptorModule } from './services/security/http-interceptor';
 
 @NgModule({
   declarations: [
@@ -25,8 +24,7 @@ import { HasClaimDirective } from './services/has-claim.directive';
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    AdminPanelComponent,
-    HasClaimDirective
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,

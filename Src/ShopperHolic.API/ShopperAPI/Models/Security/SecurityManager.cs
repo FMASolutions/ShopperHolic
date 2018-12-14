@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
+
 namespace ShopperHolic.API.ShopperAPI.Models.Security
 {
     public class SecurityManager
@@ -18,47 +19,57 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
         private JWTSettings _jwtSettings = null;
         private ISecurityService _securityService = null;
 
-        public AuthenticatedUserModel PerformAuthentication(string username, string password)
+        public string AuthUserAndGetExchangeKey(AttemptLoginDTO userInputDTO)
         {
-            AuthenticatedUserModel returnValue = null;
-            AttemptLoginDTO mappedDTO = new AttemptLoginDTO();
-            mappedDTO.Username = username;
-            mappedDTO.UserInputPasswordPlainText = password;
-            var userClaimDTO = _securityService.AttemptUserLogin(new AttemptLoginDTO { Username = username, UserInputPasswordPlainText = password } );
-            if(userClaimDTO != null)
+            return _securityService.AttemptUserAuthenticationAndGetAccessKey(userInputDTO);
+        }
+        public AuthenticatedUserDTO ExchangeKeyForToken(string exchangeKey, string username)
+        {
+            AuthenticatedUserDTO returnUser = new AuthenticatedUserDTO();
+            UserProfileDTO searchResult = _securityService.GetUserProfile(username);
+            if (searchResult != null)
             {
-                returnValue = new AuthenticatedUserModel();
-                bool firstIteration = true;
-                foreach(var claim in userClaimDTO)
+                if (_securityService.VerifyAccessKey(exchangeKey))
                 {
-                    if(firstIteration)
+                    var claims = _securityService.GetUserClaims(username);
+                    if (claims != null)
                     {
-                        returnValue.IsAuthenticated = true;
-                        returnValue.Username = claim.Username;
+                        string JWToken = BuildJwtToken(username, claims);
+                        if (!string.IsNullOrEmpty(JWToken))
+                        {
+                            returnUser = new AuthenticatedUserDTO();
+                            returnUser.BearerToken = JWToken;
+                            returnUser.IsAuthenticated = true;
+                            returnUser.Username = username;
+                            foreach (var claim in claims) { returnUser.UserClaims.Add(claim); }
+                            _securityService.StoreToken(
+                                new TokenStorageDTO
+                                {
+                                    UserID = searchResult.UserID,
+                                    Token = JWToken,
+                                    TokenIssueDate = DateTime.Now,
+                                    TokenExpiryDate = DateTime.Now.AddMinutes(_jwtSettings.MinutesToExpiration)
+                                }
+                            );
+
+                        }
                     }
-                    returnValue.UserClaims.Add(new UserClaim{ ClaimType = claim.ClaimType, ClaimValue = claim.ClaimValue});
                 }
-                
-                //Finally create the JWT based on the current claims.
-                returnValue.BearerToken = BuildJwtToken(returnValue);
             }
-            return returnValue;
+            return returnUser;
         }
 
-        protected string BuildJwtToken(AuthenticatedUserModel user)
+        protected string BuildJwtToken(string username, IEnumerable<UserClaimDTO> claims)
         {
             SymmetricSecurityKey key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_jwtSettings.Key));
 
             List<Claim> jwtClaims = new List<Claim>();
             //Standard Claims
-            jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Username));
+            jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));
             jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
-            //Default IsAuthenticated 
-            jwtClaims.Add(new Claim("IsAuthenticated", user.IsAuthenticated.ToString().ToLower()));
-
             //Add Custom Claims from DB
-            foreach (var userClaim in user.UserClaims)
+            foreach (var userClaim in claims)
                 jwtClaims.Add(new Claim(userClaim.ClaimType, userClaim.ClaimValue));
 
             //Build JWT Token

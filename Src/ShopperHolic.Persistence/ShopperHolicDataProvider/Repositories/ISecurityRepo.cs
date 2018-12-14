@@ -7,8 +7,11 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
     public interface ISecurityRepo 
     {
-        int CreateUser(UserEntity entityToCreate);
+        UserProfileDTO GetUserProfileDTO(string username);
+        string AuthenticateUserAndGetExchangeKey(AttemptLoginDTO userInput);
+        bool VerifyAccessKey(string accessKey);
         IEnumerable<UserClaimDTO> GetUserClaims(string username);
-        UserLoginDTO GetUserLoginInfo(string username);
+        bool StoreToken(TokenStorageDTO inputDTO);
+        string RetrieveValidToken(string username);
     }
 }
