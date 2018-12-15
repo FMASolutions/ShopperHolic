@@ -1,13 +1,13 @@
 using System;
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Entities
 {
-    public class UserEntity
+    public class User
     {
-        public UserEntity()
+        public User()
         {
 
         }
-        public UserEntity(Int32 userID, string username, string encryptedPassword, string knownAs, string emailAddress)
+        public User(Int32 userID, string username, string encryptedPassword, string knownAs, string emailAddress)
         {
             UserID = userID;
             Username = username;
@@ -16,7 +16,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Entities
             EmailAddress = emailAddress;
         }
         
-        public Int32 UserID {get; set;}
+        public Int32 UserID {get; internal set;}
         public string Username {get;set;}
         public string EncryptedPassword {get;set;}
         public string KnownAs {get;set;}

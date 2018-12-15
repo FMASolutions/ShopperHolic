@@ -42,16 +42,6 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
                             returnUser.IsAuthenticated = true;
                             returnUser.Username = username;
                             foreach (var claim in claims) { returnUser.UserClaims.Add(claim); }
-                            _securityService.StoreToken(
-                                new TokenStorageDTO
-                                {
-                                    UserID = searchResult.UserID,
-                                    Token = JWToken,
-                                    TokenIssueDate = DateTime.Now,
-                                    TokenExpiryDate = DateTime.Now.AddMinutes(_jwtSettings.MinutesToExpiration)
-                                }
-                            );
-
                         }
                     }
                 }

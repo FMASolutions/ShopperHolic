@@ -26,9 +26,5 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         {
             return UOW.SecurityRepo.GetUserClaims(username);
         }
-        public bool StoreToken(TokenStorageDTO tokenToStore)
-        {
-            return UOW.SecurityRepo.StoreToken(tokenToStore);
-        }
     }
 }

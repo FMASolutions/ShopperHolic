@@ -266,15 +266,6 @@ CREATE TABLE AccessKeys
     AccessKeyIssueDate DATETIME NOT NULL,
     AccessKeyExpiryDate DATETIME NOT NULL
 )
-CREATE TABLE Tokens
-(
-    TokenID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT FOREIGN KEY REFERENCES Users(UserID),
-    Token VARCHAR(MAX) NOT NULL,
-    TokenIssueDate DATETIME NOT NULL,
-    TokenExpiryDate DATETIME NOT NULL
-)
-GO
 CREATE TABLE RefreshTokens
 (
     RefreshTokenID INT IDENTITY(1,1) PRIMARY KEY,

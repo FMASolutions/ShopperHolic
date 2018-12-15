@@ -15,6 +15,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
 
             //When adding a new Repository Always remember to add it to the private "Reset" method @ the bottom
             _securityRepo = new SecurityRepo(_transaction);
+            _productGroupRepo = new ProductGroupRepo(_transaction);
             
         }
         ~UnitOfWork()
@@ -26,6 +27,8 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         //private SQLFactory _connectionFactory;
 
         public ISecurityRepo SecurityRepo { get { return _securityRepo ?? (_securityRepo = new SecurityRepo(_transaction)); } }
+        public IProductGroupRepo ProductGroupRepo { get { return _productGroupRepo ?? (_productGroupRepo = new ProductGroupRepo(_transaction)); } }
+
         
         bool _disposing = false;
 
@@ -80,11 +83,12 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             }
         }
 
-
         private void ResetRepos()
         {
             _securityRepo = null;
+            _productGroupRepo = null;
         }
         private ISecurityRepo _securityRepo;
+        private IProductGroupRepo _productGroupRepo;
     }
 }

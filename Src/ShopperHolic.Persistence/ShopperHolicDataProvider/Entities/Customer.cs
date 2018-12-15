@@ -2,13 +2,13 @@ using System;
 
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Entities
 {
-    public class CustomerEntity
+    public class Customer
     {
-        public CustomerEntity()
+        public Customer()
         {
 
         }
-        public CustomerEntity(Int32 customerID, Int32 customerTypeID, Int32 defaultAddressID, string customerCode, string customerName, string customerContactNumber, string customerEmailAddress)
+        public Customer(Int32 customerID, Int32 customerTypeID, Int32 defaultAddressID, string customerCode, string customerName, string customerContactNumber, string customerEmailAddress)
         {
             CustomerID = customerID;
             CustomerTypeID = customerTypeID;
@@ -18,7 +18,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Entities
             CustomerContactNumber = customerContactNumber;
             CustomerEmailAddress = customerEmailAddress;
         }
-        public Int32 CustomerID { get; set; }
+        public Int32 CustomerID { get; internal set; }
         public Int32 CustomerTypeID { get; set; }
         public Int32 DefaultAddressID { get; set; }
         public string CustomerContactNumber { get; set; }

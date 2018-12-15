@@ -80,31 +80,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 return null;
             }
         }
-        public bool StoreToken(TokenStorageDTO inputDTO)
-        {
-            try
-            {
-                string query = @"
-                INSERT INTO Tokens (UserID, Token, TokenIssueDate, TokenExpiryDate)
-                VALUES (@UserID, @Token, @TokenIssueDate, @TokenExpiryDate)
-                ";
 
-                var queryParameters = new DynamicParameters();
-                queryParameters.Add("@UserID", inputDTO.UserID);
-                queryParameters.Add("@Token", inputDTO.Token);
-                queryParameters.Add("@TokenIssueDate", inputDTO.TokenIssueDate);
-                queryParameters.Add("TokenExpiryDate", inputDTO.TokenExpiryDate);
-                int returnValue = Connection.Execute(query, queryParameters, transaction: Transaction);
-                if (returnValue > 0) { return true; }
-                else { return false; }
-            }
-            catch (Exception ex)
-            {
-                //TODO: LOG ERROR
-                System.Console.WriteLine(ex.Message);
-                return false;
-            }
-        }
         public string RetrieveValidToken(string username)
         {
             try

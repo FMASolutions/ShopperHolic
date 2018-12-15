@@ -11,7 +11,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         string AuthenticateUserAndGetExchangeKey(AttemptLoginDTO userInput);
         bool VerifyAccessKey(string accessKey);
         IEnumerable<UserClaimDTO> GetUserClaims(string username);
-        bool StoreToken(TokenStorageDTO inputDTO);
         string RetrieveValidToken(string username);
     }
 }
