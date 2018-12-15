@@ -34,7 +34,6 @@ DROP TABLE ProductGroups
 DROP TABLE RefreshTokens
 DROP TABLE AuthorizedApplications
 DROP TABLE AccessKeys
-DROP TABLE Tokens
 DROP TABLE UserRoles
 DROP TABLE UserClaims
 DROP TABLE UserRoleTypes
@@ -413,6 +412,9 @@ AS
 	)
 	BEGIN
 		SET @Success = 1
+        --TODO TAKE THIS DELETE LOGIC OUT AND PUT IT INTO THE AUTH SERVICE
+        DELETE FROM AccessKeys 
+        WHERE AccessKey = @AccessKeyInput
 	END
 	ELSE
 	BEGIN

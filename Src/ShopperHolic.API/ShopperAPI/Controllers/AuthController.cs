@@ -1,7 +1,5 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopperHolic.API.ShopperAPI.Models.Security;
-using System.Collections.Generic;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
 using Newtonsoft.Json;
@@ -27,7 +25,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         public ActionResult<string> AttemptAuthentication([FromBody] AttemptLoginDTO inputModel)
         {
             var result = _securityManager.AuthUserAndGetExchangeKey(inputModel);
-            if (string.IsNullOrEmpty(result)) { return NotFound(); }
+            if (string.IsNullOrEmpty(result)) { return BadRequest(); }
             else { return JsonConvert.SerializeObject(result); }
         }
 
@@ -36,7 +34,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         {
             var authenticatedUserDTO = _securityManager.ExchangeKeyForToken(exchangeKey, username);
             if(authenticatedUserDTO.IsAuthenticated & !string.IsNullOrEmpty(authenticatedUserDTO.BearerToken)) { return authenticatedUserDTO; }
-            return NotFound();
+            return BadRequest();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Entities
         {
             
         } 
-        public ProductGroup(Int32 productGroupID, string productGroupCode, string productGroupName, string productGroupDescription)
+        public ProductGroup(string productGroupCode, string productGroupName, string productGroupDescription, Int32 productGroupID = 0)
         {
             ProductGroupID = productGroupID;
             ProductGroupCode = productGroupCode;

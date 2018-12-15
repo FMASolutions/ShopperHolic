@@ -50,7 +50,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
                 ResetRepos();
             }
         }
-        public void RollBack(bool createFollowUpTransaction = true)
+        public void RollbackChanges(bool createFollowUpTransaction = true)
         {
             _transaction.Rollback();
             if (createFollowUpTransaction)

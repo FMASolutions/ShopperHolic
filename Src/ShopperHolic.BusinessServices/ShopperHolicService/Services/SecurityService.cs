@@ -7,6 +7,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
     public class SecurityService : BaseService, ISecurityService
     {
         public SecurityService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public SecurityService(string connectionString) : base(connectionString) { }
         public UserProfileDTO GetUserProfile(string username)
         {
             return UOW.SecurityRepo.GetUserProfileDTO(username);   

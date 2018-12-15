@@ -75,8 +75,8 @@ namespace ShopperHolic.API.ShopperAPI
             
             //Add Service Dependency Injection
             string connectionString = Configuration["ShopperHolicDBConnection"];
-            IUnitOfWork uow = new UnitOfWork(connectionString);
-            services.AddTransient<ISecurityService>(s => new SecurityService(uow));
+            services.AddTransient<ISecurityService>(s => new SecurityService(connectionString));
+            services.AddTransient<IStockService>(s => new StockService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
