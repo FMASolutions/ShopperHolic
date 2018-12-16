@@ -42,7 +42,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             if (searchResult != null && searchResult.ProductGroupID > 0)
                 return searchResult;
             else
-                return BadRequest();
+                return NotFound();
         }
 
         [HttpGet]
