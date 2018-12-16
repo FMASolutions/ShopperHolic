@@ -6,6 +6,7 @@ using ShopperHolic.Infrastructure.ShopperHolicDTO;
 using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
+    //TODO ADD WITH(NOLOCK) TO ALL READS!!!!!!
     public class ProductGroupRepo : BaseRepo, IProductGroupRepo
     {
         //TODO Evaluate if I shoudl even have entites since im using DTO's????????

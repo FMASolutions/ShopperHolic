@@ -7,5 +7,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         ProductGroupDTO Create(ProductGroupCreateDTO modelToCreate);
         ProductGroupDTO GetByID(int productGroupID);
         IEnumerable<ProductGroupPreviewDTO> GetAllPreview();
+        ProductGroupDTO Update(ProductGroupDTO newModel);
+        bool Delete(int productGroupID);
     }
 }

@@ -38,5 +38,14 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
             return UOW.ProductGroupRepo.GetAllPreview();
         }
 
+        public ProductGroupDTO Update(ProductGroupDTO newModel)
+        {
+            return UOW.ProductGroupRepo.Update(newModel);
+        }
+        public bool Delete(int productGroupID)
+        {
+            return UOW.ProductGroupRepo.Delete(productGroupID);
+        }
+
     }
 }

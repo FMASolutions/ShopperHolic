@@ -9,5 +9,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         int CreateProductGroup(ProductGroup entityToCreate);
         ProductGroupDTO GetProductGroupByID(int productGroupID);
         IEnumerable<ProductGroupPreviewDTO> GetAllPreview();       
+        ProductGroupDTO Update(ProductGroupDTO updatedProd);
+        bool Delete(int id);
     }
 }

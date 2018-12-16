@@ -26,5 +26,15 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _prodGroupService.GetAllPreview();
         }
+
+        public ProductGroupDTO Update(ProductGroupDTO newModel)
+        {
+            return _prodGroupService.Update(newModel);
+        }
+
+        public bool Delete(int productGroupID)
+        {
+            return _prodGroupService.Delete(productGroupID);
+        }
     }
 }

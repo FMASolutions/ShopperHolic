@@ -60,6 +60,17 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
                 return null;
         }
 
+        [HttpPut]
+        public ActionResult<ProductGroupDTO> Update([FromBody] ProductGroupDTO newModel)
+        {
+            return _prodGroupManager.Update(newModel);
+        }
+
+        [HttpDelete]
+        public ActionResult<bool> Delete([FromQuery] int id)
+        {
+            return _prodGroupManager.Delete(id);
+        }
         private ProductGroupManager _prodGroupManager;
     }
 }
