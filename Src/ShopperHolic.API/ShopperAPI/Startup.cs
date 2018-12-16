@@ -75,6 +75,7 @@ namespace ShopperHolic.API.ShopperAPI
             string connectionString = Configuration["ShopperHolicDBConnection"];
             services.AddTransient<ISecurityService>(s => new SecurityService(connectionString));
             services.AddTransient<IStockService>(s => new StockService(connectionString));
+            services.AddTransient<IProductGroupService>(s => new ProductGroupService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,6 +4,8 @@ using ShopperHolic.Infrastructure.ShopperHolicDTO;
 
 namespace ShopperHolic.API.ShopperAPI.Models.Stock
 {
+    //TODO EVALUATE IF WE WANT TO KEEP THIS CONSIDERING WE HAVE SPLIT OUT
+    //INTO THE PrdouctGroupService
     public class StockManager
     {
         public StockManager(IStockService stockService)
@@ -12,19 +14,5 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         }
 
         private IStockService _stockService;
-
-        public ProductGroupDTO CreateProductGroup(ProductGroupCreateDTO prodGroupToCreate)
-        {
-            return _stockService.CreateProductGroup(prodGroupToCreate);
-        }
-        public ProductGroupDTO GetyProductGroupByID(int id)
-        {
-            return _stockService.GetProductGroupByID(id);
-        }
-
-        public IEnumerable<ProductGroupPreviewDTO> GetAllProductGroups()
-        {
-            return _stockService.GetAllProductGroups();
-        }
     }
 }

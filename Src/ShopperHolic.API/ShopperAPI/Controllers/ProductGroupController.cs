@@ -15,9 +15,9 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
     [ApiController]
     public class ProductGroupController : ControllerBase
     {
-        public ProductGroupController(IStockService stockService)
+        public ProductGroupController(IProductGroupService prodGroupService)
         {
-            _stockManager = new StockManager(stockService);
+            _prodGroupManager = new ProductGroupManager(prodGroupService);
         }
 
         //TODO IMPLEMENT POLICY
@@ -26,7 +26,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         {
             try
             {
-                var result = _stockManager.CreateProductGroup(userInput);
+                var result = _prodGroupManager.Create(userInput);
                 return result;
             }
             catch (KeyAlreadyExists ex)
@@ -38,7 +38,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<ProductGroupDTO> GetByID([FromQuery] int id)
         {
-            var searchResult = _stockManager.GetyProductGroupByID(id);
+            var searchResult = _prodGroupManager.GetyByID(id);
             if (searchResult != null && searchResult.ProductGroupID > 0)
                 return searchResult;
             else
@@ -48,14 +48,18 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<List<ProductGroupPreviewDTO>> GetAll()
         {
-            var searchResult = _stockManager.GetAllProductGroups();
+            var searchResult = _prodGroupManager.GetAllPreview();
             List<ProductGroupPreviewDTO> returnList = new List<ProductGroupPreviewDTO>();
             if(searchResult != null)
                 foreach(var result in searchResult)
                     returnList.Add(result);
-            return returnList;
+            
+            if(returnList.Count > 0)
+                return returnList;
+            else
+                return null;
         }
 
-        private StockManager _stockManager;
+        private ProductGroupManager _prodGroupManager;
     }
 }
