@@ -35,7 +35,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 
         public IEnumerable<ProductGroupPreviewDTO> GetAllProductGroups()
         {
-            return UOW.ProductGroupRepo.GetAllProductGroupsPreview();
+            return UOW.ProductGroupRepo.GetAllPreview();
         }
 
     }
