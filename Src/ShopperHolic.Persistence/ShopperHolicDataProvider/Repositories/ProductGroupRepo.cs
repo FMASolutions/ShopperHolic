@@ -8,17 +8,18 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
     public class ProductGroupRepo : BaseRepo, IProductGroupRepo
     {
+        //TODO Evaluate if I shoudl even have entites since im using DTO's????????
         public ProductGroupRepo(IDbTransaction transaction) : base(transaction) { }
         public int CreateProductGroup(ProductGroup entityToCreate)
         {
-            var queryParameters = new DynamicParameters();
+            
             string query = @"
                 INSERT INTO ProductGroups(ProductGroupCode, ProductGroupName, ProductGroupDescription)
                 VALUES (@ProdGroupCode, @ProdGroupName, @ProdGroupDescription)
                 
                 SELECT SCOPE_IDENTITY()
                 ";
-
+            var queryParameters = new DynamicParameters();
             queryParameters.Add("@ProdGroupCode", entityToCreate.ProductGroupCode);
             queryParameters.Add("@ProdGroupName", entityToCreate.ProductGroupName);
             queryParameters.Add("@ProdGroupDescription", entityToCreate.ProductGroupDescription);
@@ -46,7 +47,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
-        public IEnumerable<ProductGroupPreviewDTO> GetAllProductGroupsPreview()
+        public IEnumerable<ProductGroupPreviewDTO> GetAllPreview()
         {
             try
             {
@@ -62,6 +63,54 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 //TODO LOG ERROR
                 Console.WriteLine(ex.Message);
                 return null;
+            }
+        }
+
+        public ProductGroupDTO Update(ProductGroupDTO updatedProd)
+        {
+            try
+            {
+                ProductGroupDTO returnResult = null;
+                string query = @"
+                UPDATE ProductGroups
+                SET ProductGroupCode = @ProductGroupCode
+                ,ProductGroupName = @ProductGroupName
+                ,ProductGroupDescription = @ProductGroupDescription
+                WHERE ProductGroupID = @ProductGroupID
+                ";
+                var queryParams = new DynamicParameters();
+                queryParams.Add("@ProductGroupID",updatedProd.ProductGroupID);
+                queryParams.Add("@ProductGroupCode",updatedProd.ProductGroupCode);
+                queryParams.Add("@ProductGroupName",updatedProd.ProductGroupName);
+                queryParams.Add("@ProductGroupDescription",updatedProd.ProductGroupDescription);
+                //TODO Change Execute to ASYNC
+                int rowsEffected = Connection.Execute(query,queryParams,this.Transaction);
+                if(rowsEffected > 0)
+                    returnResult = updatedProd;
+                return returnResult;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                string query = @"
+                DELETE FROM ProductGroups
+                WHERE ProductGroupID = @ ProductGroupID
+                ";
+                int rowsEffected = Connection.Execute(query, new { ProductGroupID = id}, Transaction);
+                return rowsEffected ==1;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
         }
     }
