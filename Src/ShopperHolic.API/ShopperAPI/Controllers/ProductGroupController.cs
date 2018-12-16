@@ -39,7 +39,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         public ActionResult<ProductGroupDTO> GetByID([FromQuery] int id)
         {
             var searchResult = _stockManager.GetyProductGroupByID(id);
-            if(searchResult != null && searchResult.ProductGroupID > 0)
+            if (searchResult != null && searchResult.ProductGroupID > 0)
                 return searchResult;
             else
                 return BadRequest();

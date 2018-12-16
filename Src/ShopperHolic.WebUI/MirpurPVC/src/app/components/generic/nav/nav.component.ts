@@ -17,11 +17,11 @@ export class NavComponent {
 
   pageTitle: string = "Mirpur PVC";
 
-  getUserName() : string {
+  getUserName(): string {
     let returnString = this.authService.currentUser.isAuthenticated ? this.authService.currentUser.username : "";
     return returnString;
   }
-  logout() : void {
+  logout(): void {
     this.authService.logoutExistingUser();
     this.router.navigateByUrl('/home');
   }

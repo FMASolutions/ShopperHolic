@@ -12,14 +12,14 @@ export class ProductGroupSearchComponent implements OnInit {
   searchID: number = 0;
   searchCode: string = "";
   statusMessage: string = "";
-  
+
   constructor(private prodService: ProductGroupService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  processSearch(){
-    this.prodService.getByID(this.searchID).subscribe(result =>{
+  processSearch() {
+    this.prodService.getByID(this.searchID).subscribe(result => {
       this.router.navigateByUrl('ProductGroupDetail' + this.prodService.generateNavBarParameters(result));
     });
 

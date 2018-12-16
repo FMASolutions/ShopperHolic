@@ -8,9 +8,9 @@ describe('ProductGroupGridComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductGroupGridComponent ]
+      declarations: [ProductGroupGridComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

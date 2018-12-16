@@ -30,10 +30,10 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<AuthenticatedUserDTO> TokenExchange([FromQuery]string exchangeKey,[FromQuery] string username)
+        public ActionResult<AuthenticatedUserDTO> TokenExchange([FromQuery]string exchangeKey, [FromQuery] string username)
         {
             var authenticatedUserDTO = _securityManager.ExchangeKeyForToken(exchangeKey, username);
-            if(authenticatedUserDTO.IsAuthenticated & !string.IsNullOrEmpty(authenticatedUserDTO.BearerToken)) { return authenticatedUserDTO; }
+            if (authenticatedUserDTO.IsAuthenticated & !string.IsNullOrEmpty(authenticatedUserDTO.BearerToken)) { return authenticatedUserDTO; }
             return BadRequest();
         }
     }

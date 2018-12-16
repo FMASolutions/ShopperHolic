@@ -7,7 +7,8 @@
     </li>
     <li class="nav-item">
         <ng-container *ngFor="let currentClaim of currentUser.userClaims">
-            <a class="nav-link" routerLink="/adminPanel" *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'" >Admin Panel</a>
+            <a class="nav-link" routerLink="/adminPanel" *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">Admin
+                Panel</a>
         </ng-container>
     </li>
     <li class="nav-item" *ngIf="currentUser.isAuthenticated">

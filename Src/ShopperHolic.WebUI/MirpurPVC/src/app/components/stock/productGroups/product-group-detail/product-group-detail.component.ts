@@ -9,7 +9,7 @@ import { ProductGroupService } from 'src/app/services/stock/product-group.servic
   styleUrls: ['./product-group-detail.component.css']
 })
 export class ProductGroupDetailComponent implements OnInit {
-  
+
   currentProdGroup: ProductGroup;
   statusMessage: string = "";
 

@@ -8,9 +8,9 @@ describe('ProductGroupSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductGroupSearchComponent ]
+      declarations: [ProductGroupSearchComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
