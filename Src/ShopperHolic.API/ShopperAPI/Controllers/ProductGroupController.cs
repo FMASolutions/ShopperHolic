@@ -19,6 +19,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             _stockManager = new StockManager(stockService);
         }
 
+        //TODO IMPLEMENT POLICY
         [Authorize]
         [HttpPost]
         public ActionResult<ProductGroupDTO> Create([FromBody] CreateProductGroupDTO userInput)
