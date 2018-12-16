@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthenticatedUserModel } from '../../models/authenticatedUserModel';
+import { AuthenticatedUserModel } from '../../models/security/authenticatedUserModel';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
     let existingToken = localStorage.getItem("bearerToken");
     if (existingToken) { 
-      //PROBABLY SHOULD CHECK THE EXPIRY TIME ON THE TOKEN>>>>>>>>>
+      //TODO Check Token Expiry and use Refresh Token if required to get a new token
       Object.assign(this.currentUser,this.getUserFromStorage());
     }
   }

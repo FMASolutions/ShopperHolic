@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/security/auth.service';
-import { AuthenticatedUserModel } from 'src/app/models/authenticatedUserModel';
+import { AuthService } from '../../../services/security/auth.service';
+import { AuthenticatedUserModel } from 'src/app/models/security/authenticatedUserModel';
 
 @Component({
   selector: 'app-nav',

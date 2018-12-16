@@ -10,18 +10,20 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         public SecurityService(string connectionString) : base(connectionString) { }
         public UserProfileDTO GetUserProfile(string username)
         {
-            return UOW.SecurityRepo.GetUserProfileDTO(username);   
+            return UOW.SecurityRepo.GetUserProfileDTO(username);
         }
         public string AttemptUserAuthenticationAndGetAccessKey(AttemptLoginDTO inputDTO)
         {
             string returnAccessKey = UOW.SecurityRepo.AuthenticateUserAndGetExchangeKey(inputDTO);
-            if(!string.IsNullOrEmpty(returnAccessKey))
-                UOW.SaveChanges();
+            if (!string.IsNullOrEmpty(returnAccessKey)) { UOW.SaveChanges(); }
+
             return returnAccessKey;
         }
         public bool VerifyAccessKey(string exchangeKey)
         {
-            return UOW.SecurityRepo.VerifyAccessKey(exchangeKey);
+            bool success = UOW.SecurityRepo.VerifyAccessKey(exchangeKey);
+            if (success) { UOW.SaveChanges(); } //Save required due to deleting the access key on verification for security purposes.
+            return success;
         }
         public IEnumerable<UserClaimDTO> GetUserClaims(string username)
         {

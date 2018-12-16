@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/security/auth.service';
+import { AuthService } from '../../../services/security/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticatedUserModel } from 'src/app/models/authenticatedUserModel';
+import { AuthenticatedUserModel } from 'src/app/models/security/authenticatedUserModel';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   currentUser: AuthenticatedUserModel = null;
   usernameInput: string = "";
   passwordInput: string = "";
-  returnMessage: string = "";
+  statusMessage: string = "";
   returnUrl: string = "";
 
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
@@ -29,9 +29,9 @@ export class LoginComponent implements OnInit {
       this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
         this.returnUrl ? this.router.navigateByUrl(this.returnUrl) : this.router.navigateByUrl("/home");
       }
-        , (tokenExchangeError) => { this.returnMessage = "Login Failed. Please retry shortly"; }
+        , (tokenExchangeError) => { this.statusMessage = "Login Failed. Please retry shortly"; }
       )
-    }, (loginError) => { this.returnMessage = "Invalid User Credentials"; });
-    this.returnMessage = "Processing Login Request...";
+    }, (loginError) => { this.statusMessage = "Invalid User Credentials"; });
+    this.statusMessage = "Processing Login Request...";
   }
 }

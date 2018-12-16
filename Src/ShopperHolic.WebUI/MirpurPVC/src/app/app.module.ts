@@ -3,17 +3,24 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { NavComponent } from './components/nav/nav.component';
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
+import { HeaderComponent } from './components/generic/header/header.component';
+import { NavComponent } from './components/generic/nav/nav.component';
+import { LoginComponent } from './components/generic/login/login.component';
+import { HomeComponent } from './components/generic/home/home.component';
+import { AboutComponent } from './components/generic/about/about.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ContactComponent } from './components/contact/contact.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { ContactComponent } from './components/generic/contact/contact.component';
+import { AdminPanelComponent } from './components/generic/admin-panel/admin-panel.component';
 import { AuthGuard } from './services/security/auth.guard';
 import { AuthService } from './services/security/auth.service';
 import { HttpInterceptorModule } from './services/security/http-interceptor';
+import { ProductGroupService} from './services/stock/product-group.service';
+import { ProductGroupComponent } from './components/stock/productGroups/product-group/product-group.component';
+import { ProductGroupSearchComponent } from './components/stock/productGroups/product-group-search/product-group-search.component';
+import { ProductGroupCreateComponent } from './components/stock/productGroups/product-group-create/product-group-create.component';
+import { ProductGroupDetailComponent } from './components/stock/productGroups/product-group-detail/product-group-detail.component';
+import { ProductGroupGridComponent } from './components/stock/productGroups/product-group-grid/product-group-grid.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +31,12 @@ import { HttpInterceptorModule } from './services/security/http-interceptor';
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    ProductGroupComponent,
+    ProductGroupSearchComponent,
+    ProductGroupCreateComponent,
+    ProductGroupDetailComponent,
+    ProductGroupGridComponent    
   ],
   imports: [
     BrowserModule,
@@ -33,7 +45,7 @@ import { HttpInterceptorModule } from './services/security/http-interceptor';
     HttpClientModule,
     HttpInterceptorModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, ProductGroupService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

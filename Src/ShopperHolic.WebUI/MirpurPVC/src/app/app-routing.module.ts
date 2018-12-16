@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { AboutComponent } from './components/about/about.component';
-import { ContactComponent } from './components/contact/contact.component';
-import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { HomeComponent } from './components/generic/home/home.component';
+import { LoginComponent } from './components/generic/login/login.component';
+import { AboutComponent } from './components/generic/about/about.component';
+import { ContactComponent } from './components/generic/contact/contact.component';
+import { AdminPanelComponent } from './components/generic/admin-panel/admin-panel.component';
 import { AuthGuard } from './services/security/auth.guard';
-
+import { ProductGroupComponent } from './components/stock/productGroups/product-group/product-group.component';
+import { ProductGroupCreateComponent } from './components/stock/productGroups/product-group-create/product-group-create.component';
+import { ProductGroupSearchComponent } from './components/stock/productGroups/product-group-search/product-group-search.component';
+import { ProductGroupDetailComponent } from './components/stock/productGroups/product-group-detail/product-group-detail.component';
+import { ProductGroupGridComponent } from './components/stock/productGroups/product-group-grid/product-group-grid.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -29,6 +33,28 @@ const routes: Routes = [
     component: AdminPanelComponent,
     canActivate: [AuthGuard],
     data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'ProductGroups',
+    component: ProductGroupComponent
+  },
+  {
+    path: 'ProductGroupSearch',
+    component: ProductGroupSearchComponent
+  },
+  {
+    path: 'ProductGroupCreate',
+    component: ProductGroupCreateComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'UserCanCreateProductGroup'}
+  },
+  {
+    path: 'ProductGroupDetail',
+    component: ProductGroupDetailComponent
+  },
+  {
+    path: 'ProductGroupGrid',
+    component: ProductGroupGridComponent
   },
   {
     path: '',
