@@ -220,7 +220,8 @@ VALUES
     ('UserCanEditItems'),
     ('UserCanAddItemsToEstimate'),
     ('UserCanRemoveItemsFromEstimate'),
-    ('UserCanCreateProductGroup')
+    ('UserCanCreateProductGroup'),
+    ('UserCanEditProductGroup')
 GO
 
 PRINT 'Insert UserRolesTypes'
@@ -251,7 +252,8 @@ VALUES
     (2,1,'true'), -- UserCanEditItems / Faisal
     (3,1,'true'), -- UserCanAddItemsToEstimate / Faisal
     (4,1,'true'), -- UserCanRemoveItemsFromEstimate / Faisal
-    (5,1,'true'), -- 
+    (5,1,'true'), -- UserCanCreateProductGroup / Faisal
+    (6,1,'true'), -- UserCanEditProductGroup / Faisal
     (1,2,'true'), -- IsAdminUser / Zulkar
     (2,2,'true'), -- UserCanEditItems / Zulkar
     (1,3,'false'), -- IsAdminUser / TestCustomer

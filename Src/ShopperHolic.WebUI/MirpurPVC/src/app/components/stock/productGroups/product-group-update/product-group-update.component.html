@@ -3,16 +3,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="text-left">
-                    <h3>Product Group Details:</h3>
-                </div>
+                    <h3>Update Product Group</h3>            
+                </div>        
             </div>
         </div>
         {{statusMessage}}
         <div class="row">
             <div class="col-sm-12">
-                <div class="text-left">
-                    ID: <input [(ngModel)]='currentProdGroup.productGroupID' type="text" class="form-control mb-2" name="ProductGroupID"
-                        readonly>
+                <div class="text-left">                    
+                    ID: <input [(ngModel)]='currentProdGroup.productGroupID' type="text" placeholder="Product Group ID"
+                    class="form-control mb-2" name="productGroupID" readonly>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                 <div class="text-left">
                     Code: <input [(ngModel)]='currentProdGroup.productGroupCode' type="text" placeholder="Product Group Code"
-                        class="form-control mb-2" name="productGroupCode" readonly>
+                    class="form-control mb-2" name="productGroupCode"> 
                 </div>
             </div>
         </div>
@@ -28,21 +28,22 @@
             <div class="col-sm-12">
                 <div class="text-left">
                     Name: <input [(ngModel)]='currentProdGroup.productGroupName' type="text" placeholder="Product Group Name"
-                        class="form-control mb-2" name="productGroupName" readonly>
+                    class="form-control mb-2" name="productGroupName">
                 </div>
-            </div>
+            </div>  
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="text-left">
                     Description: <input [(ngModel)]='currentProdGroup.productGroupDescription' type="text" placeholder="Product Group Description"
-                        class="form-control mb-2" name="productGroupDescription" readonly>
+                    class="form-control mb-2" name="productGroupDescription">
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-4"><button (click)="requestUpdatePage()" class="btn btn-outline-dark btn-block mb-3">Update</button></div>
-            <div class="col-sm-4"><a routerLink="/ProductGroups" class="btn btn-outline-dark btn-block mb-3">Back</a></div>
-        </div>
+         <div class="row">
+            <div class="col-sm-4"><button (click)="saveChanges()" class="btn btn-outline-dark btn-block mb-3">Save</button></div>            
+            <div class="col-sm-4"><a routerLink="/ProductGroups" class="btn btn-outline-dark btn-block mb-3">Back</a></div>    
+        </div>        
     </form>
 </div>
+

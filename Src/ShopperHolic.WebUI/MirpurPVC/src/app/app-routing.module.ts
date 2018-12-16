@@ -11,6 +11,7 @@ import { ProductGroupCreateComponent } from './components/stock/productGroups/pr
 import { ProductGroupSearchComponent } from './components/stock/productGroups/product-group-search/product-group-search.component';
 import { ProductGroupDetailComponent } from './components/stock/productGroups/product-group-detail/product-group-detail.component';
 import { ProductGroupGridComponent } from './components/stock/productGroups/product-group-grid/product-group-grid.component';
+import { ProductGroupUpdateComponent } from './components/stock/productGroups/product-group-update/product-group-update.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -47,6 +48,12 @@ const routes: Routes = [
     component: ProductGroupCreateComponent,
     canActivate: [AuthGuard],
     data: { claimType: 'UserCanCreateProductGroup'}
+  },
+  {
+    path: 'ProductGroupUpdate',
+    component: ProductGroupUpdateComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'UserCanEditProductGroup'}
   },
   {
     path: 'ProductGroupDetail',

@@ -20,6 +20,7 @@ import { ProductGroupSearchComponent } from './components/stock/productGroups/pr
 import { ProductGroupCreateComponent } from './components/stock/productGroups/product-group-create/product-group-create.component';
 import { ProductGroupDetailComponent } from './components/stock/productGroups/product-group-detail/product-group-detail.component';
 import { ProductGroupGridComponent } from './components/stock/productGroups/product-group-grid/product-group-grid.component';
+import { ProductGroupUpdateComponent } from './components/stock/productGroups/product-group-update/product-group-update.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ProductGroupGridComponent } from './components/stock/productGroups/prod
     ProductGroupSearchComponent,
     ProductGroupCreateComponent,
     ProductGroupDetailComponent,
-    ProductGroupGridComponent    
+    ProductGroupGridComponent,
+    ProductGroupUpdateComponent    
   ],
   imports: [
     BrowserModule,

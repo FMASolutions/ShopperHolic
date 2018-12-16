@@ -1,14 +1,16 @@
+//TODO FIGURE OUT HOW TO COMBINE THE CREATE AND UPDATE HTML AS IT IS ESSENTIALLY THE SAME APART FROM ID
 import { Component, OnInit } from '@angular/core';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 
 @Component({
-  selector: 'app-product-group-detail',
-  templateUrl: './product-group-detail.component.html',
-  styleUrls: ['./product-group-detail.component.css']
+  selector: 'app-product-group-update',
+  templateUrl: './product-group-update.component.html',
+  styleUrls: ['./product-group-update.component.css']
 })
-export class ProductGroupDetailComponent implements OnInit {
+export class ProductGroupUpdateComponent implements OnInit {
+
   currentProdGroup: ProductGroup;
   statusMessage: "";
 
@@ -20,10 +22,8 @@ export class ProductGroupDetailComponent implements OnInit {
     this.prodService.populateFromNavBarParameters(this.route.snapshot, this.currentProdGroup);
   }
 
-  requestUpdatePage() {
-    let navUrl = "/ProductGroupUpdate" + this.prodService.generateNavBarParameters(this.currentProdGroup);
-    this.router.navigateByUrl(navUrl);
+  saveChanges() {
+    //TODO IMPLEMENT UPDATE FEATURE>........
   }
-
 
 }
