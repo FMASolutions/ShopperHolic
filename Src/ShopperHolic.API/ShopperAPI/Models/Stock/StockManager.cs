@@ -11,7 +11,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         private IStockService _stockService;
 
-        public ProductGroupDTO CreateProductGroup(CreateProductGroupDTO prodGroupToCreate)
+        public ProductGroupDTO CreateProductGroup(ProductGroupCreateDTO prodGroupToCreate)
         {
             return _stockService.CreateProductGroup(prodGroupToCreate);
         }

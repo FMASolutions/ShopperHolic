@@ -22,7 +22,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
 
         //TODO IMPLEMENT POLICY
         [HttpPost]
-        public ActionResult<ProductGroupDTO> Create([FromBody] CreateProductGroupDTO userInput)
+        public ActionResult<ProductGroupDTO> Create([FromBody] ProductGroupCreateDTO userInput)
         {
             try
             {
