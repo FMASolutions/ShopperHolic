@@ -15,5 +15,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _stockService.CreateProductGroup(prodGroupToCreate);
         }
+        public ProductGroupDTO GetyProductGroupByID(int id)
+        {
+            return _stockService.GetProductGroupByID(id);
+        }
     }
 }

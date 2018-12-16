@@ -12,7 +12,7 @@ import { ProductGroupService } from 'src/app/services/stock/product-group.servic
 export class ProductGroupUpdateComponent implements OnInit {
 
   currentProdGroup: ProductGroup;
-  statusMessage: "";
+  statusMessage: string = "";
 
   constructor(private route: ActivatedRoute, private router: Router, private prodService: ProductGroupService) {
     this.currentProdGroup = new ProductGroup();

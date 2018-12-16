@@ -23,6 +23,10 @@ export class ProductGroupService {
     return this.http.post<ProductGroup>(this.baseURL + 'Create', newProductGroup).pipe(tap(this.prodCreatedResp,this.apiErrorHandler));
   }
 
+  public getByID(id: number) : Observable<ProductGroup>{
+    return this.http.get<ProductGroup>(this.baseURL + 'GetByID/?id=' + id.toString());
+  }
+
   public generateNavBarParameters(prod: ProductGroup) : string{
     let returnString: string = "?id=" + prod.productGroupID.toString();
     returnString += "&code=" + prod.productGroupCode;

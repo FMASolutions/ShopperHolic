@@ -10,6 +10,7 @@ using ShopperHolic.Infrastructure.ShopperExceptions;
 
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class ProductGroupController : ControllerBase
@@ -20,19 +21,28 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         //TODO IMPLEMENT POLICY
-        [Authorize]
         [HttpPost]
         public ActionResult<ProductGroupDTO> Create([FromBody] CreateProductGroupDTO userInput)
         {
             try
             {
-            var result = _stockManager.CreateProductGroup(userInput);
-            return result;
+                var result = _stockManager.CreateProductGroup(userInput);
+                return result;
             }
-            catch(KeyAlreadyExists ex)
+            catch (KeyAlreadyExists ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet]
+        public ActionResult<ProductGroupDTO> GetByID([FromQuery] int id)
+        {
+            var searchResult = _stockManager.GetyProductGroupByID(id);
+            if(searchResult != null && searchResult.ProductGroupID > 0)
+                return searchResult;
+            else
+                return BadRequest();
         }
 
         private StockManager _stockManager;

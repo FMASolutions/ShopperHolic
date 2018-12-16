@@ -29,7 +29,6 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         }
         public ProductGroupDTO GetProductGroupByID(int productGroupID)
         {
-            //TODO Validate?????
             return UOW.ProductGroupRepo.GetProductGroupByID(productGroupID);
         }
 
