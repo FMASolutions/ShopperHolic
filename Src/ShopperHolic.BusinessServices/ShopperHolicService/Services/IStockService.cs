@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
 namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
@@ -5,5 +6,6 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
     {
         ProductGroupDTO CreateProductGroup(ProductGroupCreateDTO modelToCreate);
         ProductGroupDTO GetProductGroupByID(int productGroupID);
+        IEnumerable<ProductGroupPreviewDTO> GetAllProductGroups();
     }
 }

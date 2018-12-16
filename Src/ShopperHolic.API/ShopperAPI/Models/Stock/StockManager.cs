@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
+
 namespace ShopperHolic.API.ShopperAPI.Models.Stock
 {
     public class StockManager
@@ -18,6 +20,11 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         public ProductGroupDTO GetyProductGroupByID(int id)
         {
             return _stockService.GetProductGroupByID(id);
+        }
+
+        public IEnumerable<ProductGroupPreviewDTO> GetAllProductGroups()
+        {
+            return _stockService.GetAllProductGroups();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
 using ShopperHolic.Infrastructure.ShopperExceptions;
@@ -30,6 +31,11 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         public ProductGroupDTO GetProductGroupByID(int productGroupID)
         {
             return UOW.ProductGroupRepo.GetProductGroupByID(productGroupID);
+        }
+
+        public IEnumerable<ProductGroupPreviewDTO> GetAllProductGroups()
+        {
+            return UOW.ProductGroupRepo.GetAllProductGroupsPreview();
         }
 
     }

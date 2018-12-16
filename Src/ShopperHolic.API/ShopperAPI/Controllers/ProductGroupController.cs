@@ -45,6 +45,17 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
                 return BadRequest();
         }
 
+        [HttpGet]
+        public ActionResult<List<ProductGroupPreviewDTO>> GetAll()
+        {
+            var searchResult = _stockManager.GetAllProductGroups();
+            List<ProductGroupPreviewDTO> returnList = new List<ProductGroupPreviewDTO>();
+            if(searchResult != null)
+                foreach(var result in searchResult)
+                    returnList.Add(result);
+            return returnList;
+        }
+
         private StockManager _stockManager;
     }
 }
