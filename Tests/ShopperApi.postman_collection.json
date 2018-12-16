@@ -157,58 +157,7 @@
 					"response": []
 				},
 				{
-					"name": "2 - GetByID",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{Token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "https://localhost:5001/api/ProductGroup/GetByID?id=1",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "5001",
-							"path": [
-								"api",
-								"ProductGroup",
-								"GetByID"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "3 - CreateNew",
+					"name": "2 - CreateNew",
 					"event": [
 						{
 							"listen": "test",
@@ -263,7 +212,58 @@
 					"response": []
 				},
 				{
-					"name": "4 - UpdateCreated",
+					"name": "3 - GetByID for Created",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/ProductGroup/GetByID?id={{CreatedProdID}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ProductGroup",
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedProdID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 - UpdateCreated",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -305,7 +305,58 @@
 					"response": []
 				},
 				{
-					"name": "4 - DeleteCreated",
+					"name": "6 - GetByID After Update",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/ProductGroup/GetByID?id={{CreatedProdID}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ProductGroup",
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedProdID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 - DeleteCreated",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -341,6 +392,57 @@
 								"api",
 								"ProductGroup",
 								"Delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedProdID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - GetByID After Delete",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/ProductGroup/GetByID?id={{CreatedProdID}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ProductGroup",
+								"GetByID"
 							],
 							"query": [
 								{
