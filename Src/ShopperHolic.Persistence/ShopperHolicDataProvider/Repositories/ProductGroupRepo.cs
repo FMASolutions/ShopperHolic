@@ -53,7 +53,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                    SELECT ProductGroupID, ProductGroupName, ProductGroupDescription
+                    SELECT ProductGroupID, ProductGroupName, ProductGroupCode
                     FROM ProductGroups
                 ";
 
@@ -103,7 +103,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 DELETE FROM ProductGroups
-                WHERE ProductGroupID = @ ProductGroupID
+                WHERE ProductGroupID = @ProductGroupID
                 ";
                 int rowsEffected = Connection.Execute(query, new { ProductGroupID = id}, Transaction);
                 return rowsEffected ==1;

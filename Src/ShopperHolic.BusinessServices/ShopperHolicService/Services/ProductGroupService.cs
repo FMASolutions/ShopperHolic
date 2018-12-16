@@ -9,7 +9,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
     {
         public ProductGroupService(string connectionString) : base(connectionString) { }
         internal ProductGroupService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
-        
+
         public ProductGroupDTO Create(ProductGroupCreateDTO modelToCreate)
         {
             try
@@ -21,7 +21,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 UOW.SaveChanges();
                 return createResult;
             }
-            catch(System.Data.SqlClient.SqlException ex)
+            catch (System.Data.SqlClient.SqlException ex)
             {
                 UOW.RollbackChanges();
                 BaseCustomException customException = SqlExceptionHandler.Handle(ex);
@@ -40,11 +40,17 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 
         public ProductGroupDTO Update(ProductGroupDTO newModel)
         {
-            return UOW.ProductGroupRepo.Update(newModel);
+            ProductGroupDTO returnModel = UOW.ProductGroupRepo.Update(newModel);
+            if (returnModel != null) { UOW.SaveChanges(); }
+            else { UOW.RollbackChanges(); }
+            return returnModel;
         }
         public bool Delete(int productGroupID)
         {
-            return UOW.ProductGroupRepo.Delete(productGroupID);
+            bool success = UOW.ProductGroupRepo.Delete(productGroupID);
+            if (success) { UOW.SaveChanges(); }
+            else { UOW.RollbackChanges(); }
+            return success;
         }
 
     }
