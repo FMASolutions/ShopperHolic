@@ -19,7 +19,7 @@ export class ProductGroupCreateComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  //TODO Add Validation
   createProductGroup() {
     this.prodGroupService.createNewProduct(this.newProdGroup).subscribe(resp => {
       let navUrl = "/ProductGroupDetail?id=" + resp.productGroupID;

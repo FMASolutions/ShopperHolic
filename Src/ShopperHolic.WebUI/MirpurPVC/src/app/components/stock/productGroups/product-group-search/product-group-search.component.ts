@@ -22,7 +22,6 @@ export class ProductGroupSearchComponent implements OnInit {
     this.prodService.getByID(this.searchID).subscribe(result => {
       this.router.navigateByUrl('ProductGroupDetail' + this.prodService.generateNavBarParameters(result));
     });
-
   }
 
 

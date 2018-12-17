@@ -47,20 +47,20 @@ const routes: Routes = [
     path: 'ProductGroupCreate',
     component: ProductGroupCreateComponent,
     canActivate: [AuthGuard],
-    data: { claimType: 'UserCanCreateProductGroup'}
+    data: { claimType: 'UserCanCreateProductGroup' }
   },
   {
     path: 'ProductGroupUpdate',
     component: ProductGroupUpdateComponent,
     canActivate: [AuthGuard],
-    data: { claimType: 'UserCanEditProductGroup'}
+    data: { claimType: 'UserCanEditProductGroup' }
   },
   {
     path: 'ProductGroupDetail',
     component: ProductGroupDetailComponent
   },
   {
-    path: 'ProductGroupGrid',
+    path: 'ProductGroupAll',
     component: ProductGroupGridComponent
   },
   {

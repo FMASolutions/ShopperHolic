@@ -1,3 +1,34 @@
-<p>
-  product-group-grid works!
-</p>
+<div class="row">
+  <h3 class="col-sm-12 text-left">Product Group Details:</h3>
+  <div class="col-sm-12"><button class="btn btn-outline-dark btn-block mb-3" (click)="refreshPreview()">Refresh Data</button></div>
+</div>
+
+<form class="form-signin">
+  state: {{statusMessage}}
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="text-left">
+          <table class="table table-striped table-dark" id="DisplayAllTable" *ngIf="prodGroupPreviews">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let prodGrp of prodGroupPreviews">
+                <td>{{prodGrp.productGroupID}}</td>
+                <td>{{prodGrp.productGroupCode}}</td>
+                <td>{{prodGrp.productGroupName}}</td>
+                <td>
+                  <button (click)="viewButtonClicked(prodGrp.productGroupID)" class="btn btn-outline-light btn-block">View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</form>

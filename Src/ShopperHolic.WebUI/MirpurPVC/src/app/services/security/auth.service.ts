@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
+//TODO IMPLEMENT USE OF REFRESH TOKEN SO USERS DOESNT HAVE TO LOG BACK IN AFTER 10 MINUTES OF JWT EXPIRATION
 export class AuthService {
 
   authURL: string = 'https://localhost:5001/api/Auth/';

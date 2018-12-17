@@ -23,7 +23,10 @@ export class ProductGroupUpdateComponent implements OnInit {
   }
 
   saveChanges() {
-    //TODO IMPLEMENT UPDATE FEATURE>........
+    this.prodService.update(this.currentProdGroup).subscribe(newModelResp =>{
+      this.statusMessage = "Update Success";
+    })
+    this.statusMessage = "Updating Please Wait....."
   }
 
 }

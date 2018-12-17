@@ -7,7 +7,7 @@ DECLARE @CurrentCode VARCHAR(7)
 DECLARE @CodePrevix VARCHAR(1)
 
 SET @LoopCounter = 0
-SET @NumLoops = 10000
+SET @NumLoops = 3500
 SET @CodePrevix = 'A'
 SET @CurrentCode = CONCAT(@CodePrevix, @LoopCounter)
 

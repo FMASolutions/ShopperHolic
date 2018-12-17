@@ -26,5 +26,18 @@ export class ProductGroupDetailComponent implements OnInit {
     this.router.navigateByUrl(navUrl);
   }
 
+  requestDelete() {
+    if (confirm("Are you sure you would like to delete? This can't be undone....")) {
+      this.statusMessage = "Requesting Delete...";
+      this.prodService.delete(this.currentProdGroup.productGroupID).subscribe(deleteResp => {
+        if (deleteResp) {
+          this.router.navigateByUrl("/ProductGroups")
+          this.statusMessage = "Delete Success";
+        }
+        else {this.statusMessage = "Delete Failed"; }
+      });
+    }
+  }
+
 
 }
