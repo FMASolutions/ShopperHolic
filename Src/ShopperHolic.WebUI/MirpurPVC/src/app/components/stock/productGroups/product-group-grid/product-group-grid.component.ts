@@ -27,8 +27,6 @@ export class ProductGroupGridComponent implements OnInit {
       this.prodGroupPreviews = [];
     this.statusMessage = "requesting data";
     this.prodGroupService.getAll().subscribe(allProdGroupResp =>{
-      this.statusMessage = "data received. pricessing"
-
       allProdGroupResp.forEach(current =>{
         if(this.prodGroupPreviews)
           this.prodGroupPreviews.push(current);
@@ -38,8 +36,7 @@ export class ProductGroupGridComponent implements OnInit {
             this.prodGroupPreviews.push(current);
           }
       });
-
-      this.statusMessage = "Data retrieval complete";
+      this.statusMessage = "";
     });
   }
 

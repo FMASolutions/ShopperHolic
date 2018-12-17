@@ -2,9 +2,11 @@
   <h3 class="col-sm-12 text-left">Product Group Details:</h3>
   <div class="col-sm-12"><button class="btn btn-outline-dark btn-block mb-3" (click)="refreshPreview()">Refresh Data</button></div>
 </div>
-
+<div class="alert alert-warning" *ngIf="statusMessage">
+    state: {{statusMessage}}
+</div>
 <form class="form-signin">
-  state: {{statusMessage}}
+  
   <div class="row">
     <div class="col-sm-12">
       <div class="text-left">
