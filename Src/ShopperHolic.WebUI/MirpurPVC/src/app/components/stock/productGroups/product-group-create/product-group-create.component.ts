@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductGroupService } from '../../../../services/stock/product-group.service';
-import { CreateProductGroup } from 'src/app/models/stock/productGroups/createProductGroup';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductGroupValidator } from 'src/app/services/stock/product-group-validator';
+import { CreateProductGroup } from 'src/app/models/stock/productGroups/createProductGroup';
 
 @Component({
   selector: 'app-product-group-create',
@@ -10,28 +12,43 @@ import { Router } from '@angular/router';
 })
 export class ProductGroupCreateComponent implements OnInit {
 
-  newProdGroup: CreateProductGroup
   statusMessage: string = "";
-
-  constructor(private prodGroupService: ProductGroupService, private router: Router) {
-    this.newProdGroup = new CreateProductGroup();
+  newProdForm: FormGroup;
+  constructor(private prodGroupService: ProductGroupService, private router: Router, private fb: FormBuilder, pgValidator: ProductGroupValidator) {
+    //TODO NEED TO BIND VALIDATION MESSAGES TO HTML AND USE NGIF ETC.....
+    this.newProdForm = this.fb.group({
+      code: ['', [pgValidator.validateCodeForCreate]],
+      name: '',
+      desc: ''
+    });
   }
 
   ngOnInit() {
   }
+
   //TODO Add Validation
   createProductGroup() {
-    this.prodGroupService.createNewProduct(this.newProdGroup).subscribe(resp => {
-      let navUrl = "/ProductGroupDetail?id=" + resp.productGroupID;
-      navUrl += "&code=" + resp.productGroupCode;
-      navUrl += "&name=" + resp.productGroupName;
-      navUrl += "&desc=" + resp.productGroupDescription;
-      this.router.navigateByUrl(navUrl);
-    }, error => {
-      console.log("inside component error handler anonymous function");
-      console.log(error);
-      this.statusMessage = error.error;
-    });
+    console.log(this.newProdForm);
+
+    if (this.newProdForm.valid) {
+      let newProdGroup: CreateProductGroup = {
+        productGroupCode: this.newProdForm.value["code"],
+        productGroupName: this.newProdForm.value["name"],
+        productGroupDescription: this.newProdForm.value["desc"]
+      };
+
+      this.prodGroupService.createNewProduct(newProdGroup).subscribe(resp => {
+        let navUrl = "/ProductGroupDetail?id=" + resp.productGroupID;
+        navUrl += "&code=" + resp.productGroupCode;
+        navUrl += "&name=" + resp.productGroupName;
+        navUrl += "&desc=" + resp.productGroupDescription;
+        this.router.navigateByUrl(navUrl);
+      }, error => {
+        console.log("inside component error handler anonymous function");
+        console.log(error);
+        this.statusMessage = error.error;
+      });
+    }
   }
 
 }

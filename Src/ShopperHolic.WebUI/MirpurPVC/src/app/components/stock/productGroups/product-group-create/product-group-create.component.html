@@ -1,40 +1,48 @@
 <div class="container rounded">
-  <form class="form-signin">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="text-left">
-          <h3>Create A Product Group</h3>
+  <div class="row">
+    <h3 class="col-sm-12 text-left pl-0 pr-0">Create New Product Group</h3>
+  </div>
+  {{statusMessage}}
+  <form [formGroup]="newProdForm">
+
+    <div class="form-group">
+      <div class="row">
+        <label for="productGroupCode">Code:</label>
+        <input 
+          formControlName="code" 
+          name="productGroupCode" id="productGroupCode" 
+          type="text" 
+          placeholder="Product Group Code"
+          class="form-control mb-2 text-left col-sm-12">
+        <div class="validationMessages">
+          <div class="alert alert-danger"*ngIf="newProdForm.controls.code.errors && newProdForm.controls.code.errors.failedMinLength">
+            Code is mandatory
+          </div>
+          <div class="alert alert-danger" *ngIf="newProdForm.controls.code.errors && newProdForm.controls.code.errors.failedMaxLength">
+            Code can't be more than 7 characters
+          </div>
         </div>
       </div>
     </div>
-    {{statusMessage}}
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="text-left">
-          Code: <input [(ngModel)]='newProdGroup.productGroupCode' type="text" placeholder="Product Group Code" class="form-control mb-2"
-            name="productGroupCode">
-        </div>
+    <div class="form-group">
+      <div class="row">
+        <label for="productGroupName">Name:</label>
+        <input formControlName='name' name="productGroupName" id="productGroupName" type="text" placeholder="Product Group Name"
+          class="col-sm-12 text-left form-control mb-2">
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="text-left">
-          Name: <input [(ngModel)]='newProdGroup.productGroupName' type="text" placeholder="Product Group Name" class="form-control mb-2"
-            name="productGroupName">
-        </div>
+    <div class="form-group">
+      <div class="row">
+        <label for="productGroupName">Desc:</label>
+        <input formControlName="desc" id="productGroupDescription" name="productGroupDescription"
+          type="text" placeholder="Product Group Description" class="form-control mb-3 col-sm-12 text-left">
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="text-left">
-          Description: <input [(ngModel)]='newProdGroup.productGroupDescription' type="text" placeholder="Product Group Description"
-            class="form-control mb-2" name="productGroupDescription">
-        </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-6 pl-0"><button type="submit" class="btn btn-outline-dark btn-block mb-3" (click)="createProductGroup()">Create</button></div>
+        <div class="col-sm-6 pr-0"><a class="btn btn-outline-dark btn-block mb-3" routerLink="/ProductGroups">Back</a></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6"><button class="btn btn-outline-dark btn-block mb-3" (click)="createProductGroup()">Create</button></div>
-      <div class="col-sm-6"><a class="btn btn-outline-dark btn-block mb-3" routerLink="/ProductGroups">Back</a></div>
     </div>
   </form>
 </div>

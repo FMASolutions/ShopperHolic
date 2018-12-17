@@ -26,21 +26,20 @@ export class ProductGroupService {
     return this.http.get<ProductGroup>(this.baseURL + 'GetByID/?id=' + id.toString());
   }
 
-  public getAll() : Observable<ProductGroupPreview[]>{
+  public getAll(): Observable<ProductGroupPreview[]> {
     return this.http.get<ProductGroupPreview[]>(this.baseURL + 'GetAll');
   }
 
-  public update(newModel: ProductGroup) : Observable<ProductGroup> {
+  public update(newModel: ProductGroup): Observable<ProductGroup> {
     return this.http.put<ProductGroup>(this.baseURL + 'Update', newModel).pipe(tap(this.prodUpdatedResp, this.apiErrorHandler));
   }
 
-  public delete(prodGroupID: number) : Observable<boolean> {
+  public delete(prodGroupID: number): Observable<boolean> {
     let urlString = this.baseURL + "Delete?id=" + prodGroupID.toString();
     return this.http.delete<boolean>(urlString).pipe(tap(this.prodDeleteResp, this.apiErrorHandler));
   }
 
-  public goToDetailPage(id: number, router: Router)
-  {
+  public goToDetailPage(id: number, router: Router) {
     router.navigateByUrl('/ProductGroupDetail?id=' + id.toString());
   }
 
@@ -53,17 +52,17 @@ export class ProductGroupService {
   }
 
   public populateFromNavBarParameters(snapShot: ActivatedRouteSnapshot, prodGroup: ProductGroup) {
-    if (snapShot.queryParamMap.get('id') 
-      && snapShot.queryParamMap.get('code') 
-      && snapShot.queryParamMap.get('name') 
+    if (snapShot.queryParamMap.get('id')
+      && snapShot.queryParamMap.get('code')
+      && snapShot.queryParamMap.get('name')
       && snapShot.queryParamMap.get('desc')) {
-        prodGroup.productGroupID = parseInt(snapShot.queryParamMap.get('id'));
-        prodGroup.productGroupName = snapShot.queryParamMap.get('name');
-        prodGroup.productGroupDescription = snapShot.queryParamMap.get('desc');
-        prodGroup.productGroupCode = snapShot.queryParamMap.get('code');
+      prodGroup.productGroupID = parseInt(snapShot.queryParamMap.get('id'));
+      prodGroup.productGroupName = snapShot.queryParamMap.get('name');
+      prodGroup.productGroupDescription = snapShot.queryParamMap.get('desc');
+      prodGroup.productGroupCode = snapShot.queryParamMap.get('code');
     }
-    else if(snapShot.queryParamMap.get('id')){ //Use API To populate values if ID available but other values are not... 
-      this.getByID(prodGroup.productGroupID).subscribe(resp =>{
+    else if (snapShot.queryParamMap.get('id')) { //Use API To populate values if ID available but other values are not... 
+      this.getByID(prodGroup.productGroupID).subscribe(resp => {
         prodGroup.productGroupID = resp.productGroupID;
         prodGroup.productGroupCode = resp.productGroupCode;
         prodGroup.productGroupName = resp.productGroupName;
@@ -81,7 +80,7 @@ export class ProductGroupService {
     //TODO Not sure if I even need to have these response functions......
   }
 
-  private prodDeleteResp(wasSuccessfull: boolean){
+  private prodDeleteResp(wasSuccessfull: boolean) {
 
   }
 

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/generic/header/header.component';
@@ -21,6 +21,7 @@ import { ProductGroupCreateComponent } from './components/stock/productGroups/pr
 import { ProductGroupDetailComponent } from './components/stock/productGroups/product-group-detail/product-group-detail.component';
 import { ProductGroupGridComponent } from './components/stock/productGroups/product-group-grid/product-group-grid.component';
 import { ProductGroupUpdateComponent } from './components/stock/productGroups/product-group-update/product-group-update.component';
+import { ProductGroupValidator } from './services/stock//product-group-validator';
 
 
 @NgModule({
@@ -43,11 +44,12 @@ import { ProductGroupUpdateComponent } from './components/stock/productGroups/pr
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpInterceptorModule
+    HttpInterceptorModule    
   ],
-  providers: [AuthService, AuthGuard, ProductGroupService],
+  providers: [AuthService, AuthGuard, ProductGroupService, ProductGroupValidator],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -19,9 +19,18 @@ export class ProductGroupSearchComponent implements OnInit {
   }
 
   processSearch() {
-    this.prodService.getByID(this.searchID).subscribe(result => {
-      this.router.navigateByUrl('ProductGroupDetail' + this.prodService.generateNavBarParameters(result));
-    });
+    if (!this.searchID && !this.searchCode) {
+      this.statusMessage = "ID or Code must be populated"
+      return;
+    }
+    if (this.searchID) {
+      this.prodService.getByID(this.searchID).subscribe(result => {
+        this.router.navigateByUrl('ProductGroupDetail' + this.prodService.generateNavBarParameters(result));
+      });
+    }
+    else{ //TODO Implement Search By Code
+      return;
+    }
   }
 
 
