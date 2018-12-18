@@ -9,39 +9,37 @@ import { Router } from '@angular/router';
   styleUrls: ['./product-group-grid.component.css']
 })
 export class ProductGroupGridComponent implements OnInit {
-  
+
   prodGroupPreviews: ProductGroupPreview[];
   statusMessage: string = "";
   hasValues: boolean = true;
 
-  constructor(private prodGroupService: ProductGroupService, private router: Router) { 
-    
+  constructor(private prodGroupService: ProductGroupService, private router: Router) {
+
   }
 
   ngOnInit() {
     this.refreshPreview();
   }
 
-  refreshPreview(){
-    if(this.prodGroupPreviews)
-      this.prodGroupPreviews = [];
+  refreshPreview() {
     this.statusMessage = "requesting data";
-    this.prodGroupService.getAll().subscribe(allProdGroupResp =>{
-      allProdGroupResp.forEach(current =>{
-        if(this.prodGroupPreviews)
+    this.prodGroupService.getAll().subscribe(allProdGroupResp => {
+      if (this.prodGroupPreviews)
+        this.prodGroupPreviews = [];
+      allProdGroupResp.forEach(current => {
+        if (this.prodGroupPreviews)
           this.prodGroupPreviews.push(current);
-        else
-          {
-            this.prodGroupPreviews = []
-            this.prodGroupPreviews.push(current);
-          }
+        else {
+          this.prodGroupPreviews = []
+          this.prodGroupPreviews.push(current);
+        }
       });
       this.statusMessage = "";
     });
   }
 
-  viewButtonClicked(id: number)
-  {
+  viewButtonClicked(id: number) {
     this.prodGroupService.goToDetailPage(id, this.router);
   }
 
