@@ -4,7 +4,7 @@ using ShopperHolic.Infrastructure.ShopperHolicDTO;
 
 namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
-    public interface ISecurityService
+    public interface ISecurityService : IDisposable
     {
         string AttemptUserAuthenticationAndGetAccessKey(AttemptLoginDTO inputDTO);  
         bool VerifyAccessKey(string exchangeKey);       

@@ -8,12 +8,17 @@ using ShopperHolic.Infrastructure.ShopperHolicDTO;
 
 namespace ShopperHolic.API.ShopperAPI.Models.Security
 {
-    public class SecurityManager
+    public class SecurityManager : IDisposable
     {
         public SecurityManager(JWTSettings jwtSettings, ISecurityService securityService)
         {
             _jwtSettings = jwtSettings;
             _securityService = securityService;
+        }
+
+        public void Dispose()
+        {
+            _securityService.Dispose();
         }
 
         private JWTSettings _jwtSettings = null;

@@ -1,14 +1,20 @@
+using System;
 using System.Collections.Generic;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
 
 namespace ShopperHolic.API.ShopperAPI.Models.Stock
 {
-    public class ProductGroupManager
+    public class ProductGroupManager : IDisposable
     {
         public ProductGroupManager(IProductGroupService prodGroupService)
         {
             _prodGroupService = prodGroupService;
+        }
+
+        public void Dispose()
+        {
+            _prodGroupService.Dispose();
         }
 
         private IProductGroupService _prodGroupService;

@@ -1,3 +1,4 @@
+using System;
 namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
     public abstract class BaseService
@@ -12,6 +13,14 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         {
             UOW = uow;
         }
+        public void Dispose()
+        {
+            if(!_disposing){
+                _disposing = true;
+                UOW.Dispose();
+            }
+        }
         internal IUnitOfWork UOW {get;}
+        private bool _disposing = false;
     }
 }

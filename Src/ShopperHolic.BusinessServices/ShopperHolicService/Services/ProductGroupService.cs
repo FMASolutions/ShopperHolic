@@ -9,7 +9,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
     {
         public ProductGroupService(string connectionString) : base(connectionString) { }
         internal ProductGroupService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
-
+        
         public ProductGroupDTO Create(ProductGroupCreateDTO modelToCreate)
         {
             try
