@@ -28,5 +28,4 @@ export class ProductGroupUpdateComponent implements OnInit {
     })
     this.statusMessage = "Updating Please Wait....."
   }
-
 }

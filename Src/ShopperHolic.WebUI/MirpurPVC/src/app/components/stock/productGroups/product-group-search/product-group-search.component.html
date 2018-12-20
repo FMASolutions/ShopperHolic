@@ -1,25 +1,15 @@
-<form class="form-signin">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="text-left">
-        <h3>Product Group Search:</h3>
+<div class="container rounded">
+  <form class="form-signin">
+    <h3>Product Group Search:</h3>
+    {{statusMessage}}
+    <div class="row">
+      <div class="col-sm-6">
+        ID: <input [(ngModel)]='searchID' type="text" class="form-control mb-3" name="searchID">
+      </div>
+      <div class="col-sm-6">
+        Code: <input [(ngModel)]='searchCode' type="text" class="form-control mb-3" name="searchCode">
       </div>
     </div>
-  </div>
-  {{statusMessage}}
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="text-left">
-        ID: <input [(ngModel)]='searchID' type="text" class="form-control mb-2" name="searchID">
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="text-left">
-        Code: <input [(ngModel)]='searchCode' type="text" class="form-control mb-2" name="searchCode">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12"><button class="btn btn-outline-dark btn-block mb-3" (click)="processSearch()">Search</button></div>
-  </div>
-</form>
+    <button class="btn btn-outline-dark btn-block mb-3" (click)="processSearch()">Search</button>
+  </form>
+</div>

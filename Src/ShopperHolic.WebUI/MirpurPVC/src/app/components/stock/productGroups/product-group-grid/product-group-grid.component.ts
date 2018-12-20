@@ -14,6 +14,7 @@ export class ProductGroupGridComponent implements OnInit {
   codeFilterInput: string = "";
   nameFilterInput: string = "";
   statusMessage: string = "";
+  statusMessageAlertType: string = "";
 
   constructor(private prodGroupService: ProductGroupService, private router: Router) {
 
@@ -35,6 +36,15 @@ export class ProductGroupGridComponent implements OnInit {
       })
 
       this.statusMessage = "Processing complete";
+      this.statusMessageAlertType = "alert alert-success"
+
+      if(this.prodGroupPreviews.length == 0){
+        
+        this.statusMessage = "No data found!";
+        this.statusMessageAlertType = "alert alert-danger"
+      }
+
+      
     });
   }
 

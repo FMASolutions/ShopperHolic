@@ -1,51 +1,19 @@
 <div class="container rounded">
     <form class="form-signin">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="text-left">
-                    <h3>Product Group Details:</h3>
-                </div>
-            </div>
-        </div>
+        <h3>Product Group Details:</h3>
         {{statusMessage}}
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="text-left">
-                    ID: <input [(ngModel)]='currentProdGroup.productGroupID' type="text" class="form-control mb-2" name="ProductGroupID"
-                        readonly>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="text-left">
-                    Code: <input [(ngModel)]='currentProdGroup.productGroupCode' type="text" placeholder="Product Group Code"
-                        class="form-control mb-2" name="productGroupCode" readonly>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="text-left">
-                    Name: <input [(ngModel)]='currentProdGroup.productGroupName' type="text" placeholder="Product Group Name"
-                        class="form-control mb-2" name="productGroupName" readonly>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="text-left">
+        ID: <input [(ngModel)]='currentProdGroup.productGroupID' type="text" class="form-control mb-3" name="ProductGroupID"
+            readonly>
+        Code: <input [(ngModel)]='currentProdGroup.productGroupCode' type="text" placeholder="Product Group Code" class="form-control mb-3"
+            name="productGroupCode" readonly>
+        Name: <input [(ngModel)]='currentProdGroup.productGroupName' type="text" placeholder="Product Group Name" class="form-control mb-3"
+            name="productGroupName" readonly>
                     Description: <input [(ngModel)]='currentProdGroup.productGroupDescription' type="text" placeholder="Product Group Description"
-                        class="form-control mb-2" name="productGroupDescription" readonly>
-                </div>
-            </div>
-        </div>
+                        class="form-control mb-3" name="productGroupDescription" readonly>
         <div class="row">
             <div class="col-sm-6"><button (click)="requestUpdatePage()" class="btn btn-outline-dark btn-block mb-3">Update</button></div>
             <div class="col-sm-6"><button (click)="requestDelete()" class="btn btn-outline-dark btn-block mb-3">Delete</button></div>
         </div>
-        <div class="row">
-            <div class="col-sm-12"><a routerLink="/ProductGroups" class="btn btn-outline-dark btn-block mb-3">Back</a></div>
-        </div>
+        <a routerLink="/ProductGroups" class="btn btn-outline-dark btn-block mb-3">Back</a>
     </form>
 </div>
