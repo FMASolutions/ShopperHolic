@@ -1,6 +1,6 @@
 <div class="row">
   <h3 class="col-sm-12 text-left">Product Group Details:</h3>
-  <div class="col-sm-12"><button class="btn btn-outline-dark btn-block mb-3" (click)="refreshPreview()">Refresh Data</button></div>
+  <div class="col-sm-12"><button class="btn btn-outline-dark btn-block mb-3" (click)="refreshAndApplyFilter()">Refresh Data</button></div>
 </div>
 <div class="alert alert-warning" *ngIf="statusMessage">
     state: {{statusMessage}}
@@ -20,6 +20,12 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>Filter: </td>
+                <td><input [(ngModel)]='codeFilterInput' name="codeFilterInput" type="text" placeholder="Code" class="form-control"></td>
+                <td><input [(ngModel)]='nameFilterInput' name="nameFilterInput" type="text" placeholder="Name" class="form-control"></td>
+                <td><button (click)="refreshAndApplyFilter()" class="btn btn-outline-light btn-block">Apply</button></td>
+              </tr>
               <tr *ngFor="let prodGrp of prodGroupPreviews">
                 <td>{{prodGrp.productGroupID}}</td>
                 <td>{{prodGrp.productGroupCode}}</td>

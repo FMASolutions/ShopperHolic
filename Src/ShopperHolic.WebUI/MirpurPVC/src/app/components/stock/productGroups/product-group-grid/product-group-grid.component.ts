@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
 })
 export class ProductGroupGridComponent implements OnInit {
 
-  prodGroupPreviews: ProductGroupPreview[];
+  prodGroupPreviews: ProductGroupPreview[] = [];
+  codeFilterInput: string = "";
+  nameFilterInput: string = "";
   statusMessage: string = "";
   hasValues: boolean = true;
 
@@ -25,8 +27,8 @@ export class ProductGroupGridComponent implements OnInit {
   refreshPreview() {
     this.statusMessage = "requesting data";
     this.prodGroupService.getAll().subscribe(allProdGroupResp => {
-      if (this.prodGroupPreviews)
-        this.prodGroupPreviews = [];
+      if (this.prodGroupPreviews) { this.prodGroupPreviews = []; }
+
       allProdGroupResp.forEach(current => {
         if (this.prodGroupPreviews)
           this.prodGroupPreviews.push(current);
@@ -37,6 +39,35 @@ export class ProductGroupGridComponent implements OnInit {
       });
       this.statusMessage = "";
     });
+  }
+
+  refreshAndApplyFilter() {
+    
+      this.prodGroupService.getAll().subscribe(prodResp => {
+        if (this.prodGroupPreviews) { this.prodGroupPreviews = []; }
+
+        prodResp.forEach(current => {
+          if(this.codeFilterInput && this.nameFilterInput){
+            if(current.productGroupCode.indexOf(this.codeFilterInput) >= 0 && current.productGroupName.indexOf(this.nameFilterInput) >= 0){
+              this.prodGroupPreviews.push(current);
+            }
+          }
+          else if(this.codeFilterInput){
+            if(current.productGroupCode.indexOf(this.codeFilterInput) >= 0){
+              this.prodGroupPreviews.push(current);
+            }
+          }
+          else if(this.nameFilterInput){
+            if(current.productGroupName.indexOf(this.nameFilterInput) >= 0){
+              this.prodGroupPreviews.push(current);
+            }
+          }
+          else{
+            this.prodGroupPreviews.push(current);
+          }
+        })
+      });
+    
   }
 
   viewButtonClicked(id: number) {
