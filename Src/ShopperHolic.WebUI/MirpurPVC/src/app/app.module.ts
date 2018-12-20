@@ -22,6 +22,7 @@ import { ProductGroupDetailComponent } from './components/stock/productGroups/pr
 import { ProductGroupGridComponent } from './components/stock/productGroups/product-group-grid/product-group-grid.component';
 import { ProductGroupUpdateComponent } from './components/stock/productGroups/product-group-update/product-group-update.component';
 import { ProductGroupValidator } from './services/stock//product-group-validator';
+import { AuthValidator } from './services/security/auth.validator';
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import { ProductGroupValidator } from './services/stock//product-group-validator
     HttpClientModule,
     HttpInterceptorModule    
   ],
-  providers: [AuthService, AuthGuard, ProductGroupService, ProductGroupValidator],
+  providers: [AuthService, AuthGuard, ProductGroupService, ProductGroupValidator,AuthValidator], 
   bootstrap: [AppComponent]
 })
 export class AppModule {

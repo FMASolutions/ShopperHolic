@@ -1,36 +1,51 @@
 <div class="container rounded">
-    <form class="form-signin">
+    <form class="form-signin" [formGroup]="loginForm">
         <div class="row">
-            <div class="col-sm-12">
-                <div class="text-left">
-                    <h3>Login</h3>
-                </div>
-            </div>
+            <h3 class="col-sm-12 text-left">Login</h3>
         </div>
-        <div class="loginErrorMessage">
+        <div class="alert pl-0 pr-0" *ngIf="statusMessage">
             {{statusMessage}}
         </div>
         <div class="row">
-            <div class="col-sm-6">
-                <div class="text-left">
-                    <input [(ngModel)]='usernameInput' type="text" placeholder="Username" class="form-control mb-2"
-                        name="usernameInput">
+            <div class="col-sm-6 text-left mb-3">
+                <label for="usernameInput">Username</label>
+                <input formControlName="username" id="usernameInput" name="usernameInput" type="text" placeholder="Username"
+                    class="form-control mb-3">
+                <div class="validationMessages">
+                    <div class="alert alert-danger" *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors && loginForm.controls.username.errors.failedPopulation">
+                        Username is mandatory
+                    </div>
+                    <div class="alert alert-danger" *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors && loginForm.controls.username.errors.failedMinLength">
+                        Username must be 3 or more characters
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="text-left">
-                    <input [(ngModel)]='passwordInput' type="password" placeholder="Password" class="form-control mb-2"
-                        name="passwordInput">
+            <div class="col-sm-6 text-left">
+                <label for="passwordInput">Password</label>
+                <input formControlName="password" id="passwordInput" name="passwordInput" type="password" placeholder="Password"
+                    class="form-control mb-3">
+                <div class="validationMessages">
+                    <div class="alert alert-danger" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.failedPopulation">
+                        Password is mandatory
+                    </div>
+                    <div class="alert alert-danger" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.failedMinLength">
+                        Password must be 5 or more characters
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12"><button class="btn btn-outline-dark btn-block mb-3" (click)="attemptLogin()">Login</button></div>
+            <div class="col-sm-12">
+                <button class="btn btn-outline-dark btn-block mb-3" (click)="attemptLogin()">Login</button>
+            </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 pr-2"><a href="/UserAccount/Register" class="btn btn-outline-dark btn-block mb-3">New
-                    User</a></div>
-            <div class="col-sm-6 pl-2"><a href="#" class="btn btn-outline-dark btn-block mb-4">Forgot Password</a></div>
+            <div class="col-sm-6 pr-2">
+                <a href="/UserAccount/Register" class="btn btn-outline-dark btn-block mb-3">NewUser</a>
+            </div>
+            <div class="col-sm-6 pl-2">
+                <a href="#" class="btn btn-outline-dark btn-block mb-4">Forgot Password</a>
+            </div>
         </div>
     </form>
 </div>

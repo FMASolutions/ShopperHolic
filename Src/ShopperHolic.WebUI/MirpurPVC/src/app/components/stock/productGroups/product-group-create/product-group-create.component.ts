@@ -17,9 +17,9 @@ export class ProductGroupCreateComponent implements OnInit {
   constructor(private prodGroupService: ProductGroupService, private router: Router, private fb: FormBuilder, pgValidator: ProductGroupValidator) {
     //TODO NEED TO BIND VALIDATION MESSAGES TO HTML AND USE NGIF ETC.....
     this.newProdForm = this.fb.group({
-      code: ['', [pgValidator.validateCodeForCreate]],
-      name: '',
-      desc: ''
+      code: [null, [pgValidator.validateCodeForCreate]],
+      name: [null, [pgValidator.basicValidation]],
+      desc: [null, [pgValidator.basicValidation]]
     });
   }
 

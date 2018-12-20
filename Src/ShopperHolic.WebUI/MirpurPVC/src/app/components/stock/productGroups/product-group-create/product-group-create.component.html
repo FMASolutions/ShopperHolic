@@ -8,18 +8,17 @@
     <div class="form-group">
       <div class="row">
         <label for="productGroupCode">Code:</label>
-        <input 
-          formControlName="code" 
-          name="productGroupCode" id="productGroupCode" 
-          type="text" 
-          placeholder="Product Group Code"
+        <input formControlName="code" name="productGroupCode" id="productGroupCode" type="text" placeholder="Product Group Code"
           class="form-control mb-2 text-left col-sm-12">
         <div class="validationMessages">
-          <div class="alert alert-danger"*ngIf="newProdForm.controls.code.errors && newProdForm.controls.code.errors.failedMinLength">
-            Code is mandatory
+          <div class="alert alert-danger" *ngIf="newProdForm.controls.code.touched && newProdForm.controls.code.errors && newProdForm.controls.code.errors.failedPopulation">
+            Code is mandatory.
           </div>
-          <div class="alert alert-danger" *ngIf="newProdForm.controls.code.errors && newProdForm.controls.code.errors.failedMaxLength">
-            Code can't be more than 7 characters
+          <div class="alert alert-danger" *ngIf="newProdForm.controls.code.touched && newProdForm.controls.code.errors && newProdForm.controls.code.errors.failedMinLength">
+            Code should be 2 or more characters.
+          </div>
+          <div class="alert alert-danger" *ngIf="newProdForm.controls.code.touched && newProdForm.controls.code.errors && newProdForm.controls.code.errors.failedMaxLength">
+            Code can't be more than 7 characters.
           </div>
         </div>
       </div>
@@ -29,13 +28,23 @@
         <label for="productGroupName">Name:</label>
         <input formControlName='name' name="productGroupName" id="productGroupName" type="text" placeholder="Product Group Name"
           class="col-sm-12 text-left form-control mb-2">
+        <div class="validationMessages">
+          <div class="alert alert-danger" *ngIf="newProdForm.controls.name.touched && newProdForm.controls.name.errors && newProdForm.controls.name.errors.failedPopulation">
+            Name is mandatory.
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-group">
       <div class="row">
         <label for="productGroupName">Desc:</label>
-        <input formControlName="desc" id="productGroupDescription" name="productGroupDescription"
-          type="text" placeholder="Product Group Description" class="form-control mb-3 col-sm-12 text-left">
+        <input formControlName="desc" id="productGroupDescription" name="productGroupDescription" type="text"
+          placeholder="Product Group Description" class="form-control mb-3 col-sm-12 text-left">
+        <div class="validationMessages">
+          <div class="alert alert-danger" *ngIf="newProdForm.controls.desc.touched && newProdForm.controls.desc.errors && newProdForm.controls.desc.errors.failedPopulation">
+            Description is mandatory.
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-group">

@@ -5,34 +5,31 @@ import { AbstractControl } from '@angular/forms';
     providedIn: 'root'
 })
 
-export class ProductGroupValidator {
-    //Return null if validation successful.
-    //Return an object with property isError : true
-    public validateCodeForCreate(control: AbstractControl) {
-        console.log(control);
+export class AuthValidator {
+
+    public ValidateUsername(control: AbstractControl) {
         if (control) {
             if (control.value == null || control.value == "") {
                 return { isError: true, failedPopulation: true }
             }
             let currentValue: string = control.value;
-            if (currentValue.length < 2) {
+            if (currentValue.length < 3) {
                 return { isError: true, failedMinLength: true }
             }
-            if(currentValue.length > 7){
-                return { isError: true, failedMaxLength: true }
-            }
-            //TODO Add Existing Code checks so we dont try to create a code that already exists....
         }
-        return null;
+        return null; //Pass auth
     }
 
-    public basicValidation(control: AbstractControl){
-        console.log(control);
+    public ValidatePassword(control: AbstractControl) {
         if (control) {
             if (control.value == null || control.value == "") {
                 return { isError: true, failedPopulation: true }
             }
+            let currentValue: string = control.value;
+            if (currentValue.length < 5) {
+                return { isError: true, failedMinLength: true }
+            }
         }
-        return null;
+        return null; //Pass auth
     }
 }
