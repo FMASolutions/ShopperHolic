@@ -22,35 +22,48 @@ export class ProductGroupGridComponent implements OnInit {
   ngOnInit() {
     this.refreshAndApplyFilter();
   }
+
   refreshAndApplyFilter() {
     this.statusMessage = "Requesting data";
     this.prodGroupService.getAll().subscribe(prodResp => {
+      
       if (this.prodGroupPreviews) { this.prodGroupPreviews = []; }
-
+      
       prodResp.forEach(current => {
         this.statusMessage = "Processing data";
-        if (this.codeFilterInput && this.nameFilterInput) {
-          if (current.productGroupCode.toLowerCase().indexOf(this.codeFilterInput.toLowerCase()) >= 0
-            && current.productGroupName.toLowerCase().indexOf(this.nameFilterInput.toLowerCase()) >= 0) {
-            this.prodGroupPreviews.push(current);
-          }
-        }
-        else if (this.codeFilterInput) {
-          if (current.productGroupCode.toLowerCase().indexOf(this.codeFilterInput.toLowerCase()) >= 0) {
-            this.prodGroupPreviews.push(current);
-          }
-        }
-        else if (this.nameFilterInput) {
-          if (current.productGroupName.toLowerCase().indexOf(this.nameFilterInput.toLowerCase()) >= 0) {
-            this.prodGroupPreviews.push(current);
-          }
-        }
-        else {
-          this.prodGroupPreviews.push(current);
-        }
+        this.applyFilter(current);
       })
+
       this.statusMessage = "Processing complete";
     });
+  }
+
+  resetFilters(){
+    this.codeFilterInput = "";
+    this.nameFilterInput = "";
+    this.refreshAndApplyFilter();
+  }
+
+  private applyFilter(item: ProductGroupPreview){
+    if (this.codeFilterInput && this.nameFilterInput) { //Both filters contain values
+      if (item.productGroupCode.toLowerCase().indexOf(this.codeFilterInput.toLowerCase()) >= 0
+        && item.productGroupName.toLowerCase().indexOf(this.nameFilterInput.toLowerCase()) >= 0) {
+        this.prodGroupPreviews.push(item);
+      }
+    }
+    else if (this.codeFilterInput) { //Only apply code filter
+      if (item.productGroupCode.toLowerCase().indexOf(this.codeFilterInput.toLowerCase()) >= 0) {
+        this.prodGroupPreviews.push(item);
+      }
+    }
+    else if (this.nameFilterInput) { //Only apply name filter
+      if (item.productGroupName.toLowerCase().indexOf(this.nameFilterInput.toLowerCase()) >= 0) {
+        this.prodGroupPreviews.push(item);
+      }
+    }
+    else { //No filters present so always add the item.
+      this.prodGroupPreviews.push(item);
+    }
   }
 
   viewButtonClicked(id: number) {
