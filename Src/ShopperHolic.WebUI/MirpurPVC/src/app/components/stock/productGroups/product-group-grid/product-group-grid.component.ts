@@ -14,60 +14,43 @@ export class ProductGroupGridComponent implements OnInit {
   codeFilterInput: string = "";
   nameFilterInput: string = "";
   statusMessage: string = "";
-  hasValues: boolean = true;
 
   constructor(private prodGroupService: ProductGroupService, private router: Router) {
 
   }
 
   ngOnInit() {
-    this.refreshPreview();
+    this.refreshAndApplyFilter();
   }
-
-  refreshPreview() {
-    this.statusMessage = "requesting data";
-    this.prodGroupService.getAll().subscribe(allProdGroupResp => {
+  refreshAndApplyFilter() {
+    this.statusMessage = "Requesting data";
+    this.prodGroupService.getAll().subscribe(prodResp => {
       if (this.prodGroupPreviews) { this.prodGroupPreviews = []; }
 
-      allProdGroupResp.forEach(current => {
-        if (this.prodGroupPreviews)
-          this.prodGroupPreviews.push(current);
-        else {
-          this.prodGroupPreviews = []
-          this.prodGroupPreviews.push(current);
-        }
-      });
-      this.statusMessage = "";
-    });
-  }
-
-  refreshAndApplyFilter() {
-    
-      this.prodGroupService.getAll().subscribe(prodResp => {
-        if (this.prodGroupPreviews) { this.prodGroupPreviews = []; }
-
-        prodResp.forEach(current => {
-          if(this.codeFilterInput && this.nameFilterInput){
-            if(current.productGroupCode.indexOf(this.codeFilterInput) >= 0 && current.productGroupName.indexOf(this.nameFilterInput) >= 0){
-              this.prodGroupPreviews.push(current);
-            }
-          }
-          else if(this.codeFilterInput){
-            if(current.productGroupCode.indexOf(this.codeFilterInput) >= 0){
-              this.prodGroupPreviews.push(current);
-            }
-          }
-          else if(this.nameFilterInput){
-            if(current.productGroupName.indexOf(this.nameFilterInput) >= 0){
-              this.prodGroupPreviews.push(current);
-            }
-          }
-          else{
+      prodResp.forEach(current => {
+        this.statusMessage = "Processing data";
+        if (this.codeFilterInput && this.nameFilterInput) {
+          if (current.productGroupCode.toLowerCase().indexOf(this.codeFilterInput.toLowerCase()) >= 0
+            && current.productGroupName.toLowerCase().indexOf(this.nameFilterInput.toLowerCase()) >= 0) {
             this.prodGroupPreviews.push(current);
           }
-        })
-      });
-    
+        }
+        else if (this.codeFilterInput) {
+          if (current.productGroupCode.toLowerCase().indexOf(this.codeFilterInput.toLowerCase()) >= 0) {
+            this.prodGroupPreviews.push(current);
+          }
+        }
+        else if (this.nameFilterInput) {
+          if (current.productGroupName.toLowerCase().indexOf(this.nameFilterInput.toLowerCase()) >= 0) {
+            this.prodGroupPreviews.push(current);
+          }
+        }
+        else {
+          this.prodGroupPreviews.push(current);
+        }
+      })
+      this.statusMessage = "Processing complete";
+    });
   }
 
   viewButtonClicked(id: number) {
