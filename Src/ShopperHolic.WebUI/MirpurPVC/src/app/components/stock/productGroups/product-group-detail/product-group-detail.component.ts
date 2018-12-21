@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { StatusMessageService } from 'src/app/services/status-message.service';
 
+//TO DO LOCK DOWN HTML PART SO THE DELETE BUTTON DOESN'T SHOW DEPENDING ON THE CURRENT USER CLAIMS (IF ANY)
 @Component({
   selector: 'app-product-group-detail',
   templateUrl: './product-group-detail.component.html',
