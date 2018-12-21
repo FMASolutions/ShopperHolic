@@ -1,7 +1,7 @@
 <div class="container rounded">
     <form class="form-signin" [formGroup]="loginForm">
         <h3>Login</h3>
-        <div *ngIf="statusMessage">
+        <div [class]="statusMessageClass" *ngIf="statusMessage">
             {{statusMessage}}
         </div>
         <div class="row">

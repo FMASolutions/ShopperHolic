@@ -14,6 +14,7 @@ import { AdminPanelComponent } from './components/generic/admin-panel/admin-pane
 import { AuthGuard } from './services/security/auth.guard';
 import { AuthService } from './services/security/auth.service';
 import { HttpInterceptorModule } from './services/security/http-interceptor';
+import { StatusMessageService } from './services/status-message.service';
 import { ProductGroupService} from './services/stock/product-group.service';
 import { ProductGroupComponent } from './components/stock/productGroups/product-group/product-group.component';
 import { ProductGroupSearchComponent } from './components/stock/productGroups/product-group-search/product-group-search.component';
@@ -50,7 +51,7 @@ import { AuthValidator } from './services/security/auth.validator';
     HttpClientModule,
     HttpInterceptorModule    
   ],
-  providers: [AuthService, AuthGuard, ProductGroupService, ProductGroupValidator,AuthValidator], 
+  providers: [AuthGuard, AuthService, AuthValidator, StatusMessageService, ProductGroupService, ProductGroupValidator], 
   bootstrap: [AppComponent]
 })
 export class AppModule {

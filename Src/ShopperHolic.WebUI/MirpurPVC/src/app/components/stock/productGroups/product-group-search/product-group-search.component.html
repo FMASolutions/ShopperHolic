@@ -1,7 +1,9 @@
 <div class="container rounded">
   <form class="form-signin">
     <h3>Product Group Search:</h3>
-    {{statusMessage}}
+    <div [class]="statusMessageClass" *ngIf="statusMessage">
+      {{statusMessage}}
+    </div>
     <div class="row">
       <div class="col-sm-6">
         ID: <input [(ngModel)]='searchID' type="text" class="form-control mb-3" name="searchID">

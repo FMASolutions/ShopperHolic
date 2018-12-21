@@ -1,19 +1,34 @@
 <div class="container rounded">
-    <form class="form-signin">
-        <h3>Product Group Details:</h3>
+    <h3>Product Group Details</h3>
+    <div [class]="statusMessageClass" *ngIf="statusMessage">
         {{statusMessage}}
-        ID: <input [(ngModel)]='currentProdGroup.productGroupID' type="text" class="form-control mb-3" name="ProductGroupID"
-            readonly>
-        Code: <input [(ngModel)]='currentProdGroup.productGroupCode' type="text" placeholder="Product Group Code" class="form-control mb-3"
-            name="productGroupCode" readonly>
-        Name: <input [(ngModel)]='currentProdGroup.productGroupName' type="text" placeholder="Product Group Name" class="form-control mb-3"
-            name="productGroupName" readonly>
-                    Description: <input [(ngModel)]='currentProdGroup.productGroupDescription' type="text" placeholder="Product Group Description"
-                        class="form-control mb-3" name="productGroupDescription" readonly>
-        <div class="row">
-            <div class="col-sm-6"><button (click)="requestUpdatePage()" class="btn btn-outline-dark btn-block mb-3">Update</button></div>
-            <div class="col-sm-6"><button (click)="requestDelete()" class="btn btn-outline-dark btn-block mb-3">Delete</button></div>
+    </div>
+    <form class="form-signin" [formGroup]="detailForm">
+        <div class="form-group">
+            <label for="productGroupID">ID:</label>
+            <input formControlName="id" name="productGroupID" id="productGroupID" type="number" class="form-control mb-3"
+                readonly>
         </div>
-        <a routerLink="/ProductGroups" class="btn btn-outline-dark btn-block mb-3">Back</a>
+        <div class="form-group">
+            <label for="productGroupCode">Code:</label>
+            <input formControlName="code" name="productGroupCode" id="productGroupCode" type="text" placeholder="Product Group Code"
+                class="form-control mb-3" readonly>
+        </div>
+        <div class="form-group">
+            <label for="productGroupName">Name:</label>
+            <input formControlName='name' name="productGroupName" id="productGroupName" type="text" placeholder="Product Group Name"
+                class="form-control mb-3" readonly>
+        </div>
+        <div class="form-group">
+            <label for="productGroupName">Desc:</label>
+            <input formControlName="desc" id="productGroupDescription" name="productGroupDescription" type="text"
+                placeholder="Product Group Description" class="form-control mb-3" readonly>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6"><button type="submit" class="btn btn-outline-dark btn-block mb-3" (click)="requestUpdatePage()">Update</button></div>
+                <div class="col-sm-6"><a class="btn btn-outline-dark btn-block mb-3" routerLink="/ProductGroups">Back</a></div>
+            </div>
+        </div>
     </form>
 </div>

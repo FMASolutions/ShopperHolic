@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
 import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 import { Router } from '@angular/router';
+import { StatusMessageService } from 'src/app/services/status-message.service';
 
 @Component({
   selector: 'app-product-group-grid',
@@ -14,9 +15,9 @@ export class ProductGroupGridComponent implements OnInit {
   codeFilterInput: string = "";
   nameFilterInput: string = "";
   statusMessage: string = "";
-  statusMessageAlertType: string = "";
+  statusMessageClass: string = "";
 
-  constructor(private prodGroupService: ProductGroupService, private router: Router) {
+  constructor(private prodGroupService: ProductGroupService, private router: Router,private sms: StatusMessageService) {
 
   }
 
@@ -36,15 +37,13 @@ export class ProductGroupGridComponent implements OnInit {
       })
 
       this.statusMessage = "Processing complete";
-      this.statusMessageAlertType = "alert alert-success"
+      this.statusMessageClass = "alert alert-success"
 
       if(this.prodGroupPreviews.length == 0){
         
         this.statusMessage = "No data found!";
-        this.statusMessageAlertType = "alert alert-danger"
+        this.statusMessageClass = "alert alert-danger"
       }
-
-      
     });
   }
 
@@ -77,7 +76,7 @@ export class ProductGroupGridComponent implements OnInit {
   }
 
   viewButtonClicked(id: number) {
-    this.prodGroupService.goToDetailPage(id, this.router);
+    this.router.navigateByUrl('/ProductGroupDetail?id=' + id.toString());
   }
 
 }

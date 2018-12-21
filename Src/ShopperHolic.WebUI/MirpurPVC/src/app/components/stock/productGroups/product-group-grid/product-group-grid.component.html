@@ -1,6 +1,6 @@
 <div class="container rounded">
   <h3>Product Group Details:</h3>
-  <div [class]="statusMessageAlertType" *ngIf="statusMessage">
+  <div [class]="statusMessageClass" *ngIf="statusMessage">
     {{statusMessage}}
   </div>
   <a routerLink="/ProductGroupCreate" class="btn btn-outline-dark btn-block mb-3">Create New Product Group</a>
@@ -31,11 +31,11 @@
           </td>
         </tr>
         <tr>
-            <td>Filter: </td>
-            <td><input [(ngModel)]='codeFilterInput' name="codeFilterInput" type="text" placeholder="Code" class="form-control"></td>
-            <td><input [(ngModel)]='nameFilterInput' name="nameFilterInput" type="text" placeholder="Name" class="form-control"></td>
-            <td><button (click)="refreshAndApplyFilter()" class="btn btn-outline-light btn-block">Apply</button></td>
-          </tr>
+          <td>Filter: </td>
+          <td><input [(ngModel)]='codeFilterInput' name="codeFilterInput" type="text" placeholder="Code" class="form-control"></td>
+          <td><input [(ngModel)]='nameFilterInput' name="nameFilterInput" type="text" placeholder="Name" class="form-control"></td>
+          <td><button (click)="refreshAndApplyFilter()" class="btn btn-outline-light btn-block">Apply</button></td>
+        </tr>
       </tbody>
     </table>
   </form>

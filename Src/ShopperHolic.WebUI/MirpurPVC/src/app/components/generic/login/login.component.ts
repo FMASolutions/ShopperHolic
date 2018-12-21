@@ -13,6 +13,7 @@ import { AuthValidator } from 'src/app/services/security/auth.validator';
 export class LoginComponent implements OnInit {
   currentUser: AuthenticatedUserModel = null;
   statusMessage: string = "";
+  statusMessageClass: string = "";
   returnUrl: string = "";
   loginForm: FormGroup;
 
@@ -23,7 +24,6 @@ export class LoginComponent implements OnInit {
       username: [null, [authValidator.ValidateUsername]],
       password: [null, [authValidator.ValidatePassword]]
     });
-    console.log(this.loginForm);
   }
 
   ngOnInit() {
@@ -36,9 +36,9 @@ export class LoginComponent implements OnInit {
         this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
           this.returnUrl ? this.router.navigateByUrl(this.returnUrl) : this.router.navigateByUrl("/home");
         }
-          , (tokenExchangeError) => { this.statusMessage = "Login Failed. Please retry shortly"; console.log(tokenExchangeError); }
+          , (tokenExchangeError) => { this.statusMessage = "Login Failed. Please retry shortly"; }
         )
-      }, (loginError) => { this.statusMessage = "Invalid User Credentials"; console.log(loginError); });
+      }, (loginError) => { this.statusMessage = "Invalid User Credentials"; });
       this.statusMessage = "Processing Login Request...";
     }
     else {

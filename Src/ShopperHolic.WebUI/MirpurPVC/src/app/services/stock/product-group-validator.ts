@@ -9,7 +9,6 @@ export class ProductGroupValidator {
     //Return null if validation successful.
     //Return an object with property isError : true
     public validateCodeForCreate(control: AbstractControl) {
-        console.log(control);
         if (control) {
             if (control.value == null || control.value == "") {
                 return { isError: true, failedPopulation: true }
@@ -27,7 +26,6 @@ export class ProductGroupValidator {
     }
 
     public basicValidation(control: AbstractControl){
-        console.log(control);
         if (control) {
             if (control.value == null || control.value == "") {
                 return { isError: true, failedPopulation: true }
