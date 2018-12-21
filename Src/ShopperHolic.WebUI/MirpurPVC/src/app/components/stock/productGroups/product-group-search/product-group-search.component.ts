@@ -28,6 +28,9 @@ export class ProductGroupSearchComponent implements OnInit {
     if (this.searchID) {
       this.prodService.getByID(this.searchID).subscribe(result => {
         this.router.navigateByUrl('ProductGroupDetail?id=' + result.productGroupID + "&" + this.sms.generateSuccessQueryParam("Search success!"));
+      },error =>{
+        this.statusMessage = "No item found with ID: " + this.searchID;
+        this.statusMessageClass = "alert alert-danger";
       });
     }
     else{ //TODO Implement Search By Code

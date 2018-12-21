@@ -33,8 +33,7 @@ export class ProductGroupCreateComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  //TODO Add Validation
+  //TODO ADD submit on enter
   createProductGroup() {
     if (this.newProdForm.valid) {
       let newProdGroup: CreateProductGroup = {
