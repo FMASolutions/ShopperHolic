@@ -26,23 +26,18 @@ export class ProductGroupGridComponent implements OnInit {
   }
 
   refreshAndApplyFilter() {
-    this.statusMessage = "Requesting data";
     this.prodGroupService.getAll().subscribe(prodResp => {
-      
       if (this.prodGroupPreviews) { this.prodGroupPreviews = []; }
-      
       prodResp.forEach(current => {
-        this.statusMessage = "Processing data";
         this.applyFilter(current);
       })
-
-      this.statusMessage = "Processing complete";
-      this.statusMessageClass = "alert alert-success"
-
       if(this.prodGroupPreviews.length == 0){
-        
         this.statusMessage = "No data found!";
         this.statusMessageClass = "alert alert-danger"
+      }
+      else{
+        this.statusMessage="";
+        this.statusMessageClass="";
       }
     });
   }
