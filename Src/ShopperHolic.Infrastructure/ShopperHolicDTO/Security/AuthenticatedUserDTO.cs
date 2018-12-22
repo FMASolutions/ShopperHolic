@@ -11,6 +11,7 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         }
         public string Username { get; set; }
         public string BearerToken { get; set; }
+        public string RefreshToken {get;set;}
         public bool IsAuthenticated { get; set; }
         public List<UserClaimDTO> UserClaims { get; set; }
     }

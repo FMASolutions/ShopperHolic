@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,9 @@ export class AuthService {
   authURL: string = 'https://localhost:5001/api/Auth/';
   currentUser: AuthenticatedUserModel = new AuthenticatedUserModel();
   private lastUsernameRequested: string = "";
-  constructor(private http: HttpClient) {
-    let existingToken = localStorage.getItem("bearerToken");
+
+  constructor(private http: HttpClient, private cookie: CookieService) {
+    let existingToken = this.cookie.get("bearerToken");
     if (existingToken) { 
       //TODO Check Token Expiry and use Refresh Token if required to get a new token
       Object.assign(this.currentUser,this.getUserFromStorage());
@@ -43,31 +45,42 @@ export class AuthService {
       }));
   }
 
+  refreshToken(): Observable<AuthenticatedUserModel>{
+    return this.http.post<AuthenticatedUserModel>(this.authURL + "TokenRefresh",this.currentUser).pipe(tap(userResp =>{
+      Object.assign(this.currentUser, userResp);
+      this.storeUserToStorage(userResp);
+    }));
+  }
+
   resetCurrentUser() {
     this.currentUser.username = "";
     this.currentUser.userClaims = [];
     this.currentUser.isAuthenticated = false;
     this.currentUser.bearerToken = "";
+    this.currentUser.refreshToken = "";
   }
 
   storeUserToStorage(userToStore: AuthenticatedUserModel) {
-    localStorage.setItem("bearerToken", userToStore.bearerToken);
-    localStorage.setItem("username", userToStore.username);
-    localStorage.setItem("userClaims", JSON.stringify(userToStore.userClaims));
+    this.cookie.set("bearerToken",userToStore.bearerToken);
+    this.cookie.set("username", userToStore.username);
+    this.cookie.set("userClaims",JSON.stringify(userToStore.userClaims));
+    this.cookie.set("refreshToken",JSON.stringify(userToStore.refreshToken));
   }
 
   removeUserFromStorage() {
-    localStorage.removeItem("bearerToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("userClaims");
+    this.cookie.delete("bearerToken");
+    this.cookie.delete("username");
+    this.cookie.delete("userClaims");
+    this.cookie.delete("refreshToken");
   }
 
   getUserFromStorage(): AuthenticatedUserModel {
     let returnObject: AuthenticatedUserModel = new AuthenticatedUserModel();
-    returnObject.bearerToken = localStorage.getItem("bearerToken");
+    returnObject.bearerToken = this.cookie.get("bearerToken");
     returnObject.isAuthenticated = true;
-    returnObject.username = localStorage.getItem("username");
-    returnObject.userClaims = JSON.parse(localStorage.getItem("userClaims"));
+    returnObject.username = this.cookie.get("username");
+    returnObject.userClaims = JSON.parse(this.cookie.get("userClaims"));
+    returnObject.refreshToken = JSON.parse(this.cookie.get("refreshToken"));
     return returnObject;
   }
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ShopperHolic.API.ShopperAPI.Models.Security;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
@@ -36,6 +37,23 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             var authenticatedUserDTO = _securityManager.ExchangeKeyForToken(exchangeKey, username);
             if (authenticatedUserDTO.IsAuthenticated & !string.IsNullOrEmpty(authenticatedUserDTO.BearerToken)) { return authenticatedUserDTO; }
             return BadRequest();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult<AuthenticatedUserDTO> TokenRefresh([FromBody] AuthenticatedUserDTO currentUser)
+        {
+            var returnUser = _securityManager.RefreshToken(currentUser);
+            if(returnUser != null)
+                return returnUser;
+            else
+                return BadRequest();
+        }
+
+        [Authorize]
+        public ActionResult<bool> Logout()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

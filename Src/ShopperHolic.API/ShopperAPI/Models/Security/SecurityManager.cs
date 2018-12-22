@@ -39,13 +39,15 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
                     var claims = _securityService.GetUserClaims(username);
                     if (claims != null)
                     {
-                        string JWToken = BuildJwtToken(username, claims);
-                        if (!string.IsNullOrEmpty(JWToken))
+                        string userJWTToken = BuildUserJwtToken(username, claims);
+                        if (!string.IsNullOrEmpty(userJWTToken))
                         {
                             returnUser = new AuthenticatedUserDTO();
-                            returnUser.BearerToken = JWToken;
+                            returnUser.RefreshToken = BuildRefreshToken(username);
+                            returnUser.BearerToken = userJWTToken;
                             returnUser.IsAuthenticated = true;
                             returnUser.Username = username;
+
                             foreach (var claim in claims) { returnUser.UserClaims.Add(claim); }
                         }
                     }
@@ -54,7 +56,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
             return returnUser;
         }
 
-        protected string BuildJwtToken(string username, IEnumerable<UserClaimDTO> claims)
+        private string BuildUserJwtToken(string username, IEnumerable<UserClaimDTO> claims)
         {
             SymmetricSecurityKey key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_jwtSettings.Key));
 
@@ -79,6 +81,48 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public AuthenticatedUserDTO RefreshToken(AuthenticatedUserDTO currentUser)
+        {
+            AuthenticatedUserDTO returnUser = null;
+            JwtSecurityToken currentRefreshToken = new JwtSecurityToken(currentUser.RefreshToken);
+            var claims = _securityService.GetUserClaims(currentUser.Username);
+            if (claims != null)
+            {
+                string newUserToken = BuildUserJwtToken(currentUser.Username, claims);
+                returnUser = new AuthenticatedUserDTO();
+                returnUser.BearerToken = newUserToken;
+                returnUser.IsAuthenticated = true;
+                returnUser.RefreshToken = currentUser.RefreshToken;
+                returnUser.Username = currentUser.Username;
+
+                foreach (var claim in claims) { returnUser.UserClaims.Add(claim); }
+            }
+            return returnUser;
+        }
+
+        private string BuildRefreshToken(string username)
+        {
+            SymmetricSecurityKey key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_jwtSettings.Key));
+
+            List<Claim> jwtClaims = new List<Claim>();
+            jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));
+            jwtClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+
+            var token = new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: jwtClaims,
+                notBefore: DateTime.UtcNow,
+                expires: DateTime.UtcNow.AddDays(1),
+                signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+
+
 
 
     }

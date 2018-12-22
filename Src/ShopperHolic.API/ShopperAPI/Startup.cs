@@ -56,7 +56,7 @@ namespace ShopperHolic.API.ShopperAPI
                      ValidAudience = jwtSettings.Audience,
 
                      ValidateLifetime = true,
-                     ClockSkew = TimeSpan.FromMinutes(jwtSettings.MinutesToExpiration)
+                     ClockSkew = TimeSpan.Zero
                  };
              });
             //Add Claim based Authorization (NOTE; Claim Type And Claim Value and BOTH CASE SENSITIVE)

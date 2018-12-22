@@ -52,7 +52,6 @@ export class ProductGroupDetailComponent implements OnInit {
       this.statusMessage = "Requesting Delete...";
       this.prodService.delete(this.detailForm.value["id"]).subscribe(deleteResp => {
         //TODO Improve Delete so it shows an error, preverbly API reporting back why the report failed. I.E orpahned record????
-        console.log(deleteResp);
         if (deleteResp) {
           this.router.navigateByUrl("/ProductGroups?" + this.sms.generateSuccessQueryParam("Delete processed successfully"));
         }

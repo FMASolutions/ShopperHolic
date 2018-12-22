@@ -29,6 +29,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    let statusFromQuery = this.route.snapshot.queryParamMap.get(this.sms.queryParamProperty);
+    if(statusFromQuery){
+      this.statusMessage = this.sms.getMessageFromQueryParam(statusFromQuery);
+      this.statusMessageClass = this.sms.generateAlertClassFromQuery(statusFromQuery);
+    }
   }
 
   attemptLogin() {

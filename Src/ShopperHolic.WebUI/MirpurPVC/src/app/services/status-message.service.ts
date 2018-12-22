@@ -23,8 +23,6 @@ export class StatusMessageService {
   }
 
   public generateAlertClassFromQuery(queryParams: string): string {
-    console.log("Query params received = ");
-    console.log(queryParams);
     if (queryParams[1] == 'S') {
       return "alert alert-success";
     }

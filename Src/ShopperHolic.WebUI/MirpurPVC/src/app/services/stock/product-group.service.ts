@@ -56,6 +56,5 @@ export class ProductGroupService {
   }
 
   private apiErrorHandler(error: HttpErrorResponse) {
-    console.log(error);
   }
 }

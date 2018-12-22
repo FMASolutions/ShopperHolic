@@ -14,8 +14,4 @@ export class AppComponent {
   constructor(private authService: AuthService) {
     this.currentUser = authService.currentUser;
   }
-
-  logout(): void {
-    this.authService.logoutExistingUser();
-  }
 }

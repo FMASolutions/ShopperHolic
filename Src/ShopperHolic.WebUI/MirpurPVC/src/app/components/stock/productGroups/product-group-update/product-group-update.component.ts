@@ -39,7 +39,6 @@ export class ProductGroupUpdateComponent implements OnInit {
   ngOnInit() {
     let idFromNavBar: number = parseInt(this.route.snapshot.queryParamMap.get('id'));
     this.prodService.getByID(idFromNavBar).subscribe(resp => {
-      console.log(resp);
       this.updateForm.setValue({
         id: resp.productGroupID,
         code: resp.productGroupCode,
