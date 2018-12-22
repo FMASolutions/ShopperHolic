@@ -50,9 +50,9 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         {
             var searchResult = _prodGroupManager.GetAllPreview();
             List<ProductGroupPreviewDTO> returnList = new List<ProductGroupPreviewDTO>();
-            if(searchResult != null)
-                foreach(var result in searchResult)
-                    returnList.Add(result);
+            
+            foreach(var result in searchResult)
+                returnList.Add(result);
             
             if(returnList.Count > 0)
                 return returnList;
@@ -66,11 +66,13 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             return _prodGroupManager.Update(newModel);
         }
 
+        [Authorize(Policy="UserCanDeleteProductGroup")]
         [HttpDelete]
         public ActionResult<bool> Delete([FromQuery] int id)
         {
             return _prodGroupManager.Delete(id);
         }
+
         private ProductGroupManager _prodGroupManager;
     }
 }

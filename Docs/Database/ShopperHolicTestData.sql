@@ -217,11 +217,12 @@ INSERT INTO UserClaimTypes
     (UserClaimTypeName)
 VALUES
     ('IsAdminUser'),
-    ('UserCanEditItems'),
-    ('UserCanAddItemsToEstimate'),
-    ('UserCanRemoveItemsFromEstimate'),
     ('UserCanCreateProductGroup'),
-    ('UserCanEditProductGroup')
+    ('UserCanEditProductGroup'),
+    ('UserCanDeleteProductGroup'),
+    ('UserCanCreateSubGroup'),
+    ('UserCanEditSubGroup'),
+    ('UserCanDeleteSubGroup')
 GO
 
 PRINT 'Insert UserRolesTypes'
@@ -249,17 +250,33 @@ INSERT INTO UserClaims
     (UserClaimTypeID, UserID, ClaimValue)
 VALUES
     (1,1,'true'), -- IsAdminUser / Faisal 
-    (2,1,'true'), -- UserCanEditItems / Faisal
-    (3,1,'true'), -- UserCanAddItemsToEstimate / Faisal
-    (4,1,'true'), -- UserCanRemoveItemsFromEstimate / Faisal
-    (5,1,'true'), -- UserCanCreateProductGroup / Faisal
-    (6,1,'true'), -- UserCanEditProductGroup / Faisal
-    (1,2,'true'), -- IsAdminUser / Zulkar
-    (2,2,'true'), -- UserCanEditItems / Zulkar
-    (1,3,'false'), -- IsAdminUser / TestCustomer
-    (2,3,'false'), -- UserCanEditItems / TestCustomer
-    (1,4,'false'), -- IsAdminUser / MinAccess
-    (2,4,'false') -- UserCanEditItems / MinAccess
+    (2,1,'true'), -- UserCanCreateProductGroup / Faisal
+    (3,1,'true'), -- UserCanEditProductGroup / Faisal
+    (4,1,'true'), -- UserCanDeleteProductGroup / Faisal
+    (5,1,'true'), -- UserCanCreateSubGroup / Faisal
+    (6,1,'true'), -- UserCanEditSubGroup / Faisal
+    (7,1,'true'), -- UserCanDeleteSubGroup / Faisal
+    (1,2,'true'), -- IsAdminUser / Zulkar 
+    (2,2,'true'), -- UserCanCreateProductGroup / Zulkar
+    (3,2,'true'), -- UserCanEditProductGroup / Zulkar
+    (4,2,'true'), -- UserCanDeleteProductGroup / Zulkar
+    (5,2,'true'), -- UserCanCreateSubGroup / Zulkar
+    (6,2,'true'), -- UserCanEditSubGroup / Zulkar
+    (7,2,'true'), -- UserCanDeleteSubGroup / Zulkar
+    (1,3,'false'), -- IsAdminUser / TestCustomer 
+    (2,3,'false'), -- UserCanCreateProductGroup / TestCustomer
+    (3,3,'false'), -- UserCanEditProductGroup / TestCustomer
+    (4,3,'false'), -- UserCanDeleteProductGroup / TestCustomer
+    (5,3,'false'), -- UserCanCreateSubGroup / TestCustomer
+    (6,3,'false'), -- UserCanEditSubGroup / TestCustomer
+    (7,3,'false'), -- UserCanDeleteSubGroup / TestCustomer
+    (1,4,'false'), -- IsAdminUser / Minaccess 
+    (2,4,'false'), -- UserCanCreateProductGroup / Minaccess
+    (3,4,'false'), -- UserCanEditProductGroup / Minaccess
+    (4,4,'false'), -- UserCanDeleteProductGroup / Minaccess
+    (5,4,'false'), -- UserCanCreateSubGroup / Minaccess
+    (6,4,'false'), -- UserCanEditSubGroup / Minaccess
+    (7,4,'false') -- UserCanDeleteSubGroup / Minaccess
 GO
 
 PRINT 'Insert UserRoles'

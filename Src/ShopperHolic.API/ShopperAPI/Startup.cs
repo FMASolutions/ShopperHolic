@@ -63,8 +63,12 @@ namespace ShopperHolic.API.ShopperAPI
             services.AddAuthorization(config =>
             {
                 config.AddPolicy("IsAdminUser", policyBuilder => policyBuilder.RequireClaim("IsAdminUser", "true"));
-                config.AddPolicy("CanDeleteProducts", policyBuilder => policyBuilder.RequireClaim("CanDeleteProducts", "true"));
-                config.AddPolicy("CanAmendProducts", policyBuilder => policyBuilder.RequireClaim("CanAmendProducts", "true"));
+                config.AddPolicy("UserCanCreateProductGroup", policyBuilder => policyBuilder.RequireClaim("UserCanCreateProductGroup", "true"));
+                config.AddPolicy("UserCanEditProductGroup", policyBuilder => policyBuilder.RequireClaim("UserCanEditProductGroup", "true"));
+                config.AddPolicy("UserCanDeleteProductGroup", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteProductGroup", "true"));
+                config.AddPolicy("UserCanCreateSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanCreateSubGroup", "true"));
+                config.AddPolicy("UserCanEditSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanEditSubGroup", "true"));
+                config.AddPolicy("UserCanDeleteSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteSubGroup", "true"));
             });
 
             //Compatibility and Cors
