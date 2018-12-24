@@ -39,18 +39,23 @@ export class ProductGroupUpdateComponent implements OnInit {
   }
 
   saveChanges() {
-    this.statusMessage.setInfoMessage("Updating Please Wait...");
+    if (this.updateForm.valid) {
+      this.statusMessage.setInfoMessage("Updating Please Wait...");
 
-    let updatedGroup: ProductGroup = new ProductGroup();
-    updatedGroup.productGroupID = this.updateForm.value["id"];
-    updatedGroup.productGroupCode = this.updateForm.value["code"];
-    updatedGroup.productGroupName = this.updateForm.value["name"];
-    updatedGroup.productGroupDescription = this.updateForm.value["desc"];
+      let updatedGroup: ProductGroup = new ProductGroup();
+      updatedGroup.productGroupID = this.updateForm.value["id"];
+      updatedGroup.productGroupCode = this.updateForm.value["code"];
+      updatedGroup.productGroupName = this.updateForm.value["name"];
+      updatedGroup.productGroupDescription = this.updateForm.value["desc"];
 
-    this.prodService.update(updatedGroup).subscribe(newModelResp => {
-      this.statusMessage.setSuccessMessage("Update Success");
-      this.prodService.goToProductGroupDetail(newModelResp.productGroupID, this.statusMessage.getCurrentMessageAsUrlParameter());
-    });
+      this.prodService.update(updatedGroup).subscribe(newModelResp => {
+        this.statusMessage.setSuccessMessage("Update Success");
+        this.prodService.goToProductGroupDetail(newModelResp.productGroupID, this.statusMessage.getCurrentMessageAsUrlParameter());
+      }, (error) => {
+        console.log(error);
+        this.statusMessage.updateCurrentStatusFromError(error);
+      });
+    }
   }
 
   goBack() {

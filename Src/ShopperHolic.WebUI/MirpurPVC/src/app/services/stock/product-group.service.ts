@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { ProductGroup } from '../../models/stock/productGroups/productGroup';
 import { CreateProductGroup } from 'src/app/models/stock/productGroups/createProductGroup';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { map, catchError, tap } from 'rxjs/operators';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
 
 @Injectable({

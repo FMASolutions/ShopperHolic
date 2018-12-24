@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, Params, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { StatusMessageService } from '../services/status-message.service';
 
 export class StatusMessage {

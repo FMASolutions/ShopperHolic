@@ -38,10 +38,17 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 
         public ProductGroupDTO Update(ProductGroupDTO newModel)
         {
-            ProductGroupDTO returnModel = UOW.ProductGroupRepo.Update(newModel);
-            if (returnModel != null) { UOW.SaveChanges(); }
-            else { UOW.RollbackChanges(); }
-            return returnModel;
+            try
+            {
+                ProductGroupDTO returnModel = UOW.ProductGroupRepo.Update(newModel);
+                UOW.SaveChanges();
+                return returnModel;
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                UOW.RollbackChanges();
+                throw HandleSQLException(ex);
+            }
         }
         public bool Delete(int productGroupID)
         {

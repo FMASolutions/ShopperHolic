@@ -63,7 +63,14 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpPut]
         public ActionResult<ProductGroupDTO> Update([FromBody] ProductGroupDTO newModel)
         {
-            return _prodGroupManager.Update(newModel);
+            try
+            {
+                return _prodGroupManager.Update(newModel);
+            }
+            catch (KeyAlreadyExists ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Authorize(Policy="UserCanDeleteProductGroup")]
