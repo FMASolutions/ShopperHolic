@@ -12,13 +12,13 @@ export class StatusMessageService {
   public generateSuccessQueryParam(message: string): string {
     return this.queryParamProperty + "=(S)" + message;
   }
-  public generateInfoQueryParam(message: string): string{
+  public generateInfoQueryParam(message: string): string {
     return this.queryParamProperty + "=(I)" + message;
   }
-  public generateWarningQueryParam(message: string): string{
+  public generateWarningQueryParam(message: string): string {
     return this.queryParamProperty + "=(W)" + message;
   }
-  public generateDangerQueryParam(message: string): string{
+  public generateDangerQueryParam(message: string): string {
     return this.queryParamProperty + "=(D)" + message;
   }
 
@@ -38,7 +38,14 @@ export class StatusMessageService {
     return "";
   }
 
-  public getMessageFromQueryParam(queryParam: string): string{
+  public generateClassParameterFromClasString(classText: string) {
+    if (classText.indexOf('alert-success') > 0) { return "(S)"; }
+    else if (classText.indexOf('alert-info') > 0) { return "(I)"; }
+    else if (classText.indexOf('alert-warning') > 0) { return "(W)"; }
+    else { return "(D)"; }
+  }
+
+  public getMessageFromQueryParam(queryParam: string): string {
     return queryParam.substr(3); //Skip out the 3 character encoding for the alert type i.e (S) (I) (W) (D)
   }
 }

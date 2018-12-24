@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
 import { ProductGroupService } from 'src/app/services/stock/product-group.service';
-import { Router } from '@angular/router';
-import { StatusMessageService } from 'src/app/services/status-message.service';
+import { StatusMessage } from 'src/app/models/statusModel';
 
 @Component({
   selector: 'app-product-group-grid',
@@ -14,41 +13,40 @@ export class ProductGroupGridComponent implements OnInit {
   prodGroupPreviews: ProductGroupPreview[] = [];
   codeFilterInput: string = "";
   nameFilterInput: string = "";
-  statusMessage: string = "";
-  statusMessageClass: string = "";
+  statusMessage: StatusMessage = new StatusMessage();
 
-  constructor(private prodGroupService: ProductGroupService, private router: Router,private sms: StatusMessageService) {
+  constructor(private prodGroupService: ProductGroupService) { }
 
-  }
+  ngOnInit() { this.refreshAndApplyFilter(); }
 
-  ngOnInit() {
-    this.refreshAndApplyFilter();
+  viewButtonClicked(id: number) {
+    this.prodGroupService.goToProductGroupDetail(id);
   }
 
   refreshAndApplyFilter() {
     this.prodGroupService.getAll().subscribe(prodResp => {
+
       if (this.prodGroupPreviews) { this.prodGroupPreviews = []; }
+
       prodResp.forEach(current => {
         this.applyFilter(current);
       })
-      if(this.prodGroupPreviews.length == 0){
-        this.statusMessage = "No data found!";
-        this.statusMessageClass = "alert alert-danger"
-      }
-      else{
-        this.statusMessage="";
-        this.statusMessageClass="";
+
+      if (this.prodGroupPreviews.length == 0) {
+        this.statusMessage.setDangerMessage("No data found!");
+      } else {
+        this.statusMessage.clearCurrentMessage();
       }
     });
   }
 
-  resetFilters(){
+  resetFilters() {
     this.codeFilterInput = "";
     this.nameFilterInput = "";
     this.refreshAndApplyFilter();
   }
 
-  private applyFilter(item: ProductGroupPreview){
+  private applyFilter(item: ProductGroupPreview) {
     if (this.codeFilterInput && this.nameFilterInput) { //Both filters contain values
       if (item.productGroupCode.toLowerCase().indexOf(this.codeFilterInput.toLowerCase()) >= 0
         && item.productGroupName.toLowerCase().indexOf(this.nameFilterInput.toLowerCase()) >= 0) {
@@ -69,9 +67,4 @@ export class ProductGroupGridComponent implements OnInit {
       this.prodGroupPreviews.push(item);
     }
   }
-
-  viewButtonClicked(id: number) {
-    this.router.navigateByUrl('/ProductGroupDetail?id=' + id.toString());
-  }
-
 }

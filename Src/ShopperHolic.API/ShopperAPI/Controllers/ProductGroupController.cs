@@ -70,7 +70,15 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpDelete]
         public ActionResult<bool> Delete([FromQuery] int id)
         {
-            return _prodGroupManager.Delete(id);
+            try
+            {
+                return _prodGroupManager.Delete(id);
+            }
+            catch(ChildRecordExists ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         private ProductGroupManager _prodGroupManager;

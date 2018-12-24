@@ -12,12 +12,12 @@ import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productG
 })
 export class ProductGroupService {
 
-  
+
   baseURL: string = 'https://localhost:5001/api/ProductGroup/';
   lastCreatedProd: ProductGroup = new ProductGroup();
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
 
@@ -35,6 +35,26 @@ export class ProductGroupService {
 
   public update(newModel: ProductGroup): Observable<ProductGroup> {
     return this.http.put<ProductGroup>(this.baseURL + 'Update', newModel).pipe(tap(this.prodUpdatedResp, this.apiErrorHandler));
+  }
+
+  public goToProductGroupHome(formattedStatusMessage?: string) {
+    if (formattedStatusMessage) {
+      this.router.navigateByUrl("/ProductGroups?" + formattedStatusMessage);
+    } else {
+      this.router.navigateByUrl("/ProductGroups");
+    }
+  }
+
+  public goToProductGroupDetail(requestedID: number,formattedStatusMessage?: string){
+    if (formattedStatusMessage) {
+      this.router.navigateByUrl("/ProductGroupDetail?id=" + requestedID.toString() + "&" + formattedStatusMessage);
+    }
+    else
+      this.router.navigateByUrl("/ProductGroupDetail?id=" + requestedID.toString());
+  }
+
+  public goToProductGroupUpdate(requestID: number){
+    this.router.navigateByUrl("/ProductGroupUpdate?id=" + requestID);
   }
 
   public delete(prodGroupID: number): Observable<boolean> {

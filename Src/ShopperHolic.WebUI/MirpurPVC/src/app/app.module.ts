@@ -33,6 +33,7 @@ import { SubGroupDetailComponent } from './components/stock/subGroups/sub-group-
 import { SubGroupGridComponent } from './components/stock/subGroups/sub-group-grid/sub-group-grid.component';
 import { SubGroupSearchComponent } from './components/stock/subGroups/sub-group-search/sub-group-search.component';
 import { SubGroupUpdateComponent } from './components/stock/subGroups/sub-group-update/sub-group-update.component';
+import { ProductGroupCRUDComponent } from './components/stock/productGroups/product-group-crud/product-group-crud.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { SubGroupUpdateComponent } from './components/stock/subGroups/sub-group-
     SubGroupGridComponent,
     SubGroupSearchComponent,
     SubGroupUpdateComponent,
+    ProductGroupCRUDComponent,
   ],
   imports: [
     BrowserModule,

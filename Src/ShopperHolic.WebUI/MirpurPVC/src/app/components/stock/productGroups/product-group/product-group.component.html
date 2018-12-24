@@ -1,6 +1,6 @@
 <div class="container">
-    <div [class]="statusMessageClass" *ngIf="statusMessage">
-        {{statusMessage}}
+    <div [class]="statusMessage.getClass()" *ngIf="statusMessage.getValue()">
+        {{statusMessage.getValue()}}
     </div>
 </div>
 <app-product-group-search></app-product-group-search>

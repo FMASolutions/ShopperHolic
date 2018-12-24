@@ -1,7 +1,7 @@
 <div class="container rounded">
   <h3>Product Group Details:</h3>
-  <div [class]="statusMessageClass" *ngIf="statusMessage">
-    {{statusMessage}}
+  <div [class]="statusMessage.getClass()" *ngIf="statusMessage.getValue()">
+    {{statusMessage.getValue()}}
   </div>
   <a routerLink="/ProductGroupCreate" class="btn btn-outline-dark btn-block mb-3">Create New Product Group</a>
   <button (click)="resetFilters()" class="btn btn-outline-dark btn-block mb-3">Reset Filters</button>

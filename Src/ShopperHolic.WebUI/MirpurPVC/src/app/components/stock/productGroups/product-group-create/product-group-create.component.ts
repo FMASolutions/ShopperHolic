@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductGroupService } from '../../../../services/stock/product-group.service';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductGroupValidator } from 'src/app/services/stock/product-group-validator';
 import { CreateProductGroup } from 'src/app/models/stock/productGroups/createProductGroup';
-import { StatusMessageService } from 'src/app/services/status-message.service';
+import { StatusMessage } from 'src/app/models/statusModel';
 
 @Component({
   selector: 'app-product-group-create',
@@ -13,17 +12,10 @@ import { StatusMessageService } from 'src/app/services/status-message.service';
 })
 export class ProductGroupCreateComponent implements OnInit {
 
-  statusMessage: string = "";
-  statusMessageClass: string = "";
+  statusMessage: StatusMessage = new StatusMessage();
   newProdForm: FormGroup;
 
-  constructor(
-    private prodGroupService: ProductGroupService,
-    private router: Router,
-    private fb: FormBuilder,
-    private pgValidator: ProductGroupValidator,
-    private sms: StatusMessageService
-  ) {
+  constructor(private prodGroupService: ProductGroupService, private fb: FormBuilder, private pgValidator: ProductGroupValidator) {
     this.newProdForm = this.fb.group({
       code: [null, [pgValidator.validateCodeForCreate]],
       name: [null, [pgValidator.basicValidation]],
@@ -31,26 +23,30 @@ export class ProductGroupCreateComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-  //TODO ADD submit on enter
+  ngOnInit() { }
+
   createProductGroup() {
     if (this.newProdForm.valid) {
-      let newProdGroup: CreateProductGroup = {
-        productGroupCode: this.newProdForm.value["code"],
-        productGroupName: this.newProdForm.value["name"],
-        productGroupDescription: this.newProdForm.value["desc"]
-      };
-
-      this.prodGroupService.createNewProduct(newProdGroup).subscribe(resp => {
-        let navUrl = "/ProductGroupDetail?id=" + resp.productGroupID;
-        navUrl += "&" + this.sms.generateSuccessQueryParam("Create Completed Successfully!");
-        this.router.navigateByUrl(navUrl);
-      }, error => {
-        this.statusMessage = error.error;
-        this.statusMessageClass = "alert alert-danger";
-      });
+      this.prodGroupService.createNewProduct(this.getModelFromCurrentForm())
+        .subscribe(resp => {
+          this.goToProductDetailPage(resp.productGroupID);
+        }, error => {
+          this.statusMessage.updateCurrentStatusFromError(error);
+        });
     }
   }
 
+  private getModelFromCurrentForm(): CreateProductGroup {
+    let newProdGroup: CreateProductGroup = {
+      productGroupCode: this.newProdForm.value["code"],
+      productGroupName: this.newProdForm.value["name"],
+      productGroupDescription: this.newProdForm.value["desc"]
+    };
+    return newProdGroup;
+  }
+
+  private goToProductDetailPage(prodGroupID: number) {
+    this.statusMessage.setSuccessMessage("Create Completed Successfully");
+    this.prodGroupService.goToProductGroupDetail(prodGroupID, this.statusMessage.getCurrentMessageAsUrlParameter());
+  }
 }

@@ -4,15 +4,16 @@ import { HTTP_INTERCEPTORS, HttpInterceptor, HttpHandler, HttpRequest, HttpEvent
 import { AuthService } from './auth.service';
 import { catchError, switchMap, filter, take } from 'rxjs/operators';
 import { AuthenticatedUserModel } from 'src/app/models/security/authenticatedUserModel';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, UrlTree } from '@angular/router';
 import { StatusMessageService } from '../status-message.service';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
     private isRefreshing: boolean = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    constructor(private authService: AuthService, private router: Router, private sms: StatusMessageService) { }
+    constructor(private authService: AuthService, private router: Router, private sms: StatusMessageService, private route: ActivatedRoute) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let bearerToken: string = "";
@@ -27,15 +28,15 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         }
 
         return next.handle(req).pipe(catchError(error => {
-            if (error instanceof HttpErrorResponse && error.status === 401) {
-                return this.handle401Error(req, next);
+            if (error instanceof HttpErrorResponse && error.status === 401) { //Unauthorized
+                return this.handle401Error(req, next, error);
             } else {
                 return throwError(error);
             }
         }));
     }
 
-    handle401Error(req: HttpRequest<any>, next: HttpHandler) {
+    private handle401Error(req: HttpRequest<any>, next: HttpHandler, currentError: HttpErrorResponse) {
         if (!this.isRefreshing) {
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
@@ -49,7 +50,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             this.isRefreshing = false;
             this.authService.logoutExistingUser();
             this.router.navigateByUrl('/login?' + this.sms.generateInfoQueryParam("Session expired, please login again"));
-            return next.handle(req);            
+            return next.handle(req);
         } else {
             return this.refreshTokenSubject.pipe(
                 filter(user => user != null),

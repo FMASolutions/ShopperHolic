@@ -1,13 +1,11 @@
 //TODO FIGURE OUT HOW TO COMBINE THE CREATE AND UPDATE HTML AS IT IS ESSENTIALLY THE SAME APART FROM ID
 import { Component, OnInit } from '@angular/core';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { fbind } from 'q';
 import { ProductGroupValidator } from 'src/app/services/stock/product-group-validator';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
-import { StatusMessageService } from 'src/app/services/status-message.service';
+import { StatusMessage } from 'src/app/models/statusModel';
 
 @Component({
   selector: 'app-product-group-update',
@@ -16,18 +14,10 @@ import { StatusMessageService } from 'src/app/services/status-message.service';
 })
 export class ProductGroupUpdateComponent implements OnInit {
 
-  statusMessage: string = "";
-  statusMessageClass: string = "";
+  statusMessage: StatusMessage = new StatusMessage();
   updateForm: FormGroup;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private prodService: ProductGroupService,
-    private fb: FormBuilder,
-    private pgValidator: ProductGroupValidator,
-    private sms: StatusMessageService
-  ) {
+  constructor(private route: ActivatedRoute, private prodService: ProductGroupService, private fb: FormBuilder, private pgValidator: ProductGroupValidator, ) {
     this.updateForm = fb.group({
       id: 0,
       code: ['', [pgValidator.validateCodeForCreate]],
@@ -49,6 +39,8 @@ export class ProductGroupUpdateComponent implements OnInit {
   }
 
   saveChanges() {
+    this.statusMessage.setInfoMessage("Updating Please Wait...");
+
     let updatedGroup: ProductGroup = new ProductGroup();
     updatedGroup.productGroupID = this.updateForm.value["id"];
     updatedGroup.productGroupCode = this.updateForm.value["code"];
@@ -56,13 +48,13 @@ export class ProductGroupUpdateComponent implements OnInit {
     updatedGroup.productGroupDescription = this.updateForm.value["desc"];
 
     this.prodService.update(updatedGroup).subscribe(newModelResp => {
-      this.router.navigateByUrl("ProductGroupDetail?id=" + newModelResp.productGroupID + "&" + this.sms.generateSuccessQueryParam("Update Success"));
+      this.statusMessage.setSuccessMessage("Update Success");
+      this.prodService.goToProductGroupDetail(newModelResp.productGroupID, this.statusMessage.getCurrentMessageAsUrlParameter());
     });
-    this.statusMessage = "Updating Please Wait.....";
-    this.statusMessageClass = "alert alert-info";
   }
 
   goBack() {
-    this.router.navigateByUrl('/ProductGroupDetail?id=' + this.updateForm.value["id"] + "&" + this.sms.generateInfoQueryParam("Changes Discarded"));
+    this.statusMessage.setInfoMessage("Changes Discarded");
+    this.prodService.goToProductGroupDetail(this.updateForm.value["id"], this.statusMessage.getCurrentMessageAsUrlParameter());
   }
 }

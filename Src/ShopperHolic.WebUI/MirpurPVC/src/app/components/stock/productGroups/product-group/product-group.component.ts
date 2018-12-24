@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StatusMessageService } from 'src/app/services/status-message.service';
 import { ActivatedRoute } from '@angular/router';
+import { StatusMessage } from 'src/app/models/statusModel';
 
 @Component({
   selector: 'app-product-group',
@@ -9,16 +9,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductGroupComponent implements OnInit {
 
-  statusMessage: string = "";
-  statusMessageClass: string = "";
-  constructor(private sms: StatusMessageService, private route: ActivatedRoute) { }
+  statusMessage: StatusMessage = new StatusMessage();
+
+  constructor( private route: ActivatedRoute) { }
 
   ngOnInit() {
-    let statusFromQuery = this.route.snapshot.queryParamMap.get(this.sms.queryParamProperty);
-      if(statusFromQuery){
-        this.statusMessage = this.sms.getMessageFromQueryParam(statusFromQuery);
-        this.statusMessageClass = this.sms.generateAlertClassFromQuery(statusFromQuery);
-      }
+    this.statusMessage.updateCurrentStatusFromURL(this.route);
   }
 
 }

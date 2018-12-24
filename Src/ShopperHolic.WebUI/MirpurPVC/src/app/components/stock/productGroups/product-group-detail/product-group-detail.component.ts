@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { StatusMessageService } from 'src/app/services/status-message.service';
+import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
+import { StatusMessage } from 'src/app/models/statusModel';
 
-//TO DO LOCK DOWN HTML PART SO THE DELETE BUTTON DOESN'T SHOW DEPENDING ON THE CURRENT USER CLAIMS (IF ANY)
+//TODO LOCK DOWN HTML PART SO THE DELETE BUTTON DOESN'T SHOW DEPENDING ON THE CURRENT USER CLAIMS (IF ANY)
 @Component({
   selector: 'app-product-group-detail',
   templateUrl: './product-group-detail.component.html',
@@ -12,11 +13,10 @@ import { StatusMessageService } from 'src/app/services/status-message.service';
 })
 export class ProductGroupDetailComponent implements OnInit {
 
-  statusMessage: string = "";
-  statusMessageClass: string = "";
+  statusMessage: StatusMessage = new StatusMessage();
   detailForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private prodService: ProductGroupService,private sms: StatusMessageService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private prodService: ProductGroupService) {
     this.detailForm = fb.group({
       id: 0,
       code: '',
@@ -26,39 +26,45 @@ export class ProductGroupDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    let idFromNavBar: number = parseInt(this.route.snapshot.queryParamMap.get('id'));
-    this.prodService.getByID(idFromNavBar).subscribe(resp =>{
-      this.detailForm.setValue({
-        id: resp.productGroupID,
-        code: resp.productGroupCode,
-        name: resp.productGroupName,
-        desc: resp.productGroupDescription 
-      });
-      let statusFromQuery = this.route.snapshot.queryParamMap.get(this.sms.queryParamProperty);
-      if(statusFromQuery){
-        this.statusMessage = this.sms.getMessageFromQueryParam(statusFromQuery);
-        this.statusMessageClass = this.sms.generateAlertClassFromQuery(statusFromQuery);
-      }
-    })
+    this.populateFromNavBar();
   }
 
   requestUpdatePage() {
-    let navUrl = "/ProductGroupUpdate?id=" + this.detailForm.value["id"];
-    this.router.navigateByUrl(navUrl);
+    this.prodService.goToProductGroupUpdate(this.detailForm.value["id"]); 
   }
 
   requestDelete() {
+
     if (confirm("Are you sure you would like to delete? This can't be undone....")) {
-      this.statusMessage = "Requesting Delete...";
+
+      this.statusMessage.setInfoMessage("Requesting Delete. Please wait");
+
       this.prodService.delete(this.detailForm.value["id"]).subscribe(deleteResp => {
-        //TODO Improve Delete so it shows an error, preverbly API reporting back why the report failed. I.E orpahned record????
-        if (deleteResp) {
-          this.router.navigateByUrl("/ProductGroups?" + this.sms.generateSuccessQueryParam("Delete processed successfully"));
-        }
-        else {this.statusMessage = "Delete Failed"; this.statusMessageClass = "alert alert-danger";}
+
+        this.statusMessage.setSuccessMessage("Delete processed successfully");
+        this.prodService.goToProductGroupHome(this.statusMessage.getCurrentMessageAsUrlParameter());
+      
+      }, error => {
+        this.statusMessage.updateCurrentStatusFromError(error);
       });
     }
+
   }
 
+  private populateFromNavBar() {
+    let idFromNavBar: number = parseInt(this.route.snapshot.queryParamMap.get('id'));
+    this.prodService.getByID(idFromNavBar).subscribe(respModel => {
+      this.populateFormFromModel(respModel);
+      this.statusMessage.updateCurrentStatusFromURL(this.route);
+    })
+  }
 
+  private populateFormFromModel(model: ProductGroup) {
+    this.detailForm.setValue({
+      id: model.productGroupID,
+      code: model.productGroupCode,
+      name: model.productGroupName,
+      desc: model.productGroupDescription
+    });
+  }
 }

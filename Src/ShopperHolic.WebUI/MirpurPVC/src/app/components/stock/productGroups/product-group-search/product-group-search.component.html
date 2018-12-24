@@ -1,8 +1,8 @@
 <div class="container rounded">
   <form class="form-signin">
     <h3>Product Group Search:</h3>
-    <div [class]="statusMessageClass" *ngIf="statusMessage">
-      {{statusMessage}}
+    <div [class]="statusMessage.getClass()" *ngIf="statusMessage.getValue()">
+      {{statusMessage.getValue()}}
     </div>
     <div class="row">
       <div class="col-sm-6">

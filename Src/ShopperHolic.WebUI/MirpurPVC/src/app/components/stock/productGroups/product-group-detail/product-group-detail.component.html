@@ -1,7 +1,7 @@
 <div class="container rounded">
     <h3>Product Group Details</h3>
-    <div [class]="statusMessageClass" *ngIf="statusMessage">
-        {{statusMessage}}
+    <div [class]="statusMessage.getClass()" *ngIf="statusMessage.getValue()">
+        {{statusMessage.getValue()}}
     </div>
     <form class="form-signin" [formGroup]="detailForm">
         <div class="form-group">
