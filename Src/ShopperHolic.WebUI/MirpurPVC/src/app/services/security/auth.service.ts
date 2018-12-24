@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root'
 })
-//TODO IMPLEMENT USE OF REFRESH TOKEN SO USERS DOESNT HAVE TO LOG BACK IN AFTER 10 MINUTES OF JWT EXPIRATION
+
 export class AuthService {
 
   authURL: string = 'https://localhost:5001/api/Auth/';
@@ -19,7 +19,6 @@ export class AuthService {
   constructor(private http: HttpClient, private cookie: CookieService) {
     let existingToken = this.cookie.get("bearerToken");
     if (existingToken) { 
-      //TODO Check Token Expiry and use Refresh Token if required to get a new token
       Object.assign(this.currentUser,this.getUserFromStorage());
     }
   }

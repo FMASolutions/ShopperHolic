@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
-    //TODO IMPLEMENT OAUTH & OpenIdConnect
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase

@@ -20,7 +20,6 @@ export class ProductGroupValidator {
             if(currentValue.length > 7){
                 return { isError: true, failedMaxLength: true }
             }
-            //TODO Add Existing Code checks so we dont try to create a code that already exists....
         }
         return null;
     }

@@ -20,7 +20,6 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             _prodGroupManager = new ProductGroupManager(prodGroupService);
         }
 
-        //TODO IMPLEMENT POLICY
         [HttpPost]
         public ActionResult<ProductGroupDTO> Create([FromBody] ProductGroupCreateDTO userInput)
         {

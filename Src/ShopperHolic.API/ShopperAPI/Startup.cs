@@ -78,7 +78,6 @@ namespace ShopperHolic.API.ShopperAPI
             //Add Service Dependency Injection
             string connectionString = Configuration["ShopperHolicDBConnection"];
             services.AddTransient<ISecurityService>(s => new SecurityService(connectionString));
-            services.AddTransient<IStockService>(s => new StockService(connectionString));
             services.AddTransient<IProductGroupService>(s => new ProductGroupService(connectionString));
         }
 

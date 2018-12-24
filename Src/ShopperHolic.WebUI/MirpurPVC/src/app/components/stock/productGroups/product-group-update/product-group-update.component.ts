@@ -1,4 +1,3 @@
-//TODO FIGURE OUT HOW TO COMBINE THE CREATE AND UPDATE HTML AS IT IS ESSENTIALLY THE SAME APART FROM ID
 import { Component, OnInit } from '@angular/core';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 import { ActivatedRoute } from '@angular/router';
