@@ -1,0 +1,41 @@
+<form [formGroup]="loginForm">
+    <h2>Login:</h2>
+    <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+        <div fxFlex="50">
+            <mat-form-field class="maxWidth">
+                <label matLabel for="usernameInput">Username:</label>
+                <input matInput formControlName="username" id="usernameInputID" name="usernameInput">
+            </mat-form-field>
+            <div class="validationMessages">
+                <div *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors && loginForm.controls.username.errors.failedPopulation">
+                    Username is mandatory
+                </div>
+                <div *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors && loginForm.controls.username.errors.failedMinLength">
+                    Username must be 3 or more characters
+                </div>
+            </div>
+        </div>
+        <div fxFlex="50">
+            <mat-form-field class="maxWidth">
+                <label matLabel for="passwordInput">Password:</label>
+                <input matInput formControlName="password" id="passwordInputID" name="passwordInput" type="password">
+            </mat-form-field>
+            <div class="validationMessages">
+                <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.failedPopulation">
+                    Password is mandatory
+                </div>
+                <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.failedMinLength">
+                    Password must be 5 or more characters
+                </div>
+            </div>
+        </div>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+        <div fxFlex="50">
+            <button mat-raised-button color="accent" class="maxWidth" (click)="attemptLogin()">Login</button>
+        </div>
+        <div fxFlex="50">
+            <button mat-raised-button color="primary" class="maxWidth" (click)="cancelLogin()">Cancel</button>
+        </div>
+    </div>
+</form>

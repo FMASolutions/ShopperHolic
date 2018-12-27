@@ -1,0 +1,49 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">{{env.appTitle}}</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home">Home</a>
+      <a mat-list-item routerLink="/contact">Contact</a>
+      <a mat-list-item routerLink="/about">About</a>
+      <ng-container *ngFor="let currentClaim of currentUser.userClaims">
+        <a mat-list-item color="primary" routerLink="/adminPanel" *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
+          Admin Panel
+        </a>
+      </ng-container>
+      <a mat-list-item (click)="openLoginDialog()" *ngIf="!currentUser.isAuthenticated">Login</a>
+      <a mat-list-item color="primary" (click)="logout()" *ngIf="currentUser.isAuthenticated">Logout
+        ({{getUserName()}})</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <a routerLink="/home" id="titleLink">
+        <span>{{env.appTitle}}</span>
+      </a>
+      <div *ngIf="!(isHandset$ | async)">
+        <button mat-flat-button color="primary" routerLink="/about">About</button>
+        <button mat-flat-button color="primary" routerLink="/contact">Contact</button>
+      </div>
+      <span class="fill-space"></span>
+      <div *ngIf="!(isHandset$ | async)">
+        <ng-container *ngFor="let currentClaim of currentUser.userClaims">
+          <button mat-flat-button color="primary" routerLink="/adminPanel" *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
+            Admin Panel
+          </button>
+        </ng-container>
+        <button mat-flat-button color="primary" (click)="openLoginDialog()" *ngIf="!currentUser.isAuthenticated">Login</button>
+        <button mat-flat-button color="primary" (click)="logout()" *ngIf="currentUser.isAuthenticated">Logout
+          ({{getUserName()}})</button>
+      </div>
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+    </mat-toolbar>
+    <header>
+      MirpurPVC
+    </header>
+    <app-notification></app-notification>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

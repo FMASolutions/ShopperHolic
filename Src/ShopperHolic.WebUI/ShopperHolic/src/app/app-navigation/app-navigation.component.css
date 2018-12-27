@@ -1,0 +1,55 @@
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 300px;
+  box-shadow: 3px 0 6px rgba(0,0,0,.24);
+}
+
+.sidenav .mat-toolbar {
+  background-color: #1d1d2e;
+  font-family: 'Advent Pro', sans-serif;
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.mat-toolbar a span{
+  font-family: 'Advent Pro', sans-serif;
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+.hidden{
+  display: none;
+}
+
+#titleLink{
+  text-decoration: none;
+  color: white;
+}
+
+header{
+  background-color: #1d1d2e;
+  padding-top: 75px;
+  padding-bottom: 100px;
+  text-align: center;
+  font-size: 5rem;
+  font-family: 'Advent Pro', sans-serif;
+  font-weight: 100;
+  color: white;
+}
+
+@media (min-width: 960px){
+  .sidenav{
+    display: none;
+  }
+}
+

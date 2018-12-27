@@ -1,0 +1,29 @@
+@import "./materialTheme.scss";
+
+html, body{
+    height: 100%;
+}
+
+body{
+    margin: 0;
+    font-family: Sans-Serif;
+}
+
+.fill-space {
+    flex: 1 1 auto;
+}
+
+.validationMessages{
+    color: red;
+    padding-bottom: 10px;
+}
+
+.maxWidth {
+    width: 100%;
+}
+
+.container{
+    margin: 25px auto;
+    max-width: 1150px;
+    padding: 10px 10px;
+}
