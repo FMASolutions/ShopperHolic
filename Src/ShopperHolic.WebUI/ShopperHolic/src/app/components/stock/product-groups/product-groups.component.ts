@@ -9,7 +9,7 @@ import { StatusMessageService } from 'src/app/services/status-message.service';
 })
 export class ProductGroupsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private sms: StatusMessageService) { }
+  constructor() { }
 
   ngOnInit() {
   }

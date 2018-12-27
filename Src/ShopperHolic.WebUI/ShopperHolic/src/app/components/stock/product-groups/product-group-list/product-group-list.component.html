@@ -1,10 +1,11 @@
 <div class="container mat-elevation-z8">
-  <h3>Product Group Details:</h3>
-  <button mat-flat-button color="primary" id="createNew" class="maxWidth" (click)="requestNew()">Create New Product
-    Group</button>
-
-  <mat-form-field class="maxWidth">
-    <input matInput [(ngModel)]="textFilter" name="textFilter" placeholder="Filter" (keyup)="applyFilters()">
+  <button mat-flat-button color="primary" id="createNew" class="maxWidth" (click)="requestNew()">
+    Create New Product Group
+  </button>
+  <h1>Product Group Details:</h1>
+  <mat-form-field class="maxWidth" appearance="outline">
+    <mat-label>Filter</mat-label>
+    <input matInput [(ngModel)]="textFilter" name="textFilter" (keyup)="applyFilters()">
   </mat-form-field>
   <button mat-flat-button color="primary" id="topReset" class="maxWidth" (click)="resetFilters()">Reset Filters</button>
 

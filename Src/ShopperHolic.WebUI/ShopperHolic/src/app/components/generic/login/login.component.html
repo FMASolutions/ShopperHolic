@@ -3,9 +3,9 @@
     <app-notification></app-notification>
     <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
         <div fxFlex="50">
-            <mat-form-field class="maxWidth">
-                <label matLabel for="usernameInput">Username:</label>
-                <input matInput formControlName="username" id="usernameInputID" name="usernameInput">
+            <mat-form-field class="maxWidth"  appearance="outline">
+                    <mat-label>Username</mat-label>
+                <input matInput formControlName="username">
             </mat-form-field>
             <div class="validationMessages">
                 <div *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors && loginForm.controls.username.errors.failedPopulation">
@@ -17,9 +17,9 @@
             </div>
         </div>
         <div fxFlex="50">
-            <mat-form-field class="maxWidth">
-                <label matLabel for="passwordInput">Password:</label>
-                <input matInput formControlName="password" id="passwordInputID" name="passwordInput" type="password">
+            <mat-form-field class="maxWidth"  appearance="outline">
+                    <mat-label>Password</mat-label>
+                <input matInput formControlName="password" type="password">
             </mat-form-field>
             <div class="validationMessages">
                 <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors && loginForm.controls.password.errors.failedPopulation">

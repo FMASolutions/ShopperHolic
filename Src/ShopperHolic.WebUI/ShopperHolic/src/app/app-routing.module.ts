@@ -8,7 +8,6 @@ import { ContactComponent } from './components/generic/contact/contact.component
 import { AdminPanelComponent } from './components/generic/admin-panel/admin-panel.component';
 import { ProductGroupsComponent } from './components/stock/product-groups/product-groups.component';
 import { ProductGroupComponent } from './components/stock/product-groups/product-group/product-group.component';
-import { ProductGroupSearchComponent } from './components/stock/product-groups/product-group-search/product-group-search.component';
 import { ProductGroupListComponent } from './components/stock/product-groups/product-group-list/product-group-list.component';
 
 const routes: Routes = [
@@ -43,12 +42,6 @@ const routes: Routes = [
   {
     path: 'productGroup',
     component: ProductGroupComponent,
-    canActivate: [AuthGuard],
-    data: { claimType: 'IsAdminUser' }
-  },
-  {
-    path: 'productGroupSearch',
-    component: ProductGroupSearchComponent,
     canActivate: [AuthGuard],
     data: { claimType: 'IsAdminUser' }
   },

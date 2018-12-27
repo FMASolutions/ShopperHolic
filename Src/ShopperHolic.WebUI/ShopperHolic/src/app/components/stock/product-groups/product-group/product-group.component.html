@@ -4,13 +4,14 @@
     <form [formGroup]="prodForm">
         <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
             <div fxFlex="50">
-                <mat-form-field class="maxWidth">
-                    <input matInput formControlName="id" id="productGroupID" name="productGroupID" placeholder="Product Group ID"
-                        readonly>
+                <mat-form-field class="maxWidth" appearance="outline">
+                    <mat-label>Product Group ID</mat-label>
+                    <input matInput formControlName="id" placeholder="Product Group ID" readonly>
                 </mat-form-field>
             </div>
             <div fxFlex="50">
-                <mat-form-field class="maxWidth">
+                <mat-form-field class="maxWidth" appearance="outline">
+                    <mat-label>Product Group Code</mat-label>
                     <input matInput formControlName="code" type="text" placeholder="Product Group Code">
                 </mat-form-field>
                 <div class="validationMessages">
@@ -26,7 +27,8 @@
                 </div>
             </div>
         </div>
-        <mat-form-field class="maxWidth">
+        <mat-form-field class="maxWidth" appearance="outline">
+            <mat-label>Product Group Name</mat-label>
             <input matInput placeholder="Product Group Name" formControlName="name" type="text">
         </mat-form-field>
         <div class="validationMessages">
@@ -34,7 +36,8 @@
                 Name is mandatory.
             </div>
         </div>
-        <mat-form-field class="maxWidth">
+        <mat-form-field class="maxWidth" appearance="outline">
+            <mat-label>Product Group Description</mat-label>
             <textarea matInput formControlName="desc" type="text" placeholder="Product Group Description"></textarea>
         </mat-form-field>
         <div class="validationMessages">

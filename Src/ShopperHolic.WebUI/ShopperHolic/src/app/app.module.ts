@@ -24,7 +24,6 @@ import { ProductGroupListComponent } from './components/stock/product-groups/pro
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppNavigationComponent } from './app-navigation/app-navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { ProductGroupSearchComponent } from './components/stock/product-groups/product-group-search/product-group-search.component';
 import { NotificationComponent } from './components/generic/notification/notification.component';
 
 @NgModule({
@@ -39,7 +38,6 @@ import { NotificationComponent } from './components/generic/notification/notific
     HomeComponent,
     LoginComponent,
     AppNavigationComponent,
-    ProductGroupSearchComponent,
     NotificationComponent,
   ],
   imports: [
