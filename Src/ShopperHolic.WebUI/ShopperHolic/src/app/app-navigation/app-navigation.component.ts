@@ -7,6 +7,7 @@ import { AuthService } from '../services/security/auth.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../components/generic/login/login.component';
+import { Globals } from 'src/globals';
 
 @Component({
   selector: 'app-navigation',
@@ -40,11 +41,7 @@ export class AppNavigationComponent {
   }
   
   openLoginDialog(){
-    let dialogRef = this.loginDialog.open(LoginComponent,{
-      minWidth : 370,
-      maxWidth: 1100,
-      width: "95%"
-    });
+    let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
 
     dialogRef.afterClosed().subscribe(result => {
     })

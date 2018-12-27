@@ -27,7 +27,6 @@ export class ProductGroupComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     if (this.data && this.data.productGroupID) { //All data received, populate as is
       this.populateFormFromModel(this.data);
     } else if (this.data) { //Recevied only ID, perform search
@@ -36,24 +35,25 @@ export class ProductGroupComponent implements OnInit {
       })
     } else { // It's a create request 
     }
-
   }
 
   submit() {
     if (this.prodForm.valid) {
-      if (this.data) { //ID Passed in, we need to do an updated, not a created...
+      if (this.data) { //Data Passed in, we need to do an update, not a created...
+        
         this.prodService.update(this.getUpdateModelFromForm()).subscribe(updateResp => {
-          alert("Product Group updated successfully");
-          this.dialogRef.close("Update Processed Successfully");
-
+          this.sms.currentMessage.setSuccessMessage("Product Group: " + updateResp.productGroupCode + " Updated successfully");
+          this.dialogRef.close();
         }, error => {
+          this.sms.currentMessage.setDangerMessage(error.error);
         });
       } else {
         this.prodService.createNewProduct(this.getCreateModelFromForm())
           .subscribe(resp => {
-            alert("Product Group " + resp.productGroupID + " Created Successfully... Closing");
-            this.dialogRef.close("Product Group Created Successfully, can also pass other data here....");
+            this.sms.currentMessage.setSuccessMessage("Product Group " + resp.productGroupID + " Created Successfully... Closing");
+            this.dialogRef.close();
           }, error => {
+            this.sms.currentMessage.setDangerMessage(error.error);
           });
       }
     }

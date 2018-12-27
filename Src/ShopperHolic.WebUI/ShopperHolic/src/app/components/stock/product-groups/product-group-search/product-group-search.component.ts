@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ProductGroupComponent } from '../product-group/product-group.component';
 import { StatusMessageService } from 'src/app/services/status-message.service';
+import { Globals } from 'src/globals';
 
 @Component({
   selector: 'app-product-group-search',
@@ -26,12 +27,9 @@ export class ProductGroupSearchComponent implements OnInit {
     
     if (!isNaN(parseInt(this.searchID))) { // Search by ID
       this.prodService.getByID(parseInt(this.searchID)).subscribe(result => {
-        let dialogRef = this.prodDialog.open(ProductGroupComponent,{
-          minWidth : 370,
-          maxWidth: 1100,
-          width: "95%",
-          data: result
-        });
+        let modalSettings = Globals.APP_SETTINGS.defaultModalSettings;
+        modalSettings.data = result;
+        let dialogRef = this.prodDialog.open(ProductGroupComponent,modalSettings);
       }, () => { //No search result
 
       });

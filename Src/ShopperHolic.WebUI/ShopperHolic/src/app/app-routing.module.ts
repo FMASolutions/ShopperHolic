@@ -36,19 +36,27 @@ const routes: Routes = [
   },
   {
     path: 'productGroups',
-    component: ProductGroupsComponent
+    component: ProductGroupsComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
   },
   {
     path: 'productGroup',
-    component: ProductGroupComponent
+    component: ProductGroupComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
   },
   {
     path: 'productGroupSearch',
-    component: ProductGroupSearchComponent
+    component: ProductGroupSearchComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
   },
   {
     path: 'productGroupList',
-    component: ProductGroupListComponent
+    component: ProductGroupListComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
   },
   {
     path: '',

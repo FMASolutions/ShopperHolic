@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthValidator } from 'src/app/services/security/auth.validator';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { StatusMessageService } from 'src/app/services/status-message.service';
+import { Globals } from 'src/globals';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string = "";
   loginForm: FormGroup;
 
-  constructor(private sms: StatusMessageService, private authService: AuthService, private router: Router,private route: ActivatedRoute, private fb: FormBuilder, private authValidator: AuthValidator, public dialogRef: MatDialogRef<LoginComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(private sms: StatusMessageService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private authValidator: AuthValidator, public dialogRef: MatDialogRef<LoginComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.currentUser = this.authService.currentUser;
     this.loginForm = fb.group({
       username: [null, [authValidator.ValidateUsername]],
@@ -33,18 +34,25 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.attemptLogin(this.loginForm.value["username"], this.loginForm.value["password"]).subscribe(resp => {
         this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
-          this.returnUrl ? this.router.navigateByUrl(this.returnUrl) : this.router.navigateByUrl("/home"); //Go to return url or home after login
-          this.dialogRef.close("Login success");
+          if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl); } //Go to return url or home after login
+          this.dialogRef.close(userResp);
         }
-          , (tokenExchangeError) => {  }
+          , (tokenExchangeError) => {
+            this.sms.currentMessage.setDangerMessage(Globals.LOGIN_FAILED_MESSAGE);
+          }
         )
-      }, (loginError) => { });
-      }
+      }, (loginError) => {
+        this.sms.currentMessage.setDangerMessage(Globals.LOGIN_FAILED_MESSAGE);
+      });
+    }
     else {
-      
+
     }
   }
-  cancelLogin(){
-    this.dialogRef.close("User Cancelled");
+
+  cancelLogin() {
+    this.dialogRef.close({
+      userCancelled: true
+    });
   }
 }

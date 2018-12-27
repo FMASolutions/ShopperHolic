@@ -1,5 +1,7 @@
-<div [class]="sms.currentMessage.getClass()" role="alert" *ngIf="sms.currentMessage.getValue()">
-  <button type="button" (click)="closeNotification()" class="closeNotification">×</button>
-  <i class="material-icons">{{sms.currentMessage.getIcon()}}</i>
-  {{sms.currentMessage.getValue()}}
+<div class="container">
+  <div [class]="sms.currentMessage.getClass()" role="alert" *ngIf="sms.currentMessage.getValue()">
+    <button type="button" (click)="closeNotification()" class="closeNotification">×</button>
+    <i class="material-icons">{{sms.currentMessage.getIcon()}}</i>
+    {{sms.currentMessage.getValue()}}
+  </div>
 </div>

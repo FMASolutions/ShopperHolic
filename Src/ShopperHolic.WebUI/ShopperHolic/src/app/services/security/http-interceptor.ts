@@ -2,18 +2,20 @@ import { Injectable, NgModule } from '@angular/core';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { HTTP_INTERCEPTORS, HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { catchError, switchMap, filter, take } from 'rxjs/operators';
+import { catchError, switchMap, filter, take, tap } from 'rxjs/operators';
 import { AuthenticatedUserModel } from 'src/app/models/security/authenticatedUserModel';
 import { Router, ActivatedRoute, UrlTree } from '@angular/router';
 import { StatusMessageService } from '../status-message.service';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { MatDialog } from '@angular/material';
+import { LoginComponent } from 'src/app/components/generic/login/login.component';
+import { Globals } from '../../../globals'
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
     private isRefreshing: boolean = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    constructor(private authService: AuthService, private router: Router, private sms: StatusMessageService, private route: ActivatedRoute) { }
+    constructor(private authService: AuthService, private router: Router, private sms: StatusMessageService, private route: ActivatedRoute, private loginDialog: MatDialog) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let bearerToken: string = "";
@@ -49,8 +51,11 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         } else if (req.url.toLowerCase().indexOf('auth/tokenrefresh') > 1) {
             this.isRefreshing = false;
             this.authService.logoutExistingUser();
-            this.router.navigateByUrl('/login');
-            return next.handle(req);
+            let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
+            dialogRef.afterClosed().pipe(tap((returnData =>{
+                return next.handle(req);    
+            })));
+            
         } else {
             return this.refreshTokenSubject.pipe(
                 filter(user => user != null),

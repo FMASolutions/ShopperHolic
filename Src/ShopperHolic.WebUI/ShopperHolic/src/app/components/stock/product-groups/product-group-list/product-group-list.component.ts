@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource, Sort, MatDialog } from '@angular/material';
 import { ProductGroupComponent } from '../product-group/product-group.component';
 import { StatusMessageService } from 'src/app/services/status-message.service';
+import { Globals } from 'src/globals';
 
 @Component({
   selector: 'app-product-group-list',
@@ -23,7 +24,7 @@ export class ProductGroupListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private sms: StatusMessageService, private prodGroupService: ProductGroupService, private route: ActivatedRoute, public prodDialog: MatDialog) { 
+  constructor(private sms: StatusMessageService, private prodGroupService: ProductGroupService, private route: ActivatedRoute, public updProdDialog: MatDialog, public newProdDialog: MatDialog) { 
     
   }
 
@@ -33,12 +34,10 @@ export class ProductGroupListComponent implements OnInit {
   }
 
   viewButtonClicked(id: number) {
-    let dialogRef = this.prodDialog.open(ProductGroupComponent, {
-      minWidth : 370,
-      maxWidth: 1100,
-      width: "95%",
-      data: id
-    })
+    var modalSettings =  { data: 0};
+    modalSettings = Object.assign(modalSettings,Globals.APP_SETTINGS.defaultModalSettings);
+    modalSettings.data = id;
+    let dialogRef = this.updProdDialog.open(ProductGroupComponent, modalSettings)
 
     dialogRef.afterClosed().subscribe(result => {
       this.refreshAndApplyFilter();
@@ -52,16 +51,14 @@ export class ProductGroupListComponent implements OnInit {
         this.refreshAndApplyFilter();
 
       }, error => {
+        this.sms.currentMessage.setDangerMessage("Unable to delete: " + error.error);
       });
     }
   }
 
   requestNew(){
-    let dialogRef = this.prodDialog.open(ProductGroupComponent, {
-      minWidth : 370,
-      maxWidth: 1100,
-      width: "95%"
-    });
+    console.log(Globals.APP_SETTINGS.defaultModalSettings);
+    let dialogRef = this.newProdDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.defaultModalSettings);
 
     dialogRef.afterClosed().subscribe(result => {
       this.refreshAndApplyFilter();
@@ -81,9 +78,6 @@ export class ProductGroupListComponent implements OnInit {
 
       this.tableDataSource = new MatTableDataSource(this.prodGroupPreviewsFiltered);
       this.tableDataSource.paginator = this.paginator;
-      if (this.prodGroupPreviewsFiltered.length == 0) {
-        //TODO NO Data found do something?
-      } 
     });
   }
 
