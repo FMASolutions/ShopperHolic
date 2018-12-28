@@ -32,10 +32,12 @@ export class AppNavigationComponent {
   getAppName(){
     return Globals.APP_SETTINGS.appTitle;  
   }
+  getAppShortName(){
+    return Globals.APP_SETTINGS.appTitleShort;
+  }
 
   getUserName(): string {
-    let returnString = this.authService.currentUser.isAuthenticated ? this.authService.currentUser.username : "";
-    return returnString;
+    return this.authService.currentUser.isAuthenticated ? this.authService.currentUser.username : "";
   }
 
   logout(): void {
@@ -44,8 +46,5 @@ export class AppNavigationComponent {
   
   openLoginDialog(){
     let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
-
-    dialogRef.afterClosed().subscribe(result => {
-    })
   }
 }

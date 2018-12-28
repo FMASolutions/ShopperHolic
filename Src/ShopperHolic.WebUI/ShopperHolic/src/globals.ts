@@ -1,6 +1,7 @@
 export class Globals{
     public static APP_SETTINGS: AppSettings = {
             appTitle: "Mirpur PVC",
+            appTitleShort: "M-PVC",
             defaultModalSettings: {
                 minWidth : 200,
                 maxWidth: 1100,
@@ -17,6 +18,7 @@ export class Globals{
 
 export class AppSettings{
     appTitle: string;
+    appTitleShort: string;
     defaultModalSettings: ModalSettings;
     baseAPIUrl: string;
 }
