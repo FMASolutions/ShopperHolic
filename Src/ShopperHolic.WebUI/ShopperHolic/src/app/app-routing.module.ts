@@ -40,18 +40,6 @@ const routes: Routes = [
     data: { claimType: 'IsAdminUser' }
   },
   {
-    path: 'productGroup',
-    component: ProductGroupComponent,
-    canActivate: [AuthGuard],
-    data: { claimType: 'IsAdminUser' }
-  },
-  {
-    path: 'productGroupList',
-    component: ProductGroupListComponent,
-    canActivate: [AuthGuard],
-    data: { claimType: 'IsAdminUser' }
-  },
-  {
     path: '',
     component: HomeComponent
   }

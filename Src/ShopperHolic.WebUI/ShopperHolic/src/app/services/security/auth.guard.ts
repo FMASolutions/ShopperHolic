@@ -10,7 +10,9 @@ import { Globals } from 'src/globals';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
+  
   constructor(private authService: AuthService, private router: Router, private loginDialog: MatDialog) { }
+
   canActivate(next: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let claimType: string = next.data["claimType"];
     let hasAccess: boolean = false;

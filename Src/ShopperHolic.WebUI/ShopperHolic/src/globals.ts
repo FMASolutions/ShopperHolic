@@ -5,6 +5,7 @@ export class Globals{
                 minWidth : 200,
                 maxWidth: 1100,
                 width: "90%",
+                autoFocus: true,
                 data: null
             },
             baseAPIUrl: "https://localhost:5001/api"
@@ -25,5 +26,6 @@ export class ModalSettings{
     minWidth : number;
     maxWidth: number;
     width: string;
+    autoFocus: boolean;
     data: any;
 }

@@ -24,7 +24,7 @@ export class ProductGroupListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private sms: StatusMessageService, private prodGroupService: ProductGroupService, private route: ActivatedRoute, public updProdDialog: MatDialog, public newProdDialog: MatDialog) { 
+  constructor(private sms: StatusMessageService, private prodGroupService: ProductGroupService, private route: ActivatedRoute, public prodDialog: MatDialog) { 
     
   }
 
@@ -37,7 +37,7 @@ export class ProductGroupListComponent implements OnInit {
     var modalSettings =  { data: 0};
     modalSettings = Object.assign(modalSettings,Globals.APP_SETTINGS.defaultModalSettings);
     modalSettings.data = id;
-    let dialogRef = this.updProdDialog.open(ProductGroupComponent, modalSettings)
+    let dialogRef = this.prodDialog.open(ProductGroupComponent, modalSettings)
 
     dialogRef.afterClosed().subscribe(result => {
       this.refreshAndApplyFilter();
@@ -57,8 +57,7 @@ export class ProductGroupListComponent implements OnInit {
   }
 
   requestNew(){
-    console.log(Globals.APP_SETTINGS.defaultModalSettings);
-    let dialogRef = this.newProdDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.defaultModalSettings);
+    let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.defaultModalSettings);
 
     dialogRef.afterClosed().subscribe(result => {
       this.refreshAndApplyFilter();

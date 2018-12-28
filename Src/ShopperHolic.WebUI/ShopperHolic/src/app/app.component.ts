@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticatedUserModel } from './models/security/authenticatedUserModel';
 import { AuthService } from './services/security/auth.service';
-import { environment } from 'src/environments/environment';
+import { Globals } from 'src/globals';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +10,11 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent {
   
-  title = 'ShopperHolic';
   currentUser: AuthenticatedUserModel = null;
-  env = environment
-
-  constructor(private authService: AuthService) {
+  getApptitle() {
+    return Globals.APP_SETTINGS.appTitle
+  }
+  constructor(authService: AuthService) {
     this.currentUser = authService.currentUser;
   }
 }

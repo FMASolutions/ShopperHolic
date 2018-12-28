@@ -13,8 +13,6 @@ export class StatusMessage {
         return this.icon;
     }
 
-
-    
     public updateCurrentStatusFromError(error){
         this.value = error.error;
         this.class = "alert alert-danger";

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthenticatedUserModel } from '../models/security/authenticatedUserModel';
 import { AuthService } from '../services/security/auth.service';
-import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../components/generic/login/login.component';
 import { Globals } from 'src/globals';
@@ -25,10 +24,13 @@ export class AppNavigationComponent {
   )
     .pipe(map(result => result.matches));
   currentUser: AuthenticatedUserModel = null;
-  env = environment
 
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, public loginDialog: MatDialog) {
     this.currentUser = this.authService.currentUser;
+  }
+
+  getAppName(){
+    return Globals.APP_SETTINGS.appTitle;  
   }
 
   getUserName(): string {

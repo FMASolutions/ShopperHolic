@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { StatusMessageService } from 'src/app/services/status-message.service';
 
 @Component({
   selector: 'app-product-groups',

@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string = "";
   loginForm: FormGroup;
 
-  constructor(private sms: StatusMessageService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private authValidator: AuthValidator, public dialogRef: MatDialogRef<LoginComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(private sms: StatusMessageService, private authService: AuthService, private router: Router, private route: ActivatedRoute, fb: FormBuilder, authValidator: AuthValidator, public dialogRef: MatDialogRef<LoginComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.currentUser = this.authService.currentUser;
     this.loginForm = fb.group({
       username: [null, [authValidator.ValidateUsername]],

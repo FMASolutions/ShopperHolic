@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { ProductGroupService } from 'src/app/services/stock/productGroup/product-group.service';
 import { ProductGroupValidator } from 'src/app/services/stock/productGroup/product-group-validator';
 import { CreateProductGroup } from 'src/app/models/stock/productGroups/createProductGroup';
@@ -17,7 +16,7 @@ export class ProductGroupComponent implements OnInit {
 
   prodForm: FormGroup;
 
-  constructor(private sms: StatusMessageService, private fb: FormBuilder, private route: ActivatedRoute, private prodService: ProductGroupService, private pgValidator: ProductGroupValidator, public dialogRef: MatDialogRef<ProductGroupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(private sms: StatusMessageService, fb: FormBuilder, private prodService: ProductGroupService, pgValidator: ProductGroupValidator, public dialogRef: MatDialogRef<ProductGroupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.prodForm = fb.group({
       id: [0, []],
       code: [null, [pgValidator.validateCodeForCreate]],
