@@ -1,4 +1,3 @@
-
 .sidenav-container {
   height: 100%;
 }
@@ -51,3 +50,12 @@ header{
   }
 }
 
+li{
+  list-style-type: none;
+}
+ol{
+  padding-left: 0;
+}
+ol li ol{
+  padding-left: 10px 
+}

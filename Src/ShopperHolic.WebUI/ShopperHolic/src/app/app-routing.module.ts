@@ -5,7 +5,6 @@ import { HomeComponent } from './components/generic/home/home.component';
 import { LoginComponent } from './components/generic/login/login.component';
 import { AboutComponent } from './components/generic/about/about.component';
 import { ContactComponent } from './components/generic/contact/contact.component';
-import { AdminPanelComponent } from './components/generic/admin-panel/admin-panel.component';
 import { ProductGroupsComponent } from './components/stock/product-groups/product-groups.component';
 import { ProductGroupComponent } from './components/stock/product-groups/product-group/product-group.component';
 import { ProductGroupListComponent } from './components/stock/product-groups/product-group-list/product-group-list.component';
@@ -26,12 +25,6 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent
-  },
-  {
-    path: 'adminPanel',
-    component: AdminPanelComponent,
-    canActivate: [AuthGuard],
-    data: { claimType: 'IsAdminUser' }
   },
   {
     path: 'productGroups',

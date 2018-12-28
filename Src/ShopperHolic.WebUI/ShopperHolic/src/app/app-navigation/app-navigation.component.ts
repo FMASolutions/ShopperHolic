@@ -11,7 +11,7 @@ import { Globals } from 'src/globals';
 @Component({
   selector: 'app-navigation',
   templateUrl: './app-navigation.component.html',
-  styleUrls: ['./app-navigation.component.css']
+  styleUrls: ['./app-navigation.component.scss']
 })
 export class AppNavigationComponent {
 
@@ -46,5 +46,24 @@ export class AppNavigationComponent {
   
   openLoginDialog(){
     let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
+  }
+
+  toggleChildVisibility(event: MouseEvent){
+    let childOrderedList = event.srcElement.parentElement.parentElement.children.item(1);
+    if(childOrderedList == null) //User Clicked the icon and not the mat-list-item directly so we need another generation ihgher (+.parent);
+      childOrderedList = event.srcElement.parentElement.parentElement.parentElement.children.item(1);
+    
+
+    let iconElement = childOrderedList.parentElement.children.item(0).children.item(0).children.item(2);
+
+    
+    console.log(parent);
+    if(childOrderedList.classList.contains("hide")){
+      childOrderedList.classList.remove("hide");
+      iconElement.innerHTML = "arrow_drop_down"
+    } else{
+      childOrderedList.classList.add("hide");
+      iconElement.innerHTML = "arrow_right"
+    }
   }
 }

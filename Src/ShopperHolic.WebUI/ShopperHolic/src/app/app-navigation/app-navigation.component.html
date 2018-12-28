@@ -7,11 +7,83 @@
       <a mat-list-item routerLink="/home">Home</a>
       <a mat-list-item routerLink="/contact">Contact</a>
       <a mat-list-item routerLink="/about">About</a>
+      <!--Admin Sidebar Navigation-->
       <ng-container *ngFor="let currentClaim of currentUser.userClaims">
-        <a mat-list-item color="primary" routerLink="/adminPanel" *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
-          Admin Panel
-        </a>
+        <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
+
+          <ol>
+            <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Admin <mat-icon>arrow_right</mat-icon></a>
+              <ol class="hide">
+                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Stock <mat-icon>arrow_right</mat-icon></a>
+                  <ol class="hide">
+                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Product Group <mat-icon>arrow_right</mat-icon></a>
+                      <ol class="hide">
+                        <li class="appLink"><a mat-list-item>Create New Product Group</a></li>
+                        <li class="appLink"><a mat-list-item routerLink="/productGroups">Manage Product Groups</a></li>
+                      </ol>
+                    </li>
+                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Sub Groups <mat-icon>arrow_right</mat-icon></a>
+                      <ol class="hide">
+                        <li class="appLink"><a mat-list-item>Create New Sub Group</a></li>
+                        <li class="appLink"><a mat-list-item>Manage Sub Groups</a></li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Location <mat-icon>arrow_right</mat-icon></a>
+                  <ol class="hide">
+                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Countries <mat-icon>arrow_right</mat-icon></a>
+                      <ol class="hide">
+                        <li class="appLink"><a mat-list-item>Create New Country</a></li>
+                        <li class="appLink"><a mat-list-item>Manage Countries</a></li>
+                      </ol>
+                    </li>
+                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Cities <mat-icon>arrow_right</mat-icon></a>
+                      <ol class="hide">
+                        <li class="appLink"><a mat-list-item>Create New City</a></li>
+                        <li class="appLink"><a mat-list-item>Manage Cities</a></li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Accounts <mat-icon>arrow_right</mat-icon></a>
+                  <ol class="hide">
+                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Customer <mat-icon>arrow_right</mat-icon></a>
+                      <ol class="hide">
+                        <li class="appLink"><a mat-list-item>Create New Country</a></li>
+                        <li class="appLink"><a mat-list-item>Manage Countries</a></li>
+                      </ol>
+                    </li>
+                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Supplier <mat-icon>arrow_right</mat-icon></a>
+                      <ol class="hide">
+                        <li class="appLink"><a mat-list-item>Create New City</a></li>
+                        <li class="appLink"><a mat-list-item>Manage Cities</a></li>
+                      </ol>
+                    </li>
+                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">User Accounts
+                        <mat-icon>arrow_right</mat-icon></a>
+                      <ol class="hide">
+                        <li class="appLink"><a mat-list-item>Create New User Account</a></li>
+                        <li class="appLink"><a mat-list-item>Manager Users</a></li>
+                      </ol>
+                    </li>
+                  </ol>
+                </li>
+                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Settings <mat-icon>arrow_right</mat-icon></a>
+                  <ol class="hide">
+                    <li class="appLink"><a mat-list-item>Order Settings</a></li>
+                    <li class="appLink"><a mat-list-item>Purchase Settings</a></li>
+                    <li class="appLink"><a mat-list-item>System Settings</a></li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+
+        </ng-container>
       </ng-container>
+      <!--End Admin Sidebar Navigation-->
+
       <a mat-list-item (click)="openLoginDialog()" *ngIf="!currentUser.isAuthenticated">Login</a>
       <a mat-list-item color="primary" (click)="logout()" *ngIf="currentUser.isAuthenticated">Logout
         ({{getUserName()}})</a>
@@ -26,14 +98,83 @@
       <div *ngIf="!(isHandset$ | async)">
         <button mat-flat-button color="primary" routerLink="/about">About</button>
         <button mat-flat-button color="primary" routerLink="/contact">Contact</button>
-      </div>
-      <span class="fill-space"></span>
-      <div *ngIf="!(isHandset$ | async)">
+
+        <!--Admin Navigation Menu-->
         <ng-container *ngFor="let currentClaim of currentUser.userClaims">
-          <button mat-flat-button color="primary" routerLink="/adminPanel" *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
-            Admin Panel
-          </button>
+          <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
+            <button mat-button [matMenuTriggerFor]="adminPanel">Admin</button>
+
+            <mat-menu #adminPanel="matMenu">
+              <button mat-menu-item [matMenuTriggerFor]="stock">Stock</button>
+              <button mat-menu-item [matMenuTriggerFor]="location">Location</button>
+              <button mat-menu-item [matMenuTriggerFor]="account">Accounts</button>
+              <button mat-menu-item [matMenuTriggerFor]="settings">Settings</button>
+            </mat-menu>
+
+            <mat-menu #stock="matMenu">
+              <button mat-menu-item [matMenuTriggerFor]="prodGroup">Product Group</button>
+              <button mat-menu-item [matMenuTriggerFor]="subGroup">Sub Group</button>
+            </mat-menu>
+
+            <mat-menu #location="matMenu">
+              <button mat-menu-item [matMenuTriggerFor]="countries">Countries</button>
+              <button mat-menu-item [matMenuTriggerFor]="cities">Cities</button>
+            </mat-menu>
+
+            <mat-menu #account="matMenu">
+              <button mat-menu-item [matMenuTriggerFor]="customer">Customer</button>
+              <button mat-menu-item [matMenuTriggerFor]="supplier">Supplier</button>
+              <button mat-menu-item [matMenuTriggerFor]="user">User Accounts</button>
+            </mat-menu>
+
+            <mat-menu #settings="matMenu">
+              <button mat-menu-item>Order Settings</button>
+              <button mat-menu-item>Purchase Settings</button>
+              <button mat-menu-item>System Settings</button>
+            </mat-menu>
+
+            <mat-menu #prodGroup="matMenu">
+              <button mat-menu-item>Create New Product Group</button>
+              <button mat-menu-item routerLink="/productGroups">Manage Product Groups</button>
+            </mat-menu>
+
+            <mat-menu #subGroup="matMenu">
+              <button mat-menu-item>Create Sub Group</button>
+              <button mat-menu-item>Manage Sub Groups</button>
+            </mat-menu>
+
+            <mat-menu #countries="matMenu">
+              <button mat-menu-item>Create New Country</button>
+              <button mat-menu-item>Manage Countries</button>
+            </mat-menu>
+
+            <mat-menu #cities="matMenu">
+              <button mat-menu-item>Create New City</button>
+              <button mat-menu-item>Manage Cities</button>
+            </mat-menu>
+
+            <mat-menu #customer="matMenu">
+              <button mat-menu-item>Create New Customer</button>
+              <button mat-menu-item>Manage Customers</button>
+            </mat-menu>
+
+            <mat-menu #supplier="matMenu">
+              <button mat-menu-item>Create Supplier</button>
+              <button mat-menu-item>Manage Suppliers</button>
+            </mat-menu>
+
+            <mat-menu #user="matMenu">
+              <button mat-menu-item>Create New User</button>
+              <button mat-menu-item>Manage Users</button>
+            </mat-menu>
+          </ng-container>
         </ng-container>
+        <!--End of Admin Navigation Menu-->
+      </div>
+
+      <span class="fill-space"></span>
+
+      <div *ngIf="!(isHandset$ | async)">
         <button mat-flat-button color="primary" (click)="openLoginDialog()" *ngIf="!currentUser.isAuthenticated">Login</button>
         <button mat-flat-button color="primary" (click)="logout()" *ngIf="currentUser.isAuthenticated">Logout
           ({{getUserName()}})</button>
@@ -44,7 +185,7 @@
     </mat-toolbar>
     <!--Header/Jumbo-->
     <header>
-        {{getAppName()}}
+      {{getAppName()}}
     </header>
     <!--Router Outlet-->
     <ng-content></ng-content>
