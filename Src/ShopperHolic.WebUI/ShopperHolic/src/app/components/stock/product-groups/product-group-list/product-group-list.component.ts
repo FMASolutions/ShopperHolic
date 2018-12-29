@@ -19,7 +19,7 @@ export class ProductGroupListComponent implements OnInit {
   tableDataSource: MatTableDataSource<ProductGroupPreview>;
 
   textFilter: string = "";
-  displayedColumns: string[] = Globals.PROD_GROUP_LIST_COLUMNS;
+  displayedColumns: string[] = Globals.PROD_GROUP_PRVW_LIST_COLUMNS;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

@@ -45,7 +45,29 @@ export class Globals {
     public static get PROD_GROUP_DELETE_SUCCESS_MSG(): string { return "Successfully deleted product group: "; }
     public static get PROD_GROUP_DELETE_FAILED_MSG(): string { return "Failed to delete product group: "; }
 
-    public static get PROD_GROUP_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'View', 'Del']; }
+    public static get PROD_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'View', 'Del']; }
+
+
+    public static get SUB_GROUP_UPDATE_TITLE(): string { return "Sub Group Update"; }
+    public static get SUB_GROUP_CREATE_TITLE(): string { return "Create New Sub Group"; }
+
+    public static get SUB_GROUP_UPDATE_MODE(): string { return "Update"; }
+    public static get SUB_GROUP_CREATE_MODE(): string { return "Create"; }
+
+    public static get SUB_GROUP_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new sub group: "; }
+    public static get SUB_GROUP_CREATE_SUCCESS_MSG(): string { return "Successfully created sub group: "; }
+    public static get SUB_GROUP_CREATE_FAILED_MSG(): string { return "Failed to create sub group: "; }
+
+    public static get SUB_GROUP_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update sub group: "; }
+    public static get SUB_GROUP_UPDATE_SUCCESS_MSG(): string { return "Successfully updated sub group: "; }
+    public static get SUB_GROUP_UPDATE_FAILED_MSG(): string { return "Failed to update sub group: "; }
+
+    public static get SUB_GROUP_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete sub group: "; }
+    public static get SUB_GROUP_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete sub group: "; }
+    public static get SUB_GROUP_DELETE_SUCCESS_MSG(): string { return "Successfully deleted sub group: "; }
+    public static get SUB_GROUP_DELETE_FAILED_MSG(): string { return "Failed to delete sub group: "; }
+
+    public static get SUB_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'View', 'Del']; }
 
 }
 
