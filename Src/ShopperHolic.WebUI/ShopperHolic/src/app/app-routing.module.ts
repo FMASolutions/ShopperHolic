@@ -6,6 +6,7 @@ import { LoginComponent } from './components/generic/login/login.component';
 import { AboutComponent } from './components/generic/about/about.component';
 import { ContactComponent } from './components/generic/contact/contact.component';
 import { ProductGroupsComponent } from './components/stock/product-groups/product-groups.component';
+import { SubGroupsComponent } from './components/stock/sub-groups/sub-groups.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,12 @@ const routes: Routes = [
   {
     path: 'productGroups',
     component: ProductGroupsComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'subGroups',
+    component: SubGroupsComponent,
     canActivate: [AuthGuard],
     data: { claimType: 'IsAdminUser' }
   },
