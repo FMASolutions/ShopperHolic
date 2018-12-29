@@ -41,6 +41,6 @@ export class UserActivityService {
   }
 
   removeWithText(message: string): void {
-    this.removeAtIndex(this.activityMessages.findIndex(current => current.getValue() == message));
+    this.removeAtIndex(this.activityMessages.findIndex(current => current.value == message));
   }
 }

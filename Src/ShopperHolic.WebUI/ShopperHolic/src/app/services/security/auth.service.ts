@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
+import { Globals } from 'src/globals';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class AuthService {
 
-  authURL: string = 'https://localhost:5001/api/Auth/';
+  authURL: string = Globals.APP_SETTINGS.BASE_API_URL +  '/Auth/';
   currentUser: AuthenticatedUserModel = new AuthenticatedUserModel();
   private lastUsernameRequested: string = "";
 

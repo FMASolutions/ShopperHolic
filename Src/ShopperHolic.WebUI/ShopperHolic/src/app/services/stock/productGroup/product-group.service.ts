@@ -4,13 +4,14 @@ import { CreateProductGroup } from 'src/app/models/stock/productGroups/createPro
 import { Observable } from 'rxjs';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
+import { Globals } from 'src/globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductGroupService {
   
-  baseURL: string = 'https://localhost:5001/api/ProductGroup/';
+  baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/ProductGroup/';
 
   constructor(private http: HttpClient) { }
 
