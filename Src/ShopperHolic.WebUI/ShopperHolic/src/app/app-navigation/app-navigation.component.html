@@ -18,7 +18,7 @@
                   <ol class="hide">
                     <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Product Group <mat-icon>arrow_right</mat-icon></a>
                       <ol class="hide">
-                        <li class="appLink"><a mat-list-item>Create New Product Group</a></li>
+                        <li class="appLink"><a mat-list-item (click)="openNewProduGroup()">Create New Product Group</a></li>
                         <li class="appLink"><a mat-list-item routerLink="/productGroups">Manage Product Groups</a></li>
                       </ol>
                     </li>
@@ -134,7 +134,7 @@
             </mat-menu>
 
             <mat-menu #prodGroup="matMenu">
-              <button mat-menu-item>Create New Product Group</button>
+              <button mat-menu-item (click)="openNewProduGroup()">Create New Product Group</button>
               <button mat-menu-item routerLink="/productGroups">Manage Product Groups</button>
             </mat-menu>
 
@@ -179,9 +179,16 @@
         <button mat-flat-button color="primary" (click)="logout()" *ngIf="currentUser.isAuthenticated">Logout
           ({{getUserName()}})</button>
       </div>
+
+
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="openUserActivity()"><mat-icon aria-label="Side nav toggle icon">history</mat-icon></button>
+
+      
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
+
+
     </mat-toolbar>
     <!--Header/Jumbo-->
     <header>

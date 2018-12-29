@@ -5,8 +5,11 @@ import { map } from 'rxjs/operators';
 import { AuthenticatedUserModel } from '../models/security/authenticatedUserModel';
 import { AuthService } from '../services/security/auth.service';
 import { MatDialog } from '@angular/material';
+import {MatBottomSheet} from '@angular/material';
 import { LoginComponent } from '../components/generic/login/login.component';
 import { Globals } from 'src/globals';
+import { UserActivityComponent } from '../components/generic/user-activity/user-activity.component';
+import { ProductGroupComponent } from '../components/stock/product-groups/product-group/product-group.component';
 
 @Component({
   selector: 'app-navigation',
@@ -25,7 +28,7 @@ export class AppNavigationComponent {
     .pipe(map(result => result.matches));
   currentUser: AuthenticatedUserModel = null;
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, public loginDialog: MatDialog) {
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, public matDialog: MatDialog, private userActivity: MatBottomSheet) {
     this.currentUser = this.authService.currentUser;
   }
 
@@ -45,7 +48,15 @@ export class AppNavigationComponent {
   }
   
   openLoginDialog(){
-    let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
+    let dialogRef = this.matDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
+  }
+
+  openUserActivity(){
+    this.userActivity.open(UserActivityComponent)
+  }
+
+  openNewProduGroup(){
+    let dialogRef = this.matDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.defaultModalSettings);
   }
 
   toggleChildVisibility(event: MouseEvent){

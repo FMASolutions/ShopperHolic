@@ -38,11 +38,11 @@ export class LoginComponent implements OnInit {
           this.dialogRef.close(userResp);
         }
           , (tokenExchangeError) => {
-            this.sms.currentMessage.setDangerMessage(Globals.LOGIN_FAILED_MESSAGE);
+            this.sms.setDangerMessage(Globals.LOGIN_FAILED_MESSAGE);
           }
         )
       }, (loginError) => {
-        this.sms.currentMessage.setDangerMessage(Globals.LOGIN_FAILED_MESSAGE);
+        this.sms.setDangerMessage(Globals.LOGIN_FAILED_MESSAGE);
       });
     }
     else {

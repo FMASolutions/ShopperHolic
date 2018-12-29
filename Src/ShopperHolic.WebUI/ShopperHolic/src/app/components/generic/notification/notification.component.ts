@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { StatusMessageService } from 'src/app/services/status-message.service';
+import { UserActivityService } from 'src/app/services/user-activity.service';
 
 @Component({
   selector: 'app-notification',
@@ -9,15 +9,14 @@ import { StatusMessageService } from 'src/app/services/status-message.service';
 })
 export class NotificationComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private sms: StatusMessageService) { 
+  constructor(private sms: StatusMessageService, private uas: UserActivityService) { 
     
   }
 
   ngOnInit() {
-    this.sms.updateCurrentStatusFromURL(this.route);
   }
 
   closeNotification(){
-    this.sms.currentMessage.clearCurrentMessage();
+    this.sms.clearCurrentMessage();
   }
 }

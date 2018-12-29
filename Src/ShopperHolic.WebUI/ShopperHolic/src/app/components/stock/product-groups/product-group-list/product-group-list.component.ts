@@ -51,7 +51,7 @@ export class ProductGroupListComponent implements OnInit {
         this.refreshAndApplyFilter();
 
       }, error => {
-        this.sms.currentMessage.setDangerMessage("Unable to delete: " + error.error);
+        this.sms.setDangerMessage("Unable to delete: " + error.error);
       });
     }
   }

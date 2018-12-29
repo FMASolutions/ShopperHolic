@@ -24,6 +24,7 @@ import { ProductGroupListComponent } from './components/stock/product-groups/pro
 import { AppNavigationComponent } from './app-navigation/app-navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NotificationComponent } from './components/generic/notification/notification.component';
+import { UserActivityComponent } from './components/generic/user-activity/user-activity.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { NotificationComponent } from './components/generic/notification/notific
     LoginComponent,
     AppNavigationComponent,
     NotificationComponent,
+    UserActivityComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,7 @@ import { NotificationComponent } from './components/generic/notification/notific
     StatusMessageService,
     ProductGroupService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ UserActivityComponent,ProductGroupComponent ]
 })
 export class AppModule { }

@@ -1,72 +1,65 @@
 import { Injectable } from '@angular/core';
 import { StatusMessage } from '../models/statusModel';
-import { ActivatedRoute } from '@angular/router';
+import { UserActivityService } from './user-activity.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusMessageService {
 
-  private queryParamProperty: string = "statusMessage";
-  public currentMessage: StatusMessage = new StatusMessage();
+  private currentMessage: StatusMessage = new StatusMessage(this.uas);
 
-  constructor() { }
-
-  public updateCurrentStatusFromURL(route: ActivatedRoute) {
-    let statusFromQuery = route.snapshot.queryParamMap.get(this.queryParamProperty);
-    if (statusFromQuery) {
-      this.setMessageFromUrlFormattedString(statusFromQuery);
-    }
+  constructor(private uas: UserActivityService) { }
+  setSuccessMessage(message: string) {
+    this.currentMessage.setSuccessMessage(message);
+    this.setTimeout();
   }
 
-  private generateAlertClassFromQuery(queryParams: string): string {
-    if (queryParams[1] == 'S') {
-      return "alert alert-success";
-    }
-    else if (queryParams[1] == "I") {
-      return "alert alert-info";
-    }
-    else if (queryParams[1] == "W") {
-      return "alert alert-warning";
-    }
-    else if (queryParams[1] == "D") {
-      return "alert alert-danger";
-    }
-    return "";
+  setInfoMessage(message: string) {
+    this.currentMessage.setInfoMessage(message);
+    this.setTimeout();
   }
 
-  private setMessageFromUrlFormattedString(queryParams: string) {
-    if (queryParams[1] == 'S') {
-      this.currentMessage.setSuccessMessage(this.getMessageFromQueryParam(queryParams));
-    }
-    else if (queryParams[1] == "I") {
-      this.currentMessage.setInfoMessage(this.getMessageFromQueryParam(queryParams));
-    }
-    else if (queryParams[1] == "W") {
-      this.currentMessage.setWarningMessage(this.getMessageFromQueryParam(queryParams));
-    }
-    else if (queryParams[1] == "D") {
-      this.currentMessage.setDangerMessage(this.getMessageFromQueryParam(queryParams));
-    }
+  setWarningMessage(message: string) {
+    this.currentMessage.setWarningMessage(message);
+    this.setTimeout();
   }
 
-  private generateClassParameterFromClasString(classText: string) {
-    if (classText.indexOf('alert-success') > 0) { return "(S)"; }
-    else if (classText.indexOf('alert-info') > 0) { return "(I)"; }
-    else if (classText.indexOf('alert-warning') > 0) { return "(W)"; }
-    else { return "(D)"; }
+  setDangerMessage(message: string) {
+    this.currentMessage.setDangerMessage(message);
+    this.setTimeout();
   }
 
-  private getMessageFromQueryParam(queryParam: string): string {
-    return queryParam.substr(3); //Skip out the 3 character encoding for the alert type i.e (S) (I) (W) (D)
+  clearCurrentMessage() {
+    this.currentMessage.clearCurrentMessage();
   }
 
-  
-
-  private getCurrentMessageAsUrlParameter(): string {
-    let returnParameter = "statusMessage=";
-    returnParameter += this.generateClassParameterFromClasString(this.currentMessage.getClass());
-    returnParameter += this.currentMessage.getValue();
-    return returnParameter;
+  getValue() {
+    return this.currentMessage.getValue();
   }
+
+  getClass() {
+    return this.currentMessage.getClass();
+  }
+
+  getIcon() {
+    return this.currentMessage.getIcon();
+  }
+
+  private setTimeout() {
+    this.runAlarm(10).then(value =>{
+      this.clearCurrentMessage();
+    })
+  }
+
+  private runAlarm(interval: number) {
+    interval = interval * 1000;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(interval);
+      }, interval);
+    });
+
+  }
+
 }

@@ -36,23 +36,32 @@ export class ProductGroupComponent implements OnInit {
     }
   }
 
+  getPageTitle(){
+    if(this.data){
+      return "Product Group Details"
+    }
+    else{
+      return "Create New Product Group"
+    }
+  }
+
   submit() {
     if (this.prodForm.valid) {
       if (this.data) { //Data Passed in, we need to do an update, not a created...
         
         this.prodService.update(this.getUpdateModelFromForm()).subscribe(updateResp => {
-          this.sms.currentMessage.setSuccessMessage("Product Group: " + updateResp.productGroupCode + " Updated successfully");
+          this.sms.setSuccessMessage("Product Group: " + updateResp.productGroupCode + " Updated successfully");
           this.dialogRef.close();
         }, error => {
-          this.sms.currentMessage.setDangerMessage(error.error);
+          this.sms.setDangerMessage(error.error);
         });
       } else {
         this.prodService.createNewProduct(this.getCreateModelFromForm())
           .subscribe(resp => {
-            this.sms.currentMessage.setSuccessMessage("Product Group " + resp.productGroupID + " Created Successfully... Closing");
+            this.sms.setSuccessMessage("Product Group " + resp.productGroupID + " Created Successfully... Closing");
             this.dialogRef.close();
           }, error => {
-            this.sms.currentMessage.setDangerMessage(error.error);
+            this.sms.setDangerMessage(error.error);
           });
       }
     }

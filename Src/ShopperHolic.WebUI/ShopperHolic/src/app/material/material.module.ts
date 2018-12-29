@@ -25,6 +25,7 @@ import {MatSortModule} from '@angular/material/sort';
     Material.MatSidenavModule,
     Material.MatListModule,    
     Material.MatMenuModule,
+    Material.MatBottomSheetModule,
   ],
   exports: [
     Material.MatToolbarModule,
@@ -46,6 +47,7 @@ import {MatSortModule} from '@angular/material/sort';
     Material.MatSidenavModule,
     Material.MatListModule,
     Material.MatMenuModule,
+    Material.MatBottomSheetModule,
   ],
   declarations: []
 })
