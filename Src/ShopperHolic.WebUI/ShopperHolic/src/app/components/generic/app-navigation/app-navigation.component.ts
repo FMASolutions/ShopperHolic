@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthenticatedUserModel } from '../models/security/authenticatedUserModel';
-import { AuthService } from '../services/security/auth.service';
+import { AuthenticatedUserModel } from '../../../models/security/authenticatedUserModel';
+import { AuthService } from '../../../services/security/auth.service';
 import { MatDialog } from '@angular/material';
 import { MatBottomSheet } from '@angular/material';
-import { LoginComponent } from '../components/generic/login/login.component';
+import { LoginComponent } from '../../../components/generic/login/login.component';
 import { Globals } from 'src/globals';
-import { UserActivityComponent } from '../components/generic/user-activity/user-activity.component';
-import { ProductGroupComponent } from '../components/stock/product-groups/product-group/product-group.component';
+import { UserActivityComponent } from '../../../components/generic/user-activity/user-activity.component';
+import { ProductGroupComponent } from '../../../components/stock/product-groups/product-group/product-group.component';
 
 @Component({
   selector: 'app-navigation',

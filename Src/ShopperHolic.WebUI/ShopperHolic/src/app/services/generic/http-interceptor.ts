@@ -1,7 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { HTTP_INTERCEPTORS, HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from './auth.service';
+import { AuthService } from '../security/auth.service';
 import { catchError, switchMap, filter, take, tap } from 'rxjs/operators';
 import { AuthenticatedUserModel } from 'src/app/models/security/authenticatedUserModel';
 import { MatDialog } from '@angular/material';

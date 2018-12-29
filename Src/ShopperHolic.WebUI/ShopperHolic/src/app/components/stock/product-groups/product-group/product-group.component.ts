@@ -5,7 +5,7 @@ import { ProductGroupValidator } from 'src/app/services/stock/productGroup/produ
 import { CreateProductGroup } from 'src/app/models/stock/productGroups/createProductGroup';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
-import { StatusMessageService } from 'src/app/services/status-message.service';
+import { StatusMessageService } from 'src/app/services/generic/status-message.service';
 import { Globals } from 'src/globals';
 
 @Component({

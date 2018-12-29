@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StatusMessageService } from 'src/app/services/status-message.service';
-import { UserActivityService } from 'src/app/services/user-activity.service';
+import { StatusMessageService } from 'src/app/services/generic/status-message.service';
+import { UserActivityService } from 'src/app/services/generic/user-activity.service';
 
 @Component({
   selector: 'app-notification',

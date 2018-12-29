@@ -1,4 +1,4 @@
-import { UserActivityService } from '../services/user-activity.service';
+import { UserActivityService } from '../services/generic/user-activity.service';
 
 export class StatusMessage {
     constructor (private uas: UserActivityService) {}

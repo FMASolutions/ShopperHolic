@@ -4,7 +4,7 @@ import { ProductGroupService } from 'src/app/services/stock/productGroup/product
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource, Sort, MatDialog } from '@angular/material';
 import { ProductGroupComponent } from '../product-group/product-group.component';
-import { StatusMessageService } from 'src/app/services/status-message.service';
+import { StatusMessageService } from 'src/app/services/generic/status-message.service';
 import { Globals } from 'src/globals';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StatusMessage } from '../models/statusModel';
+import { StatusMessage } from '../../models/statusModel';
 
 @Injectable({
   providedIn: 'root'

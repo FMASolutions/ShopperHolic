@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/security/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthValidator } from 'src/app/services/security/auth.validator';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { StatusMessageService } from 'src/app/services/status-message.service';
+import { StatusMessageService } from 'src/app/services/generic/status-message.service';
 import { Globals } from 'src/globals';
 
 @Component({
