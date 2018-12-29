@@ -9,7 +9,7 @@ import { UserActivityService } from 'src/app/services/user-activity.service';
 })
 export class NotificationComponent implements OnInit {
 
-  constructor(private sms: StatusMessageService, private uas: UserActivityService) { }
+  constructor(public sms: StatusMessageService) { }
 
   ngOnInit() { }
 

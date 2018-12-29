@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material';
 import { UserActivityService } from 'src/app/services/user-activity.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { UserActivityService } from 'src/app/services/user-activity.service';
 })
 export class UserActivityComponent implements OnInit {
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<UserActivityComponent>, private userActiveityService: UserActivityService) { }
+  constructor(public userActiveityService: UserActivityService) { }
 
   ngOnInit() { }
 
