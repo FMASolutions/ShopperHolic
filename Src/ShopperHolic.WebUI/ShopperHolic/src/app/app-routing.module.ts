@@ -6,8 +6,6 @@ import { LoginComponent } from './components/generic/login/login.component';
 import { AboutComponent } from './components/generic/about/about.component';
 import { ContactComponent } from './components/generic/contact/contact.component';
 import { ProductGroupsComponent } from './components/stock/product-groups/product-groups.component';
-import { ProductGroupComponent } from './components/stock/product-groups/product-group/product-group.component';
-import { ProductGroupListComponent } from './components/stock/product-groups/product-group-list/product-group-list.component';
 
 const routes: Routes = [
   {

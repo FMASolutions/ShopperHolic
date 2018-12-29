@@ -1,5 +1,6 @@
 <mat-nav-list>
-  <ng-container *ngIf="userActiveityService.activityMessages">
+  <ng-container *ngIf="userActiveityService.activityMessages.length > 0">
+    <button mat-raised-button color="accent" class="maxWidth" (click)="clearAll()">Clear All</button>
     <ng-container *ngFor="let currentMessage of userActiveityService.activityMessages; index as i">
       <div class="container">
         <div [class]="currentMessage.getClass()" role="alert">

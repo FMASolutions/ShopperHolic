@@ -12,7 +12,7 @@ export class AppComponent {
   
   currentUser: AuthenticatedUserModel = null;
   getApptitle() {
-    return Globals.APP_SETTINGS.appTitle
+    return Globals.APP_SETTINGS.APP_TITLE
   }
   constructor(authService: AuthService) {
     this.currentUser = authService.currentUser;

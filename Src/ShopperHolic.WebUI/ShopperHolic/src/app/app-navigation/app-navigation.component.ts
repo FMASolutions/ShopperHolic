@@ -33,10 +33,10 @@ export class AppNavigationComponent {
   }
 
   getAppName(){
-    return Globals.APP_SETTINGS.appTitle;  
+    return Globals.APP_SETTINGS.APP_TITLE;  
   }
   getAppShortName(){
-    return Globals.APP_SETTINGS.appTitleShort;
+    return Globals.APP_SETTINGS.APP_TITLE_SHORT;
   }
 
   getUserName(): string {
@@ -48,7 +48,7 @@ export class AppNavigationComponent {
   }
   
   openLoginDialog(){
-    let dialogRef = this.matDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
+    let dialogRef = this.matDialog.open(LoginComponent,Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
   }
 
   openUserActivity(){
@@ -56,7 +56,7 @@ export class AppNavigationComponent {
   }
 
   openNewProduGroup(){
-    let dialogRef = this.matDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.defaultModalSettings);
+    let dialogRef = this.matDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
   }
 
   toggleChildVisibility(event: MouseEvent){

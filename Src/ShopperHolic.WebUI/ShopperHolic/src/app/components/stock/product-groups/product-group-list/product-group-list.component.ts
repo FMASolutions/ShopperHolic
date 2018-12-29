@@ -19,7 +19,7 @@ export class ProductGroupListComponent implements OnInit {
   tableDataSource: MatTableDataSource<ProductGroupPreview>;
 
   textFilter: string = "";
-  displayedColumns: string[] = ['ID', 'Code', 'Name', 'View', 'Del'];
+  displayedColumns: string[] = Globals.PROD_GROUP_LIST_COLUMNS;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -29,13 +29,11 @@ export class ProductGroupListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.textFilter = this.route.snapshot.queryParamMap.get('textFilter');
     this.refreshAndApplyFilter();
   }
 
   viewButtonClicked(id: number) {
-    var modalSettings =  { data: 0};
-    modalSettings = Object.assign(modalSettings,Globals.APP_SETTINGS.defaultModalSettings);
+    let modalSettings =  Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
     modalSettings.data = id;
     let dialogRef = this.prodDialog.open(ProductGroupComponent, modalSettings)
 
@@ -45,19 +43,21 @@ export class ProductGroupListComponent implements OnInit {
   }
 
   deleteButtonClicked(id: number){
-    if (confirm("Are you sure you would like to delete? This can't be undone....")) {
+    if (confirm(Globals.PROD_GROUP_DELETE_CONFIRM_MSG + id)) {
+      this.sms.setWarningMessage(Globals.PROD_GROUP_DELETE_ATTEMPT_MSG + id);
       this.prodGroupService.delete(id).subscribe(deleteResp => {
-
+        this.sms.setSuccessMessage(Globals.PROD_GROUP_DELETE_SUCCESS_MSG + id);
         this.refreshAndApplyFilter();
-
       }, error => {
-        this.sms.setDangerMessage("Unable to delete: " + error.error);
+        this.sms.setDangerMessage(error.error);
+        this.sms.setDangerMessage(Globals.PROD_GROUP_DELETE_FAILED_MSG + id);
       });
     }
   }
 
   requestNew(){
-    let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.defaultModalSettings);
+    
+    let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
 
     dialogRef.afterClosed().subscribe(result => {
       this.refreshAndApplyFilter();

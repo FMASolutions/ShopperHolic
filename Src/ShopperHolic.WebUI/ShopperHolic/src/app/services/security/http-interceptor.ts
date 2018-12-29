@@ -50,7 +50,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         } else if (req.url.toLowerCase().indexOf('auth/tokenrefresh') > 1) {
             this.isRefreshing = false;
             this.authService.logoutExistingUser();
-            let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
+            let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
             dialogRef.afterClosed().pipe(tap((returnData =>{
                 return next.handle(req);    
             })));

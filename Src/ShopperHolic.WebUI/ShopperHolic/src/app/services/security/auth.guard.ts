@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     if (hasAccess) { return true; }
     else { //User isn't authorized to access the URL in the parameter, redirect to login page with a message to say they are not authorized.... 
       
-    let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.defaultModalSettings);
+    let dialogRef = this.loginDialog.open(LoginComponent,Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     dialogRef.afterClosed().subscribe(returnedData => {
       if(returnedData.isAuthenticated) //User actually logged in
         this.router.navigateByUrl(state.url);

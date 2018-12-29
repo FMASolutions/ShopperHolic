@@ -6,6 +6,7 @@ import { CreateProductGroup } from 'src/app/models/stock/productGroups/createPro
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 import { StatusMessageService } from 'src/app/services/status-message.service';
+import { Globals } from 'src/globals';
 
 @Component({
   selector: 'app-product-group',
@@ -15,6 +16,7 @@ import { StatusMessageService } from 'src/app/services/status-message.service';
 export class ProductGroupComponent implements OnInit {
 
   prodForm: FormGroup;
+  currentMode: string;
 
   constructor(private sms: StatusMessageService, fb: FormBuilder, private prodService: ProductGroupService, pgValidator: ProductGroupValidator, public dialogRef: MatDialogRef<ProductGroupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.prodForm = fb.group({
@@ -26,52 +28,42 @@ export class ProductGroupComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data && this.data.productGroupID) { //All data received, populate as is
-      this.populateFormFromModel(this.data);
-    } else if (this.data) { //Recevied only ID, perform search
+    if (this.data) { 
+      this.currentMode = Globals.PROD_GROUP_UPDATE_MODE;
       this.prodService.getByID(this.data).subscribe(respData => {
         this.populateFormFromModel(respData);
       })
-    } else { // It's a create request 
+    } else {
+      this.currentMode = Globals.PROD_GROUP_CREATE_MODE;
     }
   }
 
-  getPageTitle(){
-    if(this.data){
-      return "Product Group Details"
-    }
-    else{
-      return "Create New Product Group"
+  getPageTitle() {
+    if (this.currentMode == Globals.PROD_GROUP_UPDATE_MODE) {
+      return Globals.PROD_GROUP_UPDATE_TITLE;
+    } else if(this.currentMode == Globals.PROD_GROUP_CREATE_MODE) {
+      return Globals.PROD_GROUP_CREATE_TITLE;
     }
   }
 
   submit() {
     if (this.prodForm.valid) {
-      if (this.data) { //Data Passed in, we need to do an update, not a created...
+      if (this.currentMode == Globals.PROD_GROUP_UPDATE_MODE) {
+        this.requestUpdate();
         
-        this.prodService.update(this.getUpdateModelFromForm()).subscribe(updateResp => {
-          this.sms.setSuccessMessage("Product Group: " + updateResp.productGroupCode + " Updated successfully");
-          this.dialogRef.close();
-        }, error => {
-          this.sms.setDangerMessage(error.error);
-        });
-      } else {
-        this.prodService.createNewProduct(this.getCreateModelFromForm())
-          .subscribe(resp => {
-            this.sms.setSuccessMessage("Product Group " + resp.productGroupID + " Created Successfully... Closing");
-            this.dialogRef.close();
-          }, error => {
-            this.sms.setDangerMessage(error.error);
-          });
+      } else if(this.currentMode == Globals.PROD_GROUP_CREATE_MODE){
+        this.requestCreate();
       }
     }
   }
 
   cancel() {
-    this.dialogRef.close("Cancelled by user");
+    this.dialogRef.close();
   }
 
-  getCreateModelFromForm(): CreateProductGroup {
+
+
+  private getCreateModelFromForm(): CreateProductGroup {
     let newProdGroup: CreateProductGroup = {
       productGroupCode: this.prodForm.value["code"],
       productGroupName: this.prodForm.value["name"],
@@ -80,7 +72,7 @@ export class ProductGroupComponent implements OnInit {
     return newProdGroup;
   }
 
-  getUpdateModelFromForm(): ProductGroup {
+  private getUpdateModelFromForm(): ProductGroup {
     let newProdGroup: ProductGroup = {
       productGroupID: this.prodForm.value["id"],
       productGroupCode: this.prodForm.value["code"],
@@ -90,12 +82,35 @@ export class ProductGroupComponent implements OnInit {
     return newProdGroup;
   }
 
-  populateFormFromModel(model: ProductGroup) {
+  private populateFormFromModel(model: ProductGroup) {
     this.prodForm.setValue({
       id: model.productGroupID,
       code: model.productGroupCode,
       name: model.productGroupName,
       desc: model.productGroupDescription
+    });
+  }
+
+  private requestUpdate(){
+    this.sms.setInfoMessage(Globals.PROD_GROUP_UPDATE_ATTEMPT_MSG + this.prodForm.value["id"]);
+    this.prodService.update(this.getUpdateModelFromForm()).subscribe(updateResp => {
+      this.sms.setSuccessMessage(Globals.PROD_GROUP_UPDATE_SUCCESS_MSG + updateResp.productGroupID);
+      this.dialogRef.close();
+    }, error => {
+      this.sms.setDangerMessage(error.error);
+      this.sms.setDangerMessage(Globals.PROD_GROUP_UPDATE_FAILED_MSG + this.prodForm.value["id"]);
+    });
+  }
+
+  private requestCreate(){
+    this.sms.setInfoMessage(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG + this.prodForm.value["code"]);
+    this.prodService.createNewProduct(this.getCreateModelFromForm())
+    .subscribe(createResp => {
+      this.sms.setSuccessMessage(Globals.PROD_GROUP_CREATE_SUCCESS_MSG + createResp.productGroupID);
+      this.dialogRef.close();
+    }, error => {
+      this.sms.setDangerMessage(error.error);
+      this.sms.setDangerMessage(Globals.PROD_GROUP_CREATE_FAILED_MSG + this.prodForm.value["id"]);
     });
   }
 

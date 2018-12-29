@@ -20,6 +20,10 @@ export class UserActivityComponent implements OnInit {
   
   }
 
+  clearAll(){
+    this.userActiveityService.clearMessages();
+  }
+
   closeNotification(index: number){
     this.userActiveityService.removeAtIndex(index);
   }
