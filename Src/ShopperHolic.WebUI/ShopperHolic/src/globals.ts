@@ -14,6 +14,7 @@ export class Globals {
                 minWidth: 200,
                 maxWidth: 1100,
                 width: "90%",
+                disableClose: false,
                 autoFocus: true,
                 data: null
             },
@@ -21,10 +22,17 @@ export class Globals {
         }
     }
 
+    public static get SPINNER_LOGIN_MSG(): string { return "Requesting Login..." }
+    public static get SPINNER_UPDATE_MESSAGE(): string { return "Requesting Update.." }
+    public static get SPINNER_CREATE_MESSAGE(): string { return "Requesting Create.." }
+    public static get SPINNER_DELETE_MESSAGE(): string { return "Requesting Delete.." }
+    public static get SPINNER_SORT_MESSAGE(): string { return "Sorting Data.." }
+    public static get SPINNER_FILTER_MESSAGE(): string { return "Applying Filter.." }
+    public static get SPINNER_GET_MESSAGE(): string { return "Fetching Data.." }
+
     public static get LOGIN_FAILED_MSG(): string { return "Login failed for user: "; }
     public static get LOGIN_SUCCESS_MSG(): string { return "Login success for user: "; }
     public static get LOGIN_ATTEMPT_MSG(): string { return "Attempting login for user: "; }
-
 
     public static get PROD_GROUP_UPDATE_TITLE(): string { return "Product Group Update"; }
     public static get PROD_GROUP_CREATE_TITLE(): string { return "Create New Product Group"; }
@@ -75,6 +83,7 @@ export class CustomModalSettings {
     minWidth: number;
     maxWidth: number;
     width: string;
+    disableClose: boolean;
     autoFocus: boolean;
     data: any;
 }

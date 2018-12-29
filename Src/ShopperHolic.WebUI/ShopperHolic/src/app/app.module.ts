@@ -29,6 +29,8 @@ import { SubGroupsComponent } from './components/stock/sub-groups/sub-groups.com
 import { SubGroupComponent } from './components/stock/sub-groups/sub-group/sub-group.component';
 import { SubGroupListComponent } from './components/stock/sub-groups/sub-group-list/sub-group-list.component';
 import { SubGroupService} from './services/stock/subGroup/sub-group.service';
+import { LoadingSpinnerComponent } from './components/generic/loading-spinner/loading-spinner.component';
+import { LoadingSpinnerService} from './services/generic/loading-spinner.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { SubGroupService} from './services/stock/subGroup/sub-group.service';
     SubGroupsComponent,
     SubGroupComponent,
     SubGroupListComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import { SubGroupService} from './services/stock/subGroup/sub-group.service';
     HttpInterceptorModule,
     FlexLayoutModule,
     LayoutModule,    
+    
   ],
   providers: [
     AuthGuard,
@@ -66,9 +70,10 @@ import { SubGroupService} from './services/stock/subGroup/sub-group.service';
     AuthValidator,
     StatusMessageService,
     ProductGroupService,
-    SubGroupService
+    SubGroupService,
+    LoadingSpinnerService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ UserActivityComponent,ProductGroupComponent ]
+  entryComponents: [ UserActivityComponent,ProductGroupComponent, LoadingSpinnerComponent ]
 })
 export class AppModule { }

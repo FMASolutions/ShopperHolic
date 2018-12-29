@@ -6,6 +6,7 @@ import { MatPaginator, MatSort, MatTableDataSource, Sort, MatDialog } from '@ang
 import { ProductGroupComponent } from '../product-group/product-group.component';
 import { StatusMessageService } from 'src/app/services/generic/status-message.service';
 import { Globals } from 'src/globals';
+import { LoadingSpinnerService } from 'src/app/services/generic/loading-spinner.service';
 
 @Component({
   selector: 'app-product-group-list',
@@ -24,11 +25,45 @@ export class ProductGroupListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private sms: StatusMessageService, private prodGroupService: ProductGroupService, public prodDialog: MatDialog) { }
+  constructor(private sms: StatusMessageService, private prodGroupService: ProductGroupService, public prodDialog: MatDialog, public spinner: LoadingSpinnerService) { }
 
   ngOnInit() { this.refreshAndApplyFilter(); }
 
-  viewButtonClicked(id: number) {
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  editClicked(id: number) {
     let modalSettings = Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
     modalSettings.data = id;
     let dialogRef = this.prodDialog.open(ProductGroupComponent, modalSettings)
@@ -38,13 +73,16 @@ export class ProductGroupListComponent implements OnInit {
     })
   }
 
-  deleteButtonClicked(id: number) {
+  deleteClicked(id: number) {
     if (confirm(Globals.PROD_GROUP_DELETE_CONFIRM_MSG + id)) {
+      this.spinner.showSpinner(Globals.SPINNER_DELETE_MESSAGE);
       this.sms.setWarningMessage(Globals.PROD_GROUP_DELETE_ATTEMPT_MSG + id);
       this.prodGroupService.delete(id).subscribe(deleteResp => {
         this.sms.setSuccessMessage(Globals.PROD_GROUP_DELETE_SUCCESS_MSG + id);
+        this.spinner.hideSpinner();
         this.refreshAndApplyFilter();
       }, error => {
+        this.spinner.hideSpinner();
         this.sms.setDangerMessage(error.error);
         this.sms.setDangerMessage(Globals.PROD_GROUP_DELETE_FAILED_MSG + id);
       });
@@ -60,10 +98,11 @@ export class ProductGroupListComponent implements OnInit {
   }
 
   refreshAndApplyFilter() {
+    this.spinner.showSpinner(Globals.SPINNER_GET_MESSAGE);
     this.prodGroupService.getAll().subscribe(prodResp => {
-
+      this.spinner.hideSpinner();
+      
       if (this.prodGroupPreviewsFromServer) { this.prodGroupPreviewsFromServer = []; }
-      if (this.prodGroupPreviewsFiltered) { this.prodGroupPreviewsFiltered = []; }
 
       prodResp.forEach(current => {
         this.applyFilter(current);
@@ -72,12 +111,15 @@ export class ProductGroupListComponent implements OnInit {
 
       this.tableDataSource = new MatTableDataSource(this.prodGroupPreviewsFiltered);
       this.tableDataSource.paginator = this.paginator;
+      this.spinner.hideSpinner();
     });
   }
 
   sortData(sort: Sort) {
+    this.spinner.showSpinner(Globals.SPINNER_SORT_MESSAGE);
     const data = this.prodGroupPreviewsFiltered.slice();
     if (!sort.active || sort.direction === '') {
+      this.spinner.hideSpinner();
       this.tableDataSource = new MatTableDataSource(data);
       this.tableDataSource.paginator = this.paginator;
       return;
@@ -95,6 +137,7 @@ export class ProductGroupListComponent implements OnInit {
 
     this.tableDataSource = new MatTableDataSource(sortedData);
     this.tableDataSource.paginator = this.paginator;
+    this.spinner.hideSpinner();
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
@@ -105,16 +148,19 @@ export class ProductGroupListComponent implements OnInit {
   }
 
   applyFilters() {
+    this.spinner.showSpinner(Globals.SPINNER_FILTER_MESSAGE);
+    setTimeout(function(){
+      
+    },10000);
     this.prodGroupPreviewsFiltered = [];
     this.prodGroupPreviewsFromServer.forEach(current => {
       this.applyFilter(current);
     });
-    this.tableDataSource.filter = this.textFilter.trim().toLowerCase();
+    if(this.tableDataSource){ this.tableDataSource.filter = this.textFilter.trim().toLowerCase();}
 
-    if (this.tableDataSource.paginator) {
-      this.tableDataSource.paginator.firstPage();
-    }
+    if (this.tableDataSource.paginator) { this.tableDataSource.paginator.firstPage(); }
 
+    this.spinner.hideSpinner();
   }
 
   private applyFilter(item: ProductGroupPreview) {

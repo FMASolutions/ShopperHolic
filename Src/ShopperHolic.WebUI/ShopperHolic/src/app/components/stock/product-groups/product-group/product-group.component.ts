@@ -7,6 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 import { StatusMessageService } from 'src/app/services/generic/status-message.service';
 import { Globals } from 'src/globals';
+import { LoadingSpinnerService } from 'src/app/services/generic/loading-spinner.service';
 
 @Component({
   selector: 'app-product-group',
@@ -22,7 +23,7 @@ export class ProductGroupComponent implements OnInit {
     private sms: StatusMessageService,
     fb: FormBuilder,
     private prodService: ProductGroupService,
-
+    private spinner: LoadingSpinnerService,
     pgValidator: ProductGroupValidator,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<ProductGroupComponent>
@@ -98,23 +99,29 @@ export class ProductGroupComponent implements OnInit {
   }
 
   private requestUpdate() {
+    this.spinner.showSpinner(Globals.SPINNER_UPDATE_MESSAGE)
     this.sms.setInfoMessage(Globals.PROD_GROUP_UPDATE_ATTEMPT_MSG + this.prodForm.value["id"]);
     this.prodService.update(this.getUpdateModelFromForm()).subscribe(updateResp => {
       this.sms.setSuccessMessage(Globals.PROD_GROUP_UPDATE_SUCCESS_MSG + updateResp.productGroupID);
       this.dialogRef.close();
+      this.spinner.hideSpinner();
     }, error => {
+      this.spinner.hideSpinner();
       this.sms.setDangerMessage(error.error);
       this.sms.setDangerMessage(Globals.PROD_GROUP_UPDATE_FAILED_MSG + this.prodForm.value["id"]);
     });
   }
 
   private requestCreate() {
+    this.spinner.showSpinner(Globals.SPINNER_CREATE_MESSAGE);
     this.sms.setInfoMessage(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG + this.prodForm.value["code"]);
     this.prodService.createNewProduct(this.getCreateModelFromForm())
       .subscribe(createResp => {
         this.sms.setSuccessMessage(Globals.PROD_GROUP_CREATE_SUCCESS_MSG + createResp.productGroupID);
         this.dialogRef.close();
+        this.spinner.hideSpinner();
       }, error => {
+        this.spinner.hideSpinner();
         this.sms.setDangerMessage(error.error);
         this.sms.setDangerMessage(Globals.PROD_GROUP_CREATE_FAILED_MSG + this.prodForm.value["id"]);
       });
