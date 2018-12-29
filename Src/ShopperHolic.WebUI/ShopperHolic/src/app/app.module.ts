@@ -8,23 +8,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorModule } from './services/security/http-interceptor';
 import { AuthGuard } from './services/security/auth.guard';
 import { AuthService } from './services/security/auth.service';
+import { LoginComponent } from './components/generic/login/login.component';
 import { AuthValidator } from './services/security/auth.validator';
 import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
+import { LayoutModule } from '@angular/cdk/layout';
 import { AppComponent } from './app.component';
+import { AppNavigationComponent } from './app-navigation/app-navigation.component';
+import { NotificationComponent } from './components/generic/notification/notification.component';
+import { UserActivityComponent } from './components/generic/user-activity/user-activity.component';
+import { StatusMessageService } from './services/status-message.service';
+import { HomeComponent } from './components/generic/home/home.component';
 import { AboutComponent } from './components/generic/about/about.component';
 import { ContactComponent } from './components/generic/contact/contact.component';
-import { HomeComponent } from './components/generic/home/home.component';
-import { LoginComponent } from './components/generic/login/login.component';
-import { StatusMessageService } from './services/status-message.service';
-import { ProductGroupService } from './services/stock/productGroup/product-group.service';
 import { ProductGroupsComponent } from './components/stock/product-groups/product-groups.component';
 import { ProductGroupComponent } from './components/stock/product-groups/product-group/product-group.component';
 import { ProductGroupListComponent } from './components/stock/product-groups/product-group-list/product-group-list.component';
-import { AppNavigationComponent } from './app-navigation/app-navigation.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { NotificationComponent } from './components/generic/notification/notification.component';
-import { UserActivityComponent } from './components/generic/user-activity/user-activity.component';
+import { ProductGroupService } from './services/stock/productGroup/product-group.service';
+import { SubGroupsComponent } from './components/stock/sub-groups/sub-groups.component';
+import { SubGroupComponent } from './components/stock/sub-groups/sub-group/sub-group.component';
+import { SubGroupListComponent } from './components/stock/sub-groups/sub-group-list/sub-group-list.component';
+import { SubGroupService} from './services/stock/subGroup/sub-group.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,9 @@ import { UserActivityComponent } from './components/generic/user-activity/user-a
     AppNavigationComponent,
     NotificationComponent,
     UserActivityComponent,
+    SubGroupsComponent,
+    SubGroupComponent,
+    SubGroupListComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +65,8 @@ import { UserActivityComponent } from './components/generic/user-activity/user-a
     AuthService,
     AuthValidator,
     StatusMessageService,
-    ProductGroupService
+    ProductGroupService,
+    SubGroupService
   ],
   bootstrap: [AppComponent],
   entryComponents: [ UserActivityComponent,ProductGroupComponent ]
