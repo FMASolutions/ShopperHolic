@@ -14,25 +14,33 @@ import { Globals } from 'src/globals';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   currentUser: AuthenticatedUserModel = null;
   returnUrl: string = "";
   loginForm: FormGroup;
 
-  constructor(private sms: StatusMessageService, private authService: AuthService, private router: Router, private route: ActivatedRoute, fb: FormBuilder, authValidator: AuthValidator, public dialogRef: MatDialogRef<LoginComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    private sms: StatusMessageService,
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
+    fb: FormBuilder,
+    authValidator: AuthValidator,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<LoginComponent>
+  ) {
+
     this.currentUser = this.authService.currentUser;
     this.loginForm = fb.group({
       username: [null, [authValidator.ValidateUsername]],
       password: [null, [authValidator.ValidatePassword]]
     });
+
   }
 
-  ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-  }
+  ngOnInit() { this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl'); }
 
   attemptLogin() {
-    
-
     if (this.loginForm.valid) {
       this.sms.setInfoMessage(Globals.LOGIN_ATTEMPT_MSG + this.loginForm.value["username"]);
       this.authService.attemptLogin(this.loginForm.value["username"], this.loginForm.value["password"]).subscribe(resp => {
@@ -51,14 +59,7 @@ export class LoginComponent implements OnInit {
         this.sms.setDangerMessage(Globals.LOGIN_FAILED_MSG);
       });
     }
-    else {
-
-    }
   }
 
-  cancelLogin() {
-    this.dialogRef.close({
-      userCancelled: true
-    });
-  }
+  cancelLogin() { this.dialogRef.close({ userCancelled: true }); }
 }

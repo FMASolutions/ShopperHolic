@@ -18,17 +18,27 @@ export class ProductGroupComponent implements OnInit {
   prodForm: FormGroup;
   currentMode: string;
 
-  constructor(private sms: StatusMessageService, fb: FormBuilder, private prodService: ProductGroupService, pgValidator: ProductGroupValidator, public dialogRef: MatDialogRef<ProductGroupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    private sms: StatusMessageService,
+    fb: FormBuilder,
+    private prodService: ProductGroupService,
+
+    pgValidator: ProductGroupValidator,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<ProductGroupComponent>
+  ) {
+
     this.prodForm = fb.group({
       id: [0, []],
       code: [null, [pgValidator.validateCodeForCreate]],
       name: [null, [pgValidator.basicValidation]],
       desc: [null, [pgValidator.basicValidation]],
     });
+
   }
 
   ngOnInit() {
-    if (this.data) { 
+    if (this.data) {
       this.currentMode = Globals.PROD_GROUP_UPDATE_MODE;
       this.prodService.getByID(this.data).subscribe(respData => {
         this.populateFormFromModel(respData);
@@ -41,7 +51,7 @@ export class ProductGroupComponent implements OnInit {
   getPageTitle() {
     if (this.currentMode == Globals.PROD_GROUP_UPDATE_MODE) {
       return Globals.PROD_GROUP_UPDATE_TITLE;
-    } else if(this.currentMode == Globals.PROD_GROUP_CREATE_MODE) {
+    } else if (this.currentMode == Globals.PROD_GROUP_CREATE_MODE) {
       return Globals.PROD_GROUP_CREATE_TITLE;
     }
   }
@@ -50,18 +60,14 @@ export class ProductGroupComponent implements OnInit {
     if (this.prodForm.valid) {
       if (this.currentMode == Globals.PROD_GROUP_UPDATE_MODE) {
         this.requestUpdate();
-        
-      } else if(this.currentMode == Globals.PROD_GROUP_CREATE_MODE){
+
+      } else if (this.currentMode == Globals.PROD_GROUP_CREATE_MODE) {
         this.requestCreate();
       }
     }
   }
 
-  cancel() {
-    this.dialogRef.close();
-  }
-
-
+  cancel() { this.dialogRef.close(); }
 
   private getCreateModelFromForm(): CreateProductGroup {
     let newProdGroup: CreateProductGroup = {
@@ -91,7 +97,7 @@ export class ProductGroupComponent implements OnInit {
     });
   }
 
-  private requestUpdate(){
+  private requestUpdate() {
     this.sms.setInfoMessage(Globals.PROD_GROUP_UPDATE_ATTEMPT_MSG + this.prodForm.value["id"]);
     this.prodService.update(this.getUpdateModelFromForm()).subscribe(updateResp => {
       this.sms.setSuccessMessage(Globals.PROD_GROUP_UPDATE_SUCCESS_MSG + updateResp.productGroupID);
@@ -102,16 +108,16 @@ export class ProductGroupComponent implements OnInit {
     });
   }
 
-  private requestCreate(){
+  private requestCreate() {
     this.sms.setInfoMessage(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG + this.prodForm.value["code"]);
     this.prodService.createNewProduct(this.getCreateModelFromForm())
-    .subscribe(createResp => {
-      this.sms.setSuccessMessage(Globals.PROD_GROUP_CREATE_SUCCESS_MSG + createResp.productGroupID);
-      this.dialogRef.close();
-    }, error => {
-      this.sms.setDangerMessage(error.error);
-      this.sms.setDangerMessage(Globals.PROD_GROUP_CREATE_FAILED_MSG + this.prodForm.value["id"]);
-    });
+      .subscribe(createResp => {
+        this.sms.setSuccessMessage(Globals.PROD_GROUP_CREATE_SUCCESS_MSG + createResp.productGroupID);
+        this.dialogRef.close();
+      }, error => {
+        this.sms.setDangerMessage(error.error);
+        this.sms.setDangerMessage(Globals.PROD_GROUP_CREATE_FAILED_MSG + this.prodForm.value["id"]);
+      });
   }
 
 }

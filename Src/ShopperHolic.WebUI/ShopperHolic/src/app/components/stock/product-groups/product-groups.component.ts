@@ -9,7 +9,6 @@ export class ProductGroupsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

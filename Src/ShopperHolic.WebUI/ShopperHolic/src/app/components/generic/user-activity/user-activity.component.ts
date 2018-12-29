@@ -11,22 +11,10 @@ export class UserActivityComponent implements OnInit {
 
   constructor(private bottomSheetRef: MatBottomSheetRef<UserActivityComponent>, private userActiveityService: UserActivityService) { }
 
-  openLink(event: MouseEvent): void{
-    this.bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
+  ngOnInit() { }
 
-  ngOnInit() {
-  
-  }
+  clearAll() { this.userActiveityService.clearMessages(); }
 
-  clearAll(){
-    this.userActiveityService.clearMessages();
-  }
-
-  closeNotification(index: number){
-    this.userActiveityService.removeAtIndex(index);
-  }
-  
+  closeNotification(index: number) { this.userActiveityService.removeAtIndex(index); }
 
 }

@@ -24,16 +24,12 @@ export class ProductGroupListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private sms: StatusMessageService, private prodGroupService: ProductGroupService, private route: ActivatedRoute, public prodDialog: MatDialog) { 
-    
-  }
+  constructor(private sms: StatusMessageService, private prodGroupService: ProductGroupService, public prodDialog: MatDialog) { }
 
-  ngOnInit() {
-    this.refreshAndApplyFilter();
-  }
+  ngOnInit() { this.refreshAndApplyFilter(); }
 
   viewButtonClicked(id: number) {
-    let modalSettings =  Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
+    let modalSettings = Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
     modalSettings.data = id;
     let dialogRef = this.prodDialog.open(ProductGroupComponent, modalSettings)
 
@@ -42,7 +38,7 @@ export class ProductGroupListComponent implements OnInit {
     })
   }
 
-  deleteButtonClicked(id: number){
+  deleteButtonClicked(id: number) {
     if (confirm(Globals.PROD_GROUP_DELETE_CONFIRM_MSG + id)) {
       this.sms.setWarningMessage(Globals.PROD_GROUP_DELETE_ATTEMPT_MSG + id);
       this.prodGroupService.delete(id).subscribe(deleteResp => {
@@ -55,8 +51,7 @@ export class ProductGroupListComponent implements OnInit {
     }
   }
 
-  requestNew(){
-    
+  requestNew() {
     let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -68,7 +63,7 @@ export class ProductGroupListComponent implements OnInit {
     this.prodGroupService.getAll().subscribe(prodResp => {
 
       if (this.prodGroupPreviewsFromServer) { this.prodGroupPreviewsFromServer = []; }
-      if (this.prodGroupPreviewsFiltered) {this.prodGroupPreviewsFiltered = [];}
+      if (this.prodGroupPreviewsFiltered) { this.prodGroupPreviewsFiltered = []; }
 
       prodResp.forEach(current => {
         this.applyFilter(current);
@@ -102,28 +97,26 @@ export class ProductGroupListComponent implements OnInit {
     this.tableDataSource.paginator = this.paginator;
   }
 
-  compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  }
+  compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
 
   resetFilters() {
     this.textFilter = "";
     this.refreshAndApplyFilter();
   }
 
-  applyFilters(){
+  applyFilters() {
     this.prodGroupPreviewsFiltered = [];
-    this.prodGroupPreviewsFromServer.forEach(current =>{
+    this.prodGroupPreviewsFromServer.forEach(current => {
       this.applyFilter(current);
     });
     this.tableDataSource.filter = this.textFilter.trim().toLowerCase();
 
-    if(this.tableDataSource.paginator){
+    if (this.tableDataSource.paginator) {
       this.tableDataSource.paginator.firstPage();
     }
-    
+
   }
-  
+
   private applyFilter(item: ProductGroupPreview) {
     if (this.textFilter) { //Both filters contain values
       if (item.productGroupCode.toLowerCase().indexOf(this.textFilter.toLowerCase()) >= 0
@@ -136,5 +129,5 @@ export class ProductGroupListComponent implements OnInit {
     }
   }
 
-  
+
 }

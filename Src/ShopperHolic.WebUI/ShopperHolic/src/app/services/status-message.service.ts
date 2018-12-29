@@ -11,24 +11,16 @@ export class StatusMessageService {
 
   constructor(private uas: UserActivityService) { }
 
-  clearCurrentMessage() {
-    this.currentMessage.clearCurrentMessage();
-  }
+  clearCurrentMessage() { this.currentMessage.clearCurrentMessage(); }
 
-  getValue() {
-    return this.currentMessage.value;
-  }
+  getValue() { return this.currentMessage.value; }
 
-  getClass() {
-    return this.currentMessage.class;
-  }
+  getClass() { return this.currentMessage.class; }
 
-  getIcon() {
-    return this.currentMessage.icon;
-  }
+  getIcon() { return this.currentMessage.icon; }
 
   setSuccessMessage(message: string) {
-    this.currentMessage.value =message;
+    this.currentMessage.value = message;
     this.currentMessage.class = "alert alert-success";
     this.currentMessage.icon = "check_circle";
     this.addTooUserActivity();
@@ -36,7 +28,7 @@ export class StatusMessageService {
   }
 
   setInfoMessage(message: string) {
-    this.currentMessage.value =message;
+    this.currentMessage.value = message;
     this.currentMessage.class = "alert alert-info";
     this.currentMessage.icon = "info";
     this.addTooUserActivity();
@@ -44,7 +36,7 @@ export class StatusMessageService {
   }
 
   setWarningMessage(message: string) {
-    this.currentMessage.value =message;
+    this.currentMessage.value = message;
     this.currentMessage.class = "alert alert-warning";
     this.currentMessage.icon = "warning";
     this.addTooUserActivity();
@@ -52,7 +44,7 @@ export class StatusMessageService {
   }
 
   setDangerMessage(message: string) {
-    this.currentMessage.value =message;
+    this.currentMessage.value = message;
     this.currentMessage.class = "alert alert-danger";
     this.currentMessage.icon = "error";
     this.addTooUserActivity();
@@ -60,7 +52,7 @@ export class StatusMessageService {
   }
 
   private setTimeout() {
-    this.runAlarm(10).then(value =>{
+    this.runAlarm(10).then(value => {
       this.clearCurrentMessage();
     })
   }
@@ -74,7 +66,7 @@ export class StatusMessageService {
     });
   }
 
-  private addTooUserActivity(){
+  private addTooUserActivity() {
     let newUserActivity: StatusMessage = new StatusMessage(this.uas);
     Object.assign(newUserActivity, this.currentMessage);
     this.uas.addMessage(newUserActivity);
