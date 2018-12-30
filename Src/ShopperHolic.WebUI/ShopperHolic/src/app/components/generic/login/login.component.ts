@@ -6,7 +6,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthValidator } from 'src/app/services/security/auth.validator';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { StatusMessageService } from 'src/app/services/generic/status-message.service';
-import { Globals } from 'src/globals';
 import { LoadingSpinnerService } from 'src/app/services/generic/loading-spinner.service';
 
 @Component({
@@ -43,22 +42,12 @@ export class LoginComponent implements OnInit {
 
   attemptLogin() {
     if (this.loginForm.valid) {
-      this.sms.setInfoMessage(Globals.LOGIN_ATTEMPT_MSG + this.loginForm.value["username"]);
       this.authService.attemptLogin(this.loginForm.value["username"], this.loginForm.value["password"]).subscribe(resp => {
         this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
-          this.sms.setSuccessMessage(Globals.LOGIN_SUCCESS_MSG + userResp.username);
           if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl); } //Go to return url or home after login
           this.dialogRef.close(userResp);
-        }
-          , (tokenExchangeError) => {
-            this.sms.setDangerMessage(tokenExchangeError.error);
-            this.sms.setDangerMessage(Globals.LOGIN_FAILED_MSG + this.loginForm.value["username"]);
-          }
-        )
-      }, (loginError) => {
-        this.sms.setDangerMessage(loginError.error);
-        this.sms.setDangerMessage(Globals.LOGIN_FAILED_MSG);
-      });
+          this.spinner.closeAllSpinners();
+        })});
     }
   }
 

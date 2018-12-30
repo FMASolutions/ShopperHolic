@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { Globals } from 'src/globals';
+import { StatusMessageService } from '../generic/status-message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
   currentUser: AuthenticatedUserModel = new AuthenticatedUserModel();
   private lastUsernameRequested: string = "";
 
-  constructor(private http: HttpClient, private cookie: CookieService) {
+  constructor(private http: HttpClient, private cookie: CookieService, private sms: StatusMessageService) {
     let existingToken = this.cookie.get("bearerToken");
     if (existingToken) { 
       Object.assign(this.currentUser,this.getUserFromStorage());
@@ -24,12 +25,14 @@ export class AuthService {
   }
 
   attemptLogin(username, password): Observable<string> {
+    this.sms.setInfoMessage(Globals.LOGIN_ATTEMPT_MSG + username);;
     let authRequestObject = {
       Username: username,
       UserInputPasswordPlainText: password
     };
     this.lastUsernameRequested = username;
     return this.http.post<string>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(resp => {
+      
     }));
   }
 
@@ -41,6 +44,7 @@ export class AuthService {
         //the authService.currentUser by doing "this.currentUser = resp" 
         Object.assign(this.currentUser, resp);
         this.storeUserToStorage(resp);
+        this.sms.setSuccessMessage(Globals.LOGIN_SUCCESS_MSG + resp.username);
       }));
   }
 
