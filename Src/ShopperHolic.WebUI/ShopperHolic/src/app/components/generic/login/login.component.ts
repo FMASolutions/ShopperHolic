@@ -37,30 +37,25 @@ export class LoginComponent implements OnInit {
       username: [null, [authValidator.ValidateUsername]],
       password: [null, [authValidator.ValidatePassword]]
     });
-
   }
 
   ngOnInit() { this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl'); }
 
   attemptLogin() {
     if (this.loginForm.valid) {
-      this.spinner.showSpinner(Globals.SPINNER_LOGIN_MSG);
       this.sms.setInfoMessage(Globals.LOGIN_ATTEMPT_MSG + this.loginForm.value["username"]);
       this.authService.attemptLogin(this.loginForm.value["username"], this.loginForm.value["password"]).subscribe(resp => {
         this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
           this.sms.setSuccessMessage(Globals.LOGIN_SUCCESS_MSG + userResp.username);
           if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl); } //Go to return url or home after login
-          this.spinner.hideSpinner();
           this.dialogRef.close(userResp);
         }
           , (tokenExchangeError) => {
-            this.spinner.hideSpinner();
             this.sms.setDangerMessage(tokenExchangeError.error);
             this.sms.setDangerMessage(Globals.LOGIN_FAILED_MSG + this.loginForm.value["username"]);
           }
         )
       }, (loginError) => {
-        this.spinner.hideSpinner();
         this.sms.setDangerMessage(loginError.error);
         this.sms.setDangerMessage(Globals.LOGIN_FAILED_MSG);
       });

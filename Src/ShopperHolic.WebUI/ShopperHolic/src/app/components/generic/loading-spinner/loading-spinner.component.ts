@@ -9,9 +9,9 @@ import { LoadingSpinnerService } from 'src/app/services/generic/loading-spinner.
 })
 export class LoadingSpinnerComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<LoadingSpinnerComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public messageData: any, public dialogRef: MatDialogRef<LoadingSpinnerComponent>) { }
 
-  getLoadingMessage() : string{ return this.data ? this.data : ""; }
+  getLoadingMessage(): string { return this.messageData; }
   
   ngOnInit() {
   }

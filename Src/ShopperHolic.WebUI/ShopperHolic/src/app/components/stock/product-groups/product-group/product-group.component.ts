@@ -99,29 +99,23 @@ export class ProductGroupComponent implements OnInit {
   }
 
   private requestUpdate() {
-    this.spinner.showSpinner(Globals.SPINNER_UPDATE_MESSAGE)
     this.sms.setInfoMessage(Globals.PROD_GROUP_UPDATE_ATTEMPT_MSG + this.prodForm.value["id"]);
     this.prodService.update(this.getUpdateModelFromForm()).subscribe(updateResp => {
       this.sms.setSuccessMessage(Globals.PROD_GROUP_UPDATE_SUCCESS_MSG + updateResp.productGroupID);
-      this.dialogRef.close();
-      this.spinner.hideSpinner();
+      this.dialogRef.close({userSubmitted: true});
     }, error => {
-      this.spinner.hideSpinner();
       this.sms.setDangerMessage(error.error);
       this.sms.setDangerMessage(Globals.PROD_GROUP_UPDATE_FAILED_MSG + this.prodForm.value["id"]);
     });
   }
 
   private requestCreate() {
-    this.spinner.showSpinner(Globals.SPINNER_CREATE_MESSAGE);
     this.sms.setInfoMessage(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG + this.prodForm.value["code"]);
     this.prodService.createNewProduct(this.getCreateModelFromForm())
       .subscribe(createResp => {
         this.sms.setSuccessMessage(Globals.PROD_GROUP_CREATE_SUCCESS_MSG + createResp.productGroupID);
-        this.dialogRef.close();
-        this.spinner.hideSpinner();
+        this.dialogRef.close({ userSubmitted: true});
       }, error => {
-        this.spinner.hideSpinner();
         this.sms.setDangerMessage(error.error);
         this.sms.setDangerMessage(Globals.PROD_GROUP_CREATE_FAILED_MSG + this.prodForm.value["id"]);
       });

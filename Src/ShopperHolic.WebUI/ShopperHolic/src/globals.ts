@@ -7,7 +7,7 @@ export class AppSettings {
 
 export class Globals {
     public static get APP_SETTINGS(): AppSettings {
-        return {
+        let original = {
             APP_TITLE: "Mirpur PVC",
             APP_TITLE_SHORT: "M-PVC",
             DEFAULT_MODAL_SETTINGS: {
@@ -20,6 +20,9 @@ export class Globals {
             },
             BASE_API_URL: "https://localhost:5001/api"
         }
+        let copy = new AppSettings();
+        Object.assign(copy, original);
+        return copy;
     }
 
     public static get SPINNER_LOGIN_MSG(): string { return "Requesting Login..." }

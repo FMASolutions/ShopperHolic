@@ -5,15 +5,19 @@ import { Observable } from 'rxjs';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
 import { Globals } from 'src/globals';
+import { LoadingSpinnerService } from '../../generic/loading-spinner.service';
+import { StatusMessageService } from '../../generic/status-message.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductGroupService {
-  
-  baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/ProductGroup/';
 
-  constructor(private http: HttpClient) { }
+  baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/ProductGroup/';
+  previewsFromServer: ProductGroupPreview[] = [];
+
+  constructor(private http: HttpClient, private spinner: LoadingSpinnerService, private sms: StatusMessageService) { }
 
   public createNewProduct(newProductGroup: CreateProductGroup): Observable<ProductGroup> {
     return this.http.post<ProductGroup>(this.baseURL + 'Create', newProductGroup);
@@ -24,7 +28,9 @@ export class ProductGroupService {
   }
 
   public getAll(): Observable<ProductGroupPreview[]> {
-    return this.http.get<ProductGroupPreview[]>(this.baseURL + 'GetAll');
+    return this.http.get<ProductGroupPreview[]>(this.baseURL + 'GetAll').pipe(tap(resp=>{
+      this.previewsFromServer = resp;
+    }));
   }
 
   public update(newModel: ProductGroup): Observable<ProductGroup> {
@@ -32,7 +38,16 @@ export class ProductGroupService {
   }
 
   public delete(prodGroupID: number): Observable<boolean> {
-    return this.http.delete<boolean>(this.baseURL + "Delete?id=" + prodGroupID.toString());
+    this.sms.setWarningMessage(Globals.PROD_GROUP_DELETE_ATTEMPT_MSG + prodGroupID);
+
+    let obs = this.http.delete<boolean>(this.baseURL + "Delete?id=" + prodGroupID.toString());
+    obs.subscribe(response => {
+      this.sms.setSuccessMessage(Globals.PROD_GROUP_DELETE_SUCCESS_MSG + prodGroupID);
+    }, error => {
+      this.sms.setDangerMessage(error.error);
+      this.sms.setDangerMessage(Globals.PROD_GROUP_DELETE_FAILED_MSG + prodGroupID);
+    })
+    return obs;
   }
-  
+
 }
