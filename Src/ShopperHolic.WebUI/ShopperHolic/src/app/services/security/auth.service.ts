@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { Globals } from 'src/globals';
-import { StatusMessageService } from '../generic/status-message.service';
-import { LoadingSpinnerService } from '../generic/loading-spinner.service';
+import { UserNotificationService } from '../generic/user-notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,7 @@ export class AuthService {
   currentUser: AuthenticatedUserModel = new AuthenticatedUserModel();
   private lastUsernameRequested: string = "";
 
-  constructor(private http: HttpClient, private cookie: CookieService, private sms: StatusMessageService, private spinner: LoadingSpinnerService) {
+  constructor(private http: HttpClient, private cookie: CookieService, private userNotificationServ: UserNotificationService) {
     let existingToken = this.cookie.get("bearerToken");
     if (existingToken) {
       Object.assign(this.currentUser, this.getUserFromStorage());
@@ -26,15 +25,14 @@ export class AuthService {
   }
 
   attemptLogin(username, password): Observable<string> {
-    this.spinner.openNewSpinner(Globals.SPINNER_LOGIN_MSG);
-    this.sms.setInfoMessage(Globals.LOGIN_ATTEMPT_MSG + username);;
+    this.userNotificationServ.informUserStart(Globals.LOGIN_ATTEMPT_MSG + username,Globals.SPINNER_LOGIN_MSG);
     let authRequestObject = {
       Username: username,
       UserInputPasswordPlainText: password
     };
     this.lastUsernameRequested = username;
     return this.http.post<string>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(() => { }, (err) => {
-      this.spinner.closeAllSpinners(); //Close because error, otherwise close is handled in key exchange.
+      this.userNotificationServ.informUserError(Globals.LOGIN_FAILED_MSG);  //Close because error, handle success in key exchange.
     }));
   }
 
@@ -46,10 +44,9 @@ export class AuthService {
         //the authService.currentUser by doing "this.currentUser = resp" 
         Object.assign(this.currentUser, resp);
         this.storeUserToStorage(resp);
-        this.sms.setSuccessMessage(Globals.LOGIN_SUCCESS_MSG + resp.username);
-        this.spinner.closeAllSpinners();
+        this.userNotificationServ.informUserComplete(Globals.LOGIN_SUCCESS_MSG + resp.username);
       }, (erro) => {
-        this.spinner.closeAllSpinners();
+        this.userNotificationServ.informUserError(Globals.LOGIN_FAILED_MSG);
       }));
   }
 
