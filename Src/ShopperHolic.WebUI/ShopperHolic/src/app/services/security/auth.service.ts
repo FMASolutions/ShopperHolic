@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { Globals } from 'src/globals';
 import { StatusMessageService } from '../generic/status-message.service';
+import { LoadingSpinnerService } from '../generic/loading-spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +14,27 @@ import { StatusMessageService } from '../generic/status-message.service';
 
 export class AuthService {
 
-  authURL: string = Globals.APP_SETTINGS.BASE_API_URL +  '/Auth/';
+  authURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Auth/';
   currentUser: AuthenticatedUserModel = new AuthenticatedUserModel();
   private lastUsernameRequested: string = "";
 
-  constructor(private http: HttpClient, private cookie: CookieService, private sms: StatusMessageService) {
+  constructor(private http: HttpClient, private cookie: CookieService, private sms: StatusMessageService, private spinner: LoadingSpinnerService) {
     let existingToken = this.cookie.get("bearerToken");
-    if (existingToken) { 
-      Object.assign(this.currentUser,this.getUserFromStorage());
+    if (existingToken) {
+      Object.assign(this.currentUser, this.getUserFromStorage());
     }
   }
 
   attemptLogin(username, password): Observable<string> {
+    this.spinner.openNewSpinner(Globals.SPINNER_LOGIN_MSG);
     this.sms.setInfoMessage(Globals.LOGIN_ATTEMPT_MSG + username);;
     let authRequestObject = {
       Username: username,
       UserInputPasswordPlainText: password
     };
     this.lastUsernameRequested = username;
-    return this.http.post<string>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(resp => {
-      
+    return this.http.post<string>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(() => { }, (err) => {
+      this.spinner.closeAllSpinners(); //Close because error, otherwise close is handled in key exchange.
     }));
   }
 
@@ -45,11 +47,14 @@ export class AuthService {
         Object.assign(this.currentUser, resp);
         this.storeUserToStorage(resp);
         this.sms.setSuccessMessage(Globals.LOGIN_SUCCESS_MSG + resp.username);
+        this.spinner.closeAllSpinners();
+      }, (erro) => {
+        this.spinner.closeAllSpinners();
       }));
   }
 
-  refreshToken(): Observable<AuthenticatedUserModel>{
-    return this.http.post<AuthenticatedUserModel>(this.authURL + "TokenRefresh",this.currentUser).pipe(tap(userResp =>{
+  refreshToken(): Observable<AuthenticatedUserModel> {
+    return this.http.post<AuthenticatedUserModel>(this.authURL + "TokenRefresh", this.currentUser).pipe(tap(userResp => {
       Object.assign(this.currentUser, userResp);
       this.storeUserToStorage(userResp);
     }));
@@ -64,10 +69,10 @@ export class AuthService {
   }
 
   storeUserToStorage(userToStore: AuthenticatedUserModel) {
-    this.cookie.set("bearerToken",userToStore.bearerToken);
+    this.cookie.set("bearerToken", userToStore.bearerToken);
     this.cookie.set("username", userToStore.username);
-    this.cookie.set("userClaims",JSON.stringify(userToStore.userClaims));
-    this.cookie.set("refreshToken",JSON.stringify(userToStore.refreshToken));
+    this.cookie.set("userClaims", JSON.stringify(userToStore.userClaims));
+    this.cookie.set("refreshToken", JSON.stringify(userToStore.refreshToken));
   }
 
   removeUserFromStorage() {

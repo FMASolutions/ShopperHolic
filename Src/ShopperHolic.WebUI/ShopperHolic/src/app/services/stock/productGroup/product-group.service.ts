@@ -15,39 +15,66 @@ import { tap } from 'rxjs/operators';
 export class ProductGroupService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/ProductGroup/';
-  previewsFromServer: ProductGroupPreview[] = [];
-
   constructor(private http: HttpClient, private spinner: LoadingSpinnerService, private sms: StatusMessageService) { }
 
   public createNewProduct(newProductGroup: CreateProductGroup): Observable<ProductGroup> {
-    return this.http.post<ProductGroup>(this.baseURL + 'Create', newProductGroup);
+    this.informUserStart(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG, Globals.SPINNER_CREATE_MESSAGE);
+    return this.http.post<ProductGroup>(this.baseURL + 'Create', newProductGroup).pipe(tap(resp => {
+      this.informUserComplete(Globals.PROD_GROUP_CREATE_SUCCESS_MSG);
+    }, err => {
+      this.informUserError(Globals.PROD_GROUP_CREATE_FAILED_MSG);
+    }));
   }
 
   public getByID(id: number): Observable<ProductGroup> {
-    return this.http.get<ProductGroup>(this.baseURL + 'GetByID/?id=' + id.toString());
+    this.informUserStart(Globals.PROD_GROUP_READ_ATTEMPT_MSG, Globals.SPINNER_GET_MESSAGE);
+    return this.http.get<ProductGroup>(this.baseURL + 'GetByID/?id=' + id.toString()).pipe(tap(resp => {
+      this.informUserComplete(Globals.PROD_GROUP_READ_SUCCESS_MSG);
+    }, err => {
+      this.informUserError(Globals.PROD_GROUP_READ_FAILED_MSG);
+    }));;
   }
 
   public getAll(): Observable<ProductGroupPreview[]> {
-    return this.http.get<ProductGroupPreview[]>(this.baseURL + 'GetAll').pipe(tap(resp=>{
-      this.previewsFromServer = resp;
+    this.informUserStart(Globals.PROD_GROUP_READ_ATTEMPT_MSG,Globals.SPINNER_GET_MESSAGE);
+    return this.http.get<ProductGroupPreview[]>(this.baseURL + 'GetAll').pipe(tap(resp => {
+      this.informUserComplete(Globals.PROD_GROUP_READ_SUCCESS_MSG);
+    }, err => {
+      this.informUserError(Globals.PROD_GROUP_READ_FAILED_MSG);
     }));
   }
 
   public update(newModel: ProductGroup): Observable<ProductGroup> {
-    return this.http.put<ProductGroup>(this.baseURL + 'Update', newModel);
+    this.informUserStart(Globals.PROD_GROUP_UPDATE_ATTEMPT_MSG + newModel.productGroupID,Globals.SPINNER_UPDATE_MESSAGE);
+    return this.http.put<ProductGroup>(this.baseURL + 'Update', newModel).pipe(tap(resp => {
+      this.informUserComplete(Globals.PROD_GROUP_UPDATE_SUCCESS_MSG + resp.productGroupID);
+    }, err => {
+      this.informUserError(Globals.PROD_GROUP_UPDATE_FAILED_MSG + newModel.productGroupID);
+    }));
   }
 
   public delete(prodGroupID: number): Observable<boolean> {
-    this.sms.setWarningMessage(Globals.PROD_GROUP_DELETE_ATTEMPT_MSG + prodGroupID);
+    this.informUserStart(Globals.PROD_GROUP_DELETE_ATTEMPT_MSG + prodGroupID,Globals.SPINNER_DELETE_MESSAGE);
+    return this.http.delete<boolean>(this.baseURL + "Delete?id=" + prodGroupID.toString()).pipe(tap(resp => {
+      this.informUserComplete(Globals.PROD_GROUP_DELETE_SUCCESS_MSG + prodGroupID);
+    }, err => {
+      this.informUserError(Globals.PROD_GROUP_DELETE_FAILED_MSG + prodGroupID);
+    }));
+  }
 
-    let obs = this.http.delete<boolean>(this.baseURL + "Delete?id=" + prodGroupID.toString());
-    obs.subscribe(response => {
-      this.sms.setSuccessMessage(Globals.PROD_GROUP_DELETE_SUCCESS_MSG + prodGroupID);
-    }, error => {
-      this.sms.setDangerMessage(error.error);
-      this.sms.setDangerMessage(Globals.PROD_GROUP_DELETE_FAILED_MSG + prodGroupID);
-    })
-    return obs;
+  private informUserError(userMessage: string){
+    this.sms.setDangerMessage(userMessage);
+    this.spinner.closeAllSpinners();
+  }
+
+  private informUserStart(userMessage: string, spinnerMessage: string){
+    this.sms.setInfoMessage(userMessage);
+    this.spinner.openNewSpinner(spinnerMessage);
+  }
+
+  private informUserComplete(userMessage: string){
+    this.sms.setSuccessMessage(userMessage);
+    this.spinner.closeAllSpinners();
   }
 
 }

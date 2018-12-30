@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { LoadingSpinnerService } from 'src/app/services/generic/loading-spinner.service';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-loading-spinner',
@@ -9,10 +8,10 @@ import { LoadingSpinnerService } from 'src/app/services/generic/loading-spinner.
 })
 export class LoadingSpinnerComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public messageData: any, public dialogRef: MatDialogRef<LoadingSpinnerComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public messageData: any) { }
 
   getLoadingMessage(): string { return this.messageData; }
-  
+
   ngOnInit() {
   }
 

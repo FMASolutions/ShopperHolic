@@ -47,6 +47,10 @@ export class Globals {
     public static get PROD_GROUP_CREATE_SUCCESS_MSG(): string { return "Successfully created product group: "; }
     public static get PROD_GROUP_CREATE_FAILED_MSG(): string { return "Failed to create product group: "; }
 
+    public static get PROD_GROUP_READ_ATTEMPT_MSG(): string { return "Fetching product group data: "; }
+    public static get PROD_GROUP_READ_SUCCESS_MSG(): string { return "Product Group data recived: "; }
+    public static get PROD_GROUP_READ_FAILED_MSG(): string { return "Failed to retrieve product group data: "; }
+
     public static get PROD_GROUP_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update product group: "; }
     public static get PROD_GROUP_UPDATE_SUCCESS_MSG(): string { return "Successfully updated product group: "; }
     public static get PROD_GROUP_UPDATE_FAILED_MSG(): string { return "Failed to update product group: "; }

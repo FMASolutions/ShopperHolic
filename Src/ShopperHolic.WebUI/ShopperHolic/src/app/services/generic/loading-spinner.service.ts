@@ -23,12 +23,11 @@ export class LoadingSpinnerService {
   }
 
   closeAllSpinners() {
-    setTimeout(() => {
-      if (this.currentWindows.length > 0)
-        this.currentWindows.forEach(current => {
-          current.close();
-        })
-    },150);
+    if (this.currentWindows && this.currentWindows.length > 0) {
+      this.currentWindows.forEach(current => {
+        current.close();
+      })
+    }
   }
 
 }

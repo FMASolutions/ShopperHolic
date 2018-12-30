@@ -4,7 +4,6 @@ import { ProductGroupService } from 'src/app/services/stock/productGroup/product
 import { MatPaginator, MatSort, MatTableDataSource, Sort, MatDialog } from '@angular/material';
 import { ProductGroupComponent } from '../product-group/product-group.component';
 import { Globals } from 'src/globals';
-import { LoadingSpinnerService } from 'src/app/services/generic/loading-spinner.service';
 
 @Component({
   selector: 'app-product-group-list',
@@ -20,7 +19,7 @@ export class ProductGroupListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private prodGroupService: ProductGroupService, public prodDialog: MatDialog, public spinner: LoadingSpinnerService) { }
+  constructor(private prodGroupService: ProductGroupService, public prodDialog: MatDialog) { }
 
   ngOnInit() {
     this.refreshDatasource();
@@ -28,7 +27,7 @@ export class ProductGroupListComponent implements OnInit {
 
   public createClicked() {
     let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
-    dialogRef.afterClosed().subscribe((resp) => { if (resp.userSubmitted) { this.refreshDatasource(); } });
+    dialogRef.afterClosed().subscribe((resp) => { if (resp && resp.userSubmitted) { this.refreshDatasource(); } });
   }
 
   public editClicked(id: number) {
@@ -36,7 +35,7 @@ export class ProductGroupListComponent implements OnInit {
     modalSettings.data = id;
 
     let dialogRef = this.prodDialog.open(ProductGroupComponent, modalSettings);
-    dialogRef.afterClosed().subscribe((resp) => { if (resp.userSubmitted) { this.refreshDatasource(); } })
+    dialogRef.afterClosed().subscribe((resp) => { if (resp && resp.userSubmitted) { this.refreshDatasource(); } })
   }
 
   public deleteClicked(id: number) {
@@ -73,7 +72,6 @@ export class ProductGroupListComponent implements OnInit {
     this.tableDataSource = new MatTableDataSource(data);
     this.tableDataSource.paginator = this.paginator;
     this.tableDataSource.filter = this.textFilter;
-    this.spinner.closeAllSpinners();
   }
 
   private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
