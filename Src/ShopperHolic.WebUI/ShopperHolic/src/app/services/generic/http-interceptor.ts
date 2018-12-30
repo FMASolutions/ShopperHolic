@@ -7,7 +7,6 @@ import { AuthenticatedUserModel } from 'src/app/models/security/authenticatedUse
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from 'src/app/components/generic/login/login.component';
 import { Globals } from '../../../globals'
-import { LoadingSpinnerService } from './loading-spinner.service';
 import { StatusMessageService } from './status-message.service';
 
 @Injectable()
@@ -16,10 +15,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     private isRefreshing: boolean = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    constructor(private authService: AuthService, private loginDialog: MatDialog, private spinner: LoadingSpinnerService, private sms: StatusMessageService) { }
+    constructor(private authService: AuthService, private loginDialog: MatDialog, private sms: StatusMessageService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.spinner.openNewSpinner("Awaiting Server..");
         let bearerToken: string = "";
         if (req.url.toLowerCase().indexOf('auth/tokenrefresh') > 1) {
             bearerToken = this.authService.currentUser.refreshToken;
@@ -35,7 +33,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             if (error instanceof HttpErrorResponse && error.status === 401) { //Unauthorized
                 return this.handle401Error(req, next, error);
             } else {
-                this.spinner.closeAllSpinners();
                 this.sms.setDangerMessage(error.error.title);
                 return throwError(error);
             }
