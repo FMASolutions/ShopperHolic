@@ -196,15 +196,11 @@
 							"raw": "{\n\t\"ProductGroupCode\" : \"NEWPROD\",\n    \"ProductGroupName\" : \"Test Product Group3\",\n    \"ProductGroupDescription\" : \"Test Product Group3 Description\"\n}"
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/ProductGroup/Create",
-							"protocol": "https",
+							"raw": "{{prodController}}/Create",
 							"host": [
-								"localhost"
+								"{{prodController}}"
 							],
-							"port": "5001",
 							"path": [
-								"api",
-								"ProductGroup",
 								"Create"
 							]
 						}
@@ -241,15 +237,11 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/ProductGroup/GetByID?id={{CreatedProdID}}",
-							"protocol": "https",
+							"raw": "{{prodController}}/GetByID?id={{CreatedProdID}}",
 							"host": [
-								"localhost"
+								"{{prodController}}"
 							],
-							"port": "5001",
 							"path": [
-								"api",
-								"ProductGroup",
 								"GetByID"
 							],
 							"query": [
@@ -263,7 +255,7 @@
 					"response": []
 				},
 				{
-					"name": "5 - UpdateCreated",
+					"name": "4 - UpdateCreated",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -289,15 +281,11 @@
 							"raw": "{\n\t\"productGroupID\" : \"{{CreatedProdID}}\",\n\t\"ProductGroupCode\" : \"UPDTDPG\",\n    \"ProductGroupName\" : \"Updated Product Group\",\n    \"ProductGroupDescription\" : \"Updated PRoduct Group Description\"\n}"
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/ProductGroup/Update",
-							"protocol": "https",
+							"raw": "{{prodController}}/Update",
 							"host": [
-								"localhost"
+								"{{prodController}}"
 							],
-							"port": "5001",
 							"path": [
-								"api",
-								"ProductGroup",
 								"Update"
 							]
 						}
@@ -305,7 +293,7 @@
 					"response": []
 				},
 				{
-					"name": "6 - GetByID After Update",
+					"name": "5 - GetByID After Update",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -334,15 +322,11 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/ProductGroup/GetByID?id={{CreatedProdID}}",
-							"protocol": "https",
+							"raw": "{{prodController}}/GetByID?id={{CreatedProdID}}",
 							"host": [
-								"localhost"
+								"{{prodController}}"
 							],
-							"port": "5001",
 							"path": [
-								"api",
-								"ProductGroup",
 								"GetByID"
 							],
 							"query": [
@@ -356,7 +340,7 @@
 					"response": []
 				},
 				{
-					"name": "7 - DeleteCreated",
+					"name": "6 - DeleteCreated",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -382,15 +366,11 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/ProductGroup/Delete?id={{CreatedProdID}}",
-							"protocol": "https",
+							"raw": "{{prodController}}/Delete?id={{CreatedProdID}}",
 							"host": [
-								"localhost"
+								"{{prodController}}"
 							],
-							"port": "5001",
 							"path": [
-								"api",
-								"ProductGroup",
 								"Delete"
 							],
 							"query": [
@@ -404,7 +384,7 @@
 					"response": []
 				},
 				{
-					"name": "8 - GetByID After Delete",
+					"name": "7 - GetByID After Delete",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -433,21 +413,428 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/ProductGroup/GetByID?id={{CreatedProdID}}",
-							"protocol": "https",
+							"raw": "{{prodController}}/GetByID?id={{CreatedProdID}}",
 							"host": [
-								"localhost"
+								"{{prodController}}"
 							],
-							"port": "5001",
 							"path": [
-								"api",
-								"ProductGroup",
 								"GetByID"
 							],
 							"query": [
 								{
 									"key": "id",
 									"value": "{{CreatedProdID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - GetByID Specific ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{prodController}}/GetByID?id=1",
+							"host": [
+								"{{prodController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SubGroup",
+			"item": [
+				{
+					"name": "1 - GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{subController}}/GetAll",
+							"host": [
+								"{{subController}}"
+							],
+							"path": [
+								"GetAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - CreateNew",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c0a2985-4dda-4333-b3c7-0c4a56e1780f",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"CreatedSubID\",data.subGroupID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"SubGroupCode\" : \"NEWSUBG\",\n    \"SubGroupName\" : \"Test Sub Group3\",\n    \"SubGroupDescription\" : \"Test Sub Group Description\",\n    \"ProductGroupID\" : 1\n}"
+						},
+						"url": {
+							"raw": "{{subController}}/Create",
+							"host": [
+								"{{subController}}"
+							],
+							"path": [
+								"Create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - GetByID for Created",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{subController}}/GetByID?id={{CreatedSubID}}",
+							"host": [
+								"{{subController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedSubID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - UpdateCreated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"SubGroupID\" : \"{{CreatedSubID}}\",\n\t\"SubGroupCode\" : \"UPDSUB\",\n    \"SubGroupName\" : \"Updated Sub Group\",\n    \"SubGroupDescription\" : \"Updated Sub Group Descripotion\",\n    \"ProductGroupID\" : 1\n}"
+						},
+						"url": {
+							"raw": "{{subController}}/Update",
+							"host": [
+								"{{subController}}"
+							],
+							"path": [
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 - GetByID After Update",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{subController}}/GetByID?id={{CreatedSubID}}",
+							"host": [
+								"{{subController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedSubID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 - DeleteCreated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{subController}}/Delete?id={{CreatedSubID}}",
+							"host": [
+								"{{subController}}"
+							],
+							"path": [
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedSubID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 - GetByID After Delete",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{subController}}/GetByID?id={{CreatedSubID}}",
+							"host": [
+								"{{subController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedSubID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - GetByID Specific ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{subController}}/GetByID?id=1",
+							"host": [
+								"{{subController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
 								}
 							]
 						}
