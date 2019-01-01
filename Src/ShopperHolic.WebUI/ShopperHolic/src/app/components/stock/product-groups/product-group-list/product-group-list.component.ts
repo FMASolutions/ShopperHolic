@@ -22,7 +22,10 @@ export class ProductGroupListComponent implements OnInit {
   constructor(private prodGroupService: ProductGroupService, public prodDialog: MatDialog) { }
 
   ngOnInit() {
-    this.refreshDatasource();
+    setTimeout(()=>{ 
+      this.refreshDatasource();
+    },1); //Fake delay, error without using a timeout here, unsure why....
+    
   }
 
   public createClicked() {
