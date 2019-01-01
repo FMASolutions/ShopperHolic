@@ -9,6 +9,7 @@ import { SubGroup } from 'src/app/models/stock/subGroups/subGroup';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SubGroupPreview } from 'src/app/models/stock/subGroups/subGroupPreview';
+import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 
 @Injectable({
   providedIn: 'root'
@@ -79,7 +80,8 @@ export class SubGroupService {
       code: [null, [this.sgValidator.validateCodeForCreate]],
       name: [null, [this.sgValidator.basicValidation]],
       desc: [null, [this.sgValidator.basicValidation]],
-      prodID: [null, [this.sgValidator.validateProdID]]
+      prodID: [null, [this.sgValidator.validateProdID]],
+      prodText: [null, [this.sgValidator.basicValidation]]
     });
 
     let currentMode = this.determinMode(id);
@@ -100,9 +102,15 @@ export class SubGroupService {
       subGroupCode: this.subForm.value["code"],
       subGroupName: this.subForm.value["name"],
       subGroupDescription: this.subForm.value["desc"],
-      productGroupID: this.subForm.value["prodID"]
+      productGroupID: this.subForm.value["prodID"],
+      productGroupText: this.subForm.value["prodText"]
     } 
     return newSubGroup;
+  }
+  public updateSelectedProductGroup(selectedProd: ProductGroup){
+    this.subForm.controls["prodID"].setValue(selectedProd.productGroupID);
+    this.subForm.controls["prodText"].setValue(selectedProd.productGroupID + " - " + selectedProd.productGroupCode + " - " + selectedProd.productGroupName);
+
   }
 
   public getCreateModelFromForm(): CreateSubGroup{
@@ -128,7 +136,8 @@ export class SubGroupService {
       code: model.subGroupCode,
       name: model.subGroupName,
       desc: model.subGroupDescription,
-      prodID: model.productGroupID
+      prodID: model.productGroupID,
+      prodText: model.productGroupText
     });
   }
   

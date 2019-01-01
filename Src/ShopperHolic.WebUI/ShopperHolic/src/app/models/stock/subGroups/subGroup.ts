@@ -4,4 +4,5 @@ export class SubGroup {
     subGroupName: string = "";
     subGroupDescription: string = "";
     productGroupID: number = 0;
+    productGroupText: string = "";
 }

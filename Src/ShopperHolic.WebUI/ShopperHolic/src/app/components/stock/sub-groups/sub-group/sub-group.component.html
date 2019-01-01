@@ -3,31 +3,27 @@
         <h3 mat-dialog-title>{{getPageTitle()}}</h3>
         <app-notification></app-notification>
         <form [formGroup]="subGroupService.subForm">
-            <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="3px" fxLayoutAlign="center">
-                <div fxFlex="100">
-                    <mat-form-field class="maxWidth" appearance="outline">
-                        <mat-label>Sub Group Code</mat-label>
-                        <input matInput formControlName="code" type="text" placeholder="Sub Group Code">
-                    </mat-form-field>
-                    <div class="validationMessages">
-                        <div *ngIf="subGroupService.subForm.controls.code.touched 
+            <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Sub Group Code</mat-label>
+                <input matInput formControlName="code" type="text" placeholder="Sub Group Code">
+            </mat-form-field>
+            <div class="validationMessages">
+                <div *ngIf="subGroupService.subForm.controls.code.touched 
                             && subGroupService.subForm.controls.code.errors 
                             && subGroupService.subForm.controls.code.errors.failedPopulation">
-                            Code is mandatory.
-                        </div>
-                        <div *ngIf="
+                    Code is mandatory.
+                </div>
+                <div *ngIf="
                             subGroupService.subForm.controls.code.touched 
                             && subGroupService.subForm.controls.code.errors 
                             && subGroupService.subForm.controls.code.errors.failedMinLength">
-                            Code should be 2 or more characters.
-                        </div>
-                        <div *ngIf="
+                    Code should be 2 or more characters.
+                </div>
+                <div *ngIf="
                             subGroupService.subForm.controls.code.touched 
                             && subGroupService.subForm.controls.code.errors 
                             && subGroupService.subForm.controls.code.errors.failedMaxLength">
-                            Code can't be more than 7 characters.
-                        </div>
-                    </div>
+                    Code can't be more than 7 characters.
                 </div>
             </div>
             <mat-form-field class="maxWidth" appearance="outline">
@@ -43,7 +39,7 @@
             </div>
             <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Sub Group Description</mat-label>
-                <input matInput formControlName="desc" type="text" placeholder="Sub Group Description">
+                <input matInput formControlName="desc" type="text">
             </mat-form-field>
             <div class="validationMessages">
                 <div *ngIf="
@@ -53,6 +49,23 @@
                     Description is mandatory.
                 </div>
             </div>
+
+            <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+                <div fxFlex="50">
+
+                    <button mat-raised-button color="primary" class="maxWidth" (click)="openProdSelectDialog()">
+                        Product Group Selector
+                    </button>
+                </div>
+                <div fxFlex="50">
+                    <mat-form-field class="maxWidth">
+                        <mat-label>Use Product Group Selector Button</mat-label>
+                        <input matInput formControlName="prodID" type="text" readonly hidden>
+                        <input matInput formControlName="prodText" type="text" readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+
             <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
                 <div fxFlex="50">
                     <button mat-raised-button color="accent" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>

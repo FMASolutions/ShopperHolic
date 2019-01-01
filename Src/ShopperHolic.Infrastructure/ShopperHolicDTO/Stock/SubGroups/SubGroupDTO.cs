@@ -7,5 +7,6 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public string SubGroupName {get;set;}
         public string SubGroupDescription {get;set;}
         public int ProductGroupID {get;set;}
+        public string ProductGroupText {get;set;}
     }
 }

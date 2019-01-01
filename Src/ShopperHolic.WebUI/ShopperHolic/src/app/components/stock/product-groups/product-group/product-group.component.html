@@ -3,31 +3,27 @@
         <h3 mat-dialog-title>{{getPageTitle()}}</h3>
         <app-notification></app-notification>
         <form [formGroup]="prodService.prodForm">
-            <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="3px" fxLayoutAlign="center">
-                <div fxFlex="100">
-                    <mat-form-field class="maxWidth" appearance="outline">
-                        <mat-label>Product Group Code</mat-label>
-                        <input matInput formControlName="code" type="text" placeholder="Product Group Code">
-                    </mat-form-field>
-                    <div class="validationMessages">
-                        <div *ngIf="prodService.prodForm.controls.code.touched 
+            <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Product Group Code</mat-label>
+                <input matInput formControlName="code" type="text" placeholder="Product Group Code">
+            </mat-form-field>
+            <div class="validationMessages">
+                <div *ngIf="prodService.prodForm.controls.code.touched 
                             && prodService.prodForm.controls.code.errors 
                             && prodService.prodForm.controls.code.errors.failedPopulation">
-                            Code is mandatory.
-                        </div>
-                        <div *ngIf="
+                    Code is mandatory.
+                </div>
+                <div *ngIf="
                             prodService.prodForm.controls.code.touched 
                             && prodService.prodForm.controls.code.errors 
                             && prodService.prodForm.controls.code.errors.failedMinLength">
-                            Code should be 2 or more characters.
-                        </div>
-                        <div *ngIf="
+                    Code should be 2 or more characters.
+                </div>
+                <div *ngIf="
                             prodService.prodForm.controls.code.touched 
                             && prodService.prodForm.controls.code.errors 
                             && prodService.prodForm.controls.code.errors.failedMaxLength">
-                            Code can't be more than 7 characters.
-                        </div>
-                    </div>
+                    Code can't be more than 7 characters.
                 </div>
             </div>
             <mat-form-field class="maxWidth" appearance="outline">

@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { SubGroupService } from 'src/app/services/stock/subGroup/sub-group.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { Globals } from 'src/globals';
+import { ProductGroupSelectorComponent } from '../../product-groups/product-group-selector/product-group-selector.component';
 
 @Component({
   selector: 'app-sub-group',
@@ -12,7 +13,7 @@ export class SubGroupComponent {
 
   currentMode: string = "";
 
-  constructor(public subGroupService: SubGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<SubGroupComponent>) {
+  constructor(public subGroupService: SubGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<SubGroupComponent>, public prodDialog: MatDialog) {
     this.currentMode = this.subGroupService.InitializeForm(data);
   }
 
@@ -26,23 +27,32 @@ export class SubGroupComponent {
     else if (this.currentMode == Globals.MODE_CREATE) { return Globals.CREATE_BUTTON_TEXT }
   }
 
+  openProdSelectDialog(){
+    let dialogRef = this.prodDialog.open(ProductGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    dialogRef.afterClosed().subscribe(resp => {
+      if(resp && resp.selectedProductGroup) {
+        this.subGroupService.updateSelectedProductGroup(resp.selectedProductGroup);
+      }
+    })
+  }
+
   submit() {
     if (this.subGroupService.subForm.valid) {
       if (this.currentMode == Globals.MODE_UPDATE) {
         let obs = this.subGroupService.update(this.subGroupService.getUpdateModelFromForm()).subscribe(() => {
-          this.dialogRef.close({ userSubmitted: true });
+          this.ownDialog.close({ userSubmitted: true });
           obs.unsubscribe();
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
         let obs = this.subGroupService.createNewSubGroup(this.subGroupService.getCreateModelFromForm()).subscribe(() => {
-          this.dialogRef.close({ userSubmitted: true });
+          this.ownDialog.close({ userSubmitted: true });
           obs.unsubscribe();
         });
       }
     }
   }
 
-  cancel() { this.dialogRef.close(); }
+  cancel() { this.ownDialog.close(); }
 
 }

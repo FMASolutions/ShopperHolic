@@ -28,34 +28,23 @@
         <td mat-cell *matCellDef="let row">{{row.productGroupName}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="View">
-        <th mat-header-cell *matHeaderCellDef></th>
+      <ng-container matColumnDef="Select">
+        <th mat-header-cell *matHeaderCellDef>Select</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button (click)="editClicked(row.productGroupID)">
-            <mat-icon aria-label="View">view_compact</mat-icon>
+          <button mat-icon-button (click)="selectClicked(row.productGroupID)">
+            <mat-icon aria-label="View">send</mat-icon>
           </button>
         </td>
       </ng-container>
-
-      <ng-container matColumnDef="Del">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-icon-button (click)="deleteClicked(row.productGroupID)">
-            <mat-icon aria-label="Del">delete_forever</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
   <button mat-flat-button 
-  color="primary" 
-  id="bottomReset" class="maxWidth" 
-  (click)="resetFilterClicked()">
-  Reset Filters
-</button>
-
+    color="primary" 
+    id="bottomReset" class="maxWidth" 
+    (click)="resetFilterClicked()">
+    Reset Filters
+  </button>
 </div>

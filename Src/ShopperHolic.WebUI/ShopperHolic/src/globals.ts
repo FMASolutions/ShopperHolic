@@ -57,6 +57,7 @@ export class Globals {
     public static get PROD_GROUP_DELETE_SUCCESS_MSG(): string { return "Successfully deleted product group: "; }
     public static get PROD_GROUP_DELETE_FAILED_MSG(): string { return "Failed to delete product group: "; }
     public static get PROD_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'View', 'Del']; }
+    public static get PROD_GROUP_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'Select']; }
 
     //Sub Group Specific Text
     public static get SUB_GROUP_UPDATE_TITLE(): string { return "Sub Group Update"; }
@@ -75,6 +76,7 @@ export class Globals {
     public static get SUB_GROUP_DELETE_SUCCESS_MSG(): string { return "Successfully deleted sub group: "; }
     public static get SUB_GROUP_DELETE_FAILED_MSG(): string { return "Failed to delete sub group: "; }
     public static get SUB_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','PID', 'View', 'Del']; }
+    public static get SUB_GROUP_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','PID', 'Select']; }
 
 }
 

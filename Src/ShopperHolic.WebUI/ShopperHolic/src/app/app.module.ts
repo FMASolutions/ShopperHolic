@@ -31,6 +31,7 @@ import { SubGroupListComponent } from './components/stock/sub-groups/sub-group-l
 import { SubGroupService} from './services/stock/subGroup/sub-group.service';
 import { LoadingSpinnerComponent } from './components/generic/loading-spinner/loading-spinner.component';
 import { LoadingSpinnerService} from './services/generic/loading-spinner.service';
+import { ProductGroupSelectorComponent } from './components/stock/product-groups/product-group-selector/product-group-selector.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { LoadingSpinnerService} from './services/generic/loading-spinner.service
     SubGroupComponent,
     SubGroupListComponent,
     LoadingSpinnerComponent,
+    ProductGroupSelectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +76,6 @@ import { LoadingSpinnerService} from './services/generic/loading-spinner.service
     LoadingSpinnerService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ UserActivityComponent,LoadingSpinnerComponent, ProductGroupComponent, SubGroupComponent  ]
+  entryComponents: [ UserActivityComponent,LoadingSpinnerComponent, ProductGroupComponent, ProductGroupSelectorComponent, SubGroupComponent ]
 })
 export class AppModule { }
