@@ -4,6 +4,8 @@ using System.Data;
 using System.Collections.Generic;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
 using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
+using ShopperHolic.Infrastructure.ShopperExceptions;
+
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
     //TODO ADD WITH(NOLOCK) TO ALL READS!!!!!!
@@ -13,45 +15,78 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         public ProductGroupRepo(IDbTransaction transaction) : base(transaction) { }
         public int CreateProductGroup(ProductGroup entityToCreate)
         {
-
-            string query = @"
+            try
+            {
+                string query = @"
                 INSERT INTO ProductGroups(ProductGroupCode, ProductGroupName, ProductGroupDescription)
                 VALUES (@ProdGroupCode, @ProdGroupName, @ProdGroupDescription)
                 
                 SELECT SCOPE_IDENTITY()
                 ";
-            var queryParameters = new DynamicParameters();
-            queryParameters.Add("@ProdGroupCode", entityToCreate.ProductGroupCode);
-            queryParameters.Add("@ProdGroupName", entityToCreate.ProductGroupName);
-            queryParameters.Add("@ProdGroupDescription", entityToCreate.ProductGroupDescription);
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@ProdGroupCode", entityToCreate.ProductGroupCode);
+                queryParameters.Add("@ProdGroupName", entityToCreate.ProductGroupName);
+                queryParameters.Add("@ProdGroupDescription", entityToCreate.ProductGroupDescription);
 
-            return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
-
+                return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
+            }
+            catch (Exception ex)
+            {
+                var newEx = SqlExceptionHandler.HandleSqlException(ex);
+                if (newEx != null)
+                    throw newEx;
+                else
+                    throw ex;
+            }
         }
 
         public ProductGroupDTO GetProductGroupByID(int productGroupID)
         {
+            try
+            {
                 string query = @"
                 SELECT [ProductGroupID], [ProductGroupCode],[ProductGroupName],[ProductGroupDescription] 
                 FROM ProductGroups 
                 WHERE ProductGroupID = @ProductGroupID";
 
                 return Connection.QueryFirst<ProductGroupDTO>(query, new { ProductGroupID = productGroupID }, transaction: Transaction);
-                //TODO LOG ERROR
+            }
+            catch (Exception ex)
+            {
+                var newEx = SqlExceptionHandler.HandleSqlException(ex);
+                if (newEx != null)
+                    throw newEx;
+                else
+                    throw ex;
+            }
+
         }
 
         public IEnumerable<ProductGroupPreviewDTO> GetAllPreview()
         {
+            try
+            {
                 string query = @"
                     SELECT ProductGroupID, ProductGroupName, ProductGroupCode
                     FROM ProductGroups
                 ";
 
                 return Connection.Query<ProductGroupPreviewDTO>(query, transaction: Transaction);
+            }
+            catch (Exception ex)
+            {
+                var newEx = SqlExceptionHandler.HandleSqlException(ex);
+                if (newEx != null)
+                    throw newEx;
+                else
+                    throw ex;
+            }
         }
 
         public ProductGroupDTO Update(ProductGroupDTO updatedProd)
         {
+            try
+            {
                 ProductGroupDTO returnResult = null;
                 string query = @"
                 UPDATE ProductGroups
@@ -70,16 +105,39 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 if (rowsEffected > 0)
                     returnResult = updatedProd;
                 return returnResult;
+            }
+            catch (Exception ex)
+            {
+                var newEx = SqlExceptionHandler.HandleSqlException(ex);
+                if (newEx != null)
+                    throw newEx;
+                else
+                    throw ex;
+            }
         }
 
         public bool Delete(int id)
         {
-            string query = @"
+            try
+            {
+                string query = @"
                 DELETE FROM ProductGroups
                 WHERE ProductGroupID = @ProductGroupID
                 ";
-            int rowsEffected = Connection.Execute(query, new { ProductGroupID = id }, Transaction);
-            return rowsEffected == 1;
+                int rowsEffected = Connection.Execute(query, new { ProductGroupID = id }, Transaction);
+                if(rowsEffected >= 1)
+                    return true;
+                else
+                    throw new System.InvalidOperationException("Sequence contains no elements");
+            }
+            catch (Exception ex)
+            {
+                var newEx = SqlExceptionHandler.HandleSqlException(ex);
+                if (newEx != null)
+                    throw newEx;
+                else
+                    throw ex;
+            }
         }
     }
 }

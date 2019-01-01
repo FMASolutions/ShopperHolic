@@ -3,22 +3,40 @@ namespace ShopperHolic.Infrastructure.ShopperExceptions
 {
     public static class SqlExceptionHandler
     {
-        public static BaseCustomException Handle(System.Data.SqlClient.SqlException ex)
+        public static BaseCustomException HandleSqlException(System.Exception ex)
         {
-            BaseCustomException returnException = null;
-            switch (ex.Number)
+            try
             {
-                case 2627:
-                    returnException = GetKeyAlreadyExistsException(ex.Message);
-                    break;
-                case 547:
-                    returnException = GetChildRecordExistsException(ex.Message);
-                    break;
-                default: break;
+
+                System.Data.SqlClient.SqlException SQLExcep = (System.Data.SqlClient.SqlException)ex;
+
+                BaseCustomException returnException = null;
+                switch (SQLExcep.Number)
+                {
+                    case 2627:
+                        returnException = GetKeyAlreadyExistsException(ex.Message);
+                        break;
+                    case 547:
+                        returnException = GetChildRecordExistsException(ex.Message);
+                        break;
+                    default: break;
+                }
+                if (returnException != null) { throw returnException; }
+                else { throw ex; }
             }
-            
-            if(returnException != null) { throw  returnException;}
-            else {throw  ex;}
+            catch (System.InvalidCastException)
+            {
+                try
+                {
+                    System.InvalidOperationException invOp = (System.InvalidOperationException)ex;
+                    BaseCustomException returnException = NoRecordsFoundException();
+                    return returnException;
+                }
+                catch (System.InvalidCastException)
+                {
+                    throw ex;
+                }
+            }
         }
 
         private static BaseCustomException GetKeyAlreadyExistsException(string originalErrorMessage)
@@ -39,8 +57,13 @@ namespace ShopperHolic.Infrastructure.ShopperExceptions
             int startIndex = originalErrorMessage.IndexOf(locatorText);
             originalErrorMessage = originalErrorMessage.Substring(startIndex + locatorText.Length);
             int endIndex = originalErrorMessage.IndexOf(terminatorText);
-            string childTableName = originalErrorMessage.Substring(0,endIndex);
+            string childTableName = originalErrorMessage.Substring(0, endIndex);
             return new ChildRecordExists(childTableName);
+        }
+
+        private static BaseCustomException NoRecordsFoundException()
+        {
+            return new NoRecordsFoundException();
         }
     }
 }

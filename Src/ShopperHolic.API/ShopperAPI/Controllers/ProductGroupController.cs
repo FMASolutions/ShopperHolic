@@ -23,68 +23,43 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpPost]
         public ActionResult<ProductGroupDTO> Create([FromBody] ProductGroupCreateDTO userInput)
         {
-            try
-            {
-                var result = _prodGroupManager.Create(userInput);
-                return result;
-            }
-            catch (KeyAlreadyExists ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            try { return _prodGroupManager.Create(userInput); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
         public ActionResult<ProductGroupDTO> GetByID([FromQuery] int id)
         {
-            var searchResult = _prodGroupManager.GetyByID(id);
-            if (searchResult != null && searchResult.ProductGroupID > 0)
-                return searchResult;
-            else
-                return NotFound();
+            try { return  _prodGroupManager.GetyByID(id); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
         public ActionResult<List<ProductGroupPreviewDTO>> GetAll()
         {
-            var searchResult = _prodGroupManager.GetAllPreview();
-            List<ProductGroupPreviewDTO> returnList = new List<ProductGroupPreviewDTO>();
-            
-            foreach(var result in searchResult)
-                returnList.Add(result);
-            
-            if(returnList.Count > 0)
+            try
+            {
+                List<ProductGroupPreviewDTO> returnList = new List<ProductGroupPreviewDTO>();
+                foreach (var result in  _prodGroupManager.GetAllPreview())
+                    returnList.Add(result);
                 return returnList;
-            else
-                return null;
+            }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpPut]
         public ActionResult<ProductGroupDTO> Update([FromBody] ProductGroupDTO newModel)
         {
-            try
-            {
-                return _prodGroupManager.Update(newModel);
-            }
-            catch (KeyAlreadyExists ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            try { return _prodGroupManager.Update(newModel); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [Authorize(Policy="UserCanDeleteProductGroup")]
+        [Authorize(Policy = "UserCanDeleteProductGroup")]
         [HttpDelete]
         public ActionResult<bool> Delete([FromQuery] int id)
         {
-            try
-            {
-                return _prodGroupManager.Delete(id);
-            }
-            catch(ChildRecordExists ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            
+            try{return _prodGroupManager.Delete(id);}
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         private ProductGroupManager _prodGroupManager;

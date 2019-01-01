@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
-using ShopperHolic.Infrastructure.ShopperExceptions;
 
 namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
@@ -15,16 +15,17 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
             try
             {
                 ProductGroup entityToCreate = new ProductGroup(modelToCreate.ProductGroupCode, modelToCreate.ProductGroupName, modelToCreate.ProductGroupDescription);
-                //TODO Validate ProductGroup?????
                 int newID = UOW.ProductGroupRepo.CreateProductGroup(entityToCreate);
                 var createResult = UOW.ProductGroupRepo.GetProductGroupByID(newID);
                 UOW.SaveChanges();
                 return createResult;
             }
-            catch (System.Data.SqlClient.SqlException ex)
+            catch(Exception ex)
             {
-                throw HandleSQLException(ex);
+                UOW.RollbackChanges();
+                throw ex;
             }
+
         }
         public ProductGroupDTO GetByID(int productGroupID)
         {
@@ -44,10 +45,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 UOW.SaveChanges();
                 return returnModel;
             }
-            catch (System.Data.SqlClient.SqlException ex)
+            catch (Exception ex)
             {
                 UOW.RollbackChanges();
-                throw HandleSQLException(ex);
+                throw ex;
             }
         }
         public bool Delete(int productGroupID)
@@ -58,17 +59,11 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 UOW.SaveChanges();
                 return success;
             }
-            catch (System.Data.SqlClient.SqlException ex)
+            catch (Exception ex)
             {
-                throw HandleSQLException(ex);
+                UOW.RollbackChanges();
+                throw ex;
             }
         }
-
-        private BaseCustomException HandleSQLException(System.Data.SqlClient.SqlException ex)
-        {
-            UOW.RollbackChanges();
-            return SqlExceptionHandler.Handle(ex);
-        }
-
     }
 }
