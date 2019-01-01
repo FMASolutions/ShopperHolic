@@ -20,12 +20,11 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 UOW.SaveChanges();
                 return createResult;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UOW.RollbackChanges();
                 throw ex;
             }
-
         }
         public ProductGroupDTO GetByID(int productGroupID)
         {

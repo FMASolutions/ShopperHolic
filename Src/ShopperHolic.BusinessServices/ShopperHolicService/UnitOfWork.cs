@@ -8,7 +8,6 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
     {
         public UnitOfWork(string connectionString)
         {
-            //_connectionFactory = new SQLFactoryStandard();
             _dbConnection = ConnectionProvider.GetSQLConnection(connectionString);
             _dbConnection.Open();
             _transaction = _dbConnection.BeginTransaction();
@@ -16,19 +15,18 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             //When adding a new Repository Always remember to add it to the private "Reset" method @ the bottom
             _securityRepo = new SecurityRepo(_transaction);
             _productGroupRepo = new ProductGroupRepo(_transaction);
-            
+            _subGroupRepo = new SubGroupRepo(_transaction);
         }
         ~UnitOfWork()
         {
-            dispose(false);
+            dispose(_disposing);
         }
         private IDbConnection _dbConnection;
         private IDbTransaction _transaction;
-        //private SQLFactory _connectionFactory;
 
         public ISecurityRepo SecurityRepo { get { return _securityRepo ?? (_securityRepo = new SecurityRepo(_transaction)); } }
         public IProductGroupRepo ProductGroupRepo { get { return _productGroupRepo ?? (_productGroupRepo = new ProductGroupRepo(_transaction)); } }
-
+        public ISubGroupRepo SubGroupRepo {get { return _subGroupRepo ?? (_subGroupRepo = new SubGroupRepo(_transaction));}}
         
         bool _disposing = false;
 
@@ -87,8 +85,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         {
             _securityRepo = null;
             _productGroupRepo = null;
+            _subGroupRepo = null;
         }
         private ISecurityRepo _securityRepo;
         private IProductGroupRepo _productGroupRepo;
+        private ISubGroupRepo _subGroupRepo;
     }
 }
