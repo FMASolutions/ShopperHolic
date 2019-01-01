@@ -59,6 +59,8 @@ export class Globals {
     public static get PROD_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'View', 'Del']; }
 
     //Sub Group Specific Text
+    public static get SUB_GROUP_UPDATE_TITLE(): string { return "Sub Group Update"; }
+    public static get SUB_GROUP_CREATE_TITLE(): string { return "Create New Sub Group"; }
     public static get SUB_GROUP_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new sub group: "; }
     public static get SUB_GROUP_CREATE_SUCCESS_MSG(): string { return "Successfully created sub group: "; }
     public static get SUB_GROUP_CREATE_FAILED_MSG(): string { return "Failed to create sub group: "; }
@@ -72,7 +74,7 @@ export class Globals {
     public static get SUB_GROUP_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete sub group: "; }
     public static get SUB_GROUP_DELETE_SUCCESS_MSG(): string { return "Successfully deleted sub group: "; }
     public static get SUB_GROUP_DELETE_FAILED_MSG(): string { return "Failed to delete sub group: "; }
-    public static get SUB_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'View', 'Del']; }
+    public static get SUB_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','PID', 'View', 'Del']; }
 
 }
 

@@ -74,6 +74,6 @@ import { LoadingSpinnerService} from './services/generic/loading-spinner.service
     LoadingSpinnerService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ UserActivityComponent,ProductGroupComponent, LoadingSpinnerComponent ]
+  entryComponents: [ UserActivityComponent,LoadingSpinnerComponent, ProductGroupComponent, SubGroupComponent  ]
 })
 export class AppModule { }

@@ -65,7 +65,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                    SELECT SubGroupID, SubGroupName, SubGroupCode
+                    SELECT SubGroupID, SubGroupName, SubGroupCode, ProductGroupID
                     FROM SubGroups
                 ";
 

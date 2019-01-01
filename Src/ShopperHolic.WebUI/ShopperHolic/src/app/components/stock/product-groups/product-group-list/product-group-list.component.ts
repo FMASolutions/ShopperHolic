@@ -24,8 +24,7 @@ export class ProductGroupListComponent implements OnInit {
   ngOnInit() {
     setTimeout(()=>{ 
       this.refreshDatasource();
-    },1); //Fake delay, error without using a timeout here, unsure why....
-    
+    },1); 
   }
 
   public createClicked() {

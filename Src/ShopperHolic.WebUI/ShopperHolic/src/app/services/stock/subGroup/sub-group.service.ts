@@ -53,9 +53,9 @@ export class SubGroupService {
   public update(newModel: SubGroup): Observable<SubGroup> {
     this.userNotificationService.informUserStart(Globals.SUB_GROUP_UPDATE_ATTEMPT_MSG + newModel.subGroupID,Globals.SPINNER_UPDATE_MESSAGE);
     return this.http.put<SubGroup>(this.baseURL + 'Update', newModel).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_UPDATE_SUCCESS_MSG + resp.productGroupID);
+      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_UPDATE_SUCCESS_MSG + resp.subGroupID);
     }, err => {
-      this.userNotificationService.informUserError(Globals.SUB_GROUP_UPDATE_FAILED_MSG + newModel.productGroupID);
+      this.userNotificationService.informUserError(Globals.SUB_GROUP_UPDATE_FAILED_MSG + newModel.subGroupID);
       this.userNotificationService.informUserError(err.error);
     }));
   }
@@ -65,12 +65,12 @@ export class SubGroupService {
     return this.http.delete<boolean>(this.baseURL + "Delete?id=" + subGroupID.toString()).pipe(tap(resp => {
       this.userNotificationService.informUserComplete(Globals.SUB_GROUP_DELETE_SUCCESS_MSG + subGroupID);
     }, err => {
-      this.userNotificationService.informUserError(Globals.PROD_GROUP_DELETE_FAILED_MSG + subGroupID);
+      this.userNotificationService.informUserError(Globals.SUB_GROUP_DELETE_FAILED_MSG + subGroupID);
       this.userNotificationService.informUserError(err.error);
     }));
   }
 
-  /*--------------------- --- Product Group Popup Helper --- ----------------------*/
+  /*--------------------- --- SubGroup Group Popup Helper --- ----------------------*/
   public subForm: FormGroup;
 
   public InitializeForm(id?: any) : string{

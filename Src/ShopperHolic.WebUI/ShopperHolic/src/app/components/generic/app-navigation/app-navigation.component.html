@@ -18,14 +18,14 @@
                   <ol class="hide">
                     <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Product Group <mat-icon>arrow_right</mat-icon></a>
                       <ol class="hide">
-                        <li class="appLink"><a mat-list-item (click)="openNewProduGroup()">Create New Product Group</a></li>
+                        <li class="appLink"><a mat-list-item (click)="openNewProductGroup()">Create New Product Group</a></li>
                         <li class="appLink"><a mat-list-item routerLink="/productGroups">Manage Product Groups</a></li>
                       </ol>
                     </li>
                     <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Sub Groups <mat-icon>arrow_right</mat-icon></a>
                       <ol class="hide">
-                        <li class="appLink"><a mat-list-item>Create New Sub Group</a></li>
-                        <li class="appLink"><a mat-list-item>Manage Sub Groups</a></li>
+                        <li class="appLink"><a mat-list-item (click)="openNewSubGroup()">Create New Sub Group</a></li>
+                        <li class="appLink"><a mat-list-item routerLink="/subGroups">Manage Sub Groups</a></li>
                       </ol>
                     </li>
                   </ol>
@@ -139,8 +139,8 @@
             </mat-menu>
 
             <mat-menu #subGroup="matMenu">
-              <button mat-menu-item>Create Sub Group</button>
-              <button mat-menu-item>Manage Sub Groups</button>
+              <button mat-menu-item (click)="openNewSubGroup()">Create Sub Group</button>
+              <button mat-menu-item routerLink="/subGroups">Manage Sub Groups</button>
             </mat-menu>
 
             <mat-menu #countries="matMenu">
