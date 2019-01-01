@@ -25,6 +25,9 @@ export class Globals {
         return copy;
     }
 
+    public static get UPDATE_BUTTON_TEXT(): string { return "Update"; }
+    public static get CREATE_BUTTON_TEXT(): string { return "Create New" }
+
     public static get SPINNER_LOGIN_MSG(): string { return "Requesting Login..." }
     public static get SPINNER_UPDATE_MESSAGE(): string { return "Requesting Update.." }
     public static get SPINNER_CREATE_MESSAGE(): string { return "Requesting Create.." }

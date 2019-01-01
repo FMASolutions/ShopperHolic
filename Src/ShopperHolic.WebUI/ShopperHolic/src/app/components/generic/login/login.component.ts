@@ -22,8 +22,10 @@ export class LoginComponent {
 
   attemptLoginClicked() {
     if (this.authService.loginForm.valid) {
-      this.authService.attemptLogin(this.authService.loginForm.value["username"], this.authService.loginForm.value["password"]).subscribe(resp => {
-        this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
+      let obsAuth = this.authService.attemptLogin(this.authService.loginForm.value["username"], this.authService.loginForm.value["password"]).subscribe(resp => {
+        obsAuth.unsubscribe();
+        let obsExchange = this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
+          obsExchange.unsubscribe();
           this.dialogRef.close(userResp);
         })
       });

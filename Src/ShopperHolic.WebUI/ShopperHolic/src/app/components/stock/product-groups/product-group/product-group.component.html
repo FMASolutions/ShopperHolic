@@ -2,7 +2,7 @@
     <div class="container">
         <h3 mat-dialog-title>{{getPageTitle()}}</h3>
         <app-notification></app-notification>
-        <form [formGroup]="prodForm">
+        <form [formGroup]="prodService.prodForm">
             <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="3px" fxLayoutAlign="center">
                 <div fxFlex="100">
                     <mat-form-field class="maxWidth" appearance="outline">
@@ -10,13 +10,21 @@
                         <input matInput formControlName="code" type="text" placeholder="Product Group Code">
                     </mat-form-field>
                     <div class="validationMessages">
-                        <div *ngIf="prodForm.controls.code.touched && prodForm.controls.code.errors && prodForm.controls.code.errors.failedPopulation">
+                        <div *ngIf="prodService.prodForm.controls.code.touched 
+                            && prodService.prodForm.controls.code.errors 
+                            && prodService.prodForm.controls.code.errors.failedPopulation">
                             Code is mandatory.
                         </div>
-                        <div *ngIf="prodForm.controls.code.touched && prodForm.controls.code.errors && prodForm.controls.code.errors.failedMinLength">
+                        <div *ngIf="
+                            prodService.prodForm.controls.code.touched 
+                            && prodService.prodForm.controls.code.errors 
+                            && prodService.prodForm.controls.code.errors.failedMinLength">
                             Code should be 2 or more characters.
                         </div>
-                        <div *ngIf="prodForm.controls.code.touched && prodForm.controls.code.errors && prodForm.controls.code.errors.failedMaxLength">
+                        <div *ngIf="
+                            prodService.prodForm.controls.code.touched 
+                            && prodService.prodForm.controls.code.errors 
+                            && prodService.prodForm.controls.code.errors.failedMaxLength">
                             Code can't be more than 7 characters.
                         </div>
                     </div>
@@ -27,7 +35,9 @@
                 <input matInput placeholder="Product Group Name" formControlName="name" type="text">
             </mat-form-field>
             <div class="validationMessages">
-                <div *ngIf="prodForm.controls.name.touched && prodForm.controls.name.errors && prodForm.controls.name.errors.failedPopulation">
+                <div *ngIf="prodService.prodForm.controls.name.touched 
+                    && prodService.prodForm.controls.name.errors 
+                    && prodService.prodForm.controls.name.errors.failedPopulation">
                     Name is mandatory.
                 </div>
             </div>
@@ -36,13 +46,16 @@
                 <input matInput formControlName="desc" type="text" placeholder="Product Group Description">
             </mat-form-field>
             <div class="validationMessages">
-                <div *ngIf="prodForm.controls.desc.touched && prodForm.controls.desc.errors && prodForm.controls.desc.errors.failedPopulation">
+                <div *ngIf="
+                    prodService.prodForm.controls.desc.touched 
+                    && prodService.prodForm.controls.desc.errors 
+                    && prodService.prodForm.controls.desc.errors.failedPopulation">
                     Description is mandatory.
                 </div>
             </div>
             <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
                 <div fxFlex="50">
-                    <button mat-raised-button color="accent" class="maxWidth" (click)="submit()">Submit</button>
+                    <button mat-raised-button color="accent" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
                 </div>
                 <div fxFlex="50">
                     <button mat-raised-button color="primary" class="maxWidth" (click)="cancel()">Close</button>

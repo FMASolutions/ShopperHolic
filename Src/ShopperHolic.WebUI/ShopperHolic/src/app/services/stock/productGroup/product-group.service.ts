@@ -7,21 +7,27 @@ import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productG
 import { Globals } from 'src/globals';
 import { tap } from 'rxjs/operators';
 import { UserNotificationService } from '../../generic/user-notification.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ProductGroupValidator } from './product-group-validator';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductGroupService {
 
+  
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/ProductGroup/';
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService) { }
+  
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private pgValidator: ProductGroupValidator,) { }
 
+  /*--------------------- --- API CALLS --- ----------------------*/
   public createNewProduct(newProductGroup: CreateProductGroup): Observable<ProductGroup> {
     this.userNotificationService.informUserStart(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG, Globals.SPINNER_CREATE_MESSAGE);
     return this.http.post<ProductGroup>(this.baseURL + 'Create', newProductGroup).pipe(tap(resp => {
       this.userNotificationService.informUserComplete(Globals.PROD_GROUP_CREATE_SUCCESS_MSG);
     }, err => {
       this.userNotificationService.informUserError(Globals.PROD_GROUP_CREATE_FAILED_MSG);
+      this.userNotificationService.informUserError(err.error);
     }));
   }
 
@@ -31,6 +37,7 @@ export class ProductGroupService {
       this.userNotificationService.informUserComplete(Globals.PROD_GROUP_READ_SUCCESS_MSG);
     }, err => {
       this.userNotificationService.informUserError(Globals.PROD_GROUP_READ_FAILED_MSG);
+      this.userNotificationService.informUserError(err.error);
     }));;
   }
 
@@ -40,6 +47,7 @@ export class ProductGroupService {
       this.userNotificationService.informUserComplete(Globals.PROD_GROUP_READ_SUCCESS_MSG);
     }, err => {
       this.userNotificationService.informUserError(Globals.PROD_GROUP_READ_FAILED_MSG);
+      this.userNotificationService.informUserError(err.error);
     }));
   }
 
@@ -49,6 +57,7 @@ export class ProductGroupService {
       this.userNotificationService.informUserComplete(Globals.PROD_GROUP_UPDATE_SUCCESS_MSG + resp.productGroupID);
     }, err => {
       this.userNotificationService.informUserError(Globals.PROD_GROUP_UPDATE_FAILED_MSG + newModel.productGroupID);
+      this.userNotificationService.informUserError(err.error);
     }));
   }
 
@@ -58,6 +67,67 @@ export class ProductGroupService {
       this.userNotificationService.informUserComplete(Globals.PROD_GROUP_DELETE_SUCCESS_MSG + prodGroupID);
     }, err => {
       this.userNotificationService.informUserError(Globals.PROD_GROUP_DELETE_FAILED_MSG + prodGroupID);
+      this.userNotificationService.informUserError(err.error);
     }));
   }
+
+  /*--------------------- --- Product Group Popup Helper --- ----------------------*/
+  public prodForm: FormGroup;
+
+  public InitializeForm(id?: any) : string{
+    this.prodForm = this.fb.group({
+      id: [0, []],
+      code: [null, [this.pgValidator.validateCodeForCreate]],
+      name: [null, [this.pgValidator.basicValidation]],
+      desc: [null, [this.pgValidator.basicValidation]],
+    });
+
+    let currentMode = this.determinMode(id);
+
+    if (currentMode == Globals.PROD_GROUP_UPDATE_MODE) {
+      let obs = this.getByID(id).subscribe(respData => {
+        obs.unsubscribe();
+        this.populateFormFromModel(respData);
+      })
+    }
+
+    return currentMode;
+  }
+
+  public getUpdateModelFromForm(): ProductGroup {
+    let newProdGroup: ProductGroup = {
+      productGroupID: this.prodForm.value["id"],
+      productGroupCode: this.prodForm.value["code"],
+      productGroupName: this.prodForm.value["name"],
+      productGroupDescription: this.prodForm.value["desc"]
+    } 
+    return newProdGroup;
+  }
+
+  public getCreateModelFromForm(): CreateProductGroup{
+    let newProdGroup: CreateProductGroup = {
+      productGroupCode: this.prodForm.value["code"],
+      productGroupName: this.prodForm.value["name"],
+      productGroupDescription: this.prodForm.value["desc"]
+    };
+    return newProdGroup;
+  }
+
+  private determinMode(id?: any) : string {
+    let returnString = "";
+    if (id) { returnString = Globals.PROD_GROUP_UPDATE_MODE; }
+    else { returnString = Globals.PROD_GROUP_CREATE_MODE; }
+    return returnString;
+  }
+
+  private populateFormFromModel(model: ProductGroup) {
+    this.prodForm.setValue({
+      id: model.productGroupID,
+      code: model.productGroupCode,
+      name: model.productGroupName,
+      desc: model.productGroupDescription
+    });
+  }
+
+  
 }

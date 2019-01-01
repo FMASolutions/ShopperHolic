@@ -20,35 +20,43 @@ export class StatusMessageService {
   getIcon() { return this.currentMessage.icon; }
 
   setSuccessMessage(message: string) {
+    if(message){
     this.currentMessage.value = message;
     this.currentMessage.class = "alert alert-success";
     this.currentMessage.icon = "check_circle";
-    this.addTooUserActivity();
+    this.addToUserActivity();
     this.setTimeout();
+    }
   }
 
   setInfoMessage(message: string) {
+    if(message){
     this.currentMessage.value = message;
     this.currentMessage.class = "alert alert-info";
     this.currentMessage.icon = "info";
-    this.addTooUserActivity();
+    this.addToUserActivity();
     this.setTimeout();
+    }
   }
 
   setWarningMessage(message: string) {
+    if(message){
     this.currentMessage.value = message;
     this.currentMessage.class = "alert alert-warning";
     this.currentMessage.icon = "warning";
-    this.addTooUserActivity();
+    this.addToUserActivity();
     this.setTimeout();
+    }
   }
 
   setDangerMessage(message: string) {
-    this.currentMessage.value = message;
-    this.currentMessage.class = "alert alert-danger";
-    this.currentMessage.icon = "error";
-    this.addTooUserActivity();
-    this.setTimeout();
+    if (message) {
+      this.currentMessage.value = message;
+      this.currentMessage.class = "alert alert-danger";
+      this.currentMessage.icon = "error";
+      this.addToUserActivity();
+      this.setTimeout();
+    }
   }
 
   private setTimeout() {
@@ -66,7 +74,7 @@ export class StatusMessageService {
     });
   }
 
-  private addTooUserActivity() {
+  private addToUserActivity() {
     let newUserActivity: StatusMessage = new StatusMessage(this.uas);
     Object.assign(newUserActivity, this.currentMessage);
     this.uas.addMessage(newUserActivity);

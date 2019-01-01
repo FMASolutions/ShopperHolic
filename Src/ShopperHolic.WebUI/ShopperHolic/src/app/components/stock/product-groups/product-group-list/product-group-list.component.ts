@@ -27,7 +27,10 @@ export class ProductGroupListComponent implements OnInit {
 
   public createClicked() {
     let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
-    dialogRef.afterClosed().subscribe((resp) => { if (resp && resp.userSubmitted) { this.refreshDatasource(); } });
+    let obs = dialogRef.afterClosed().subscribe((resp) => { 
+      if (resp && resp.userSubmitted) { this.refreshDatasource(); }
+      obs.unsubscribe();
+    });
   }
 
   public editClicked(id: number) {
@@ -35,12 +38,18 @@ export class ProductGroupListComponent implements OnInit {
     modalSettings.data = id;
 
     let dialogRef = this.prodDialog.open(ProductGroupComponent, modalSettings);
-    dialogRef.afterClosed().subscribe((resp) => { if (resp && resp.userSubmitted) { this.refreshDatasource(); } })
+    let obs = dialogRef.afterClosed().subscribe((resp) => { 
+      if (resp && resp.userSubmitted) { this.refreshDatasource(); }
+      obs.unsubscribe(); 
+    });
   }
 
   public deleteClicked(id: number) {
     if (confirm(Globals.PROD_GROUP_DELETE_CONFIRM_MSG + id)) {
-      this.prodGroupService.delete(id).subscribe(() => { this.refreshDatasource(); });
+      let obs = this.prodGroupService.delete(id).subscribe(() => { 
+        this.refreshDatasource();
+        obs.unsubscribe(); 
+      });
     }
   }
 
@@ -77,8 +86,9 @@ export class ProductGroupListComponent implements OnInit {
   private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
 
   private refreshDatasource() {
-    this.prodGroupService.getAll().subscribe(prodGroupsResp => {
+    let obs = this.prodGroupService.getAll().subscribe(prodGroupsResp => {
       this.setupTableDataSource(prodGroupsResp);
+      obs.unsubscribe();
     })
   }
 }
