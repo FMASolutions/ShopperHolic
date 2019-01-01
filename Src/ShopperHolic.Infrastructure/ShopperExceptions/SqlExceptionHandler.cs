@@ -1,15 +1,14 @@
-
+using System.Data.SqlClient;
+using System;
 namespace ShopperHolic.Infrastructure.ShopperExceptions
 {
     public static class SqlExceptionHandler
     {
-        public static BaseCustomException HandleSqlException(System.Exception ex)
+        public static BaseCustomException HandleSqlException(Exception ex)
         {
             try
             {
-
-                System.Data.SqlClient.SqlException SQLExcep = (System.Data.SqlClient.SqlException)ex;
-
+                SqlException SQLExcep = (SqlException)ex;
                 BaseCustomException returnException = null;
                 switch (SQLExcep.Number)
                 {
@@ -24,15 +23,15 @@ namespace ShopperHolic.Infrastructure.ShopperExceptions
                 if (returnException != null) { throw returnException; }
                 else { throw ex; }
             }
-            catch (System.InvalidCastException)
+            catch (InvalidCastException)
             {
                 try
                 {
-                    System.InvalidOperationException invOp = (System.InvalidOperationException)ex;
+                    InvalidOperationException invOp = (InvalidOperationException)ex;
                     BaseCustomException returnException = NoRecordsFoundException();
                     return returnException;
                 }
-                catch (System.InvalidCastException)
+                catch (InvalidCastException)
                 {
                     throw ex;
                 }
