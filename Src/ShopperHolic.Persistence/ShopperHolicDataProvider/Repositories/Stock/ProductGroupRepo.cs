@@ -32,11 +32,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
         }
 
@@ -53,11 +50,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
 
         }
@@ -75,11 +69,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
         }
 
@@ -87,7 +78,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         {
             try
             {
-                ProductGroupDTO returnResult = null;
                 string query = @"
                 UPDATE ProductGroups
                 SET ProductGroupCode = @ProductGroupCode
@@ -103,16 +93,14 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 //TODO Change Execute to ASYNC
                 int rowsEffected = Connection.Execute(query, queryParams, this.Transaction);
                 if (rowsEffected > 0)
-                    returnResult = updatedProd;
-                return returnResult;
+                    return updatedProd;
+                else
+                    throw new System.InvalidOperationException("Sequence contains no elements");
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
         }
 
@@ -132,11 +120,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
         }
     }

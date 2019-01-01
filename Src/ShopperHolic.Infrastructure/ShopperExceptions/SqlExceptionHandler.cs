@@ -4,36 +4,35 @@ namespace ShopperHolic.Infrastructure.ShopperExceptions
 {
     public static class SqlExceptionHandler
     {
-        public static BaseCustomException HandleSqlException(Exception ex)
+        public static BaseCustomException HandleSqlException(Exception originalException)
         {
             try
             {
-                SqlException SQLExcep = (SqlException)ex;
+                SqlException SQLExcep = (SqlException)originalException;
                 BaseCustomException returnException = null;
                 switch (SQLExcep.Number)
                 {
                     case 2627:
-                        returnException = GetKeyAlreadyExistsException(ex.Message);
+                        returnException = GetKeyAlreadyExistsException(originalException.Message);
                         break;
                     case 547:
-                        returnException = GetChildRecordExistsException(ex.Message);
+                        returnException = GetChildRecordExistsException(originalException.Message);
                         break;
                     default: break;
                 }
-                if (returnException != null) { throw returnException; }
-                else { throw ex; }
+                return returnException;
             }
             catch (InvalidCastException)
             {
                 try
                 {
-                    InvalidOperationException invOp = (InvalidOperationException)ex;
+                    InvalidOperationException invOp = (InvalidOperationException)originalException;
                     BaseCustomException returnException = NoRecordsFoundException();
                     return returnException;
                 }
                 catch (InvalidCastException)
                 {
-                    throw ex;
+                    throw originalException;
                 }
             }
         }
