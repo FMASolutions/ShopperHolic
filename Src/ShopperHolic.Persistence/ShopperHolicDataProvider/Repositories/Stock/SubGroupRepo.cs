@@ -125,7 +125,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 DELETE FROM SubGroups
                 WHERE SubGroupID = @SubGroupID
                 ";
-                int rowsEffected = Connection.Execute(query, new { ProductGroupID = id }, Transaction);
+                int rowsEffected = Connection.Execute(query, new { SubGroupID = id }, Transaction);
                 if(rowsEffected >= 1)
                     return true;
                 else
