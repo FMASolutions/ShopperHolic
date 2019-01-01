@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AuthenticatedUserModel } from 'src/app/models/security/authenticatedUserModel';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/services/security/auth.service';
@@ -11,41 +11,24 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   currentUser: AuthenticatedUserModel = null;
-  returnUrl: string = "";
-  loginForm: FormGroup;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute,
-    fb: FormBuilder,
-    authValidator: AuthValidator,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<LoginComponent>
-  ) {
-
+  constructor(private authService: AuthService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<LoginComponent>) {
     this.currentUser = this.authService.currentUser;
-    this.loginForm = fb.group({
-      username: [null, [authValidator.ValidateUsername]],
-      password: [null, [authValidator.ValidatePassword]]
-    });
+    this.authService.setupLoginForm();
   }
 
-  ngOnInit() { this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl'); }
-
-  attemptLogin() {
-    if (this.loginForm.valid) {
-      this.authService.attemptLogin(this.loginForm.value["username"], this.loginForm.value["password"]).subscribe(resp => {
+  attemptLoginClicked() {
+    if (this.authService.loginForm.valid) {
+      this.authService.attemptLogin(this.authService.loginForm.value["username"], this.authService.loginForm.value["password"]).subscribe(resp => {
         this.authService.exchangeKeyForToken(resp).subscribe(userResp => {
-          if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl); } //Go to return url or home after login
           this.dialogRef.close(userResp);
         })
       });
     }
   }
 
-  cancelLogin() { this.dialogRef.close({ userCancelled: true }); }
+  cancelLoginClicked() { this.dialogRef.close({ userCancelled: true }); }
 }
