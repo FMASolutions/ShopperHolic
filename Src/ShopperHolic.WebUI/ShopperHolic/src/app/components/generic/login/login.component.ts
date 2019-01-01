@@ -15,7 +15,7 @@ export class LoginComponent {
 
   currentUser: AuthenticatedUserModel = null;
 
-  constructor(private authService: AuthService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<LoginComponent>) {
+  constructor(public authService: AuthService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<LoginComponent>) {
     this.currentUser = this.authService.currentUser;
     this.authService.setupLoginForm();
   }

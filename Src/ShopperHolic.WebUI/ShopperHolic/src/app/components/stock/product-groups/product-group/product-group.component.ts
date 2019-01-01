@@ -12,7 +12,7 @@ export class ProductGroupComponent {
 
   currentMode: string = "";
 
-  constructor(private prodService: ProductGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ProductGroupComponent>) {
+  constructor(public prodService: ProductGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ProductGroupComponent>) {
     this.currentMode = this.prodService.InitializeForm(data);
   }
 
