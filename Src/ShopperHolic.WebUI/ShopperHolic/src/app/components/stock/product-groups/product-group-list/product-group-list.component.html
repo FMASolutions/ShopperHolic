@@ -6,12 +6,11 @@
   <form>
     <mat-form-field class="maxWidth" appearance="outline">
       <mat-label>Filter</mat-label>
-      <input matInput [(ngModel)]="textFilter" name="textFilter" id="textFilterID">
+      <mat-icon matSuffix *ngIf="textFilter" (click)="resetFilterClicked()">close</mat-icon>
+      <input matInput [(ngModel)]="textFilter" name="textFilter" type="search" id="textFilterID">
     </mat-form-field>
-      <button mat-flat-button color="primary" class="maxWidth" (click)="applyFilterClicked()">Apply Filters</button>
+    <button mat-flat-button color="primary" class="maxWidth" (click)="applyFilterClicked()">Apply Filters</button>
   </form>
-  <button mat-flat-button color="primary" id="topReset" class="maxWidth" (click)="resetFilterClicked()">Reset Filters</button>
-
   <div class="mat-elevation-z4">
     <table mat-table [dataSource]="tableDataSource" matSort (matSortChange)="sortClicked($event)" class="maxWidth">
       <ng-container matColumnDef="ID">
