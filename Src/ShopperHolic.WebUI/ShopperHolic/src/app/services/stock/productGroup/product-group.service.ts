@@ -14,7 +14,6 @@ import { ProductGroupValidator } from './product-group-validator';
   providedIn: 'root'
 })
 export class ProductGroupService {
-
   
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/ProductGroup/';
   
@@ -84,7 +83,7 @@ export class ProductGroupService {
 
     let currentMode = this.determinMode(id);
 
-    if (currentMode == Globals.PROD_GROUP_UPDATE_MODE) {
+    if (currentMode == Globals.MODE_UPDATE) {
       let obs = this.getByID(id).subscribe(respData => {
         obs.unsubscribe();
         this.populateFormFromModel(respData);
@@ -115,8 +114,8 @@ export class ProductGroupService {
 
   private determinMode(id?: any) : string {
     let returnString = "";
-    if (id) { returnString = Globals.PROD_GROUP_UPDATE_MODE; }
-    else { returnString = Globals.PROD_GROUP_CREATE_MODE; }
+    if (id) { returnString = Globals.MODE_UPDATE; }
+    else { returnString = Globals.MODE_CREATE; }
     return returnString;
   }
 
@@ -128,6 +127,4 @@ export class ProductGroupService {
       desc: model.productGroupDescription
     });
   }
-
-  
 }

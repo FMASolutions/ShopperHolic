@@ -2,5 +2,5 @@ export class CreateSubGroup {
     subGroupCode: string = "";
     subGroupName: string = "";
     subGroupDescription: string = "";
-    productGroupCode: number = 0;
+    productGroupID: number = 0;
 }

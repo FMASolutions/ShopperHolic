@@ -32,4 +32,8 @@ export class SubGroupValidator {
         }
         return null;
     }
+
+    public validateProdID(control: AbstractControl){
+        //TODO IMPLEMENT PRODID VALIDATION FOR SUB GROUP
+    }
 }
