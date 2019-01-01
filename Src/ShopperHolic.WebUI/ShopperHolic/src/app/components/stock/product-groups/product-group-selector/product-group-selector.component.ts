@@ -68,6 +68,10 @@ export class ProductGroupSelectorComponent implements OnInit {
     this.setupTableDataSource(sortedData);
   }
 
+  public closeClicked(){
+    this.dialogRef.close();
+  }
+
   private setupTableDataSource(data: ProductGroupPreview[]) {
     this.tableDataSource = new MatTableDataSource(data);
     this.tableDataSource.paginator = this.paginator;
