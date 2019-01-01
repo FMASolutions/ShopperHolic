@@ -13,51 +13,51 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
     [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductGroupController : ControllerBase
+    public class SubGroupController : ControllerBase
     {
-        public ProductGroupController(IProductGroupService prodGroupService)
+        public SubGroupController(ISubGroupService subGroupService)
         {
-            _prodGroupManager = new ProductGroupManager(prodGroupService);
+            _subGroupManager = new SubGroupManager(subGroupService);
         }
 
-        [Authorize(Policy = "UserCanCreateProductGroup")]
+        [Authorize(Policy = "UserCanCreateSubGroup")]
         [HttpPost]
-        public ActionResult<ProductGroupDTO> Create([FromBody] ProductGroupCreateDTO userInput)
+        public ActionResult<SubGroupDTO> Create([FromBody] SubGroupCreateDTO userInput)
         {
-            try { return _prodGroupManager.Create(userInput); }
+            try { return _subGroupManager.Create(userInput); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<ProductGroupDTO> GetByID([FromQuery] int id)
+        public ActionResult<SubGroupDTO> GetByID([FromQuery] int id)
         {
-            try { return  _prodGroupManager.GetyByID(id); }
+            try { return _subGroupManager.GetyByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<List<ProductGroupPreviewDTO>> GetAll()
+        public ActionResult<List<SubGroupPreviewDTO>> GetAll()
         {
-            try { return _prodGroupManager.GetAllPreview(); }
+            try { return _subGroupManager.GetAllPreview(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [Authorize(Policy = "UserCanEditProductGroup")]
+        [Authorize(Policy = "UserCanEditSubGroup")]
         [HttpPut]
-        public ActionResult<ProductGroupDTO> Update([FromBody] ProductGroupDTO newModel)
+        public ActionResult<SubGroupDTO> Update([FromBody] SubGroupDTO newModel)
         {
-            try { return _prodGroupManager.Update(newModel); }
+            try { return _subGroupManager.Update(newModel); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [Authorize(Policy = "UserCanDeleteProductGroup")]
+        [Authorize(Policy = "UserCanDeleteSubGroup")]
         [HttpDelete]
         public ActionResult<bool> Delete([FromQuery] int id)
         {
-            try{return _prodGroupManager.Delete(id);}
+            try { return _subGroupManager.Delete(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        private ProductGroupManager _prodGroupManager;
+        private SubGroupManager _subGroupManager;
     }
 }

@@ -28,9 +28,12 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
             return _prodGroupService.GetByID(id);
         }
 
-        public IEnumerable<ProductGroupPreviewDTO> GetAllPreview()
+        public List<ProductGroupPreviewDTO> GetAllPreview()
         {
-            return _prodGroupService.GetAllPreview();
+            var returnList = new List<ProductGroupPreviewDTO>();
+            foreach(var current in _prodGroupService.GetAllPreview())
+                returnList.Add(current);
+            return returnList;
         }
 
         public ProductGroupDTO Update(ProductGroupDTO newModel)
