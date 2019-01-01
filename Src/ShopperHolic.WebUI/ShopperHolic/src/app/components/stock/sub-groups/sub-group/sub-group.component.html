@@ -53,7 +53,7 @@
             <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
                 <div fxFlex="50">
 
-                    <button mat-raised-button color="primary" class="maxWidth" (click)="openProdSelectDialog()">
+                    <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openProdSelectDialog()">
                         Product Group Selector
                     </button>
                 </div>
@@ -68,7 +68,7 @@
 
             <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
                 <div fxFlex="50">
-                    <button mat-raised-button color="accent" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
+                    <button mat-raised-button color="accent" type="submit" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
                 </div>
                 <div fxFlex="50">
                     <button mat-raised-button color="primary" class="maxWidth" (click)="cancel()">Close</button>

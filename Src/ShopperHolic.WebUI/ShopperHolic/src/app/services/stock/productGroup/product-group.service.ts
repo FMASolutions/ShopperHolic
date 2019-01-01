@@ -21,21 +21,21 @@ export class ProductGroupService {
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNewProduct(newProductGroup: CreateProductGroup): Observable<ProductGroup> {
-    this.userNotificationService.informUserStart(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG, Globals.SPINNER_CREATE_MESSAGE);
+    this.userNotificationService.informUserStart(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG + newProductGroup.productGroupCode, Globals.SPINNER_CREATE_MESSAGE);
     return this.http.post<ProductGroup>(this.baseURL + 'Create', newProductGroup).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.PROD_GROUP_CREATE_SUCCESS_MSG);
+      this.userNotificationService.informUserComplete(Globals.PROD_GROUP_CREATE_SUCCESS_MSG + resp.productGroupID);
     }, err => {
-      this.userNotificationService.informUserError(Globals.PROD_GROUP_CREATE_FAILED_MSG);
+      this.userNotificationService.informUserError(Globals.PROD_GROUP_CREATE_FAILED_MSG + newProductGroup.productGroupCode);
       this.userNotificationService.informUserError(err.error);
     }));
   }
 
   public getByID(id: number): Observable<ProductGroup> {
-    this.userNotificationService.informUserStart(Globals.PROD_GROUP_READ_ATTEMPT_MSG, Globals.SPINNER_GET_MESSAGE);
+    this.userNotificationService.informUserStart(Globals.PROD_GROUP_READ_ATTEMPT_MSG + id, Globals.SPINNER_GET_MESSAGE);
     return this.http.get<ProductGroup>(this.baseURL + 'GetByID/?id=' + id.toString()).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.PROD_GROUP_READ_SUCCESS_MSG);
+      this.userNotificationService.informUserComplete(Globals.PROD_GROUP_READ_SUCCESS_MSG + id);
     }, err => {
-      this.userNotificationService.informUserError(Globals.PROD_GROUP_READ_FAILED_MSG);
+      this.userNotificationService.informUserError(Globals.PROD_GROUP_READ_FAILED_MSG + id);
       this.userNotificationService.informUserError(err.error);
     }));;
   }

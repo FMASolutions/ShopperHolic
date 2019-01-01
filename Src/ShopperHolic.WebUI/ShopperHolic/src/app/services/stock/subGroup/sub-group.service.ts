@@ -22,21 +22,21 @@ export class SubGroupService {
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNewSubGroup(newSubGroup: CreateSubGroup): Observable<SubGroup> {
-    this.userNotificationService.informUserStart(Globals.SUB_GROUP_CREATE_ATTEMPT_MSG, Globals.SPINNER_CREATE_MESSAGE);
+    this.userNotificationService.informUserStart(Globals.SUB_GROUP_CREATE_ATTEMPT_MSG + newSubGroup.subGroupCode, Globals.SPINNER_CREATE_MESSAGE);
     return this.http.post<SubGroup>(this.baseURL + 'Create', newSubGroup).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_CREATE_SUCCESS_MSG);
+      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_CREATE_SUCCESS_MSG + resp.subGroupID);
     }, err => {
-      this.userNotificationService.informUserError(Globals.SUB_GROUP_CREATE_FAILED_MSG);
+      this.userNotificationService.informUserError(Globals.SUB_GROUP_CREATE_FAILED_MSG + newSubGroup.subGroupCode);
       this.userNotificationService.informUserError(err.error);
     }));
   }
 
   public getByID(id: number): Observable<SubGroup> {
-    this.userNotificationService.informUserStart(Globals.SUB_GROUP_READ_ATTEMPT_MSG, Globals.SPINNER_GET_MESSAGE);
+    this.userNotificationService.informUserStart(Globals.SUB_GROUP_READ_ATTEMPT_MSG + id, Globals.SPINNER_GET_MESSAGE);
     return this.http.get<SubGroup>(this.baseURL + 'GetByID/?id=' + id.toString()).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_READ_SUCCESS_MSG);
+      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_READ_SUCCESS_MSG + id);
     }, err => {
-      this.userNotificationService.informUserError(Globals.SUB_GROUP_READ_FAILED_MSG);
+      this.userNotificationService.informUserError(Globals.SUB_GROUP_READ_FAILED_MSG + id);
       this.userNotificationService.informUserError(err.error);
     }));;
   }
