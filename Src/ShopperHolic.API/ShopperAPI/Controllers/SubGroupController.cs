@@ -4,8 +4,6 @@ using ShopperHolic.API.ShopperAPI.Models.Stock;
 using System.Collections.Generic;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
-using Newtonsoft.Json;
-using System;
 using ShopperHolic.Infrastructure.ShopperExceptions;
 
 namespace ShopperHolic.API.ShopperAPI.Controllers

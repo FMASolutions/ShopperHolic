@@ -5,7 +5,7 @@
         <form [formGroup]="subGroupService.subForm">
             <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Sub Group Code</mat-label>
-                <input matInput formControlName="code" type="text" placeholder="Sub Group Code">
+                <input matInput formControlName="code" type="text">
             </mat-form-field>
             <div class="validationMessages">
                 <div *ngIf="subGroupService.subForm.controls.code.touched 
@@ -28,7 +28,7 @@
             </div>
             <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Sub Group Name</mat-label>
-                <input matInput placeholder="Sub Group Name" formControlName="name" type="text">
+                <input matInput formControlName="name" type="text">
             </mat-form-field>
             <div class="validationMessages">
                 <div *ngIf="subGroupService.subForm.controls.name.touched 

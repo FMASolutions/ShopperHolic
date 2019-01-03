@@ -1,25 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, Sort } from '@angular/material';
-import { SubGroupPreview } from 'src/app/models/stock/subGroups/subGroupPreview';
+import { ItemPreview } from 'src/app/models/stock/items/itemPreview';
 import { Globals } from 'src/globals';
-import { SubGroupService } from 'src/app/services/stock/subGroup/sub-group.service';
-import { SubGroupComponent } from '../sub-group/sub-group.component';
+import { ItemService } from 'src/app/services/stock/item/item.service';
+import { ItemComponent } from '../item/item.component';
 
 @Component({
-  selector: 'app-sub-group-list',
-  templateUrl: './sub-group-list.component.html',
-  styleUrls: ['./sub-group-list.component.css']
+  selector: 'app-item-list',
+  templateUrl: './item-list.component.html',
+  styleUrls: ['./item-list.component.css']
 })
-export class SubGroupListComponent implements OnInit {
+export class ItemListComponent implements OnInit {
 
-  tableDataSource: MatTableDataSource<SubGroupPreview>;
+  tableDataSource: MatTableDataSource<ItemPreview>;
   textFilter: string = "";
-  displayedColumns: string[] = Globals.SUB_GROUP_PRVW_LIST_COLUMNS;
+  displayedColumns: string[] = Globals.ITEM_PRVW_LIST_COLUMNS;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private subGroupService: SubGroupService, public subDialog: MatDialog) { }
+  constructor(private itemService: ItemService, public itemDialog: MatDialog) { }
 
   ngOnInit() {
     setTimeout(()=>{ 
@@ -28,7 +28,7 @@ export class SubGroupListComponent implements OnInit {
   }
 
   public createClicked() {
-    let dialogRef = this.subDialog.open(SubGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    let dialogRef = this.itemDialog.open(ItemComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     let obs = dialogRef.afterClosed().subscribe((resp) => { 
       if (resp && resp.userSubmitted) { this.refreshDatasource(); }
       obs.unsubscribe();
@@ -39,7 +39,7 @@ export class SubGroupListComponent implements OnInit {
     let modalSettings = Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
     modalSettings.data = id;
 
-    let dialogRef = this.subDialog.open(SubGroupComponent, modalSettings);
+    let dialogRef = this.itemDialog.open(ItemComponent, modalSettings);
     let obs = dialogRef.afterClosed().subscribe((resp) => { 
       if (resp && resp.userSubmitted) { this.refreshDatasource(); }
       obs.unsubscribe(); 
@@ -47,8 +47,8 @@ export class SubGroupListComponent implements OnInit {
   }
 
   public deleteClicked(id: number) {
-    if (confirm(Globals.SUB_GROUP_DELETE_CONFIRM_MSG + id)) {
-      let obs = this.subGroupService.delete(id).subscribe(() => { 
+    if (confirm(Globals.ITEM_DELETE_CONFIRM_MSG + id)) {
+      let obs = this.itemService.delete(id).subscribe(() => { 
         this.refreshDatasource();
         obs.unsubscribe(); 
       });
@@ -70,17 +70,17 @@ export class SubGroupListComponent implements OnInit {
     let sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'ID': return this.compare(a.subGroupID, b.subGroupID, isAsc);
-        case 'Code': return this.compare(a.subGroupCode.toLowerCase(), b.subGroupCode.toLowerCase(), isAsc);
-        case 'Name': return this.compare(a.subGroupName.toLowerCase(), b.subGroupName.toLowerCase(), isAsc);
-        case 'PID': return this.compare(a.productGroupID, b.productGroupID, isAsc);
+        case 'ID': return this.compare(a.itemID, b.itemID, isAsc);
+        case 'Code': return this.compare(a.itemCode.toLowerCase(), b.itemCode.toLowerCase(), isAsc);
+        case 'Name': return this.compare(a.itemName.toLowerCase(), b.itemName.toLowerCase(), isAsc);
+        case 'SID': return this.compare(a.subGroupID, b.subGroupID, isAsc);
         default: return 0;
       }
     });
     this.setupTableDataSource(sortedData);
   }
 
-  private setupTableDataSource(data: SubGroupPreview[]) {
+  private setupTableDataSource(data: ItemPreview[]) {
     this.tableDataSource = new MatTableDataSource(data);
     this.tableDataSource.paginator = this.paginator;
     this.tableDataSource.filter = this.textFilter;
@@ -89,10 +89,11 @@ export class SubGroupListComponent implements OnInit {
   private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
 
   private refreshDatasource() {
-    let obs = this.subGroupService.getAll().subscribe(subGroupResp => {
-      this.setupTableDataSource(subGroupResp);
-      console.log(subGroupResp);
+    let obs = this.itemService.getAll().subscribe(itemResp => {
+      this.setupTableDataSource(itemResp);
       obs.unsubscribe();
+      console.log(itemResp);
     })
   }
+
 }

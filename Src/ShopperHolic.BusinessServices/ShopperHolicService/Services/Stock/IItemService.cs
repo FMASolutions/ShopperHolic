@@ -10,5 +10,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         IEnumerable<ItemPreviewDTO> GetAllPreview();
         ItemDTO Update(ItemDTO newModel);
         bool Delete(int id);
+
+        bool UpdateImage(int id, string imageName);
     }
 }

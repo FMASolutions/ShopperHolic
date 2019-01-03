@@ -94,8 +94,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParams.Add("@ProductGroupName", updatedRecord.ProductGroupName);
                 queryParams.Add("@ProductGroupDescription", updatedRecord.ProductGroupDescription);
                 //TODO Change Execute to ASYNC
-                int rowsEffected = Connection.Execute(query, queryParams, this.Transaction);
-                if (rowsEffected > 0)
+                if (Connection.Execute(query, queryParams, this.Transaction) > 0)
                     return updatedRecord;
                 else
                     throw new System.InvalidOperationException("Sequence contains no elements");
@@ -119,11 +118,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ProductGroupID", id);
 
-                int rowsEffected = Connection.Execute(query, queryParameters, Transaction);
-                if(rowsEffected >= 1)
-                    return true;
-                else
-                    throw new System.InvalidOperationException("Sequence contains no elements");
+                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
             }
             catch (Exception ex)
             {

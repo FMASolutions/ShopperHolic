@@ -78,6 +78,25 @@ export class Globals {
     public static get SUB_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','PID', 'View', 'Del']; }
     public static get SUB_GROUP_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','PID', 'Select']; }
 
+    //Item Specific Text
+    public static get ITEM_UPDATE_TITLE(): string { return "Item Update"; }
+    public static get ITEM_CREATE_TITLE(): string { return "Create New Item"; }
+    public static get ITEM_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new item: "; }
+    public static get ITEM_CREATE_SUCCESS_MSG(): string { return "Successfully created item: "; }
+    public static get ITEM_CREATE_FAILED_MSG(): string { return "Failed to create item: "; }
+    public static get ITEM_READ_ATTEMPT_MSG(): string { return "Fetching item data: "; }
+    public static get ITEM_READ_SUCCESS_MSG(): string { return "Item data recived: "; }
+    public static get ITEM_READ_FAILED_MSG(): string { return "Failed to retrieve item data: "; }
+    public static get ITEM_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update item: "; }
+    public static get ITEM_UPDATE_SUCCESS_MSG(): string { return "Successfully updated item: "; }
+    public static get ITEM_UPDATE_FAILED_MSG(): string { return "Failed to update item: "; }
+    public static get ITEM_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete item: "; }
+    public static get ITEM_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete item: "; }
+    public static get ITEM_DELETE_SUCCESS_MSG(): string { return "Successfully deleted item: "; }
+    public static get ITEM_DELETE_FAILED_MSG(): string { return "Failed to delete item: "; }
+    public static get ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
+    public static get ITEM_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
+
 }
 
 export class CustomModalSettings {

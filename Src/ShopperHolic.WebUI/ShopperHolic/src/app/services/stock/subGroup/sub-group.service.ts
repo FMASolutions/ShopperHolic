@@ -18,15 +18,15 @@ export class SubGroupService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/SubGroup/';
   
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private sgValidator: SubGroupValidator,) { }
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: SubGroupValidator,) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
-  public createNewSubGroup(newSubGroup: CreateSubGroup): Observable<SubGroup> {
-    this.userNotificationService.informUserStart(Globals.SUB_GROUP_CREATE_ATTEMPT_MSG + newSubGroup.subGroupCode, Globals.SPINNER_CREATE_MESSAGE);
-    return this.http.post<SubGroup>(this.baseURL + 'Create', newSubGroup).pipe(tap(resp => {
+  public createNew(newModel: CreateSubGroup): Observable<SubGroup> {
+    this.userNotificationService.informUserStart(Globals.SUB_GROUP_CREATE_ATTEMPT_MSG + newModel.subGroupCode, Globals.SPINNER_CREATE_MESSAGE);
+    return this.http.post<SubGroup>(this.baseURL + 'Create', newModel).pipe(tap(resp => {
       this.userNotificationService.informUserComplete(Globals.SUB_GROUP_CREATE_SUCCESS_MSG + resp.subGroupID);
     }, err => {
-      this.userNotificationService.informUserError(Globals.SUB_GROUP_CREATE_FAILED_MSG + newSubGroup.subGroupCode);
+      this.userNotificationService.informUserError(Globals.SUB_GROUP_CREATE_FAILED_MSG + newModel.subGroupCode);
       this.userNotificationService.informUserError(err.error);
     }));
   }
@@ -61,12 +61,12 @@ export class SubGroupService {
     }));
   }
 
-  public delete(subGroupID: number): Observable<boolean> {
-    this.userNotificationService.informUserStart(Globals.SUB_GROUP_DELETE_ATTEMPT_MSG + subGroupID,Globals.SPINNER_DELETE_MESSAGE);
-    return this.http.delete<boolean>(this.baseURL + "Delete?id=" + subGroupID.toString()).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_DELETE_SUCCESS_MSG + subGroupID);
+  public delete(id: number): Observable<boolean> {
+    this.userNotificationService.informUserStart(Globals.SUB_GROUP_DELETE_ATTEMPT_MSG + id,Globals.SPINNER_DELETE_MESSAGE);
+    return this.http.delete<boolean>(this.baseURL + "Delete?id=" + id.toString()).pipe(tap(resp => {
+      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_DELETE_SUCCESS_MSG + id);
     }, err => {
-      this.userNotificationService.informUserError(Globals.SUB_GROUP_DELETE_FAILED_MSG + subGroupID);
+      this.userNotificationService.informUserError(Globals.SUB_GROUP_DELETE_FAILED_MSG + id);
       this.userNotificationService.informUserError(err.error);
     }));
   }
@@ -77,11 +77,11 @@ export class SubGroupService {
   public InitializeForm(id?: any) : string{
     this.subForm = this.fb.group({
       id: [0, []],
-      code: [null, [this.sgValidator.validateCodeForCreate]],
-      name: [null, [this.sgValidator.basicValidation]],
-      desc: [null, [this.sgValidator.basicValidation]],
-      prodID: [null, [this.sgValidator.validateProdID]],
-      prodText: [null, [this.sgValidator.basicValidation]]
+      code: [null, [this.validator.validateCodeForCreate]],
+      name: [null, [this.validator.basicValidation]],
+      desc: [null, [this.validator.basicValidation]],
+      prodID: [null, [this.validator.validateProdID]],
+      prodText: [null, [this.validator.basicValidation]]
     });
 
     let currentMode = this.determinMode(id);

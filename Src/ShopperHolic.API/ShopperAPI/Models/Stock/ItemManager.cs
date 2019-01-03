@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace ShopperHolic.API.ShopperAPI.Models.Stock
 {
@@ -31,7 +34,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         public List<ItemPreviewDTO> GetAllPreview()
         {
             var returnList = new List<ItemPreviewDTO>();
-            foreach(var current in _itemService.GetAllPreview())
+            foreach (var current in _itemService.GetAllPreview())
                 returnList.Add(current);
             return returnList;
         }
@@ -44,6 +47,26 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         public bool Delete(int id)
         {
             return _itemService.Delete(id);
+        }
+
+        public bool UploadFileAndItem(IFormFile file, int id, IHostingEnvironment env)
+        {
+            var upload = Path.Combine(env.ContentRootPath, "uploads");
+            if (file.Length > 0)
+            {
+                if (!Directory.Exists(upload))
+                {
+                    Directory.CreateDirectory(upload);
+                }
+                var extension = Path.GetExtension(file.FileName);
+                var currentPath = Path.Combine(upload, id + extension);
+                using (var filestream = new FileStream(currentPath, FileMode.Create))
+                {
+                    file.CopyTo(filestream);
+                    _itemService.UpdateImage(id,Path.GetFileName(currentPath));
+                }
+            }
+            return true;
         }
     }
 }

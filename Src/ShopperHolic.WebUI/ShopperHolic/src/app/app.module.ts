@@ -32,25 +32,36 @@ import { SubGroupService} from './services/stock/subGroup/sub-group.service';
 import { LoadingSpinnerComponent } from './components/generic/loading-spinner/loading-spinner.component';
 import { LoadingSpinnerService} from './services/generic/loading-spinner.service';
 import { ProductGroupSelectorComponent } from './components/stock/product-groups/product-group-selector/product-group-selector.component';
+import { ItemsComponent } from './components/stock/items/items.component';
+import { ItemComponent } from './components/stock/items/item/item.component';
+import { ItemListComponent } from './components/stock/items/item-list/item-list.component';
+import { ItemSelectorComponent } from './components/stock/items/item-selector/item-selector.component';
+import { SubGroupSelectorComponent } from './components/stock/sub-groups/sub-group-selector/sub-group-selector.component';
+import { ItemService } from './services/stock/item/item.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductGroupsComponent,
-    ProductGroupComponent,
-    ProductGroupListComponent,
-    AboutComponent,
-    ContactComponent,
-    HomeComponent,
-    LoginComponent,
     AppNavigationComponent,
     NotificationComponent,
     UserActivityComponent,
+    LoadingSpinnerComponent,
+    HomeComponent,
+    AboutComponent,
+    ContactComponent,
+    LoginComponent,
+    ProductGroupsComponent,
+    ProductGroupComponent,
+    ProductGroupListComponent,
+    ProductGroupSelectorComponent,
     SubGroupsComponent,
     SubGroupComponent,
     SubGroupListComponent,
-    LoadingSpinnerComponent,
-    ProductGroupSelectorComponent,
+    SubGroupSelectorComponent,
+    ItemsComponent,
+    ItemComponent,
+    ItemListComponent,
+    ItemSelectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,12 +81,13 @@ import { ProductGroupSelectorComponent } from './components/stock/product-groups
     CookieService,
     AuthService,
     AuthValidator,
+    LoadingSpinnerService,
     StatusMessageService,
     ProductGroupService,
     SubGroupService,
-    LoadingSpinnerService,
+    ItemService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ UserActivityComponent,LoadingSpinnerComponent, ProductGroupComponent, ProductGroupSelectorComponent, SubGroupComponent ]
+  entryComponents: [ UserActivityComponent,LoadingSpinnerComponent, ProductGroupComponent, ProductGroupSelectorComponent, SubGroupComponent, SubGroupSelectorComponent, ItemComponent, ItemSelectorComponent ]
 })
 export class AppModule { }

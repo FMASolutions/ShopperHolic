@@ -17,15 +17,15 @@ export class ProductGroupService {
   
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/ProductGroup/';
   
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private pgValidator: ProductGroupValidator,) { }
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: ProductGroupValidator,) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
-  public createNewProduct(newProductGroup: CreateProductGroup): Observable<ProductGroup> {
-    this.userNotificationService.informUserStart(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG + newProductGroup.productGroupCode, Globals.SPINNER_CREATE_MESSAGE);
-    return this.http.post<ProductGroup>(this.baseURL + 'Create', newProductGroup).pipe(tap(resp => {
+  public createNew(newModel: CreateProductGroup): Observable<ProductGroup> {
+    this.userNotificationService.informUserStart(Globals.PROD_GROUP_CREATE_ATTEMPT_MSG + newModel.productGroupCode, Globals.SPINNER_CREATE_MESSAGE);
+    return this.http.post<ProductGroup>(this.baseURL + 'Create', newModel).pipe(tap(resp => {
       this.userNotificationService.informUserComplete(Globals.PROD_GROUP_CREATE_SUCCESS_MSG + resp.productGroupID);
     }, err => {
-      this.userNotificationService.informUserError(Globals.PROD_GROUP_CREATE_FAILED_MSG + newProductGroup.productGroupCode);
+      this.userNotificationService.informUserError(Globals.PROD_GROUP_CREATE_FAILED_MSG + newModel.productGroupCode);
       this.userNotificationService.informUserError(err.error);
     }));
   }
@@ -60,12 +60,12 @@ export class ProductGroupService {
     }));
   }
 
-  public delete(prodGroupID: number): Observable<boolean> {
-    this.userNotificationService.informUserStart(Globals.PROD_GROUP_DELETE_ATTEMPT_MSG + prodGroupID,Globals.SPINNER_DELETE_MESSAGE);
-    return this.http.delete<boolean>(this.baseURL + "Delete?id=" + prodGroupID.toString()).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.PROD_GROUP_DELETE_SUCCESS_MSG + prodGroupID);
+  public delete(id: number): Observable<boolean> {
+    this.userNotificationService.informUserStart(Globals.PROD_GROUP_DELETE_ATTEMPT_MSG + id,Globals.SPINNER_DELETE_MESSAGE);
+    return this.http.delete<boolean>(this.baseURL + "Delete?id=" + id.toString()).pipe(tap(resp => {
+      this.userNotificationService.informUserComplete(Globals.PROD_GROUP_DELETE_SUCCESS_MSG + id);
     }, err => {
-      this.userNotificationService.informUserError(Globals.PROD_GROUP_DELETE_FAILED_MSG + prodGroupID);
+      this.userNotificationService.informUserError(Globals.PROD_GROUP_DELETE_FAILED_MSG + id);
       this.userNotificationService.informUserError(err.error);
     }));
   }
@@ -76,9 +76,9 @@ export class ProductGroupService {
   public InitializeForm(id?: any) : string{
     this.prodForm = this.fb.group({
       id: [0, []],
-      code: [null, [this.pgValidator.validateCodeForCreate]],
-      name: [null, [this.pgValidator.basicValidation]],
-      desc: [null, [this.pgValidator.basicValidation]],
+      code: [null, [this.validator.validateCodeForCreate]],
+      name: [null, [this.validator.basicValidation]],
+      desc: [null, [this.validator.basicValidation]],
     });
 
     let currentMode = this.determinMode(id);

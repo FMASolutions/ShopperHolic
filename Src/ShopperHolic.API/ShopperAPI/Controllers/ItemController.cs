@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using ShopperHolic.API.ShopperAPI.Models.Stock;
 using System.Collections.Generic;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
-using Newtonsoft.Json;
 using System;
 using ShopperHolic.Infrastructure.ShopperExceptions;
 
@@ -15,9 +15,11 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
-        public ItemController(IItemService itemService)
+        private readonly IHostingEnvironment _environment;
+        public ItemController(IItemService itemService, IHostingEnvironment env)
         {
             _itemManager = new ItemManager(itemService);
+            _environment = env;
         }
 
         [Authorize(Policy = "UserCanCreateItem")]
@@ -56,6 +58,24 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         {
             try { return _itemManager.Delete(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        public ActionResult<bool> UploadImage()
+        {
+            try
+            {
+            var file = Request.Form.Files[0];
+            var id = int.Parse(Request.Form["id"]);
+            
+            _itemManager.UploadFileAndItem(file,id,_environment);
+
+            return true;
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         private ItemManager _itemManager;

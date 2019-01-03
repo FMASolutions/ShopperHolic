@@ -64,5 +64,20 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 throw ex;
             }
         }
+
+        public bool UpdateImage(int id, string imageName)
+        {
+            try
+            {
+                bool success = UOW.ItemRepo.UpdateImageNane(id,imageName);
+                UOW.SaveChanges();
+                return success;
+            }
+            catch(Exception ex)
+            {
+                UOW.RollbackChanges();
+                throw ex;
+            }
+        }
     }
 }

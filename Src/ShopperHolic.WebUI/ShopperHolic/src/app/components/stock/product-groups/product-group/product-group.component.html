@@ -5,7 +5,7 @@
         <form [formGroup]="prodService.prodForm">
             <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Product Group Code</mat-label>
-                <input matInput formControlName="code" type="text" placeholder="Product Group Code">
+                <input matInput formControlName="code" type="text">
             </mat-form-field>
             <div class="validationMessages">
                 <div *ngIf="prodService.prodForm.controls.code.touched 
@@ -28,7 +28,7 @@
             </div>
             <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Product Group Name</mat-label>
-                <input matInput placeholder="Product Group Name" formControlName="name" type="text">
+                <input matInput formControlName="name" type="text">
             </mat-form-field>
             <div class="validationMessages">
                 <div *ngIf="prodService.prodForm.controls.name.touched 
@@ -39,7 +39,7 @@
             </div>
             <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Product Group Description</mat-label>
-                <input matInput formControlName="desc" type="text" placeholder="Product Group Description">
+                <input matInput formControlName="desc" type="text">
             </mat-form-field>
             <div class="validationMessages">
                 <div *ngIf="

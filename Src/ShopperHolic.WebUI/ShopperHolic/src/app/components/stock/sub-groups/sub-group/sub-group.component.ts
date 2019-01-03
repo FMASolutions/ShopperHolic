@@ -45,8 +45,8 @@ export class SubGroupComponent {
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
-        let obs = this.subGroupService.createNewSubGroup(this.subGroupService.getCreateModelFromForm()).subscribe(() => {
-          this.ownDialog.close({ userSubmitted: true });
+        let obs = this.subGroupService.createNew(this.subGroupService.getCreateModelFromForm()).subscribe((createResp) => {
+          this.ownDialog.close({ userSubmitted: true, createdSubGroup: createResp });
           obs.unsubscribe();
         });
       }

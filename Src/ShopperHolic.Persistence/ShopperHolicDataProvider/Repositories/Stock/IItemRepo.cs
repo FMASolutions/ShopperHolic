@@ -11,5 +11,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         IEnumerable<ItemPreviewDTO> GetAllPreview();       
         ItemDTO Update(ItemDTO updatedRecord);
         bool Delete(int id);
+        bool UpdateImageNane(int id, string image);
+        
     }
 }

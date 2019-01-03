@@ -22,7 +22,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 VALUES (@ItemCode,@SubGroupID,@ItemName,@ItemDescription,@ItemUnitPrice,@ItemUnitPriceWithMaxDiscount,@ItemAvailableQty,@ItemReorderQtyReminder,@ItemImageFilename)
                 
                 SELECT SCOPE_IDENTITY()";
-                
+
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ItemCode", entityToCreate.ItemCode);
                 queryParameters.Add("@SubGroupID", entityToCreate.SubGroupID);
@@ -69,7 +69,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT  ItemID ,ItemCode ItemName, ItemImageFilename, SubGroupID, ItemUnitPrice
+                SELECT  ItemID ,ItemCode, ItemName, ItemImageFilename, SubGroupID, ItemUnitPrice
                 FROM Items I";
 
                 return Connection.Query<ItemPreviewDTO>(query, transaction: Transaction);
@@ -109,13 +109,12 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemReorderQtyReminder", updatedRecord.ItemReorderQtyReminder);
                 queryParameters.Add("@ItemImageFilename", updatedRecord.ItemImageFilename);
                 queryParameters.Add("@ItemID", updatedRecord.ItemID);
-                 int rowsEffected = Connection.Execute(query, queryParameters, this.Transaction);
 
-                if (rowsEffected > 0)
+                if (Connection.Execute(query, queryParameters, this.Transaction) > 0)
                     return updatedRecord;
                 else
                     throw new System.InvalidOperationException("Sequence contains no elements");
-                
+
             }
             catch (Exception ex)
             {
@@ -135,12 +134,29 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ItemID", id);
 
-                int rowsEffected = Connection.Execute(query, queryParameters, Transaction);
+                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
+            }
+        }
 
-                if(rowsEffected >= 1)
-                    return true;
-                else
-                    throw new System.InvalidOperationException("Sequence contains no elements");
+        public bool UpdateImageNane(int id, string image)
+        {
+            try
+            {
+                string query = @"
+                UPDATE Items
+                SET ItemImageFilename = @ItemImageFilename
+                WHERE ItemID = @ItemID
+                ";
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@ItemID", id);
+                queryParameters.Add("@ItemImagefilename", image);
+
+                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
             }
             catch (Exception ex)
             {

@@ -35,7 +35,7 @@ export class ProductGroupComponent {
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
-        let obs = this.prodService.createNewProduct(this.prodService.getCreateModelFromForm()).subscribe(createResp => {
+        let obs = this.prodService.createNew(this.prodService.getCreateModelFromForm()).subscribe(createResp => {
           this.dialogRef.close({ userSubmitted: true, createdProductGroup: createResp });
           obs.unsubscribe();
         });
