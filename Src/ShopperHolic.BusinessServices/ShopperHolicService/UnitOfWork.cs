@@ -16,6 +16,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             _securityRepo = new SecurityRepo(_transaction);
             _productGroupRepo = new ProductGroupRepo(_transaction);
             _subGroupRepo = new SubGroupRepo(_transaction);
+            _itemRepo = new ItemRepo(_transaction);
         }
         ~UnitOfWork()
         {
@@ -26,8 +27,9 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
 
         public ISecurityRepo SecurityRepo { get { return _securityRepo ?? (_securityRepo = new SecurityRepo(_transaction)); } }
         public IProductGroupRepo ProductGroupRepo { get { return _productGroupRepo ?? (_productGroupRepo = new ProductGroupRepo(_transaction)); } }
-        public ISubGroupRepo SubGroupRepo {get { return _subGroupRepo ?? (_subGroupRepo = new SubGroupRepo(_transaction));}}
-        
+        public ISubGroupRepo SubGroupRepo { get { return _subGroupRepo ?? (_subGroupRepo = new SubGroupRepo(_transaction)); } }
+        public IItemRepo ItemRepo { get { return _itemRepo ?? (_itemRepo = new ItemRepo(_transaction)); } }
+
         bool _disposing = false;
 
         public void SaveChanges()
@@ -86,9 +88,11 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             _securityRepo = null;
             _productGroupRepo = null;
             _subGroupRepo = null;
+            _itemRepo = null;
         }
         private ISecurityRepo _securityRepo;
         private IProductGroupRepo _productGroupRepo;
         private ISubGroupRepo _subGroupRepo;
+        private IItemRepo _itemRepo;
     }
 }

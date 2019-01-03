@@ -222,7 +222,10 @@ VALUES
     ('UserCanDeleteProductGroup'),
     ('UserCanCreateSubGroup'),
     ('UserCanEditSubGroup'),
-    ('UserCanDeleteSubGroup')
+    ('UserCanDeleteSubGroup'),
+    ('UserCanCreateItem'),
+    ('UserCanEditItem'),
+    ('UserCanDeleteItem')
 GO
 
 PRINT 'Insert UserRolesTypes'
@@ -256,6 +259,9 @@ VALUES
     (5,1,'true'), -- UserCanCreateSubGroup / Faisal
     (6,1,'true'), -- UserCanEditSubGroup / Faisal
     (7,1,'true'), -- UserCanDeleteSubGroup / Faisal
+    (8,1,'true'), -- UserCanCreateItem / Faisal
+    (9,1,'true'), -- UserCanEditItem / Faisal
+    (10,1,'true'), -- USerCanDeleteItem / Faisal
     (1,2,'true'), -- IsAdminUser / Zulkar 
     (2,2,'true'), -- UserCanCreateProductGroup / Zulkar
     (3,2,'true'), -- UserCanEditProductGroup / Zulkar
@@ -263,6 +269,9 @@ VALUES
     (5,2,'true'), -- UserCanCreateSubGroup / Zulkar
     (6,2,'true'), -- UserCanEditSubGroup / Zulkar
     (7,2,'true'), -- UserCanDeleteSubGroup / Zulkar
+    (8,2,'true'), -- UserCanCreateItem / Zulkar
+    (9,2,'true'), -- UserCanEditItem / Zulkar
+    (10,2,'true'), -- USerCanDeleteItem / Zulkar
     (1,3,'false'), -- IsAdminUser / TestCustomer 
     (2,3,'false'), -- UserCanCreateProductGroup / TestCustomer
     (3,3,'false'), -- UserCanEditProductGroup / TestCustomer
@@ -270,13 +279,19 @@ VALUES
     (5,3,'false'), -- UserCanCreateSubGroup / TestCustomer
     (6,3,'false'), -- UserCanEditSubGroup / TestCustomer
     (7,3,'false'), -- UserCanDeleteSubGroup / TestCustomer
+    (8,3,'false'), -- UserCanCreateItem / TestCustomer
+    (9,3,'false'), -- UserCanEditItem / TestCustomer
+    (10,3,'false'), -- USerCanDeleteItem / TestCustomer
     (1,4,'false'), -- IsAdminUser / Minaccess 
     (2,4,'false'), -- UserCanCreateProductGroup / Minaccess
     (3,4,'false'), -- UserCanEditProductGroup / Minaccess
     (4,4,'false'), -- UserCanDeleteProductGroup / Minaccess
     (5,4,'false'), -- UserCanCreateSubGroup / Minaccess
     (6,4,'false'), -- UserCanEditSubGroup / Minaccess
-    (7,4,'false') -- UserCanDeleteSubGroup / Minaccess
+    (7,4,'false'), -- UserCanDeleteSubGroup / Minaccess
+    (8,4,'false'), -- UserCanCreateItem / Zulkar
+    (9,4,'false'), -- UserCanEditItem / Zulkar
+    (10,4,'false') -- USerCanDeleteItem / Zulkar
 GO
 
 PRINT 'Insert UserRoles'

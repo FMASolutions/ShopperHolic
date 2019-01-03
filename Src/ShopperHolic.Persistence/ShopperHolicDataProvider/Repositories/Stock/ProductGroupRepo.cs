@@ -13,7 +13,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
     {
         //TODO Evaluate if I shoudl even have entites since im using DTO's????????
         public ProductGroupRepo(IDbTransaction transaction) : base(transaction) { }
-        public int CreateProductGroup(ProductGroup entityToCreate)
+        public int Create(ProductGroup entityToCreate)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
-        public ProductGroupDTO GetProductGroupByID(int productGroupID)
+        public ProductGroupDTO GetByID(int id)
         {
             try
             {
@@ -46,7 +46,10 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 FROM ProductGroups 
                 WHERE ProductGroupID = @ProductGroupID";
 
-                return Connection.QueryFirst<ProductGroupDTO>(query, new { ProductGroupID = productGroupID }, transaction: Transaction);
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@ProductGroupID", id);
+
+                return Connection.QueryFirst<ProductGroupDTO>(query, queryParameters, transaction: Transaction);
             }
             catch (Exception ex)
             {
@@ -74,7 +77,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
-        public ProductGroupDTO Update(ProductGroupDTO updatedProd)
+        public ProductGroupDTO Update(ProductGroupDTO updatedRecord)
         {
             try
             {
@@ -86,14 +89,14 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 WHERE ProductGroupID = @ProductGroupID
                 ";
                 var queryParams = new DynamicParameters();
-                queryParams.Add("@ProductGroupID", updatedProd.ProductGroupID);
-                queryParams.Add("@ProductGroupCode", updatedProd.ProductGroupCode);
-                queryParams.Add("@ProductGroupName", updatedProd.ProductGroupName);
-                queryParams.Add("@ProductGroupDescription", updatedProd.ProductGroupDescription);
+                queryParams.Add("@ProductGroupID", updatedRecord.ProductGroupID);
+                queryParams.Add("@ProductGroupCode", updatedRecord.ProductGroupCode);
+                queryParams.Add("@ProductGroupName", updatedRecord.ProductGroupName);
+                queryParams.Add("@ProductGroupDescription", updatedRecord.ProductGroupDescription);
                 //TODO Change Execute to ASYNC
                 int rowsEffected = Connection.Execute(query, queryParams, this.Transaction);
                 if (rowsEffected > 0)
-                    return updatedProd;
+                    return updatedRecord;
                 else
                     throw new System.InvalidOperationException("Sequence contains no elements");
             }
@@ -112,7 +115,11 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 DELETE FROM ProductGroups
                 WHERE ProductGroupID = @ProductGroupID
                 ";
-                int rowsEffected = Connection.Execute(query, new { ProductGroupID = id }, Transaction);
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@ProductGroupID", id);
+
+                int rowsEffected = Connection.Execute(query, queryParameters, Transaction);
                 if(rowsEffected >= 1)
                     return true;
                 else

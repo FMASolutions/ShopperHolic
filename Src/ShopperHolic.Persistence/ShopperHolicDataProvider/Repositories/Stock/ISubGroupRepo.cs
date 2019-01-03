@@ -6,10 +6,10 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
     public interface ISubGroupRepo
     {
-        int CreateSubGroup(SubGroup entityToCreate);
-        SubGroupDTO GetSubGroupByID(int subGroupID);
+        int Create(SubGroup entityToCreate);
+        SubGroupDTO GetByID(int id);
         IEnumerable<SubGroupPreviewDTO> GetAllPreview();       
-        SubGroupDTO Update(SubGroupDTO updatedSub);
+        SubGroupDTO Update(SubGroupDTO updatedRecord);
         bool Delete(int id);
     }
 }

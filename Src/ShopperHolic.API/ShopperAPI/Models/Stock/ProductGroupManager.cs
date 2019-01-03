@@ -7,9 +7,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 {
     public class ProductGroupManager : IDisposable
     {
-        public ProductGroupManager(IProductGroupService prodGroupService)
+        public ProductGroupManager(IProductGroupService service)
         {
-            _prodGroupService = prodGroupService;
+            _prodGroupService = service;
         }
 
         public void Dispose()
@@ -19,9 +19,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         private IProductGroupService _prodGroupService;
 
-        public ProductGroupDTO Create(ProductGroupCreateDTO prodGroupToCreate)
+        public ProductGroupDTO Create(ProductGroupCreateDTO createModel)
         {
-            return _prodGroupService.Create(prodGroupToCreate);
+            return _prodGroupService.Create(createModel);
         }
         public ProductGroupDTO GetyByID(int id)
         {
@@ -41,9 +41,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
             return _prodGroupService.Update(newModel);
         }
 
-        public bool Delete(int productGroupID)
+        public bool Delete(int id)
         {
-            return _prodGroupService.Delete(productGroupID);
+            return _prodGroupService.Delete(id);
         }
     }
 }

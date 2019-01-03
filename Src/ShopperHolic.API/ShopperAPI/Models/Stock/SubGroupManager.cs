@@ -7,9 +7,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 {
     public class SubGroupManager : IDisposable
     {
-        public SubGroupManager(ISubGroupService subGroupService)
+        public SubGroupManager(ISubGroupService service)
         {
-            _subGroupService = subGroupService;
+            _subGroupService = service;
         }
 
         public void Dispose()
@@ -19,9 +19,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         private ISubGroupService _subGroupService;
 
-        public SubGroupDTO Create(SubGroupCreateDTO subGroupToCreate)
+        public SubGroupDTO Create(SubGroupCreateDTO createModel)
         {
-            return _subGroupService.Create(subGroupToCreate);
+            return _subGroupService.Create(createModel);
         }
         public SubGroupDTO GetyByID(int id)
         {
@@ -41,9 +41,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
             return _subGroupService.Update(newModel);
         }
 
-        public bool Delete(int subGroupID)
+        public bool Delete(int id)
         {
-            return _subGroupService.Delete(subGroupID);
+            return _subGroupService.Delete(id);
         }
     }
 }

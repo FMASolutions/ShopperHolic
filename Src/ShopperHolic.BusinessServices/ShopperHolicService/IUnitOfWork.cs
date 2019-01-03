@@ -8,6 +8,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         ISecurityRepo SecurityRepo {get;}
         IProductGroupRepo ProductGroupRepo {get;}
         ISubGroupRepo SubGroupRepo {get;}
+        IItemRepo ItemRepo {get;}
         void SaveChanges();
         void RollbackChanges(bool createFollowUpTransaction = true);
     }

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
-    public interface IProductGroupRepo
+    public interface IItemRepo
     {
-        int Create(ProductGroup entityToCreate);
-        ProductGroupDTO GetByID(int id);
-        IEnumerable<ProductGroupPreviewDTO> GetAllPreview();       
-        ProductGroupDTO Update(ProductGroupDTO updatedRecord);
+        int Create(Item entityToCreate);
+        ItemDTO GetByID(int id);
+        IEnumerable<ItemPreviewDTO> GetAllPreview();       
+        ItemDTO Update(ItemDTO updatedRecord);
         bool Delete(int id);
     }
 }

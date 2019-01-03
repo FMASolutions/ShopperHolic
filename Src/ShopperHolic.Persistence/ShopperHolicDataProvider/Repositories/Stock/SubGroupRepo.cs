@@ -11,9 +11,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
     //TODO ADD WITH(NOLOCK) TO ALL READS!!!!!!
     public class SubGroupRepo : BaseRepo, ISubGroupRepo
     {
-        //TODO Evaluate if I shoudl even have entites since im using DTO's????????
         public SubGroupRepo(IDbTransaction transaction) : base(transaction) { }
-        public int CreateSubGroup(SubGroup entityToCreate)
+        public int Create(SubGroup entityToCreate)
         {
             try
             {
@@ -33,15 +32,12 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
         }
 
-        public SubGroupDTO GetSubGroupByID(int subGroupID)
+        public SubGroupDTO GetByID(int id)
         {
             try
             {
@@ -52,7 +48,10 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 INNER JOIN ProductGroups p ON s.ProductGroupID = p.ProductGroupID
                 WHERE SubGroupID = @SubGroupID";
 
-                return Connection.QueryFirst<SubGroupDTO>(query, new { SubGroupID = subGroupID }, transaction: Transaction);
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@SubGroupID", id);
+
+                return Connection.QueryFirst<SubGroupDTO>(query,queryParameters, transaction: Transaction);
             }
             catch (Exception ex)
             {
@@ -75,15 +74,12 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
         }
 
-        public SubGroupDTO Update(SubGroupDTO updatedSub)
+        public SubGroupDTO Update(SubGroupDTO updatedRecord)
         {
             try
             {
@@ -96,26 +92,22 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 WHERE SubGroupID = @SubGroupID
                 ";
                 var queryParams = new DynamicParameters();
-                queryParams.Add("@SubGroupID", updatedSub.SubGroupID);
-                queryParams.Add("@ProductGroupID", updatedSub.ProductGroupID);
-                queryParams.Add("@SubGroupCode", updatedSub.SubGroupCode);
-                queryParams.Add("@SubGroupName", updatedSub.SubGroupName);
-                queryParams.Add("@SubGroupDescription", updatedSub.SubGroupDescription);
-                //TODO Change Execute to ASYNC
+                queryParams.Add("@SubGroupID", updatedRecord.SubGroupID);
+                queryParams.Add("@ProductGroupID", updatedRecord.ProductGroupID);
+                queryParams.Add("@SubGroupCode", updatedRecord.SubGroupCode);
+                queryParams.Add("@SubGroupName", updatedRecord.SubGroupName);
+                queryParams.Add("@SubGroupDescription", updatedRecord.SubGroupDescription);
                 int rowsEffected = Connection.Execute(query, queryParams, this.Transaction);
                 if (rowsEffected > 0)
-                    return updatedSub;
+                    return updatedRecord;
                 else
                     throw new System.InvalidOperationException("Sequence contains no elements");
                 
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
         }
 
@@ -127,7 +119,12 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 DELETE FROM SubGroups
                 WHERE SubGroupID = @SubGroupID
                 ";
-                int rowsEffected = Connection.Execute(query, new { SubGroupID = id }, Transaction);
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@SubGroupID", id);
+
+                int rowsEffected = Connection.Execute(query, queryParameters, Transaction);
+
                 if(rowsEffected >= 1)
                     return true;
                 else
@@ -135,11 +132,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                var newEx = SqlExceptionHandler.HandleSqlException(ex);
-                if (newEx != null)
-                    throw newEx;
-                else
-                    throw ex;
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
             }
         }
     }

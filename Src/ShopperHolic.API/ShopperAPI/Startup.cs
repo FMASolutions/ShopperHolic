@@ -69,6 +69,9 @@ namespace ShopperHolic.API.ShopperAPI
                 config.AddPolicy("UserCanCreateSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanCreateSubGroup", "true"));
                 config.AddPolicy("UserCanEditSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanEditSubGroup", "true"));
                 config.AddPolicy("UserCanDeleteSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteSubGroup", "true"));
+                config.AddPolicy("UserCanCreateItem", policyBuilder => policyBuilder.RequireClaim("UserCanCreateItem", "true"));
+                config.AddPolicy("UserCanEditItem", policyBuilder => policyBuilder.RequireClaim("UserCanEditItem", "true"));
+                config.AddPolicy("UserCanDeleteItem", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteItem", "true"));
             });
 
             //Compatibility and Cors
@@ -80,6 +83,7 @@ namespace ShopperHolic.API.ShopperAPI
             services.AddTransient<ISecurityService>(s => new SecurityService(connectionString));
             services.AddTransient<IProductGroupService>(s => new ProductGroupService(connectionString));
             services.AddTransient<ISubGroupService>(s => new SubGroupService(connectionString));
+            services.AddTransient<IItemService>(s => new ItemService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

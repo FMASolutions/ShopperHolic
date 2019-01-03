@@ -15,8 +15,8 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
             try
             {
                 SubGroup entityToCreate = new SubGroup(modelToCreate.SubGroupCode, modelToCreate.SubGroupName, modelToCreate.SubGroupDescription, modelToCreate.ProductGroupID);
-                int newID = UOW.SubGroupRepo.CreateSubGroup(entityToCreate);
-                var createResult = UOW.SubGroupRepo.GetSubGroupByID(newID);
+                int newID = UOW.SubGroupRepo.Create(entityToCreate);
+                var createResult = UOW.SubGroupRepo.GetByID(newID);
                 UOW.SaveChanges();
                 return createResult;
             }
@@ -26,9 +26,9 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 throw ex;
             }
         }
-        public SubGroupDTO GetByID(int subGroupID)
+        public SubGroupDTO GetByID(int id)
         {
-            return UOW.SubGroupRepo.GetSubGroupByID(subGroupID);
+            return UOW.SubGroupRepo.GetByID(id);
         }
         public IEnumerable<SubGroupPreviewDTO> GetAllPreview()
         {
@@ -48,11 +48,11 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 throw ex;
             }
         }
-        public bool Delete(int subGroupID)
+        public bool Delete(int id)
         {
             try
             {
-                bool success = UOW.SubGroupRepo.Delete(subGroupID);
+                bool success = UOW.SubGroupRepo.Delete(id);
                 UOW.SaveChanges();
                 return success;
             }
