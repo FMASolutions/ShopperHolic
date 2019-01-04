@@ -7,5 +7,4 @@ export class CreateItem {
      itemUnitPriceWithMaxDiscount: number = 0.00
      itemAvailableQty: number = 0
      itemReorderQtyReminder: number = 0
-     itemImageFilename: string = ""
 }

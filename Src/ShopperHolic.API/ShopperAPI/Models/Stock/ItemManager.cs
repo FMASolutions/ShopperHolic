@@ -51,7 +51,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         public bool UploadFileAndItem(IFormFile file, int id, IHostingEnvironment env)
         {
-            var upload = Path.Combine(env.ContentRootPath, "uploads");
+            var upload = Path.Combine(env.ContentRootPath + "\\wwwroot\\", "uploads");
             if (file.Length > 0)
             {
                 if (!Directory.Exists(upload))
@@ -60,7 +60,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
                 }
                 var extension = Path.GetExtension(file.FileName);
                 var currentPath = Path.Combine(upload, id + extension);
-                using (var filestream = new FileStream(currentPath, FileMode.Create))
+                using (var filestream = new FileStream(currentPath, FileMode.OpenOrCreate))
                 {
                     file.CopyTo(filestream);
                     _itemService.UpdateImage(id,Path.GetFileName(currentPath));

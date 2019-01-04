@@ -43,11 +43,7 @@
 
             <input type="file" #fileSelector style="display: none" (change)="fileSelected($event)" />
             <button mat-raised-button color="primary" class="maxWidth" (click)="uploadClicked()">Select File</button>
-            <mat-form-field class="maxWidth">
-                <mat-label>Select File Using Button</mat-label>
-                <input matInput formControlName="itemImageFilename" type="text" readonly>
-                <img #currentImage [src]="imgSrc || '' || 'http://placehold.it/160'" alt="itemImage" style="max-width: 100%;">
-            </mat-form-field>
+            <img #currentImage [src]="itemService.imgSrc || 'http://placehold.it/160'" alt="itemImage" style="max-width: 100%;">
 
 
             <mat-form-field class="maxWidth" appearance="outline">
@@ -66,7 +62,7 @@
             <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
                 <div fxFlex="50">
 
-                    <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openProdSelectDialog()">
+                    <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openSubSelect()">
                         Sub Group Selector
                     </button>
                 </div>

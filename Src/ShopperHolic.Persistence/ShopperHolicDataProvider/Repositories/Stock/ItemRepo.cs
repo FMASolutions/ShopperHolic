@@ -32,7 +32,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemUnitPriceWithMaxDiscount", entityToCreate.ItemUnitPriceWithMaxDiscount);
                 queryParameters.Add("@ItemAvailableQty", entityToCreate.ItemAvailableQty);
                 queryParameters.Add("@ItemReorderQtyReminder", entityToCreate.ItemReorderQtyReminder);
-                queryParameters.Add("@ItemImageFilename", entityToCreate.ItemImageFilename);
+                queryParameters.Add("@ItemImageFilename", ""); //Set Image to empty as this is available through the image update function.
 
                 return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
             }
@@ -94,7 +94,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ,ItemUnitPriceWithMaxDiscount = @ItemUnitPriceWithMaxDiscount
                 ,ItemAvailableQty = @ItemAvailableQty
                 ,ItemReorderQtyReminder = ItemReorderQtyReminder
-                ,ItemImageFilename = ItemImageFilename
                 WHERE ItemID = @ItemID
                 ";
 
@@ -107,7 +106,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemUnitPriceWithMaxDiscount", updatedRecord.ItemUnitPriceWithMaxDiscount);
                 queryParameters.Add("@ItemAvailableQty", updatedRecord.ItemAvailableQty);
                 queryParameters.Add("@ItemReorderQtyReminder", updatedRecord.ItemReorderQtyReminder);
-                queryParameters.Add("@ItemImageFilename", updatedRecord.ItemImageFilename);
                 queryParameters.Add("@ItemID", updatedRecord.ItemID);
 
                 if (Connection.Execute(query, queryParameters, this.Transaction) > 0)

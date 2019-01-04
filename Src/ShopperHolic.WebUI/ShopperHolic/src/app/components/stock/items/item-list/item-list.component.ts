@@ -92,7 +92,6 @@ export class ItemListComponent implements OnInit {
     let obs = this.itemService.getAll().subscribe(itemResp => {
       this.setupTableDataSource(itemResp);
       obs.unsubscribe();
-      console.log(itemResp);
     })
   }
 

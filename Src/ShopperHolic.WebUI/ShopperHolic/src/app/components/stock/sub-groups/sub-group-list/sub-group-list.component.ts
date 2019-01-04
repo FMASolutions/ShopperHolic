@@ -91,7 +91,6 @@ export class SubGroupListComponent implements OnInit {
   private refreshDatasource() {
     let obs = this.subGroupService.getAll().subscribe(subGroupResp => {
       this.setupTableDataSource(subGroupResp);
-      console.log(subGroupResp);
       obs.unsubscribe();
     })
   }

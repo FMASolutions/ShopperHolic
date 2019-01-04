@@ -17,6 +17,8 @@ import { SubGroup } from 'src/app/models/stock/subGroups/subGroup';
 export class ItemService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Item/';
+  imageLocationPrefix: string = "http://localhost:5000/uploads/";
+  imageSrc: string = "";
   
   constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: ItemValidator,) { }
 
@@ -78,14 +80,13 @@ export class ItemService {
     formData.append("id", id.toString());
     return this.http.post<string>(this.baseURL + 'UploadImage', formData).pipe(tap(() =>{
       this.userNotificationService.informUserComplete("Upload Complete");
-      console.log("resp in service =: ");
     }))
   }
 
   /*--------------------- --- Item Popup Helper --- ----------------------*/
   public itemForm: FormGroup;
 
-  public InitializeForm(id?: any) : string{
+  public InitializeForm(currentImageElement: any, id?: any) : string{
     this.itemForm = this.fb.group({
       id: [0, []],
       code: [null, [this.validator.validateCodeForCreate]],
@@ -97,7 +98,6 @@ export class ItemService {
       unitPriceAD: [null, [this.validator.basicValidation]],
       availableQty: [null, [this.validator.basicValidation]],
       reorderQty: [null, [this.validator.basicValidation]],
-      itemImageFilename: [null, [this.validator.basicValidation]]
     });
 
     let currentMode = this.determinMode(id);
@@ -106,12 +106,25 @@ export class ItemService {
       let obs = this.getByID(id).subscribe(respData => {
         obs.unsubscribe();
         this.populateFormFromModel(respData);
+        let r = Math.random().toString(36).substring(7); //Use random characters for query string so the browser can't cache the image
+        this.imageSrc = this.imageLocationPrefix + respData.itemImageFilename + "?" + r;
+        currentImageElement.nativeElement.src = this.imageSrc;
       })
     }
 
     //TODO LOAD IMAGE FILE
 
     return currentMode;
+  }
+
+  public newFileSelected(newFile: File, currentImageElement: any){
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageSrc = reader.result.toString();
+      currentImageElement.nativeElement.src = this.imageSrc;
+    }
+    reader.readAsDataURL(newFile);
   }
 
   public getUpdateModelFromForm(): Item {
@@ -126,18 +139,15 @@ export class ItemService {
       itemUnitPriceWithMaxDiscount: this.itemForm.value["unitPriceAD"],
       itemReorderQtyReminder: this.itemForm.value["reorderQty"],
       itemAvailableQty: this.itemForm.value["availableQty"],
-      itemImageFilename: this.itemForm.value["itemImageFilename"]
+      itemImageFilename: "N/A" //This value isn't used when Updating a record, updates to the image are done trhough the api image upload.
     } 
     
     return newModel;
   }
+
   public updateSelectedSubGroup(selectedGroup: SubGroup){
     this.itemForm.controls["subID"].setValue(selectedGroup.subGroupID);
     this.itemForm.controls["subText"].setValue(selectedGroup.subGroupID + " - " + selectedGroup.subGroupCode + " - " + selectedGroup.subGroupName);
-  }
-
-  public updateSelectedFile(imageFile: File){
-    this.itemForm.controls[""]
   }
 
   public getCreateModelFromForm(): CreateItem{
@@ -150,7 +160,6 @@ export class ItemService {
       itemUnitPriceWithMaxDiscount: this.itemForm.value["unitPriceAD"],
       itemReorderQtyReminder: this.itemForm.value["reorderQty"],
       itemAvailableQty: this.itemForm.value["availableQty"],
-      itemImageFilename: "" //not 100% what to do here?????
     };
     return newModel;
   }
@@ -173,8 +182,7 @@ export class ItemService {
       unitPrice: model.itemUnitPrice,
       unitPriceAD: model.itemUnitPriceWithMaxDiscount,
       availableQty: model.itemAvailableQty,
-      reorderQty: model.itemReorderQtyReminder,
-      itemImageFilename: model.itemImageFilename
+      reorderQty: model.itemReorderQtyReminder
     });
   }
 }
