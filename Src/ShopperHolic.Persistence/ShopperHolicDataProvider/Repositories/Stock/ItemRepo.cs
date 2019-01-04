@@ -162,5 +162,54 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 throw exToThrow;
             }
         }
+
+        public IEnumerable<ItemDetailedDTO> GetItemsInSubGroup(int subGroupID){
+            try
+            {
+                string query = @"
+                SELECT ItemID,ItemCode,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,
+                    ItemReorderQtyReminder,ItemImageFilename,S.SubGroupID,SubGroupCode,SubGroupName,SubGroupDescription,
+                    P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription
+                FROM Items I
+                INNER JOIN SubGroups S on S.SubGroupID = I.SubGroupID
+                INNER JOIN ProductGroups P on P.ProductGroupID = S.ProductGroupID
+                WHERE S.SubGroupID = @SubGroupID
+                ";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@SubGroupID", subGroupID);
+
+                return Connection.Query<ItemDetailedDTO>(query, queryParameters, transaction: Transaction);
+            }
+            catch(Exception ex)
+            {
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
+            }
+        }
+        public IEnumerable<ItemDetailedDTO> GetItemsInProductGroup(int productGroupID){
+            try
+            {
+                string query = @"
+                SELECT ItemID,ItemCode,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,
+                    ItemReorderQtyReminder,ItemImageFilename,S.SubGroupID,SubGroupCode,SubGroupName,SubGroupDescription,
+                    P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription
+                FROM Items I
+                INNER JOIN SubGroups S on S.SubGroupID = I.SubGroupID
+                INNER JOIN ProductGroups P on P.ProductGroupID = S.ProductGroupID
+                WHERE P.ProductGroupID = @ProductGroupID
+                ";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@ProductGroupID", productGroupID);
+
+                return Connection.Query<ItemDetailedDTO>(query, queryParameters, transaction: Transaction);
+            }
+            catch(Exception ex)
+            {
+                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+                throw exToThrow;
+            }
+        }
     }
 }

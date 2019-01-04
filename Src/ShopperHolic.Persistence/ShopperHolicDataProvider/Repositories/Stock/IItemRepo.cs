@@ -12,6 +12,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         ItemDTO Update(ItemDTO updatedRecord);
         bool Delete(int id);
         bool UpdateImageNane(int id, string image);
-        
+        IEnumerable<ItemDetailedDTO> GetItemsInSubGroup(int subGroupID);
+        IEnumerable<ItemDetailedDTO> GetItemsInProductGroup(int productGroupID);
     }
 }
