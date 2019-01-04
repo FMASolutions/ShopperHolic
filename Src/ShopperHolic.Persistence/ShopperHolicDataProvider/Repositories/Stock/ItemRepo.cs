@@ -48,8 +48,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 string query = @"
                 SELECT  ItemID ,ItemCode ,s.SubGroupID ,CONVERT(VARCHAR(10),s.SubGroupID) + ' - ' + s.SubGroupCode + ' - ' + s.SubGroupName AS [SubGroupText],
                     ItemName ,ItemDescription ,ItemUnitPrice ,ItemUnitPriceWithMaxDiscount ,ItemAvailableQty ,ItemReorderQtyReminder ,ItemImageFilename
-                FROM Items I
-                INNER JOIN SubGroups S ON I.SubGroupID = S.SubGroupID
+                FROM Items I WITH(NOLOCK)
+                INNER JOIN SubGroups S WITH(NOLOCK) ON I.SubGroupID = S.SubGroupID
                 WHERE ItemID = @ItemID";
 
                 var queryParameters = new DynamicParameters();
@@ -69,7 +69,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT  ItemID ,ItemCode, ItemName, ItemImageFilename, SubGroupID, ItemUnitPrice
-                FROM Items I";
+                FROM Items I WITH(NOLOCK)";
 
                 return Connection.Query<ItemPreviewDTO>(query, transaction: Transaction);
             }
@@ -169,9 +169,9 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SELECT ItemID,ItemCode,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,
                     ItemReorderQtyReminder,ItemImageFilename,S.SubGroupID,SubGroupCode,SubGroupName,SubGroupDescription,
                     P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription
-                FROM Items I
-                INNER JOIN SubGroups S on S.SubGroupID = I.SubGroupID
-                INNER JOIN ProductGroups P on P.ProductGroupID = S.ProductGroupID
+                FROM Items I WITH(NOLOCK)
+                INNER JOIN SubGroups S WITH(NOLOCK) on S.SubGroupID = I.SubGroupID
+                INNER JOIN ProductGroups P WITH(NOLOCK) on P.ProductGroupID = S.ProductGroupID
                 WHERE S.SubGroupID = @SubGroupID
                 ";
 
@@ -193,9 +193,9 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SELECT ItemID,ItemCode,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,
                     ItemReorderQtyReminder,ItemImageFilename,S.SubGroupID,SubGroupCode,SubGroupName,SubGroupDescription,
                     P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription
-                FROM Items I
-                INNER JOIN SubGroups S on S.SubGroupID = I.SubGroupID
-                INNER JOIN ProductGroups P on P.ProductGroupID = S.ProductGroupID
+                FROM Items I WITH(NOLOCK)
+                INNER JOIN SubGroups S WITH(NOLOCK) on S.SubGroupID = I.SubGroupID
+                INNER JOIN ProductGroups P WITH(NOLOCK) on P.ProductGroupID = S.ProductGroupID
                 WHERE P.ProductGroupID = @ProductGroupID
                 ";
 

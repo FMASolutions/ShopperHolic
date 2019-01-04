@@ -43,8 +43,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 string query = @"
                 SELECT s.[SubGroupID], s.[SubGroupCode], s.[SubGroupName],s.[SubGroupDescription],s.[ProductGroupID]
                     ,CONVERT(VARCHAR(12),p.ProductGroupID) + ' - ' + p.ProductGroupCode + ' - ' + p.ProductGroupName AS [ProductGroupText]
-                FROM SubGroups s
-                INNER JOIN ProductGroups p ON s.ProductGroupID = p.ProductGroupID
+                FROM SubGroups s WITH(NOLOCK)
+                INNER JOIN ProductGroups p WITH(NOLOCK) ON s.ProductGroupID = p.ProductGroupID
                 WHERE SubGroupID = @SubGroupID";
 
                 var queryParameters = new DynamicParameters();
@@ -66,7 +66,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                     SELECT SubGroupID, SubGroupName, SubGroupCode, ProductGroupID
-                    FROM SubGroups
+                    FROM SubGroups WITH(NOLOCK)
                 ";
 
                 return Connection.Query<SubGroupPreviewDTO>(query, transaction: Transaction);

@@ -41,7 +41,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT [ProductGroupID], [ProductGroupCode],[ProductGroupName],[ProductGroupDescription] 
-                FROM ProductGroups 
+                FROM ProductGroups WITH(NOLOCK)
                 WHERE ProductGroupID = @ProductGroupID";
 
                 var queryParameters = new DynamicParameters();
@@ -63,7 +63,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                     SELECT ProductGroupID, ProductGroupName, ProductGroupCode
-                    FROM ProductGroups
+                    FROM ProductGroups WITH(NOLOCK)
                 ";
 
                 return Connection.Query<ProductGroupPreviewDTO>(query, transaction: Transaction);

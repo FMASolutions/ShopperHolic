@@ -19,7 +19,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT UserID, Username, EmailAddress, EncryptedPassword
-                FROM Users
+                FROM Users WITH(NOLOCK)
                 WHERE Username = @Username
                 ";
                 return Connection.QueryFirst<UserProfileDTO>(query, new { Username = username }, transaction: Transaction);
@@ -33,7 +33,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         {
             try
             {
-                
                 var spParameters = new DynamicParameters();
                 spParameters.Add("@UsernameInput", userInput.Username);
                 spParameters.Add("@EncryptedPasswordInput", encryptedPassword);
@@ -63,9 +62,9 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT ct.UserClaimTypeName AS [ClaimType], uclaims.ClaimValue
-                FROM Users usr
-                INNER JOIN UserClaims uclaims on usr.UserID = uclaims.UserID
-                INNER JOIN UserClaimTypes ct on ct.UserClaimTypeID = uclaims.UserClaimTypeID
+                FROM Users usr WITH(NOLOCK)
+                INNER JOIN UserClaims uclaims WITH(NOLOCK) on usr.UserID = uclaims.UserID
+                INNER JOIN UserClaimTypes ct WITH(NOLOCK) on ct.UserClaimTypeID = uclaims.UserClaimTypeID
                 WHERE usr.Username = @Username
                 ";
                 return Connection.Query<UserClaimDTO>(query, new { Username = username} ,transaction: Transaction);
@@ -82,8 +81,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT TOP 1 t.Token
-                FROM Users u
-                INNER JOIN Tokens t ON u.UserID = t.UserID
+                FROM Users u WITH(NOLOCK)
+                INNER JOIN Tokens t WITH(NOLOCK) ON u.UserID = t.UserID
                 WHERE u.Username = @Username
                 AND t.TokenExpiryDate > GetDate()
                 ORDER BY t.TokenExpiryDate DESC
