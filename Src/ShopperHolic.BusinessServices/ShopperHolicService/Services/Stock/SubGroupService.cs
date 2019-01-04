@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
 
 namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
@@ -14,8 +13,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         {
             try
             {
-                SubGroup entityToCreate = new SubGroup(modelToCreate.SubGroupCode, modelToCreate.SubGroupName, modelToCreate.SubGroupDescription, modelToCreate.ProductGroupID);
-                int newID = UOW.SubGroupRepo.Create(entityToCreate);
+                int newID = UOW.SubGroupRepo.Create(modelToCreate);
                 var createResult = UOW.SubGroupRepo.GetByID(newID);
                 UOW.SaveChanges();
                 return createResult;

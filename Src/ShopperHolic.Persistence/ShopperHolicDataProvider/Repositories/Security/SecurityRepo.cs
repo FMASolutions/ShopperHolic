@@ -2,7 +2,6 @@ using Dapper;
 using System;
 using System.Data;
 using System.Collections.Generic;
-using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
 
 

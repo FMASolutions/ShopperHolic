@@ -3,7 +3,6 @@ using Dapper;
 using System.Data;
 using System.Collections.Generic;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
-using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
 using ShopperHolic.Infrastructure.ShopperExceptions;
 
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
@@ -11,7 +10,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
     public class ProductGroupRepo : BaseRepo, IProductGroupRepo
     {
         public ProductGroupRepo(IDbTransaction transaction) : base(transaction) { }
-        public int Create(ProductGroup entityToCreate)
+        public int Create(ProductGroupCreateDTO entityToCreate)
         {
             try
             {

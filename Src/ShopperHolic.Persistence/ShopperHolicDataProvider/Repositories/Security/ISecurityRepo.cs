@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
 
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
