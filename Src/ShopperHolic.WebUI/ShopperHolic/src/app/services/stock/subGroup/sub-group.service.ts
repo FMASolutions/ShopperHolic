@@ -32,9 +32,9 @@ export class SubGroupService {
   }
 
   public getByID(id: number): Observable<SubGroup> {
-    this.userNotificationService.informUserStart(Globals.SUB_GROUP_READ_ATTEMPT_MSG + id, Globals.SPINNER_GET_MESSAGE);
+    this.userNotificationService.informUserStart("", Globals.SPINNER_GET_MESSAGE);
     return this.http.get<SubGroup>(this.baseURL + 'GetByID/?id=' + id.toString()).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.SUB_GROUP_READ_SUCCESS_MSG + id);
+      this.userNotificationService.informUserComplete("");
     }, err => {
       this.userNotificationService.informUserError(Globals.SUB_GROUP_READ_FAILED_MSG + id);
       this.userNotificationService.informUserError(err.error);

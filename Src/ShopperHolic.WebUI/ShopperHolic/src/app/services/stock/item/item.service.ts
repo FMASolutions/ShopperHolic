@@ -34,11 +34,11 @@ export class ItemService {
   }
 
   public getByID(id: number): Observable<Item> {
-    this.userNotificationService.informUserStart(Globals.ITEM_READ_ATTEMPT_MSG + id, Globals.SPINNER_GET_MESSAGE);
+    this.userNotificationService.informUserStart("", Globals.SPINNER_GET_MESSAGE);
     return this.http.get<Item>(this.baseURL + 'GetByID/?id=' + id.toString()).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.ITEM_READ_SUCCESS_MSG + id);
+      this.userNotificationService.informUserComplete("");
     }, err => {
-      this.userNotificationService.informUserError(Globals.ITEM_READ_FAILED_MSG + id);
+      this.userNotificationService.informUserError(Globals.ITEM_READ_FAILED_MSG + id);  
       this.userNotificationService.informUserError(err.error);
     }));;
   }

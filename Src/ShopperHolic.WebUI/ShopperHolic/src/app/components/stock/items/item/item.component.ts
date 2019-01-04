@@ -65,6 +65,7 @@ export class ItemComponent implements OnInit {
               this.ownDialog.close({ userSubmitted: true });
             });
           }
+          else { this.ownDialog.close({ userSubmitted: true });} 
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
