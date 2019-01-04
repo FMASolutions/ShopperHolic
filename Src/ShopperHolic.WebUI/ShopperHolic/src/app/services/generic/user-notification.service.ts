@@ -23,4 +23,12 @@ export class UserNotificationService {
     this.sms.setSuccessMessage(userMessage);
     this.spinner.closeAllSpinners();
   }
+
+  public informUserStartSpinnerOnly(spinnerMessage: string){
+    this.spinner.openNewSpinner(spinnerMessage);
+  }
+
+  public closeSpinners(){
+    this.spinner.closeAllSpinners();
+  }
 }

@@ -34,9 +34,9 @@ export class ItemService {
   }
 
   public getByID(id: number): Observable<Item> {
-    this.userNotificationService.informUserStart("", Globals.SPINNER_GET_MESSAGE);
+    this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_GET_MESSAGE);
     return this.http.get<Item>(this.baseURL + 'GetByID/?id=' + id.toString()).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete("");
+      this.userNotificationService.closeSpinners();
     }, err => {
       this.userNotificationService.informUserError(Globals.ITEM_READ_FAILED_MSG + id);  
       this.userNotificationService.informUserError(err.error);
@@ -44,9 +44,9 @@ export class ItemService {
   }
 
   public getAll(): Observable<ItemPreview[]> {
-    this.userNotificationService.informUserStart(Globals.ITEM_READ_ATTEMPT_MSG,Globals.SPINNER_GET_MESSAGE);
+    this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_GET_MESSAGE);
     return this.http.get<ItemPreview[]>(this.baseURL + 'GetAll').pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.ITEM_READ_SUCCESS_MSG);
+      this.userNotificationService.closeSpinners();
     }, err => {
       this.userNotificationService.informUserError(Globals.ITEM_READ_FAILED_MSG);
       this.userNotificationService.informUserError(err.error);
@@ -74,12 +74,14 @@ export class ItemService {
   }
 
   public imageUpload(uploadFile: File, id: number): Observable<string>{
-    this.userNotificationService.informUserStart("Performing image upload", Globals.SPINNER_CREATE_MESSAGE);
+    this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_UPLOAD_MESSAGE);
     const formData = new FormData();
     formData.append(uploadFile.name, uploadFile);
     formData.append("id", id.toString());
     return this.http.post<string>(this.baseURL + 'UploadImage', formData).pipe(tap(() =>{
-      this.userNotificationService.informUserComplete("Upload Complete");
+      this.userNotificationService.closeSpinners();
+    },(error) =>{
+      this.userNotificationService.informUserError(error.error);
     }))
   }
 

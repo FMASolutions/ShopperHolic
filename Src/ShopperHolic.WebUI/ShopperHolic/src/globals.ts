@@ -34,11 +34,13 @@ export class Globals {
     public static get SPINNER_SORT_MESSAGE(): string { return "Sorting Data.." }
     public static get SPINNER_FILTER_MESSAGE(): string { return "Applying Filter.." }
     public static get SPINNER_GET_MESSAGE(): string { return "Fetching Data.." }
+    public static get SPINNER_UPLOAD_MESSAGE(): string {return "Performing image upload"}
     public static get LOGIN_FAILED_MSG(): string { return "Login failed for user: "; }
     public static get LOGIN_SUCCESS_MSG(): string { return "Login success for user: "; }
     public static get LOGIN_ATTEMPT_MSG(): string { return "Attempting login for user: "; }
     public static get MODE_UPDATE(): string { return "Update"; }
     public static get MODE_CREATE(): string { return "Create"; }
+    
 
     //Product Group Specific Text
     public static get PROD_GROUP_UPDATE_TITLE(): string { return "Product Group Update"; }
@@ -46,8 +48,6 @@ export class Globals {
     public static get PROD_GROUP_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new product group: "; }
     public static get PROD_GROUP_CREATE_SUCCESS_MSG(): string { return "Successfully created product group: "; }
     public static get PROD_GROUP_CREATE_FAILED_MSG(): string { return "Failed to create product group: "; }
-    public static get PROD_GROUP_READ_ATTEMPT_MSG(): string { return "Fetching product group data: "; }
-    public static get PROD_GROUP_READ_SUCCESS_MSG(): string { return "Product Group data recived: "; }
     public static get PROD_GROUP_READ_FAILED_MSG(): string { return "Failed to retrieve product group data: "; }
     public static get PROD_GROUP_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update product group: "; }
     public static get PROD_GROUP_UPDATE_SUCCESS_MSG(): string { return "Successfully updated product group: "; }
@@ -65,8 +65,6 @@ export class Globals {
     public static get SUB_GROUP_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new sub group: "; }
     public static get SUB_GROUP_CREATE_SUCCESS_MSG(): string { return "Successfully created sub group: "; }
     public static get SUB_GROUP_CREATE_FAILED_MSG(): string { return "Failed to create sub group: "; }
-    public static get SUB_GROUP_READ_ATTEMPT_MSG(): string { return "Fetching sub group data: "; }
-    public static get SUB_GROUP_READ_SUCCESS_MSG(): string { return "Sub Group data recived: "; }
     public static get SUB_GROUP_READ_FAILED_MSG(): string { return "Failed to retrieve sub group data: "; }
     public static get SUB_GROUP_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update sub group: "; }
     public static get SUB_GROUP_UPDATE_SUCCESS_MSG(): string { return "Successfully updated sub group: "; }
@@ -84,8 +82,6 @@ export class Globals {
     public static get ITEM_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new item: "; }
     public static get ITEM_CREATE_SUCCESS_MSG(): string { return "Successfully created item: "; }
     public static get ITEM_CREATE_FAILED_MSG(): string { return "Failed to create item: "; }
-    public static get ITEM_READ_ATTEMPT_MSG(): string { return "Fetching item data: "; }
-    public static get ITEM_READ_SUCCESS_MSG(): string { return "Item data recived: "; }
     public static get ITEM_READ_FAILED_MSG(): string { return "Failed to retrieve item data: "; }
     public static get ITEM_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update item: "; }
     public static get ITEM_UPDATE_SUCCESS_MSG(): string { return "Successfully updated item: "; }

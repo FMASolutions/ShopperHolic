@@ -31,9 +31,9 @@ export class ProductGroupService {
   }
 
   public getByID(id: number): Observable<ProductGroup> {
-    this.userNotificationService.informUserStart("", Globals.SPINNER_GET_MESSAGE);
+    this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_GET_MESSAGE);
     return this.http.get<ProductGroup>(this.baseURL + 'GetByID/?id=' + id.toString()).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete("");
+      this.userNotificationService.closeSpinners();
     }, err => {
       this.userNotificationService.informUserError(Globals.PROD_GROUP_READ_FAILED_MSG + id);
       this.userNotificationService.informUserError(err.error);
@@ -41,9 +41,9 @@ export class ProductGroupService {
   }
 
   public getAll(): Observable<ProductGroupPreview[]> {
-    this.userNotificationService.informUserStart(Globals.PROD_GROUP_READ_ATTEMPT_MSG,Globals.SPINNER_GET_MESSAGE);
+    this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_GET_MESSAGE);
     return this.http.get<ProductGroupPreview[]>(this.baseURL + 'GetAll').pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.PROD_GROUP_READ_SUCCESS_MSG);
+      this.userNotificationService.closeSpinners();
     }, err => {
       this.userNotificationService.informUserError(Globals.PROD_GROUP_READ_FAILED_MSG);
       this.userNotificationService.informUserError(err.error);
