@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, Sort } from '@angular/material';
 import { ItemPreview } from 'src/app/models/stock/items/itemPreview';
 import { Globals } from 'src/globals';
-import { ItemService } from 'src/app/services/stock/item/item.service';
+import { ItemService } from 'src/app/services/stock/item.service';
 import { ItemComponent } from '../item/item.component';
 
 @Component({

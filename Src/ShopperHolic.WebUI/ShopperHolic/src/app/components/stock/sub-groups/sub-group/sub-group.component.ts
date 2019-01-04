@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { SubGroupService } from 'src/app/services/stock/subGroup/sub-group.service';
+import { SubGroupService } from 'src/app/services/stock/sub-group.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { Globals } from 'src/globals';
 import { ProductGroupSelectorComponent } from '../../product-groups/product-group-selector/product-group-selector.component';

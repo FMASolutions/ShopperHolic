@@ -23,10 +23,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ";
                 return Connection.QueryFirst<UserProfileDTO>(query, new { Username = username }, transaction: Transaction);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO: LOG ERROR
-                System.Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -36,13 +34,11 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 var spParameters = new DynamicParameters();
                 spParameters.Add("@UsernameInput", userInput.Username);
-                //TODO Encrypt Password before sending to Stored Proc
                 spParameters.Add("@EncryptedPasswordInput", userInput.UserInputPasswordPlainText);
                 return Connection.QueryFirst<string>("AuthenticateUserAndGetExchangeKey", spParameters, Transaction, commandType: CommandType.StoredProcedure);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                System.Console.WriteLine(ex.Message);
                 return string.Empty;
             }
         }
@@ -54,9 +50,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 spParameters.Add("@AccessKeyInput", accessKey);
                 return Connection.QueryFirst<bool>("VerifyAccessKey", spParameters, Transaction, commandType: CommandType.StoredProcedure);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                System.Console.WriteLine(ex.Message);
                 return false;
             }
         }
@@ -73,10 +68,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ";
                 return Connection.Query<UserClaimDTO>(query, new { Username = username} ,transaction: Transaction);
             }
-            catch( Exception ex)
+            catch( Exception)
             {
-                //TODO: LOG ERROR
-                System.Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -95,10 +88,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ";
                 return Connection.QueryFirst<string>(query, new { Username = username }, transaction: Transaction);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO: LOG ERROR
-                System.Console.WriteLine(ex.Message);
                 return null;
             }
         }

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { ProductGroupService } from 'src/app/services/stock/productGroup/product-group.service';
+import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Globals } from 'src/globals';
 

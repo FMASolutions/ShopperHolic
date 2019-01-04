@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild, OnInit } from '@angular/core';
-import { ItemService } from 'src/app/services/stock/item/item.service';
+import { ItemService } from 'src/app/services/stock/item.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { Globals } from 'src/globals';
 import { SubGroupSelectorComponent } from '../../sub-groups/sub-group-selector/sub-group-selector.component';
@@ -69,7 +69,7 @@ export class ItemComponent implements OnInit {
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
-        if(this.currentSelectedFile) { //Only create file if we have selected a file to upload.... TODO Update this part so we can't submit form without selecting a image.
+        if(this.currentSelectedFile) { //Only create file if we have selected a file to upload....
           let obs = this.itemService.createNew(this.itemService.getCreateModelFromForm()).subscribe((createResp) => {
             obs.unsubscribe();
             let obsUpload = this.itemService.imageUpload(this.currentSelectedFile, createResp.itemID).subscribe(resp => {

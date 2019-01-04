@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, Sort, MatDialogRef } from '@angular/material';
 import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
 import { Globals } from 'src/globals';
-import { ProductGroupService } from 'src/app/services/stock/productGroup/product-group.service';
+import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 import { ProductGroupComponent } from '../product-group/product-group.component';
 
 @Component({

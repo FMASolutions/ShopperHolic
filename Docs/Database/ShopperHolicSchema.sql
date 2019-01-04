@@ -412,7 +412,6 @@ AS
 	)
 	BEGIN
 		SET @Success = 1
-        --TODO TAKE THIS DELETE LOGIC OUT AND PUT IT INTO THE AUTH SERVICE
         DELETE FROM AccessKeys 
         WHERE AccessKey = @AccessKeyInput
 	END

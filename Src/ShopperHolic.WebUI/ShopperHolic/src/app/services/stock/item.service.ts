@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Globals } from 'src/globals';
 import { HttpClient } from '@angular/common/http';
-import { UserNotificationService } from '../../generic/user-notification.service';
+import { UserNotificationService } from '../generic/user-notification.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ItemValidator } from './item-validator';
 import { CreateItem } from 'src/app/models/stock/items/createItem';
 import { Observable } from 'rxjs';
 import { Item } from 'src/app/models/stock/items/item';
 import { tap } from 'rxjs/operators';
 import { ItemPreview } from 'src/app/models/stock/items/itemPreview';
 import { SubGroup } from 'src/app/models/stock/subGroups/subGroup';
+import { GenericValidator } from '../generic/generic-validator';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class ItemService {
   imageLocationPrefix: string = "http://localhost:5000/uploads/";
   imageSrc: string = "";
   
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: ItemValidator,) { }
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: GenericValidator,) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNew(newModel: CreateItem): Observable<Item> {
@@ -92,7 +92,7 @@ export class ItemService {
       code: [null, [this.validator.validateCodeForCreate]],
       name: [null, [this.validator.basicValidation]],
       desc: [null, [this.validator.basicValidation]],
-      subID: [null, [this.validator.validateSubGroupID]],
+      subID: [null, [this.validator.basicValidation]],
       subText: [null, [this.validator.basicValidation]],
       unitPrice: [null, [this.validator.basicValidation]],
       unitPriceAD: [null, [this.validator.basicValidation]],
@@ -111,8 +111,6 @@ export class ItemService {
         currentImageElement.nativeElement.src = this.imageSrc;
       })
     }
-
-    //TODO LOAD IMAGE FILE
 
     return currentMode;
   }

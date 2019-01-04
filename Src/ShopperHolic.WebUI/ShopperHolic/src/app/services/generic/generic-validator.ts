@@ -4,8 +4,7 @@ import { AbstractControl } from '@angular/forms';
 @Injectable({
     providedIn: 'root'
 })
-//TODO CONSIDER IF THIS CLASS CAN BE AMALGAMATED INTO A GENERIC VALIDATOR CLASS AND HAVE ONLY SUB GROUP SPECIFIC LOGIC HERE......
-export class ItemValidator {
+export class GenericValidator {
     //Return null if validation successful.
     //Return an object with property isError : true
     public validateCodeForCreate(control: AbstractControl) {
@@ -31,9 +30,5 @@ export class ItemValidator {
             }
         }
         return null;
-    }
-
-    public validateSubGroupID(control: AbstractControl){
-        //TODO IMPLEMENT SubGroupID VALIDATION FOR SUB GROUP
     }
 }

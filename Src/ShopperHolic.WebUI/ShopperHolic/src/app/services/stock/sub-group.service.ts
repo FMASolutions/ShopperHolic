@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Globals } from 'src/globals';
 import { HttpClient } from '@angular/common/http';
-import { UserNotificationService } from '../../generic/user-notification.service';
+import { UserNotificationService } from '../generic/user-notification.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SubGroupValidator } from './sub-group-validator';
 import { CreateSubGroup } from 'src/app/models/stock/subGroups/createSubGroup';
 import { SubGroup } from 'src/app/models/stock/subGroups/subGroup';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SubGroupPreview } from 'src/app/models/stock/subGroups/subGroupPreview';
 import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
+import { GenericValidator } from '../generic/generic-validator';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class SubGroupService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/SubGroup/';
   
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: SubGroupValidator,) { }
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: GenericValidator,) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNew(newModel: CreateSubGroup): Observable<SubGroup> {
@@ -80,7 +80,7 @@ export class SubGroupService {
       code: [null, [this.validator.validateCodeForCreate]],
       name: [null, [this.validator.basicValidation]],
       desc: [null, [this.validator.basicValidation]],
-      prodID: [null, [this.validator.validateProdID]],
+      prodID: [null, [this.validator.basicValidation]],
       prodText: [null, [this.validator.basicValidation]]
     });
 

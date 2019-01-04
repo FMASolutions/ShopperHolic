@@ -8,10 +8,8 @@ using ShopperHolic.Infrastructure.ShopperExceptions;
 
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
-    //TODO ADD WITH(NOLOCK) TO ALL READS!!!!!!
     public class ProductGroupRepo : BaseRepo, IProductGroupRepo
     {
-        //TODO Evaluate if I shoudl even have entites since im using DTO's????????
         public ProductGroupRepo(IDbTransaction transaction) : base(transaction) { }
         public int Create(ProductGroup entityToCreate)
         {
@@ -93,7 +91,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParams.Add("@ProductGroupCode", updatedRecord.ProductGroupCode);
                 queryParams.Add("@ProductGroupName", updatedRecord.ProductGroupName);
                 queryParams.Add("@ProductGroupDescription", updatedRecord.ProductGroupDescription);
-                //TODO Change Execute to ASYNC
                 if (Connection.Execute(query, queryParams, this.Transaction) > 0)
                     return updatedRecord;
                 else

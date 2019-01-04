@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
-import { ProductGroupService } from 'src/app/services/stock/productGroup/product-group.service';
+import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 import { MatPaginator, MatSort, MatTableDataSource, Sort, MatDialog } from '@angular/material';
 import { ProductGroupComponent } from '../product-group/product-group.component';
 import { Globals } from 'src/globals';

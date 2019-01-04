@@ -24,11 +24,11 @@ import { ContactComponent } from './components/generic/contact/contact.component
 import { ProductGroupsComponent } from './components/stock/product-groups/product-groups.component';
 import { ProductGroupComponent } from './components/stock/product-groups/product-group/product-group.component';
 import { ProductGroupListComponent } from './components/stock/product-groups/product-group-list/product-group-list.component';
-import { ProductGroupService } from './services/stock/productGroup/product-group.service';
+import { ProductGroupService } from './services/stock/product-group.service';
 import { SubGroupsComponent } from './components/stock/sub-groups/sub-groups.component';
 import { SubGroupComponent } from './components/stock/sub-groups/sub-group/sub-group.component';
 import { SubGroupListComponent } from './components/stock/sub-groups/sub-group-list/sub-group-list.component';
-import { SubGroupService} from './services/stock/subGroup/sub-group.service';
+import { SubGroupService} from './services/stock/sub-group.service';
 import { LoadingSpinnerComponent } from './components/generic/loading-spinner/loading-spinner.component';
 import { LoadingSpinnerService} from './services/generic/loading-spinner.service';
 import { ProductGroupSelectorComponent } from './components/stock/product-groups/product-group-selector/product-group-selector.component';
@@ -37,7 +37,7 @@ import { ItemComponent } from './components/stock/items/item/item.component';
 import { ItemListComponent } from './components/stock/items/item-list/item-list.component';
 import { ItemSelectorComponent } from './components/stock/items/item-selector/item-selector.component';
 import { SubGroupSelectorComponent } from './components/stock/sub-groups/sub-group-selector/sub-group-selector.component';
-import { ItemService } from './services/stock/item/item.service';
+import { ItemService } from './services/stock/item.service';
 
 @NgModule({
   declarations: [

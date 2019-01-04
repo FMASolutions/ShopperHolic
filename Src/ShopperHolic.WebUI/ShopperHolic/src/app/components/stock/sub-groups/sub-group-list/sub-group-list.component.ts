@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog, Sort } from '@angular/material';
 import { SubGroupPreview } from 'src/app/models/stock/subGroups/subGroupPreview';
 import { Globals } from 'src/globals';
-import { SubGroupService } from 'src/app/services/stock/subGroup/sub-group.service';
+import { SubGroupService } from 'src/app/services/stock/sub-group.service';
 import { SubGroupComponent } from '../sub-group/sub-group.component';
 
 @Component({

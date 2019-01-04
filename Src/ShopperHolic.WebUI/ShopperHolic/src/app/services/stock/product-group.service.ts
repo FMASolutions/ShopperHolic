@@ -6,9 +6,9 @@ import { ProductGroup } from 'src/app/models/stock/productGroups/productGroup';
 import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
 import { Globals } from 'src/globals';
 import { tap } from 'rxjs/operators';
-import { UserNotificationService } from '../../generic/user-notification.service';
+import { UserNotificationService } from '../generic/user-notification.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ProductGroupValidator } from './product-group-validator';
+import { GenericValidator } from '../generic/generic-validator';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class ProductGroupService {
   
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/ProductGroup/';
   
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: ProductGroupValidator,) { }
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: GenericValidator,) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNew(newModel: CreateProductGroup): Observable<ProductGroup> {

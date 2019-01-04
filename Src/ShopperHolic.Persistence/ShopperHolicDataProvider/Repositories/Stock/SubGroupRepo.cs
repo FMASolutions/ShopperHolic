@@ -8,7 +8,6 @@ using ShopperHolic.Infrastructure.ShopperExceptions;
 
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
-    //TODO ADD WITH(NOLOCK) TO ALL READS!!!!!!
     public class SubGroupRepo : BaseRepo, ISubGroupRepo
     {
         public SubGroupRepo(IDbTransaction transaction) : base(transaction) { }
