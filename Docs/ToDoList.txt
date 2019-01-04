@@ -1,9 +1,4 @@
-Take Access Key Delete logic out of SQL and put it into the auth service
-Complete Password encryption
+Allow user registration as a basic user.
 Add WithNolock to all reads
 Change to Async db  and api calls
-Create javascript generic validator for basic validaton
-Impl
-
-
 Improve image creation by only submitting form if a image has been selcted for upload.

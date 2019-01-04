@@ -36,6 +36,7 @@ namespace ShopperHolic.API.ShopperAPI
             //Add JWTSettings into the service collection for dependency injection.
             JWTSettings jwtSettings = GetJWTSettings();
             services.AddSingleton<JWTSettings>(jwtSettings);
+            services.AddSingleton<EncSettings>(GetEncSettings());
             
             //Configure Authentication to use JwtBearer and set the Allowed parameters.
             services.AddAuthentication(options =>
@@ -125,5 +126,14 @@ namespace ShopperHolic.API.ShopperAPI
             settings.MinutesToExpiration = Convert.ToInt32(Configuration["JWTSettings:minutesToExpiration"]);
             return settings;
         }
+
+        private EncSettings GetEncSettings()
+        {
+            var settings = new EncSettings();
+            settings.IV = Configuration["EncSettings:IV"];
+            settings.Key = Configuration["EncSettings:Key"];
+            return settings;
+        }
+
     }
 }

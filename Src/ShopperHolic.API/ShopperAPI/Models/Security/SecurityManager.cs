@@ -24,9 +24,9 @@ namespace ShopperHolic.API.ShopperAPI.Models.Security
         private JWTSettings _jwtSettings = null;
         private ISecurityService _securityService = null;
 
-        public string AuthUserAndGetExchangeKey(AttemptLoginDTO userInputDTO)
+        public string AuthUserAndGetExchangeKey(AttemptLoginDTO userInputDTO, EncSettings settings)
         {
-            return _securityService.AttemptUserAuthenticationAndGetAccessKey(userInputDTO);
+            return _securityService.AttemptUserAuthenticationAndGetAccessKey(userInputDTO,settings.Key,settings.IV);
         }
         public AuthenticatedUserDTO ExchangeKeyForToken(string exchangeKey, string username)
         {

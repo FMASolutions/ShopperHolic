@@ -11,21 +11,23 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public AuthController(JWTSettings settings, ISecurityService securityService)
+        public AuthController(JWTSettings settings, EncSettings encSettings, ISecurityService securityService)
         {
             _jwtSettings = settings;
+            _encSettings = encSettings;
             _securityService = securityService;
             _securityManager = new SecurityManager(_jwtSettings, _securityService);
         }
 
         private JWTSettings _jwtSettings = null;
+        private EncSettings _encSettings = null;
         private ISecurityService _securityService = null;
         private SecurityManager _securityManager = null;
 
         [HttpPost]
         public ActionResult<string> AttemptAuthentication([FromBody] AttemptLoginDTO inputModel)
         {
-            var result = _securityManager.AuthUserAndGetExchangeKey(inputModel);
+            var result = _securityManager.AuthUserAndGetExchangeKey(inputModel, _encSettings);
             if (string.IsNullOrEmpty(result)) { return BadRequest(); }
             else { return JsonConvert.SerializeObject(result); }
         }

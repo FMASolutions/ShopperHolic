@@ -241,10 +241,10 @@ PRINT 'Insert Users'
 INSERT INTO Users
     (Username, EncryptedPassword, KnownAs, EmailAddress)
 VALUES
-    ('Faisal', 'NflJAmYGz63nnWNVD07Qu9S5azN3zhq02A8xkqQOsCo=', 'chinkey', 'faisal@ahmedmail.info'),
-    ('Zulkar','NflJAmYGz63nnWNVD07Qu9S5azN3zhq02A8xkqQOsCo=','zal','zal@hotmail.com'),
-    ('TestCustomer','NflJAmYGz63nnWNVD07Qu9S5azN3zhq02A8xkqQOsCo=','tester1','tester1@ahmedmail.info'),
-    ('Minaccess','NflJAmYGz63nnWNVD07Qu9S5azN3zhq02A8xkqQOsCo=','tester2','tester2@ahmedmail.info')
+    ('Faisal', 'ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=', 'chinkey', 'faisal@ahmedmail.info'),
+    ('Zulkar','ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=','zal','zal@hotmail.com'),
+    ('TestCustomer','ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=','tester1','tester1@ahmedmail.info'),
+    ('Minaccess','ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=','tester2','tester2@ahmedmail.info')
 GO
 
 PRINT 'Insert UserClaims'

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
+using FMASolutionsCore.DataServices.CryptoHelper;
 
 namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
@@ -12,9 +13,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         {
             return UOW.SecurityRepo.GetUserProfileDTO(username);
         }
-        public string AttemptUserAuthenticationAndGetAccessKey(AttemptLoginDTO inputDTO)
+        public string AttemptUserAuthenticationAndGetAccessKey(AttemptLoginDTO inputDTO, string key, string IV)
         {
-            string returnAccessKey = UOW.SecurityRepo.AuthenticateUserAndGetExchangeKey(inputDTO);
+            string encryptedPassword = CryptoService.Encrypt(inputDTO.UserInputPasswordPlainText, key, IV);
+            string returnAccessKey = UOW.SecurityRepo.AuthenticateUserAndGetExchangeKey(inputDTO, encryptedPassword);
             if (!string.IsNullOrEmpty(returnAccessKey)) { UOW.SaveChanges(); }
 
             return returnAccessKey;

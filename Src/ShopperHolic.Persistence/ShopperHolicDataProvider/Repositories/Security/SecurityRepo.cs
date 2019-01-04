@@ -4,7 +4,7 @@ using System.Data;
 using System.Collections.Generic;
 using ShopperHolic.Persistence.ShopperHolicDataProvider.Entities;
 using ShopperHolic.Infrastructure.ShopperHolicDTO;
-using FMASolutionsCore.DataServices.CryptoHelper;
+
 
 namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
@@ -29,13 +29,11 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 return null;
             }
         }
-        public string AuthenticateUserAndGetExchangeKey(AttemptLoginDTO userInput)
+        public string AuthenticateUserAndGetExchangeKey(AttemptLoginDTO userInput, string encryptedPassword)
         {
             try
-            {                  
-                string key = "A VERY LONG SENTENCE IS REQUIRED HERE TO BE ABLE TO FOR THE PRIVATE KEY GENERATION IF NOT A CERTAIN SIZE THEN AN ERROR WILL OCCURE.";
-                string IV = "126BA3CAF5E84362960167027C9733FB";
-                var encryptedPassword = CryptoService.Encrypt(userInput.UserInputPasswordPlainText, key, IV);
+            {
+                
                 var spParameters = new DynamicParameters();
                 spParameters.Add("@UsernameInput", userInput.Username);
                 spParameters.Add("@EncryptedPasswordInput", encryptedPassword);
