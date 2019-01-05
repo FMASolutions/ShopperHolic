@@ -1,3 +1,4 @@
-1) Allow user registration as a basic user.
-2) Change to Async db  and api calls
-3) Improve image creation by only submitting form if a image has been selcted for upload.
+1) Add Item Selector in UI
+2) Allow user registration as a basic user.
+3) Change to Async db  and api calls
+4) Improve image creation by only submitting form if a image has been selcted for upload.
