@@ -13,23 +13,103 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 
         public int Create(CityCreateDTO entityToCreate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"
+                INSERT INTO Cities(CityCode, CityName, CountryID)
+                VALUES (@CityCode, @CityName, @CountryID)
+                
+                SELECT SCOPE_IDENTITY()";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@CityCode", entityToCreate.CityCode);
+                queryParameters.Add("@CityName", entityToCreate.CityName);
+                queryParameters.Add("@CountryID", entityToCreate.CountryID);
+
+                return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
         }
         public CityDTO GetByID(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"
+                SELECT CityID,CityCode,CityName,ci.CountryID,
+                    CONVERT(VARCHAR(10),co.CountryID) + ' - ' + co.CountryCode + ' - ' + co.CountryName AS [CountryText]
+                FROM Cities ci WITH(NOLOCK)
+                INNER JOIN Countries co WITH(NOLOCK) ON ci.CountryID= co.CountryID
+                WHERE CityID = @CityID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@CityID", id);
+
+                return Connection.QueryFirst<CityDTO>(query, queryParameters, transaction: Transaction);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
         }
         public IEnumerable<CityPreviewDTO> GetAllPreview()
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"
+                SELECT CityID,CityCode,CityName,ci.CountryID
+                FROM Cities ci WITH(NOLOCK)
+                INNER JOIN Countries co WITH(NOLOCK) ON ci.CountryID= co.CountryID";
+
+                return Connection.Query<CityPreviewDTO>(query, transaction: Transaction);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
         }
         public CityDTO Update(CityDTO updatedRecord)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"
+                UPDATE Cities
+                SET CityCode = @CityCode,
+                CityName = @CityName,
+                CountryID = @CountryID
+                WHERE CityID = @CityID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@CityCode", updatedRecord.CityCode);
+                queryParameters.Add("@CityName", updatedRecord.CityName);
+                queryParameters.Add("@CountryID", updatedRecord.CountryID);
+
+                return (Connection.Execute(query, queryParameters, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;                
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
         }
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"
+                DELETE FROM Cities
+                WHERE CityID = @CityID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@CityID", id);
+
+                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
         }
     }
 }
