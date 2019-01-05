@@ -89,8 +89,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ,ItemUnitPriceWithMaxDiscount = @ItemUnitPriceWithMaxDiscount
                 ,ItemAvailableQty = @ItemAvailableQty
                 ,ItemReorderQtyReminder = ItemReorderQtyReminder
-                WHERE ItemID = @ItemID
-                ";
+                WHERE ItemID = @ItemID";
 
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ItemCode", updatedRecord.ItemCode);
@@ -141,8 +140,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 string query = @"
                 UPDATE Items
                 SET ItemImageFilename = @ItemImageFilename
-                WHERE ItemID = @ItemID
-                ";
+                WHERE ItemID = @ItemID";
+
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ItemID", id);
                 queryParameters.Add("@ItemImagefilename", image);
@@ -165,8 +164,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 FROM Items I WITH(NOLOCK)
                 INNER JOIN SubGroups S WITH(NOLOCK) on S.SubGroupID = I.SubGroupID
                 INNER JOIN ProductGroups P WITH(NOLOCK) on P.ProductGroupID = S.ProductGroupID
-                WHERE S.SubGroupID = @SubGroupID
-                ";
+                WHERE S.SubGroupID = @SubGroupID";
 
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@SubGroupID", subGroupID);
@@ -188,8 +186,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 FROM Items I WITH(NOLOCK)
                 INNER JOIN SubGroups S WITH(NOLOCK) on S.SubGroupID = I.SubGroupID
                 INNER JOIN ProductGroups P WITH(NOLOCK) on P.ProductGroupID = S.ProductGroupID
-                WHERE P.ProductGroupID = @ProductGroupID
-                ";
+                WHERE P.ProductGroupID = @ProductGroupID";
 
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ProductGroupID", productGroupID);

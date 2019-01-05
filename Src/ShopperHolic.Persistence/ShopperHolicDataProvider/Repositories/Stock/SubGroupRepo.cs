@@ -18,8 +18,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 INSERT INTO SubGroups(SubGroupCode, SubGroupName, SubGroupDescription, ProductGroupID)
                 VALUES (@SubGroupCode, @SubGroupName, @SubGroupDescription, @ProductGroupID)
                 
-                SELECT SCOPE_IDENTITY()
-                ";
+                SELECT SCOPE_IDENTITY()";
+
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@SubGroupCode", entityToCreate.SubGroupCode);
                 queryParameters.Add("@SubGroupName", entityToCreate.SubGroupName);
@@ -63,8 +63,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                     SELECT SubGroupID, SubGroupName, SubGroupCode, ProductGroupID
-                    FROM SubGroups WITH(NOLOCK)
-                ";
+                    FROM SubGroups WITH(NOLOCK)";
 
                 return Connection.Query<SubGroupPreviewDTO>(query, transaction: Transaction);
             }
@@ -85,8 +84,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ,SubGroupName = @SubGroupName
                 ,SubGroupDescription = @SubGroupDescription
                 ,ProductGroupID = @ProductGroupID
-                WHERE SubGroupID = @SubGroupID
-                ";
+                WHERE SubGroupID = @SubGroupID";
+
                 var queryParams = new DynamicParameters();
                 queryParams.Add("@SubGroupID", updatedRecord.SubGroupID);
                 queryParams.Add("@ProductGroupID", updatedRecord.ProductGroupID);
@@ -112,8 +111,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 DELETE FROM SubGroups
-                WHERE SubGroupID = @SubGroupID
-                ";
+                WHERE SubGroupID = @SubGroupID";
 
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@SubGroupID", id);

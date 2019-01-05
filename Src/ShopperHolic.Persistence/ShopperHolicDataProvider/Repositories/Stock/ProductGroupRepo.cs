@@ -18,8 +18,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 INSERT INTO ProductGroups(ProductGroupCode, ProductGroupName, ProductGroupDescription)
                 VALUES (@ProdGroupCode, @ProdGroupName, @ProdGroupDescription)
                 
-                SELECT SCOPE_IDENTITY()
-                ";
+                SELECT SCOPE_IDENTITY()";
+
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ProdGroupCode", entityToCreate.ProductGroupCode);
                 queryParameters.Add("@ProdGroupName", entityToCreate.ProductGroupName);
@@ -59,9 +59,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                    SELECT ProductGroupID, ProductGroupName, ProductGroupCode
-                    FROM ProductGroups WITH(NOLOCK)
-                ";
+                SELECT ProductGroupID, ProductGroupName, ProductGroupCode
+                FROM ProductGroups WITH(NOLOCK)";
 
                 return Connection.Query<ProductGroupPreviewDTO>(query, transaction: Transaction);
             }
@@ -80,8 +79,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SET ProductGroupCode = @ProductGroupCode
                 ,ProductGroupName = @ProductGroupName
                 ,ProductGroupDescription = @ProductGroupDescription
-                WHERE ProductGroupID = @ProductGroupID
-                ";
+                WHERE ProductGroupID = @ProductGroupID";
+
                 var queryParams = new DynamicParameters();
                 queryParams.Add("@ProductGroupID", updatedRecord.ProductGroupID);
                 queryParams.Add("@ProductGroupCode", updatedRecord.ProductGroupCode);
@@ -104,8 +103,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 DELETE FROM ProductGroups
-                WHERE ProductGroupID = @ProductGroupID
-                ";
+                WHERE ProductGroupID = @ProductGroupID";
 
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ProductGroupID", id);
