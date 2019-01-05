@@ -31,4 +31,9 @@ export class GenericValidator {
         }
         return null;
     }
+
+    public postCodeValidator(control: AbstractControl){
+        //TODO CREATE POSTCODE VALIDATION
+        return null;
+    }
 }

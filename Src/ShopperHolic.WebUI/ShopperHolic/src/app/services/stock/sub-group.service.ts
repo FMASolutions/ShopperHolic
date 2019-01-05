@@ -97,7 +97,7 @@ export class SubGroupService {
   }
 
   public getUpdateModelFromForm(): SubGroup {
-    let newSubGroup: SubGroup = {
+    let newModel: SubGroup = {
       subGroupID: this.subForm.value["id"],
       subGroupCode: this.subForm.value["code"],
       subGroupName: this.subForm.value["name"],
@@ -105,22 +105,22 @@ export class SubGroupService {
       productGroupID: this.subForm.value["prodID"],
       productGroupText: this.subForm.value["prodText"]
     } 
-    return newSubGroup;
+    return newModel;
   }
-  public updateSelectedProductGroup(selectedProd: ProductGroup){
-    this.subForm.controls["prodID"].setValue(selectedProd.productGroupID);
-    this.subForm.controls["prodText"].setValue(selectedProd.productGroupID + " - " + selectedProd.productGroupCode + " - " + selectedProd.productGroupName);
+  public updateSelectedProductGroup(newChildModel: ProductGroup){
+    this.subForm.controls["prodID"].setValue(newChildModel.productGroupID);
+    this.subForm.controls["prodText"].setValue(newChildModel.productGroupID + " - " + newChildModel.productGroupCode + " - " + newChildModel.productGroupName);
 
   }
 
   public getCreateModelFromForm(): CreateSubGroup{
-    let newSubGroup: CreateSubGroup = {
+    let newModel: CreateSubGroup = {
       subGroupCode: this.subForm.value["code"],
       subGroupName: this.subForm.value["name"],
       subGroupDescription: this.subForm.value["desc"],
       productGroupID: this.subForm.value["prodID"]
     };
-    return newSubGroup;
+    return newModel;
   }
 
   private determinMode(id?: any) : string {
@@ -140,5 +140,4 @@ export class SubGroupService {
       prodText: model.productGroupText
     });
   }
-  
 }

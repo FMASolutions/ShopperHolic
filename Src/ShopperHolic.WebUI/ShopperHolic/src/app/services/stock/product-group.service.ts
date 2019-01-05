@@ -94,22 +94,22 @@ export class ProductGroupService {
   }
 
   public getUpdateModelFromForm(): ProductGroup {
-    let newProdGroup: ProductGroup = {
+    let newModel: ProductGroup = {
       productGroupID: this.prodForm.value["id"],
       productGroupCode: this.prodForm.value["code"],
       productGroupName: this.prodForm.value["name"],
       productGroupDescription: this.prodForm.value["desc"]
     } 
-    return newProdGroup;
+    return newModel;
   }
 
   public getCreateModelFromForm(): CreateProductGroup{
-    let newProdGroup: CreateProductGroup = {
+    let newModel: CreateProductGroup = {
       productGroupCode: this.prodForm.value["code"],
       productGroupName: this.prodForm.value["name"],
       productGroupDescription: this.prodForm.value["desc"]
     };
-    return newProdGroup;
+    return newModel;
   }
 
   private determinMode(id?: any) : string {

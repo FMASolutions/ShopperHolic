@@ -128,7 +128,7 @@ export class ItemService {
   }
 
   public getUpdateModelFromForm(): Item {
-        let newModel: Item = {
+      let newModel: Item = {
       itemID: this.itemForm.value["id"],
       subGroupID: this.itemForm.value["subID"],
       itemCode: this.itemForm.value["code"],
@@ -145,9 +145,9 @@ export class ItemService {
     return newModel;
   }
 
-  public updateSelectedSubGroup(selectedGroup: SubGroup){
-    this.itemForm.controls["subID"].setValue(selectedGroup.subGroupID);
-    this.itemForm.controls["subText"].setValue(selectedGroup.subGroupID + " - " + selectedGroup.subGroupCode + " - " + selectedGroup.subGroupName);
+  public updateSelectedSubGroup(newChildModel: SubGroup){
+    this.itemForm.controls["subID"].setValue(newChildModel.subGroupID);
+    this.itemForm.controls["subText"].setValue(newChildModel.subGroupID + " - " + newChildModel.subGroupCode + " - " + newChildModel.subGroupName);
   }
 
   public getCreateModelFromForm(): CreateItem{
