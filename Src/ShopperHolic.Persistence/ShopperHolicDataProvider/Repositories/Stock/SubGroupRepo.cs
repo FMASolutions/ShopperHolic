@@ -24,9 +24,9 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@SubGroupCode", entityToCreate.SubGroupCode);
                 queryParameters.Add("@SubGroupName", entityToCreate.SubGroupName);
                 queryParameters.Add("@SubGroupDescription", entityToCreate.SubGroupDescription);
-                queryParameters.Add("ProductGroupID", entityToCreate.ProductGroupID);
+                queryParameters.Add("@ProductGroupID", entityToCreate.ProductGroupID);
 
-                return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -48,7 +48,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@SubGroupID", id);
 
-                return Connection.QueryFirst<SubGroupDTO>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<SubGroupDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -62,15 +62,14 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                    SELECT SubGroupID, SubGroupName, SubGroupCode, ProductGroupID
-                    FROM SubGroups WITH(NOLOCK)";
+                SELECT SubGroupID, SubGroupName, SubGroupCode, ProductGroupID
+                FROM SubGroups WITH(NOLOCK)";
 
-                return Connection.Query<SubGroupPreviewDTO>(query, transaction: Transaction);
+                return Connection.Query<SubGroupPreviewDTO>(query, transaction: CurrentTrans);
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
 
@@ -86,14 +85,15 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ,ProductGroupID = @ProductGroupID
                 WHERE SubGroupID = @SubGroupID";
 
-                var queryParams = new DynamicParameters();
-                queryParams.Add("@SubGroupID", updatedRecord.SubGroupID);
-                queryParams.Add("@ProductGroupID", updatedRecord.ProductGroupID);
-                queryParams.Add("@SubGroupCode", updatedRecord.SubGroupCode);
-                queryParams.Add("@SubGroupName", updatedRecord.SubGroupName);
-                queryParams.Add("@SubGroupDescription", updatedRecord.SubGroupDescription);
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@SubGroupID", updatedRecord.SubGroupID);
+                queryParameters.Add("@ProductGroupID", updatedRecord.ProductGroupID);
+                queryParameters.Add("@SubGroupCode", updatedRecord.SubGroupCode);
+                queryParameters.Add("@SubGroupName", updatedRecord.SubGroupName);
+                queryParameters.Add("@SubGroupDescription", updatedRecord.SubGroupDescription);
 
-                return (Connection.Execute(query, queryParams, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;
+                int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsUpdated > 0) ? GetByID(updatedRecord.SubGroupID) : throw noRecordEX;
             }
             catch (Exception ex)
             {
@@ -112,7 +112,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@SubGroupID", id);
 
-                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
+                int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsDeleted > 0) ? true : false;
             }
             catch (Exception ex)
             {

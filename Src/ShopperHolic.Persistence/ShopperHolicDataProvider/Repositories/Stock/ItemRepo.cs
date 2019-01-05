@@ -32,7 +32,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemReorderQtyReminder", entityToCreate.ItemReorderQtyReminder);
                 queryParameters.Add("@ItemImageFilename", ""); //Set Image to empty as this is available through the image update function.
 
-                return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ItemID", id);
 
-                return Connection.QueryFirst<ItemDTO>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<ItemDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SELECT  ItemID ,ItemCode, ItemName, ItemImageFilename, SubGroupID, ItemUnitPrice
                 FROM Items I WITH(NOLOCK)";
 
-                return Connection.Query<ItemPreviewDTO>(query, transaction: Transaction);
+                return Connection.Query<ItemPreviewDTO>(query, transaction: CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -102,7 +102,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemReorderQtyReminder", updatedRecord.ItemReorderQtyReminder);
                 queryParameters.Add("@ItemID", updatedRecord.ItemID);
 
-                return (Connection.Execute(query, queryParameters, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;
+                int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsUpdated > 0) ? GetByID(updatedRecord.ItemID) : throw noRecordEX;
 
             }
             catch (Exception ex)
@@ -122,7 +123,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ItemID", id);
 
-                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
+                int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsDeleted > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -143,7 +145,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemID", id);
                 queryParameters.Add("@ItemImagefilename", image);
 
-                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
+                int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsUpdated > 0) ? true : false;
             }
             catch (Exception ex)
             {
@@ -166,7 +169,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@SubGroupID", subGroupID);
 
-                return Connection.Query<ItemDetailedDTO>(query, queryParameters, transaction: Transaction);
+                return Connection.Query<ItemDetailedDTO>(query, queryParameters, CurrentTrans);
             }
             catch(Exception ex)
             {
@@ -188,7 +191,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ProductGroupID", productGroupID);
 
-                return Connection.Query<ItemDetailedDTO>(query, queryParameters, transaction: Transaction);
+                return Connection.Query<ItemDetailedDTO>(query, queryParameters, CurrentTrans);
             }
             catch(Exception ex)
             {

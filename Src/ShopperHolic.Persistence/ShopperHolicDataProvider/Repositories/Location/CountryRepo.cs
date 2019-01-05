@@ -24,7 +24,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@CountryCode", entityToCreate.CountryCode);
                 queryParameters.Add("@CountryName", entityToCreate.CountryName);
 
-                return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -43,7 +43,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@CountryID", id);
 
-                return Connection.QueryFirst<CountryDTO>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<CountryDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SELECT CountryID, CountryCode, CountryName
                 FROM Countries WITH(NOLOCK)";
 
-                return Connection.Query<CountryDTO>(query, transaction: Transaction);
+                return Connection.Query<CountryDTO>(query, transaction: CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -75,12 +75,13 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ,CountryName = @CountryName
                 WHERE CountryID = @CountryID";
 
-                var queryParams = new DynamicParameters();
-                queryParams.Add("@CountryID", updatedRecord.CountryID);
-                queryParams.Add("@CountryCode", updatedRecord.CountryCode);
-                queryParams.Add("@CountryName", updatedRecord.CountryName);
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@CountryID", updatedRecord.CountryID);
+                queryParameters.Add("@CountryCode", updatedRecord.CountryCode);
+                queryParameters.Add("@CountryName", updatedRecord.CountryName);
 
-                return (Connection.Execute(query, queryParams, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;
+                int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsUpdated > 0) ? GetByID(updatedRecord.CountryID) : throw noRecordEX;
             }
             catch (Exception ex)
             {
@@ -98,7 +99,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@CountryID", id);
 
-                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
+                int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsDeleted > 0) ? true : false;
             }
             catch (Exception ex)
             {

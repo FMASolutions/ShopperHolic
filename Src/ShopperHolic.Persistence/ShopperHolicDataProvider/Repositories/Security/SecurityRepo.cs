@@ -19,9 +19,9 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 string query = @"
                 SELECT UserID, Username, EmailAddress, EncryptedPassword
                 FROM Users WITH(NOLOCK)
-                WHERE Username = @Username
-                ";
-                return Connection.QueryFirst<UserProfileDTO>(query, new { Username = username }, transaction: Transaction);
+                WHERE Username = @Username";
+                
+                return Connection.QueryFirst<UserProfileDTO>(query, new { Username = username }, CurrentTrans);
             }
             catch (Exception)
             {
@@ -35,7 +35,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var spParameters = new DynamicParameters();
                 spParameters.Add("@UsernameInput", userInput.Username);
                 spParameters.Add("@EncryptedPasswordInput", encryptedPassword);
-                return Connection.QueryFirst<string>("AuthenticateUserAndGetExchangeKey", spParameters, Transaction, commandType: CommandType.StoredProcedure);
+                return Connection.QueryFirst<string>("AuthenticateUserAndGetExchangeKey", spParameters, CurrentTrans, commandType: CommandType.StoredProcedure);
             }
             catch (Exception)
             {
@@ -48,7 +48,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 var spParameters = new DynamicParameters();
                 spParameters.Add("@AccessKeyInput", accessKey);
-                return Connection.QueryFirst<bool>("VerifyAccessKey", spParameters, Transaction, commandType: CommandType.StoredProcedure);
+                return Connection.QueryFirst<bool>("VerifyAccessKey", spParameters, CurrentTrans, commandType: CommandType.StoredProcedure);
             }
             catch (Exception)
             {
@@ -64,9 +64,9 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 FROM Users usr WITH(NOLOCK)
                 INNER JOIN UserClaims uclaims WITH(NOLOCK) on usr.UserID = uclaims.UserID
                 INNER JOIN UserClaimTypes ct WITH(NOLOCK) on ct.UserClaimTypeID = uclaims.UserClaimTypeID
-                WHERE usr.Username = @Username
-                ";
-                return Connection.Query<UserClaimDTO>(query, new { Username = username} ,transaction: Transaction);
+                WHERE usr.Username = @Username";
+
+                return Connection.Query<UserClaimDTO>(query, new { Username = username} , CurrentTrans);
             }
             catch( Exception)
             {
@@ -84,9 +84,9 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 INNER JOIN Tokens t WITH(NOLOCK) ON u.UserID = t.UserID
                 WHERE u.Username = @Username
                 AND t.TokenExpiryDate > GetDate()
-                ORDER BY t.TokenExpiryDate DESC
-                ";
-                return Connection.QueryFirst<string>(query, new { Username = username }, transaction: Transaction);
+                ORDER BY t.TokenExpiryDate DESC";
+
+                return Connection.QueryFirst<string>(query, new { Username = username }, CurrentTrans);
             }
             catch (Exception)
             {

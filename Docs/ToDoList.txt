@@ -1,3 +1,3 @@
-Allow user registration as a basic user.
-Change to Async db  and api calls
-Improve image creation by only submitting form if a image has been selcted for upload.
+1) Allow user registration as a basic user.
+2) Change to Async db  and api calls
+3) Improve image creation by only submitting form if a image has been selcted for upload.

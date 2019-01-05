@@ -7,13 +7,13 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         public InvalidOperationException noRecordEX = new InvalidOperationException("Sequence contains no elements");
         public BaseRepo(IDbTransaction transaction)
         {
-            Transaction = transaction;
+            CurrentTrans = transaction;
         }
         public void Dispose()
         {
             Connection.Dispose();
         }
-        protected IDbConnection Connection { get { return Transaction.Connection; } }
-        protected IDbTransaction Transaction { get; private set; }
+        protected IDbConnection Connection { get { return CurrentTrans.Connection; } }
+        protected IDbTransaction CurrentTrans { get; private set; }
     }
 }

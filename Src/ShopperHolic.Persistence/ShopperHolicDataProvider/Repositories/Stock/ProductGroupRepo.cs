@@ -25,7 +25,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ProdGroupName", entityToCreate.ProductGroupName);
                 queryParameters.Add("@ProdGroupDescription", entityToCreate.ProductGroupDescription);
 
-                return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ProductGroupID", id);
 
-                return Connection.QueryFirst<ProductGroupDTO>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<ProductGroupDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -62,7 +62,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SELECT ProductGroupID, ProductGroupName, ProductGroupCode
                 FROM ProductGroups WITH(NOLOCK)";
 
-                return Connection.Query<ProductGroupPreviewDTO>(query, transaction: Transaction);
+                return Connection.Query<ProductGroupPreviewDTO>(query, transaction: CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -81,13 +81,14 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ,ProductGroupDescription = @ProductGroupDescription
                 WHERE ProductGroupID = @ProductGroupID";
 
-                var queryParams = new DynamicParameters();
-                queryParams.Add("@ProductGroupID", updatedRecord.ProductGroupID);
-                queryParams.Add("@ProductGroupCode", updatedRecord.ProductGroupCode);
-                queryParams.Add("@ProductGroupName", updatedRecord.ProductGroupName);
-                queryParams.Add("@ProductGroupDescription", updatedRecord.ProductGroupDescription);
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@ProductGroupID", updatedRecord.ProductGroupID);
+                queryParameters.Add("@ProductGroupCode", updatedRecord.ProductGroupCode);
+                queryParameters.Add("@ProductGroupName", updatedRecord.ProductGroupName);
+                queryParameters.Add("@ProductGroupDescription", updatedRecord.ProductGroupDescription);
 
-                return (Connection.Execute(query, queryParams, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;
+                int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsUpdated > 0) ? GetByID(updatedRecord.ProductGroupID) : throw noRecordEX;
             }
             catch (Exception ex)
             {
@@ -106,7 +107,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@ProductGroupID", id);
 
-                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
+                int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsDeleted > 0) ? true : false;
             }
             catch (Exception ex)
             {

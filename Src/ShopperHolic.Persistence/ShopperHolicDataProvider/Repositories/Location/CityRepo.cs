@@ -26,7 +26,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@CityName", entityToCreate.CityName);
                 queryParameters.Add("@CountryID", entityToCreate.CountryID);
 
-                return Connection.QueryFirst<int>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@CityID", id);
 
-                return Connection.QueryFirst<CityDTO>(query, queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<CityDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 FROM Cities ci WITH(NOLOCK)
                 INNER JOIN Countries co WITH(NOLOCK) ON ci.CountryID= co.CountryID";
 
-                return Connection.Query<CityPreviewDTO>(query, transaction: Transaction);
+                return Connection.Query<CityPreviewDTO>(query, transaction: CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -86,7 +86,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@CityName", updatedRecord.CityName);
                 queryParameters.Add("@CountryID", updatedRecord.CountryID);
 
-                return (Connection.Execute(query, queryParameters, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;                
+                int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsUpdated > 0) ? GetByID(updatedRecord.CityID) : throw noRecordEX;          
             }
             catch (Exception ex)
             {
@@ -104,7 +105,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@CityID", id);
 
-                return (Connection.Execute(query, queryParameters, Transaction) > 0) ? true : false;
+                int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsDeleted > 0) ? true : false;
             }
             catch (Exception ex)
             {
