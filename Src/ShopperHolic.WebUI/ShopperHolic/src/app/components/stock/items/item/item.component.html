@@ -43,7 +43,7 @@
 
             <input type="file" #fileSelector style="display: none" (change)="fileSelected($event)" />
             <button mat-raised-button color="primary" class="maxWidth" (click)="uploadClicked()">Select File</button>
-            <img #currentImage [src]="itemService.imgSrc || 'http://placehold.it/160'" alt="itemImage" style="max-width: 100%;">
+            <img #currentImage [src]="itemService.imageSrc || 'http://placehold.it/160'" alt="itemImage" style="max-width: 100%;">
 
 
             <mat-form-field class="maxWidth" appearance="outline">
