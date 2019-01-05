@@ -114,5 +114,29 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
+
+        public AddressDetailedDTO GetDetailedAddress(int addressID)
+        {
+            try
+            {
+                string query = @"
+                SELECT AddressLocationID AS [AddressID], AddressLine1, AddressLine2
+                    , ca.CityAreaName AS CityArea, c.CityName AS City, PostCode, co.CountryName AS [Country]
+                FROM AddressLocations al WITH(NOLOCK)
+                INNER JOIN CityAreas ca WITH(NOLOCK) ON al.CityAreaID = ca.CityAreaID
+                INNER JOIN Cities c WITH(NOLOCK) ON ca.CityID = c.CityID
+                INNER JOIN Countries co WITH(NOLOCK) ON c.CountryID = co.CountryID
+                WHERE AddressLocationID = @AddressLocationID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@AddressLocationID", addressID);
+
+                return Connection.QueryFirst<AddressDetailedDTO>(query, queryParameters, CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
     }
 }

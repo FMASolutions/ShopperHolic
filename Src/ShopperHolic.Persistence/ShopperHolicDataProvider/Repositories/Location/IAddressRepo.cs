@@ -10,5 +10,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         IEnumerable<AddressPreviewDTO> GetAllPreview();
         AddressDTO Update(AddressDTO updatedRecord);
         bool Delete(int id);
+        AddressDetailedDTO GetDetailedAddress(int addressID);
     }
 }
