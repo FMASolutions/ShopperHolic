@@ -11,51 +11,51 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
     [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class SubGroupController : ControllerBase
+    public class CityAreaController : ControllerBase
     {
-        public SubGroupController(ISubGroupService subGroupService)
+        public CityAreaController(ICityAreaService cityAreaService)
         {
-            _subGroupManager = new SubGroupManager(subGroupService);
+            _cityAreaManager = new CityAreaManager(cityAreaService);
         }
 
-        [Authorize(Policy = "UserCanCreateSubGroup")]
+        private CityAreaManager _cityAreaManager;
+
+        [Authorize(Policy = "UserCanCreateCityArea")]
         [HttpPost]
-        public ActionResult<SubGroupDTO> Create([FromBody] SubGroupCreateDTO userInput)
+        public ActionResult<CityAreaDTO> Create([FromBody] CityAreaCreateDTO userInput)
         {
-            try { return _subGroupManager.Create(userInput); }
+            try { return _cityAreaManager.Create(userInput); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<SubGroupDTO> GetByID([FromQuery] int id)
+        public ActionResult<CityAreaDTO> GetByID([FromQuery] int id)
         {
-            try { return _subGroupManager.GetyByID(id); }
+            try { return  _cityAreaManager.GetyByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<List<SubGroupPreviewDTO>> GetAll()
+        public ActionResult<List<CityAreaPreviewDTO>> GetAll()
         {
-            try { return _subGroupManager.GetAllPreview(); }
+            try { return _cityAreaManager.GetAllPreview(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [Authorize(Policy = "UserCanEditSubGroup")]
+        [Authorize(Policy = "UserCanEditCityArea")]
         [HttpPut]
-        public ActionResult<SubGroupDTO> Update([FromBody] SubGroupDTO newModel)
+        public ActionResult<CityAreaDTO> Update([FromBody] CityAreaDTO newModel)
         {
-            try { return _subGroupManager.Update(newModel); }
+            try { return _cityAreaManager.Update(newModel); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [Authorize(Policy = "UserCanDeleteSubGroup")]
+        [Authorize(Policy = "UserCanDeleteCityArea")]
         [HttpDelete]
         public ActionResult<bool> Delete([FromQuery] int id)
         {
-            try { return _subGroupManager.Delete(id); }
+            try{return _cityAreaManager.Delete(id);}
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
-
-        private SubGroupManager _subGroupManager;
     }
 }

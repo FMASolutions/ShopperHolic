@@ -73,6 +73,18 @@ namespace ShopperHolic.API.ShopperAPI
                 config.AddPolicy("UserCanCreateItem", policyBuilder => policyBuilder.RequireClaim("UserCanCreateItem", "true"));
                 config.AddPolicy("UserCanEditItem", policyBuilder => policyBuilder.RequireClaim("UserCanEditItem", "true"));
                 config.AddPolicy("UserCanDeleteItem", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteItem", "true"));
+                config.AddPolicy("UserCanCreateCountry", policyBuilder => policyBuilder.RequireClaim("UserCanCreateCountry", "true"));
+                config.AddPolicy("UserCanEditCountry", policyBuilder => policyBuilder.RequireClaim("UserCanEditCountry", "true"));
+                config.AddPolicy("UserCanDeleteCountry", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCountry", "true"));
+                config.AddPolicy("UserCanCreateCity", policyBuilder => policyBuilder.RequireClaim("UserCanCreateCity", "true"));
+                config.AddPolicy("UserCanEditCity", policyBuilder => policyBuilder.RequireClaim("UserCanEditCity", "true"));
+                config.AddPolicy("UserCanDeleteCity", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCity", "true"));
+                config.AddPolicy("UserCanCreateCityArea", policyBuilder => policyBuilder.RequireClaim("UserCanCreateCityArea", "true"));
+                config.AddPolicy("UserCanEditCityArea", policyBuilder => policyBuilder.RequireClaim("UserCanEditCityArea", "true"));
+                config.AddPolicy("UserCanDeleteCityArea", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCityArea", "true"));
+                config.AddPolicy("UserCanCreateAddress", policyBuilder => policyBuilder.RequireClaim("UserCanCreateAddress", "true"));
+                config.AddPolicy("UserCanEditIAddress", policyBuilder => policyBuilder.RequireClaim("UserCanEditAddress", "true"));
+                config.AddPolicy("UserCanDeleteAddress", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteAddress", "true"));
             });
 
             //Compatibility and Cors
@@ -85,6 +97,10 @@ namespace ShopperHolic.API.ShopperAPI
             services.AddTransient<IProductGroupService>(s => new ProductGroupService(connectionString));
             services.AddTransient<ISubGroupService>(s => new SubGroupService(connectionString));
             services.AddTransient<IItemService>(s => new ItemService(connectionString));
+            services.AddTransient<ICountryService>(s => new CountryService(connectionString));
+            services.AddTransient<ICityService>(s => new CityService(connectionString));
+            services.AddTransient<ICityAreaService>(s => new CityAreaService(connectionString));
+            services.AddTransient<IAddressService>(s => new AddressService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -22,6 +22,8 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             _environment = env;
         }
 
+        private ItemManager _itemManager;
+
         [Authorize(Policy = "UserCanCreateItem")]
         [HttpPost]
         public ActionResult<ItemDTO> Create([FromBody] ItemCreateDTO userInput)
@@ -77,7 +79,5 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        private ItemManager _itemManager;
     }
 }

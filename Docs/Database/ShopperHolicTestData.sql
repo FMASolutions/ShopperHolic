@@ -225,7 +225,20 @@ VALUES
     ('UserCanDeleteSubGroup'),
     ('UserCanCreateItem'),
     ('UserCanEditItem'),
-    ('UserCanDeleteItem')
+    ('UserCanDeleteItem'),
+
+    ('UserCanCreateCountry'),
+    ('UserCanEditCountry'),
+    ('UserCanDeleteCountry'),
+    ('UserCanCreateCity'),
+    ('UserCanEditCity'),
+    ('UserCanDeleteCity'),
+    ('UserCanCreateCityArea'),
+    ('UserCanEditCityArea'),
+    ('UserCanDeleteCityArea'),
+    ('UserCanCreateAddress'),
+    ('UserCanEditAddress'),
+    ('UserCanDeleteAddress')
 GO
 
 PRINT 'Insert UserRolesTypes'
@@ -241,10 +254,7 @@ PRINT 'Insert Users'
 INSERT INTO Users
     (Username, EncryptedPassword, KnownAs, EmailAddress)
 VALUES
-    ('Faisal', 'ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=', 'chinkey', 'faisal@ahmedmail.info'),
-    ('Zulkar','ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=','zal','zal@hotmail.com'),
-    ('TestCustomer','ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=','tester1','tester1@ahmedmail.info'),
-    ('Minaccess','ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=','tester2','tester2@ahmedmail.info')
+    ('Faisal', 'ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=', 'chinkey', 'faisal@ahmedmail.info')
 GO
 
 PRINT 'Insert UserClaims'
@@ -261,36 +271,18 @@ VALUES
     (8,1,'true'), -- UserCanCreateItem / Faisal
     (9,1,'true'), -- UserCanEditItem / Faisal
     (10,1,'true'), -- USerCanDeleteItem / Faisal
-    (1,2,'true'), -- IsAdminUser / Zulkar 
-    (2,2,'true'), -- UserCanCreateProductGroup / Zulkar
-    (3,2,'true'), -- UserCanEditProductGroup / Zulkar
-    (4,2,'true'), -- UserCanDeleteProductGroup / Zulkar
-    (5,2,'true'), -- UserCanCreateSubGroup / Zulkar
-    (6,2,'true'), -- UserCanEditSubGroup / Zulkar
-    (7,2,'true'), -- UserCanDeleteSubGroup / Zulkar
-    (8,2,'true'), -- UserCanCreateItem / Zulkar
-    (9,2,'true'), -- UserCanEditItem / Zulkar
-    (10,2,'true'), -- USerCanDeleteItem / Zulkar
-    (1,3,'false'), -- IsAdminUser / TestCustomer 
-    (2,3,'false'), -- UserCanCreateProductGroup / TestCustomer
-    (3,3,'false'), -- UserCanEditProductGroup / TestCustomer
-    (4,3,'false'), -- UserCanDeleteProductGroup / TestCustomer
-    (5,3,'false'), -- UserCanCreateSubGroup / TestCustomer
-    (6,3,'false'), -- UserCanEditSubGroup / TestCustomer
-    (7,3,'false'), -- UserCanDeleteSubGroup / TestCustomer
-    (8,3,'false'), -- UserCanCreateItem / TestCustomer
-    (9,3,'false'), -- UserCanEditItem / TestCustomer
-    (10,3,'false'), -- USerCanDeleteItem / TestCustomer
-    (1,4,'false'), -- IsAdminUser / Minaccess 
-    (2,4,'false'), -- UserCanCreateProductGroup / Minaccess
-    (3,4,'false'), -- UserCanEditProductGroup / Minaccess
-    (4,4,'false'), -- UserCanDeleteProductGroup / Minaccess
-    (5,4,'false'), -- UserCanCreateSubGroup / Minaccess
-    (6,4,'false'), -- UserCanEditSubGroup / Minaccess
-    (7,4,'false'), -- UserCanDeleteSubGroup / Minaccess
-    (8,4,'false'), -- UserCanCreateItem / Zulkar
-    (9,4,'false'), -- UserCanEditItem / Zulkar
-    (10,4,'false') -- USerCanDeleteItem / Zulkar
+    (11,1,'true'), -- UserCanCreateCountry / Faisal
+    (12,1,'true'), -- UserCanEditCountry / Faisal
+    (13,1,'true'), -- UserCanDeleteCountry / Faisal
+    (14,1,'true'), -- UserCanCreateCity / Faisal
+    (15,1,'true'), -- UserCanEditCity / Faisal
+    (16,1,'true'), -- UserCanDeleteCity / Faisal
+    (17,1,'true'), -- UserCanCreateCityArea / Faisal
+    (18,1,'true'), -- UserCanEditCityArea / Faisal
+    (19,1,'true'), -- UserCanDeleteCityArea / Faisal
+    (20,1,'true'), -- UserCanCreateAddress / Faisal
+    (21,1,'true'), -- UserCanEditAddress / Faisal
+    (22,1,'true') -- UserCanDeleteAddress / Faisal
 GO
 
 PRINT 'Insert UserRoles'

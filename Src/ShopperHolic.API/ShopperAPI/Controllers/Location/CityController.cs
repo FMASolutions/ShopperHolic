@@ -11,51 +11,51 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
     [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductGroupController : ControllerBase
+    public class CityController : ControllerBase
     {
-        public ProductGroupController(IProductGroupService prodGroupService)
+        public CityController(ICityService cityService)
         {
-            _prodGroupManager = new ProductGroupManager(prodGroupService);
+            _cityManager = new CityManager(cityService);
         }
 
-        [Authorize(Policy = "UserCanCreateProductGroup")]
+        private CityManager _cityManager;
+
+        [Authorize(Policy = "UserCanCreateCity")]
         [HttpPost]
-        public ActionResult<ProductGroupDTO> Create([FromBody] ProductGroupCreateDTO userInput)
+        public ActionResult<CityDTO> Create([FromBody] CityCreateDTO userInput)
         {
-            try { return _prodGroupManager.Create(userInput); }
+            try { return _cityManager.Create(userInput); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<ProductGroupDTO> GetByID([FromQuery] int id)
+        public ActionResult<CityDTO> GetByID([FromQuery] int id)
         {
-            try { return  _prodGroupManager.GetyByID(id); }
+            try { return  _cityManager.GetyByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<List<ProductGroupPreviewDTO>> GetAll()
+        public ActionResult<List<CityPreviewDTO>> GetAll()
         {
-            try { return _prodGroupManager.GetAllPreview(); }
+            try { return _cityManager.GetAllPreview(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [Authorize(Policy = "UserCanEditProductGroup")]
+        [Authorize(Policy = "UserCanEditCity")]
         [HttpPut]
-        public ActionResult<ProductGroupDTO> Update([FromBody] ProductGroupDTO newModel)
+        public ActionResult<CityDTO> Update([FromBody] CityDTO newModel)
         {
-            try { return _prodGroupManager.Update(newModel); }
+            try { return _cityManager.Update(newModel); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [Authorize(Policy = "UserCanDeleteProductGroup")]
+        [Authorize(Policy = "UserCanDeleteCity")]
         [HttpDelete]
         public ActionResult<bool> Delete([FromQuery] int id)
         {
-            try{return _prodGroupManager.Delete(id);}
+            try{return _cityManager.Delete(id);}
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
-
-        private ProductGroupManager _prodGroupManager;
     }
 }
