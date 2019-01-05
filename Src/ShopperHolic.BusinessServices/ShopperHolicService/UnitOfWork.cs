@@ -11,12 +11,6 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             _dbConnection = ConnectionProvider.GetSQLConnection(connectionString);
             _dbConnection.Open();
             _transaction = _dbConnection.BeginTransaction();
-
-            //When adding a new Repository Always remember to add it to the private "Reset" method @ the bottom
-            _securityRepo = new SecurityRepo(_transaction);
-            _productGroupRepo = new ProductGroupRepo(_transaction);
-            _subGroupRepo = new SubGroupRepo(_transaction);
-            _itemRepo = new ItemRepo(_transaction);
         }
         ~UnitOfWork()
         {
@@ -29,6 +23,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         public IProductGroupRepo ProductGroupRepo { get { return _productGroupRepo ?? (_productGroupRepo = new ProductGroupRepo(_transaction)); } }
         public ISubGroupRepo SubGroupRepo { get { return _subGroupRepo ?? (_subGroupRepo = new SubGroupRepo(_transaction)); } }
         public IItemRepo ItemRepo { get { return _itemRepo ?? (_itemRepo = new ItemRepo(_transaction)); } }
+        public ICountryRepo CountryRepo {get {return _countryRepo ?? (_countryRepo = new CountryRepo(_transaction));}}
+        public ICityRepo CityRepo {get {return _cityRepo ?? (_cityRepo = new CityRepo(_transaction));}}
+        public ICityAreaRepo CityAreaRepo {get {return _cityAreaRepo ?? (_cityAreaRepo = new CityAreaRepo(_transaction));}}
+        public IAddressRepo AddressRepo {get {return _addressRepo ?? (_addressRepo = new AddressRepo(_transaction));}}
 
         bool _disposing = false;
 
@@ -89,10 +87,18 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             _productGroupRepo = null;
             _subGroupRepo = null;
             _itemRepo = null;
+            _countryRepo = null;
+            _cityRepo = null;
+            _cityAreaRepo = null;
+            _addressRepo = null;
         }
         private ISecurityRepo _securityRepo;
         private IProductGroupRepo _productGroupRepo;
         private ISubGroupRepo _subGroupRepo;
         private IItemRepo _itemRepo;
+        private ICountryRepo _countryRepo;
+        private ICityRepo _cityRepo;
+        private ICityAreaRepo _cityAreaRepo;
+        private IAddressRepo _addressRepo;
     }
 }
