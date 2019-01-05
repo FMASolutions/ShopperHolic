@@ -48,7 +48,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@SubGroupID", id);
 
-                return Connection.QueryFirst<SubGroupDTO>(query,queryParameters, transaction: Transaction);
+                return Connection.QueryFirst<SubGroupDTO>(query, queryParameters, transaction: Transaction);
             }
             catch (Exception ex)
             {
@@ -93,11 +93,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParams.Add("@SubGroupName", updatedRecord.SubGroupName);
                 queryParams.Add("@SubGroupDescription", updatedRecord.SubGroupDescription);
 
-                if (Connection.Execute(query, queryParams, this.Transaction) > 0)
-                    return updatedRecord;
-                else
-                    throw new System.InvalidOperationException("Sequence contains no elements");
-                
+                return (Connection.Execute(query, queryParams, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;
             }
             catch (Exception ex)
             {

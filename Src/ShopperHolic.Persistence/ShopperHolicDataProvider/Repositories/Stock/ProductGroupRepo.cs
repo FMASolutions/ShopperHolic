@@ -86,10 +86,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParams.Add("@ProductGroupCode", updatedRecord.ProductGroupCode);
                 queryParams.Add("@ProductGroupName", updatedRecord.ProductGroupName);
                 queryParams.Add("@ProductGroupDescription", updatedRecord.ProductGroupDescription);
-                if (Connection.Execute(query, queryParams, this.Transaction) > 0)
-                    return updatedRecord;
-                else
-                    throw new System.InvalidOperationException("Sequence contains no elements");
+
+                return (Connection.Execute(query, queryParams, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;
             }
             catch (Exception ex)
             {

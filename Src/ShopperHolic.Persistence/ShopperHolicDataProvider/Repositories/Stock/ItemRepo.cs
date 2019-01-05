@@ -102,10 +102,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemReorderQtyReminder", updatedRecord.ItemReorderQtyReminder);
                 queryParameters.Add("@ItemID", updatedRecord.ItemID);
 
-                if (Connection.Execute(query, queryParameters, this.Transaction) > 0)
-                    return updatedRecord;
-                else
-                    throw new System.InvalidOperationException("Sequence contains no elements");
+                return (Connection.Execute(query, queryParameters, base.Transaction) > 0) ? updatedRecord : throw base.noRecordEX;
 
             }
             catch (Exception ex)
