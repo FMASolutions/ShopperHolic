@@ -29,8 +29,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
 
@@ -50,8 +49,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
 
         }
@@ -69,8 +67,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
 
@@ -97,8 +94,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
 
@@ -118,8 +114,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
     }

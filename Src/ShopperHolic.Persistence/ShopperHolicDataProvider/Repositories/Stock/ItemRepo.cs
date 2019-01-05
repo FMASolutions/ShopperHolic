@@ -36,8 +36,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
         public ItemDTO GetByID(int id)
@@ -58,8 +57,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
         public IEnumerable<ItemPreviewDTO> GetAllPreview()
@@ -74,8 +72,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
         public ItemDTO Update(ItemDTO updatedRecord)
@@ -114,8 +111,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
         public bool Delete(int id)
@@ -134,8 +130,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
 
@@ -156,8 +151,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch (Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
 
@@ -181,8 +175,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch(Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
         public IEnumerable<ItemDetailedDTO> GetItemsInProductGroup(int productGroupID){
@@ -205,8 +198,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
             catch(Exception ex)
             {
-                Exception exToThrow = SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-                throw exToThrow;
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
     }
