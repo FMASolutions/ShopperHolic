@@ -16,71 +16,31 @@
               <ol class="hide">
                 <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Stock <mat-icon>arrow_right</mat-icon></a>
                   <ol class="hide">
-                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Product Group
-                        <mat-icon>arrow_right</mat-icon></a>
-                      <ol class="hide">
-                        <li class="appLink"><a mat-list-item (click)="openNewProductGroup()">Create New Product Group</a></li>
-                        <li class="appLink"><a mat-list-item routerLink="/productGroups">Manage Product Groups</a></li>
-                      </ol>
-                    </li>
-                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Sub Groups <mat-icon>arrow_right</mat-icon></a>
-                      <ol class="hide">
-                        <li class="appLink"><a mat-list-item (click)="openNewSubGroup()">Create New Sub Group</a></li>
-                        <li class="appLink"><a mat-list-item routerLink="/subGroups">Manage Sub Groups</a></li>
-                      </ol>
-                    </li>
-                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Items <mat-icon>arrow_right</mat-icon></a>
-                      <ol class="hide">
-                        <li class="appLink"><a mat-list-item (click)="openNewItem()">Create New Item</a></li>
-                        <li class="appLink"><a mat-list-item routerLink="/items">Manage Items</a></li>
-                      </ol>
-                    </li>
+                    <li class="appLink"><a mat-list-item routerLink="/productGroups">Manage Product Groups</a></li>
+                    <li class="appLink"><a mat-list-item (click)="openNewSubGroup()">Create New Sub Group</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/items">Manage Items</a></li>
                   </ol>
                 </li>
                 <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Location <mat-icon>arrow_right</mat-icon></a>
                   <ol class="hide">
-                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Countries <mat-icon>arrow_right</mat-icon></a>
-                      <ol class="hide">
-                        <li class="appLink"><a mat-list-item>Create New Country</a></li>
-                        <li class="appLink"><a mat-list-item>Manage Countries</a></li>
-                      </ol>
-                    </li>
-                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Cities <mat-icon>arrow_right</mat-icon></a>
-                      <ol class="hide">
-                        <li class="appLink"><a mat-list-item>Create New City</a></li>
-                        <li class="appLink"><a mat-list-item>Manage Cities</a></li>
-                      </ol>
-                    </li>
+                      <li class="appLink"><a mat-list-item routerLink="/addresses">Manage Addresses</a></li>
+                      <li class="appLink"><a mat-list-item routerLink="/cityAreas">Manage CityAreas</a></li>
+                      <li class="appLink"><a mat-list-item routerLink="/cities">Manage Cities</a></li>
+                      <li class="appLink"><a mat-list-item routerLink="/countries">Manage Countries</a></li>
                   </ol>
                 </li>
                 <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Accounts <mat-icon>arrow_right</mat-icon></a>
                   <ol class="hide">
-                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Customer <mat-icon>arrow_right</mat-icon></a>
-                      <ol class="hide">
-                        <li class="appLink"><a mat-list-item>Create New Country</a></li>
-                        <li class="appLink"><a mat-list-item>Manage Countries</a></li>
-                      </ol>
-                    </li>
-                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Supplier <mat-icon>arrow_right</mat-icon></a>
-                      <ol class="hide">
-                        <li class="appLink"><a mat-list-item>Create New City</a></li>
-                        <li class="appLink"><a mat-list-item>Manage Cities</a></li>
-                      </ol>
-                    </li>
-                    <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">User Accounts
-                        <mat-icon>arrow_right</mat-icon></a>
-                      <ol class="hide">
-                        <li class="appLink"><a mat-list-item>Create New User Account</a></li>
-                        <li class="appLink"><a mat-list-item>Manager Users</a></li>
-                      </ol>
-                    </li>
+                      <li class="appLink"><a mat-list-item routerLink="/customers">Manage Customers</a></li>
+                      <li class="appLink"><a mat-list-item routerLink="/suppliers">Manage Suppliers</a></li>
+                      <li class="appLink"><a mat-list-item routerLink="/accounts">Manage User Accounts</a></li>
                   </ol>
                 </li>
                 <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Settings <mat-icon>arrow_right</mat-icon></a>
                   <ol class="hide">
-                    <li class="appLink"><a mat-list-item>Order Settings</a></li>
-                    <li class="appLink"><a mat-list-item>Purchase Settings</a></li>
-                    <li class="appLink"><a mat-list-item>System Settings</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/orderSettings">Order Settings</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/purchaseSettings">Purchase Settings</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/systemSettings">System Settings</a></li>
                   </ol>
                 </li>
               </ol>
@@ -119,66 +79,28 @@
             </mat-menu>
 
             <mat-menu #stock="matMenu">
-              <button mat-menu-item [matMenuTriggerFor]="prodGroup">Product Group</button>
-              <button mat-menu-item [matMenuTriggerFor]="subGroup">Sub Group</button>
-              <button mat-menu-item [matMenuTriggerFor]="item">Items</button>
-            </mat-menu>
-
-            <mat-menu #location="matMenu">
-              <button mat-menu-item [matMenuTriggerFor]="countries">Countries</button>
-              <button mat-menu-item [matMenuTriggerFor]="cities">Cities</button>
-            </mat-menu>
-
-            <mat-menu #account="matMenu">
-              <button mat-menu-item [matMenuTriggerFor]="customer">Customer</button>
-              <button mat-menu-item [matMenuTriggerFor]="supplier">Supplier</button>
-              <button mat-menu-item [matMenuTriggerFor]="user">User Accounts</button>
-            </mat-menu>
-
-            <mat-menu #settings="matMenu">
-              <button mat-menu-item>Order Settings</button>
-              <button mat-menu-item>Purchase Settings</button>
-              <button mat-menu-item>System Settings</button>
-            </mat-menu>
-
-            <mat-menu #prodGroup="matMenu">
-              <button mat-menu-item (click)="openNewProduGroup()">Create New Product Group</button>
               <button mat-menu-item routerLink="/productGroups">Manage Product Groups</button>
-            </mat-menu>
-
-            <mat-menu #subGroup="matMenu">
-              <button mat-menu-item (click)="openNewSubGroup()">Create Sub Group</button>
               <button mat-menu-item routerLink="/subGroups">Manage Sub Groups</button>
-            </mat-menu>
-
-            <mat-menu #item="matMenu">
-              <button mat-menu-item (click)="openNewItem()">Create Item</button>
               <button mat-menu-item routerLink="/items">Manage Items</button>
             </mat-menu>
 
-            <mat-menu #countries="matMenu">
-              <button mat-menu-item>Create New Country</button>
-              <button mat-menu-item>Manage Countries</button>
+            <mat-menu #location="matMenu">
+                <button mat-menu-item routerLink="/addresses">Manage Addresses</button>
+                <button mat-menu-item routerLink="/cityAreas">Manage CityAreas</button>
+                <button mat-menu-item routerLink="/cities">Manage Cities</button>
+                <button mat-menu-item routerLink="/countries">Manage Countries</button>
             </mat-menu>
 
-            <mat-menu #cities="matMenu">
-              <button mat-menu-item>Create New City</button>
-              <button mat-menu-item>Manage Cities</button>
+            <mat-menu #account="matMenu">
+                <button mat-menu-item routerLink="/customers">Manage Customers</button>
+                <button mat-menu-item routerLink="/suppliers">Manage Suppliers</button>
+                <button mat-menu-item routerLink="/accounts">Manage User Accounts</button>
             </mat-menu>
 
-            <mat-menu #customer="matMenu">
-              <button mat-menu-item>Create New Customer</button>
-              <button mat-menu-item>Manage Customers</button>
-            </mat-menu>
-
-            <mat-menu #supplier="matMenu">
-              <button mat-menu-item>Create Supplier</button>
-              <button mat-menu-item>Manage Suppliers</button>
-            </mat-menu>
-
-            <mat-menu #user="matMenu">
-              <button mat-menu-item>Create New User</button>
-              <button mat-menu-item>Manage Users</button>
+            <mat-menu #settings="matMenu">
+              <button mat-menu-item routerLink="/orderSettings">Order Settings</button>
+              <button mat-menu-item routerLink="/purchaseSettings">Purchase Settings</button>
+              <button mat-menu-item routerLink="/systemSettings">System Settings</button>
             </mat-menu>
           </ng-container>
         </ng-container>

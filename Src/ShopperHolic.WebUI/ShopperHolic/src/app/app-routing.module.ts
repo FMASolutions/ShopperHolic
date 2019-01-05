@@ -8,6 +8,10 @@ import { ContactComponent } from './components/generic/contact/contact.component
 import { ProductGroupsComponent } from './components/stock/product-groups/product-groups.component';
 import { SubGroupsComponent } from './components/stock/sub-groups/sub-groups.component';
 import { ItemsComponent } from './components/stock/items/items.component';
+import { CountriesComponent } from './components/location/countries/countries.component';
+import { CitiesComponent } from './components/location/cities/cities.component';
+import { CityAreasComponent } from './components/location/city-areas/city-areas.component';
+import { AddressesComponent } from './components/location/addresses/addresses.component';
 
 const routes: Routes = [
   {
@@ -41,6 +45,30 @@ const routes: Routes = [
   {
     path: 'items',
     component: ItemsComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'countries',
+    component: CountriesComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'cities',
+    component: CitiesComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'cityAreas',
+    component: CityAreasComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'addresses',
+    component: AddressesComponent,
     canActivate: [AuthGuard],
     data: { claimType: 'IsAdminUser' }
   },

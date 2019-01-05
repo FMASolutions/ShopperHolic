@@ -93,6 +93,74 @@ export class Globals {
     public static get ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
     public static get ITEM_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
 
+    //Country Specific Text
+    public static get COUNTRY_UPDATE_TITLE(): string { return "Country Update"; }
+    public static get COUNTRY_CREATE_TITLE(): string { return "Create New Country"; }
+    public static get COUNTRY_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new country: "; }
+    public static get COUNTRY_CREATE_SUCCESS_MSG(): string { return "Successfully created country: "; }
+    public static get COUNTRY_CREATE_FAILED_MSG(): string { return "Failed to create country: "; }
+    public static get COUNTRY_READ_FAILED_MSG(): string { return "Failed to retrieve country data: "; }
+    public static get COUNTRY_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update country: "; }
+    public static get COUNTRY_UPDATE_SUCCESS_MSG(): string { return "Successfully updated country: "; }
+    public static get COUNTRY_UPDATE_FAILED_MSG(): string { return "Failed to update country: "; }
+    public static get COUNTRY_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete country: "; }
+    public static get COUNTRY_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete country: "; }
+    public static get COUNTRY_DELETE_SUCCESS_MSG(): string { return "Successfully deleted country: "; }
+    public static get COUNTRY_DELETE_FAILED_MSG(): string { return "Failed to delete country: "; }
+    public static get COUNTRY_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'View', 'Del']; }
+    public static get COUNTRY_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'Select']; }
+
+    //City Specific Text
+    public static get CITY_UPDATE_TITLE(): string { return "City Update"; }
+    public static get CITY_CREATE_TITLE(): string { return "Create New City"; }
+    public static get CITY_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new city: "; }
+    public static get CITY_CREATE_SUCCESS_MSG(): string { return "Successfully created city: "; }
+    public static get CITY_CREATE_FAILED_MSG(): string { return "Failed to create city: "; }
+    public static get CITY_READ_FAILED_MSG(): string { return "Failed to retrieve city data: "; }
+    public static get CITY_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update city: "; }
+    public static get CITY_UPDATE_SUCCESS_MSG(): string { return "Successfully updated city: "; }
+    public static get CITY_UPDATE_FAILED_MSG(): string { return "Failed to update city: "; }
+    public static get CITY_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete city: "; }
+    public static get CITY_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete city: "; }
+    public static get CITY_DELETE_SUCCESS_MSG(): string { return "Successfully deleted city: "; }
+    public static get CITY_DELETE_FAILED_MSG(): string { return "Failed to delete city: "; }
+    public static get CITY_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
+    public static get CITY_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
+
+    //CityArea Specific Text
+    public static get CITYAREA_UPDATE_TITLE(): string { return "City Area Update"; }
+    public static get CITYAREA_CREATE_TITLE(): string { return "Create New City Area"; }
+    public static get CITYAREA_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new city area: "; }
+    public static get CITYAREA_CREATE_SUCCESS_MSG(): string { return "Successfully created city area: "; }
+    public static get CITYAREA_CREATE_FAILED_MSG(): string { return "Failed to create city area: "; }
+    public static get CITYAREA_READ_FAILED_MSG(): string { return "Failed to retrieve city area data: "; }
+    public static get CITYAREA_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update city area: "; }
+    public static get CITYAREA_UPDATE_SUCCESS_MSG(): string { return "Successfully updated city area: "; }
+    public static get CITYAREA_UPDATE_FAILED_MSG(): string { return "Failed to update city area: "; }
+    public static get CITYAREA_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete city area: "; }
+    public static get CITYAREA_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete city area: "; }
+    public static get CITYAREA_DELETE_SUCCESS_MSG(): string { return "Successfully deleted city area: "; }
+    public static get CITYAREA_DELETE_FAILED_MSG(): string { return "Failed to delete city area: "; }
+    public static get CITYAREA_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
+    public static get CITYAREA_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
+
+    //Address Specific Text
+    public static get ADDRESS_UPDATE_TITLE(): string { return "Address Update"; }
+    public static get ADDRESS_CREATE_TITLE(): string { return "Create New Address"; }
+    public static get ADDRESS_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new address: "; }
+    public static get ADDRESS_CREATE_SUCCESS_MSG(): string { return "Successfully created address: "; }
+    public static get ADDRESS_CREATE_FAILED_MSG(): string { return "Failed to create address: "; }
+    public static get ADDRESS_READ_FAILED_MSG(): string { return "Failed to retrieve address data: "; }
+    public static get ADDRESS_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update address: "; }
+    public static get ADDRESS_UPDATE_SUCCESS_MSG(): string { return "Successfully updated address: "; }
+    public static get ADDRESS_UPDATE_FAILED_MSG(): string { return "Failed to update address: "; }
+    public static get ADDRESS_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete address: "; }
+    public static get ADDRESS_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete address: "; }
+    public static get ADDRESS_DELETE_SUCCESS_MSG(): string { return "Successfully deleted address: "; }
+    public static get ADDRESS_DELETE_FAILED_MSG(): string { return "Failed to delete address: "; }
+    public static get ADDRESS_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
+    public static get ADDRESS_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
+
 }
 
 export class CustomModalSettings {
