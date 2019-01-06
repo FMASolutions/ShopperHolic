@@ -54,6 +54,10 @@ import { AddressesComponent } from './components/location/addresses/addresses.co
 import { AddressComponent } from './components/location/addresses/address/address.component';
 import { AddressListComponent } from './components/location/addresses/address-list/address-list.component';
 import { AddressSelectorComponent } from './components/location/addresses/address-selector/address-selector.component';
+import { CountryService } from './services/location/country.service';
+import { CityService } from './services/location/city.service';
+import { CityAreaService } from './services/location/city-area.service';
+import { AddressService } from './services/location/address.service';
 
 @NgModule({
   declarations: [
@@ -118,6 +122,10 @@ import { AddressSelectorComponent } from './components/location/addresses/addres
     ProductGroupService,
     SubGroupService,
     ItemService,
+    CountryService,
+    CityService,
+    CityAreaService,
+    AddressService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

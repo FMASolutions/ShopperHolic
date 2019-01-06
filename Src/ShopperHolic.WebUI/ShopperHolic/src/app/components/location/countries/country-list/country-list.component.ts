@@ -15,12 +15,12 @@ export class CountryListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   columnList: string[] = Globals.COUNTRY_PRVW_LIST_COLUMNS;
 
-  constructor(public service: CountryService, public countryDialog: MatDialog) { }
+  constructor(public service: CountryService, public childDialog: MatDialog) { }
 
   ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public createClicked() {
-    let dialogRef = this.countryDialog.open(CountryComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    let dialogRef = this.childDialog.open(CountryComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
       if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();
@@ -31,7 +31,7 @@ export class CountryListComponent implements OnInit {
     let modalSettings = Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
     modalSettings.data = id;
 
-    let dialogRef = this.countryDialog.open(CountryComponent, modalSettings);
+    let dialogRef = this.childDialog.open(CountryComponent, modalSettings);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
       if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();

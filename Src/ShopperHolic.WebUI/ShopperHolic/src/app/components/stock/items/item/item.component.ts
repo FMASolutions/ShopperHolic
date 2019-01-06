@@ -16,7 +16,7 @@ export class ItemComponent implements OnInit {
   currentMode: string = "";
   currentSelectedFile: File = null;
 
-  constructor(public service: ItemService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<ItemComponent>, public subDialog: MatDialog) { }
+  constructor(public service: ItemService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<ItemComponent>, public childDialog: MatDialog) { }
 
   ngOnInit() {
     this.currentMode = this.service.InitializeForm(this.currentImageElement, this.data);
@@ -26,8 +26,8 @@ export class ItemComponent implements OnInit {
 
   getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 
-  openSubSelect() {
-    let dialogRef = this.subDialog.open(SubGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+  openChildSelect() {
+    let dialogRef = this.childDialog.open(SubGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     dialogRef.afterClosed().subscribe(resp => {
       if (resp && resp.selectedModel) {
         this.service.updateSelectedSubGroup(resp.selectedModel);

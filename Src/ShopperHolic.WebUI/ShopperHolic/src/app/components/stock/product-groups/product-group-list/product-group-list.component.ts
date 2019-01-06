@@ -15,12 +15,12 @@ export class ProductGroupListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   columnList: string[] = Globals.PROD_GROUP_PRVW_LIST_COLUMNS;
 
-  constructor(public service: ProductGroupService, public prodDialog: MatDialog) { }
+  constructor(public service: ProductGroupService, public childDialog: MatDialog) { }
 
   ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public createClicked() {
-    let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    let dialogRef = this.childDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
       if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();
@@ -31,7 +31,7 @@ export class ProductGroupListComponent implements OnInit {
     let modalSettings = Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
     modalSettings.data = id;
 
-    let dialogRef = this.prodDialog.open(ProductGroupComponent, modalSettings);
+    let dialogRef = this.childDialog.open(ProductGroupComponent, modalSettings);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
       if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();

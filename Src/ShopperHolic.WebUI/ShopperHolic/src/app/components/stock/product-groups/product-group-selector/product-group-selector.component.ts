@@ -15,15 +15,15 @@ export class ProductGroupSelectorComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   columnList: string[] = Globals.PROD_GROUP_PRVW_SELECT_COLUMNS;
 
-  constructor(public service: ProductGroupService, public prodDialog: MatDialog, public dialogRef: MatDialogRef<ProductGroupSelectorComponent>) { }
+  constructor(public service: ProductGroupService, public childDialog: MatDialog, public ownDialog: MatDialogRef<ProductGroupSelectorComponent>) { }
 
   ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public createClicked() {
-    let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    let dialogRef = this.childDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
       if (resp && resp.userSubmitted && resp.newModel) {
-        this.dialogRef.close({ selectedModel: resp.newModel });
+        this.ownDialog.close({ selectedModel: resp.newModel });
       }
       obs.unsubscribe();
     });
@@ -32,11 +32,11 @@ export class ProductGroupSelectorComponent implements OnInit {
   public selectClicked(id: number) {
     let obs = this.service.getByID(id).subscribe(modelResp => {
       obs.unsubscribe();
-      this.dialogRef.close({ selectedModel: modelResp });
+      this.ownDialog.close({ selectedModel: modelResp });
     })
   }
 
   public sortClicked(sort: Sort) { this.service.sortTableData(sort, this.paginator); }
 
-  public closeClicked() { this.dialogRef.close(); }
+  public closeClicked() { this.ownDialog.close(); }
 }

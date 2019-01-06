@@ -13,7 +13,7 @@ export class SubGroupComponent {
 
   currentMode: string = "";
 
-  constructor(public service: SubGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<SubGroupComponent>, public prodDialog: MatDialog) {
+  constructor(public service: SubGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<SubGroupComponent>, public childDialog: MatDialog) {
     this.currentMode = this.service.InitializeForm(data);
   }
 
@@ -21,8 +21,8 @@ export class SubGroupComponent {
 
   getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 
-  openProdSelectDialog(){
-    let dialogRef = this.prodDialog.open(ProductGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+  openChildSelect(){
+    let dialogRef = this.childDialog.open(ProductGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     dialogRef.afterClosed().subscribe(resp => {
       if(resp && resp.selectedModel) {
         this.service.updateSelectedProductGroup(resp.selectedModel);
@@ -48,5 +48,4 @@ export class SubGroupComponent {
   }
 
   cancel() { this.ownDialog.close(); }
-
 }

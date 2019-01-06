@@ -85,6 +85,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@CityCode", updatedRecord.CityCode);
                 queryParameters.Add("@CityName", updatedRecord.CityName);
                 queryParameters.Add("@CountryID", updatedRecord.CountryID);
+                queryParameters.Add("@CityID", updatedRecord.CityID);
 
                 int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
                 return (rowsUpdated > 0) ? GetByID(updatedRecord.CityID) : throw noRecordEX;          

@@ -16,7 +16,7 @@ export class ItemListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   columnList: string[] = Globals.ITEM_PRVW_LIST_COLUMNS;
 
-  constructor(public service: ItemService, public itemDialog: MatDialog) { }
+  constructor(public service: ItemService, public childDialog: MatDialog) { }
 
   ngOnInit() {
     setTimeout(()=>{ 
@@ -25,7 +25,7 @@ export class ItemListComponent implements OnInit {
   }
 
   public createClicked() {
-    let dialogRef = this.itemDialog.open(ItemComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    let dialogRef = this.childDialog.open(ItemComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     let obs = dialogRef.afterClosed().subscribe((resp) => { 
       if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();
@@ -36,7 +36,7 @@ export class ItemListComponent implements OnInit {
     let modalSettings = Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
     modalSettings.data = id;
 
-    let dialogRef = this.itemDialog.open(ItemComponent, modalSettings);
+    let dialogRef = this.childDialog.open(ItemComponent, modalSettings);
     let obs = dialogRef.afterClosed().subscribe((resp) => { 
       if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe(); 

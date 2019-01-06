@@ -80,7 +80,6 @@ export class CityService {
       id: [0, []],
       code: [null, [this.validator.validateCodeForCreate]],
       name: [null, [this.validator.basicValidation]],
-      desc: [null, [this.validator.basicValidation]],
       countryID: [null, [this.validator.basicValidation]],
       countryText: [null, [this.validator.basicValidation]]
     });

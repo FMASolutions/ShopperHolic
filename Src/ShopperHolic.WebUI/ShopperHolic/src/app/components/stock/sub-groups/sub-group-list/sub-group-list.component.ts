@@ -15,12 +15,12 @@ export class SubGroupListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   columnList: string[] = Globals.SUB_GROUP_PRVW_LIST_COLUMNS;
 
-  constructor(public service: SubGroupService, public subDialog: MatDialog) { }
+  constructor(public service: SubGroupService, public childDialog: MatDialog) { }
 
   ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public createClicked() {
-    let dialogRef = this.subDialog.open(SubGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    let dialogRef = this.childDialog.open(SubGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
       if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();
@@ -31,7 +31,7 @@ export class SubGroupListComponent implements OnInit {
     let modalSettings = Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS;
     modalSettings.data = id;
 
-    let dialogRef = this.subDialog.open(SubGroupComponent, modalSettings);
+    let dialogRef = this.childDialog.open(SubGroupComponent, modalSettings);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
       if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();

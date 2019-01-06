@@ -12,7 +12,7 @@ export class CountryComponent {
 
   currentMode: string = "";
 
-  constructor(public service: CountryService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<CountryComponent>) {
+  constructor(public service: CountryService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<CountryComponent>) {
     this.currentMode = this.service.InitializeForm(data);
   }
 
@@ -24,19 +24,19 @@ export class CountryComponent {
     if (this.service.countryForm.valid) {
       if (this.currentMode == Globals.MODE_UPDATE) {
         let obs = this.service.update(this.service.getUpdateModelFromForm()).subscribe(updateResp => {
-          this.dialogRef.close({ userSubmitted: true, newModel: updateResp });
+          this.ownDialog.close({ userSubmitted: true, newModel: updateResp });
           obs.unsubscribe();
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
         let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe(createResp => {
-          this.dialogRef.close({ userSubmitted: true, newModel: createResp });
+          this.ownDialog.close({ userSubmitted: true, newModel: createResp });
           obs.unsubscribe();
         });
       }
     }
   }
 
-  cancel() { this.dialogRef.close(); }
+  cancel() { this.ownDialog.close(); }
 
 }
