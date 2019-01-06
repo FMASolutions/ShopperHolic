@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef, Sort } from '@angular/material';
-import { SubGroupPreview } from 'src/app/models/stock/subGroups/subGroupPreview';
+import { MatPaginator, MatSort, MatDialog, MatDialogRef, Sort } from '@angular/material';
 import { Globals } from 'src/globals';
 import { SubGroupService } from 'src/app/services/stock/sub-group.service';
 import { SubGroupComponent } from '../sub-group/sub-group.component';
@@ -12,80 +11,33 @@ import { SubGroupComponent } from '../sub-group/sub-group.component';
 })
 export class SubGroupSelectorComponent implements OnInit {
 
-  tableDataSource: MatTableDataSource<SubGroupPreview>;
-  textFilter: string = "";
-  displayedColumns: string[] = Globals.SUB_GROUP_PRVW_SELECT_COLUMNS;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  columnList: string[] = Globals.SUB_GROUP_PRVW_SELECT_COLUMNS;
 
-  constructor(private subGroupService: SubGroupService, public subDialog: MatDialog, public dialogRef: MatDialogRef<SubGroupSelectorComponent>) { }
+  constructor(public service: SubGroupService, public subDialog: MatDialog, public dialogRef: MatDialogRef<SubGroupSelectorComponent>) { }
 
-  ngOnInit() {
-    setTimeout(()=>{ 
-      this.refreshDatasource();
-    },1); 
-  }
+  ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public createClicked() {
     let dialogRef = this.subDialog.open(SubGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     let obs = dialogRef.afterClosed().subscribe((resp) => { 
-      if (resp && resp.userSubmitted && resp.createdSubGroup) { 
-        this.dialogRef.close({ selectedSubGroup: resp.createdSubGroup}); 
+      if (resp && resp.userSubmitted && resp.newModel) { 
+        this.dialogRef.close({ selectedModel: resp.newModel}); 
       }
       obs.unsubscribe();
     });
   }
 
   public selectClicked(id: number) {
-    let obs = this.subGroupService.getByID(id).subscribe(subGroupResp => {
+    let obs = this.service.getByID(id).subscribe(modelResp => {
       obs.unsubscribe();
-      this.dialogRef.close({ selectedSubGroup: subGroupResp});
+      this.dialogRef.close({ selectedModel: modelResp});
     })
   }
 
-  public resetFilterClicked() {
-    this.textFilter = "";
-    this.applyFilterClicked();
-  }
+  public sortClicked(sort: Sort) { this.service.sortTableData(sort, this.paginator); }
 
-  public applyFilterClicked() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
-
-  public sortClicked(sort: Sort) {
-    const data = this.tableDataSource.filteredData.slice();
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-    let sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'ID': return this.compare(a.subGroupID, b.subGroupID, isAsc);
-        case 'Code': return this.compare(a.subGroupCode.toLowerCase(), b.subGroupCode.toLowerCase(), isAsc);
-        case 'Name': return this.compare(a.subGroupName.toLowerCase(), b.subGroupName.toLowerCase(), isAsc);
-        case 'PID': return this.compare(a.productGroupID, b.productGroupID, isAsc);
-        default: return 0;
-      }
-    });
-    this.setupTableDataSource(sortedData);
-  }
-
-  public closeClicked(){
-    this.dialogRef.close();
-  }
-
-  private setupTableDataSource(data: SubGroupPreview[]) {
-    this.tableDataSource = new MatTableDataSource(data);
-    this.tableDataSource.paginator = this.paginator;
-    this.tableDataSource.filter = this.textFilter;
-  }
-
-  private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
-
-  private refreshDatasource() {
-    let obs = this.subGroupService.getAll().subscribe(subGroupResp => {
-      this.setupTableDataSource(subGroupResp);
-      obs.unsubscribe();
-    })
-  }
+  public closeClicked() { this.dialogRef.close(); }
 
 }

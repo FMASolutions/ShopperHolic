@@ -13,8 +13,8 @@ export class SubGroupComponent {
 
   currentMode: string = "";
 
-  constructor(public subGroupService: SubGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<SubGroupComponent>, public prodDialog: MatDialog) {
-    this.currentMode = this.subGroupService.InitializeForm(data);
+  constructor(public service: SubGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<SubGroupComponent>, public prodDialog: MatDialog) {
+    this.currentMode = this.service.InitializeForm(data);
   }
 
   getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.SUB_GROUP_UPDATE_TITLE : Globals.SUB_GROUP_CREATE_TITLE; }
@@ -24,23 +24,23 @@ export class SubGroupComponent {
   openProdSelectDialog(){
     let dialogRef = this.prodDialog.open(ProductGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     dialogRef.afterClosed().subscribe(resp => {
-      if(resp && resp.selectedProductGroup) {
-        this.subGroupService.updateSelectedProductGroup(resp.selectedProductGroup);
+      if(resp && resp.selectedModel) {
+        this.service.updateSelectedProductGroup(resp.selectedModel);
       }
     })
   }
 
   submit() {
-    if (this.subGroupService.subForm.valid) {
+    if (this.service.subForm.valid) {
       if (this.currentMode == Globals.MODE_UPDATE) {
-        let obs = this.subGroupService.update(this.subGroupService.getUpdateModelFromForm()).subscribe(() => {
-          this.ownDialog.close({ userSubmitted: true });
+        let obs = this.service.update(this.service.getUpdateModelFromForm()).subscribe(updateResp => {
+          this.ownDialog.close({ userSubmitted: true, newModel: updateResp  });
           obs.unsubscribe();
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
-        let obs = this.subGroupService.createNew(this.subGroupService.getCreateModelFromForm()).subscribe((createResp) => {
-          this.ownDialog.close({ userSubmitted: true, createdSubGroup: createResp });
+        let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe(createResp => {
+          this.ownDialog.close({ userSubmitted: true, newModel: createResp });
           obs.unsubscribe();
         });
       }

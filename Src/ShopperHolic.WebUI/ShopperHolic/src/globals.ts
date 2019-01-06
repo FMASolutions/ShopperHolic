@@ -124,8 +124,8 @@ export class Globals {
     public static get CITY_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete city: "; }
     public static get CITY_DELETE_SUCCESS_MSG(): string { return "Successfully deleted city: "; }
     public static get CITY_DELETE_FAILED_MSG(): string { return "Failed to delete city: "; }
-    public static get CITY_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
-    public static get CITY_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
+    public static get CITY_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','CID', 'View', 'Del']; }
+    public static get CITY_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','CID', 'Select']; }
 
     //CityArea Specific Text
     public static get CITYAREA_UPDATE_TITLE(): string { return "City Area Update"; }
@@ -141,8 +141,8 @@ export class Globals {
     public static get CITYAREA_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete city area: "; }
     public static get CITYAREA_DELETE_SUCCESS_MSG(): string { return "Successfully deleted city area: "; }
     public static get CITYAREA_DELETE_FAILED_MSG(): string { return "Failed to delete city area: "; }
-    public static get CITYAREA_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
-    public static get CITYAREA_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
+    public static get CITYAREA_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','CID', 'View', 'Del']; }
+    public static get CITYAREA_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','CID', 'Select']; }
 
     //Address Specific Text
     public static get ADDRESS_UPDATE_TITLE(): string { return "Address Update"; }
@@ -158,8 +158,8 @@ export class Globals {
     public static get ADDRESS_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete address: "; }
     public static get ADDRESS_DELETE_SUCCESS_MSG(): string { return "Successfully deleted address: "; }
     public static get ADDRESS_DELETE_FAILED_MSG(): string { return "Failed to delete address: "; }
-    public static get ADDRESS_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
-    public static get ADDRESS_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
+    public static get ADDRESS_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Line1', 'Line2','CityAreaName', 'View', 'Del']; }
+    public static get ADDRESS_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Line1', 'Line2','CityAreaName', 'Select']; }
 
 }
 

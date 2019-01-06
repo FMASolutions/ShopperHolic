@@ -10,6 +10,7 @@ import { tap } from 'rxjs/operators';
 import { ItemPreview } from 'src/app/models/stock/items/itemPreview';
 import { SubGroup } from 'src/app/models/stock/subGroups/subGroup';
 import { GenericValidator } from '../generic/generic-validator';
+import { MatTableDataSource, MatPaginator, Sort } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -185,4 +186,48 @@ export class ItemService {
       reorderQty: model.itemReorderQtyReminder
     });
   }
+
+  /*--------------------- --- Item Table Helper --- ----------------------*/
+  tableDataSource: MatTableDataSource<ItemPreview>;
+  textFilter: string = "";
+
+  public sortTableData(sort: Sort, paginator: MatPaginator){
+    const data = this.tableDataSource.filteredData.slice();
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+    let sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'ID': return this.compare(a.itemID, b.itemID, isAsc);
+        case 'Code': return this.compare(a.itemCode.toLowerCase(), b.itemCode.toLowerCase(), isAsc);
+        case 'Name': return this.compare(a.itemName.toLowerCase(), b.itemName.toLowerCase(), isAsc);
+        case 'SID': return this.compare(a.subGroupID, b.subGroupID, isAsc);
+        default: return 0;
+      }
+    });
+    this.setupTableDataSource(sortedData, paginator);
+  }
+
+  public refreshListData(paginator: MatPaginator){
+    let obs = this.getAll().subscribe(modelResp => {
+      this.setupTableDataSource(modelResp, paginator);
+      obs.unsubscribe();
+    })        
+  }
+
+  public resetListFilter(){
+    this.textFilter = "";
+    this.applyListFilter();
+  }
+
+  public applyListFilter() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
+
+  private setupTableDataSource(data: ItemPreview[], paginator: MatPaginator) {
+    this.tableDataSource = new MatTableDataSource(data);
+    this.tableDataSource.paginator = paginator;
+    this.tableDataSource.filter = this.textFilter;
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
 }

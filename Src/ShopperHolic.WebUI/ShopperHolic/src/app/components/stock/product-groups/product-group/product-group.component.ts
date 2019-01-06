@@ -12,8 +12,8 @@ export class ProductGroupComponent {
 
   currentMode: string = "";
 
-  constructor(public prodService: ProductGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ProductGroupComponent>) {
-    this.currentMode = this.prodService.InitializeForm(data);
+  constructor(public service: ProductGroupService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<ProductGroupComponent>) {
+    this.currentMode = this.service.InitializeForm(data);
   }
 
   getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.PROD_GROUP_UPDATE_TITLE : Globals.PROD_GROUP_CREATE_TITLE; }
@@ -21,21 +21,21 @@ export class ProductGroupComponent {
   getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 
   submit() {
-    if (this.prodService.prodForm.valid) {
+    if (this.service.prodForm.valid) {
       if (this.currentMode == Globals.MODE_UPDATE) {
-        let obs = this.prodService.update(this.prodService.getUpdateModelFromForm()).subscribe(() => {
-          this.dialogRef.close({ userSubmitted: true });
+        let obs = this.service.update(this.service.getUpdateModelFromForm()).subscribe(updateResp => {
+          this.ownDialog.close({ userSubmitted: true, newModel: updateResp  });
           obs.unsubscribe();
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
-        let obs = this.prodService.createNew(this.prodService.getCreateModelFromForm()).subscribe(createResp => {
-          this.dialogRef.close({ userSubmitted: true, createdProductGroup: createResp });
+        let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe(createResp => {
+          this.ownDialog.close({ userSubmitted: true, newModel: createResp });
           obs.unsubscribe();
         });
       }
     }
   }
 
-  cancel() { this.dialogRef.close(); }
+  cancel() { this.ownDialog.close(); }
 }

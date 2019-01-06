@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
 import { ProductGroupService } from 'src/app/services/stock/product-group.service';
-import { MatPaginator, MatSort, MatTableDataSource, Sort, MatDialog } from '@angular/material';
+import { MatPaginator, MatSort, Sort, MatDialog } from '@angular/material';
 import { ProductGroupComponent } from '../product-group/product-group.component';
 import { Globals } from 'src/globals';
 
@@ -14,15 +13,16 @@ export class ProductGroupListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  columnList: string[] = Globals.PROD_GROUP_PRVW_LIST_COLUMNS;
 
-  constructor(public prodGroupService: ProductGroupService, public prodDialog: MatDialog) { }
+  constructor(public service: ProductGroupService, public prodDialog: MatDialog) { }
 
-  ngOnInit() { setTimeout(() => { this.prodGroupService.refreshListData(this.paginator); }, 1); }
+  ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public createClicked() {
     let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
-      if (resp && resp.userSubmitted) { this.prodGroupService.refreshListData(this.paginator); }
+      if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();
     });
   }
@@ -33,23 +33,19 @@ export class ProductGroupListComponent implements OnInit {
 
     let dialogRef = this.prodDialog.open(ProductGroupComponent, modalSettings);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
-      if (resp && resp.userSubmitted) { this.prodGroupService.refreshListData(this.paginator); }
+      if (resp && resp.userSubmitted) { this.service.refreshListData(this.paginator); }
       obs.unsubscribe();
     });
   }
 
   public deleteClicked(id: number) {
     if (confirm(Globals.PROD_GROUP_DELETE_CONFIRM_MSG + id)) {
-      let obs = this.prodGroupService.delete(id).subscribe(() => {
-        this.prodGroupService.refreshListData(this.paginator);
+      let obs = this.service.delete(id).subscribe(() => {
+        this.service.refreshListData(this.paginator);
         obs.unsubscribe();
       });
     }
   }
 
-  public resetFilterClicked() { this.prodGroupService.resetListFilter() }
-
-  public applyFilterClicked() { this.prodGroupService.applyListFilter() }
-
-  public sortClicked(sort: Sort) { this.prodGroupService.sortTableData(sort, this.paginator); }
+  public sortClicked(sort: Sort) { this.service.sortTableData(sort, this.paginator); }
 }

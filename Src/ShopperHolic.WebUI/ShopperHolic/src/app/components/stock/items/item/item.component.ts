@@ -16,10 +16,10 @@ export class ItemComponent implements OnInit {
   currentMode: string = "";
   currentSelectedFile: File = null;
 
-  constructor(public itemService: ItemService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<ItemComponent>, public subDialog: MatDialog) { }
+  constructor(public service: ItemService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<ItemComponent>, public subDialog: MatDialog) { }
 
   ngOnInit() {
-    this.currentMode = this.itemService.InitializeForm(this.currentImageElement, this.data);
+    this.currentMode = this.service.InitializeForm(this.currentImageElement, this.data);
   }
 
   getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.ITEM_UPDATE_TITLE : Globals.ITEM_CREATE_TITLE; }
@@ -29,8 +29,8 @@ export class ItemComponent implements OnInit {
   openSubSelect() {
     let dialogRef = this.subDialog.open(SubGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     dialogRef.afterClosed().subscribe(resp => {
-      if (resp && resp.selectedSubGroup) {
-        this.itemService.updateSelectedSubGroup(resp.selectedSubGroup);
+      if (resp && resp.selectedModel) {
+        this.service.updateSelectedSubGroup(resp.selectedModel);
       }
     })
   }
@@ -41,34 +41,34 @@ export class ItemComponent implements OnInit {
 
   fileSelected(event) {
     if (event.target.files && event.target.files[0]) {
-      this.itemService.newFileSelected(event.target.files[0], this.currentImageElement);
+      this.service.newFileSelected(event.target.files[0], this.currentImageElement);
       this.currentSelectedFile = event.target.files[0];
     }
   }
 
   submit() {
-    if (this.itemService.itemForm.valid) {
+    if (this.service.itemForm.valid) {
 
       if (this.currentMode == Globals.MODE_UPDATE) {
-        let obs = this.itemService.update(this.itemService.getUpdateModelFromForm()).subscribe((updateResp) => {
+        let obs = this.service.update(this.service.getUpdateModelFromForm()).subscribe(updateResp => {
           obs.unsubscribe();
           if (this.currentSelectedFile) { //Only perform upload if a new file has been selected.
             console.log("uploading file");
-            let obsUpload = this.itemService.imageUpload(this.currentSelectedFile, updateResp.itemID).subscribe(resp => {
+            let obsUpload = this.service.imageUpload(this.currentSelectedFile, updateResp.itemID).subscribe(resp => {
               obsUpload.unsubscribe();
-              this.ownDialog.close({ userSubmitted: true });
+              this.ownDialog.close({ userSubmitted: true, newModel: updateResp  });
             });
           }
-          else { this.ownDialog.close({ userSubmitted: true });} 
+          else { this.ownDialog.close({ userSubmitted: true, newModel: updateResp  });} 
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
         if(this.currentSelectedFile) { //Only create file if we have selected a file to upload....
-          let obs = this.itemService.createNew(this.itemService.getCreateModelFromForm()).subscribe((createResp) => {
+          let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe((createResp) => {
             obs.unsubscribe();
-            let obsUpload = this.itemService.imageUpload(this.currentSelectedFile, createResp.itemID).subscribe(resp => {
+            let obsUpload = this.service.imageUpload(this.currentSelectedFile, createResp.itemID).subscribe(resp => {
               obsUpload.unsubscribe();
-              this.ownDialog.close({ userSubmitted: true, createdItem: createResp });
+              this.ownDialog.close({ userSubmitted: true, newModel: createResp });
             });
           });
         }

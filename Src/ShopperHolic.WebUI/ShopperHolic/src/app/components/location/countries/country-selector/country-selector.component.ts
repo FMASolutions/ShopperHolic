@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef, Sort } from '@angular/material';
-import { Country } from 'src/app/models/location/countries/country';
+import { MatPaginator, MatSort, MatDialog, MatDialogRef, Sort } from '@angular/material';
 import { Globals } from 'src/globals';
 import { CountryService } from 'src/app/services/location/country.service';
 import { CountryComponent } from '../country/country.component';
@@ -12,79 +11,35 @@ import { CountryComponent } from '../country/country.component';
 })
 export class CountrySelectorComponent implements OnInit {
 
-  tableDataSource: MatTableDataSource<Country>;
-  textFilter: string = "";
-  displayedColumns: string[] = Globals.COUNTRY_PRVW_SELECT_COLUMNS
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  columnList: string[] = Globals.COUNTRY_PRVW_SELECT_COLUMNS;
 
-  constructor(private countryService: CountryService, public prodDialog: MatDialog, public dialogRef: MatDialogRef<CountrySelectorComponent>) { }
+  constructor(private service: CountryService, public prodDialog: MatDialog, public dialogRef: MatDialogRef<CountrySelectorComponent>) { }
 
-  ngOnInit() {
-    setTimeout(()=>{ 
-      this.refreshDatasource();
-    },1); 
-  }
+  ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public createClicked() {
     let dialogRef = this.prodDialog.open(CountryComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
-    let obs = dialogRef.afterClosed().subscribe((resp) => { 
-      if (resp && resp.userSubmitted && resp.createdCountry) { 
-        this.dialogRef.close({ selectedCountry: resp.createdCountry}); 
+    let obs = dialogRef.afterClosed().subscribe((resp) => {
+      if (resp && resp.userSubmitted && resp.newModel) {
+        this.dialogRef.close({ selectedModel: resp.newModel });
       }
       obs.unsubscribe();
     });
   }
 
   public selectClicked(id: number) {
-    let obs = this.countryService.getByID(id).subscribe(modelResp => {
+    let obs = this.service.getByID(id).subscribe(modelResp => {
       obs.unsubscribe();
-      this.dialogRef.close({ selectedCountry: modelResp});
+      this.dialogRef.close({ selectedModel: modelResp });
     })
   }
 
-  public resetFilterClicked() {
-    this.textFilter = "";
-    this.applyFilterClicked();
-  }
-
-  public applyFilterClicked() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
-
-  public sortClicked(sort: Sort) {
-    const data = this.tableDataSource.filteredData.slice();
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-    let sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'ID': return this.compare(a.countryID, b.countryID, isAsc);
-        case 'Code': return this.compare(a.countryCode.toLowerCase(), b.countryCode.toLowerCase(), isAsc);
-        case 'Name': return this.compare(a.countryName.toLowerCase(), b.countryName.toLowerCase(), isAsc);
-        default: return 0;
-      }
-    });
-    this.setupTableDataSource(sortedData);
-  }
-
-  public closeClicked(){
+  public closeClicked() {
     this.dialogRef.close();
   }
 
-  private setupTableDataSource(data: Country[]) {
-    this.tableDataSource = new MatTableDataSource(data);
-    this.tableDataSource.paginator = this.paginator;
-    this.tableDataSource.filter = this.textFilter;
-  }
-
-  private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
-
-  private refreshDatasource() {
-    let obs = this.countryService.getAll().subscribe(modelResp => {
-      this.setupTableDataSource(modelResp);
-      obs.unsubscribe();
-    })
-  }
+  public sortClicked(sort: Sort) { this.service.sortTableData(sort, this.paginator); }
 
 }

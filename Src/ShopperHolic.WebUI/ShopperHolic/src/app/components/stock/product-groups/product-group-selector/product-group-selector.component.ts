@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog, Sort, MatDialogRef } from '@angular/material';
-import { ProductGroupPreview } from 'src/app/models/stock/productGroups/productGroupPreview';
 import { Globals } from 'src/globals';
 import { ProductGroupService } from 'src/app/services/stock/product-group.service';
 import { ProductGroupComponent } from '../product-group/product-group.component';
+import { MatPaginator, MatSort, MatDialog, MatDialogRef, Sort } from '@angular/material';
 
 @Component({
   selector: 'app-product-group-selector',
@@ -12,78 +11,32 @@ import { ProductGroupComponent } from '../product-group/product-group.component'
 })
 export class ProductGroupSelectorComponent implements OnInit {
 
-  tableDataSource: MatTableDataSource<ProductGroupPreview>;
-  textFilter: string = "";
-  displayedColumns: string[] = Globals.PROD_GROUP_PRVW_SELECT_COLUMNS;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  columnList: string[] = Globals.PROD_GROUP_PRVW_SELECT_COLUMNS;
 
-  constructor(private prodGroupService: ProductGroupService, public prodDialog: MatDialog, public dialogRef: MatDialogRef<ProductGroupSelectorComponent>) { }
+  constructor(public service: ProductGroupService, public prodDialog: MatDialog, public dialogRef: MatDialogRef<ProductGroupSelectorComponent>) { }
 
-  ngOnInit() {
-    setTimeout(()=>{ 
-      this.refreshDatasource();
-    },1); 
-  }
+  ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public createClicked() {
     let dialogRef = this.prodDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
-    let obs = dialogRef.afterClosed().subscribe((resp) => { 
-      if (resp && resp.userSubmitted && resp.createdProductGroup) { 
-        this.dialogRef.close({ selectedProductGroup: resp.createdProductGroup}); 
+    let obs = dialogRef.afterClosed().subscribe((resp) => {
+      if (resp && resp.userSubmitted && resp.newModel) {
+        this.dialogRef.close({ selectedModel: resp.newModel });
       }
       obs.unsubscribe();
     });
   }
 
   public selectClicked(id: number) {
-    let obs = this.prodGroupService.getByID(id).subscribe(prodGroupResp => {
+    let obs = this.service.getByID(id).subscribe(modelResp => {
       obs.unsubscribe();
-      this.dialogRef.close({ selectedProductGroup: prodGroupResp});
+      this.dialogRef.close({ selectedModel: modelResp });
     })
   }
 
-  public resetFilterClicked() {
-    this.textFilter = "";
-    this.applyFilterClicked();
-  }
+  public sortClicked(sort: Sort) { this.service.sortTableData(sort, this.paginator); }
 
-  public applyFilterClicked() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
-
-  public sortClicked(sort: Sort) {
-    const data = this.tableDataSource.filteredData.slice();
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-    let sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'ID': return this.compare(a.productGroupID, b.productGroupID, isAsc);
-        case 'Code': return this.compare(a.productGroupCode.toLowerCase(), b.productGroupCode.toLowerCase(), isAsc);
-        case 'Name': return this.compare(a.productGroupName.toLowerCase(), b.productGroupName.toLowerCase(), isAsc);
-        default: return 0;
-      }
-    });
-    this.setupTableDataSource(sortedData);
-  }
-
-  public closeClicked(){
-    this.dialogRef.close();
-  }
-
-  private setupTableDataSource(data: ProductGroupPreview[]) {
-    this.tableDataSource = new MatTableDataSource(data);
-    this.tableDataSource.paginator = this.paginator;
-    this.tableDataSource.filter = this.textFilter;
-  }
-
-  private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
-
-  private refreshDatasource() {
-    let obs = this.prodGroupService.getAll().subscribe(prodGroupsResp => {
-      this.setupTableDataSource(prodGroupsResp);
-      obs.unsubscribe();
-    })
-  }
+  public closeClicked() { this.dialogRef.close(); }
 }

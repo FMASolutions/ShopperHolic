@@ -12,8 +12,8 @@ export class CountryComponent {
 
   currentMode: string = "";
 
-  constructor(public countryService: CountryService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<CountryComponent>) {
-    this.currentMode = this.countryService.InitializeForm(data);
+  constructor(public service: CountryService, @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<CountryComponent>) {
+    this.currentMode = this.service.InitializeForm(data);
   }
 
   getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.COUNTRY_UPDATE_TITLE : Globals.COUNTRY_CREATE_TITLE; }
@@ -21,16 +21,16 @@ export class CountryComponent {
   getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 
   submit() {
-    if (this.countryService.countryForm.valid) {
+    if (this.service.countryForm.valid) {
       if (this.currentMode == Globals.MODE_UPDATE) {
-        let obs = this.countryService.update(this.countryService.getUpdateModelFromForm()).subscribe(() => {
-          this.dialogRef.close({ userSubmitted: true });
+        let obs = this.service.update(this.service.getUpdateModelFromForm()).subscribe(updateResp => {
+          this.dialogRef.close({ userSubmitted: true, newModel: updateResp });
           obs.unsubscribe();
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
-        let obs = this.countryService.createNew(this.countryService.getCreateModelFromForm()).subscribe(createResp => {
-          this.dialogRef.close({ userSubmitted: true, createdCountry: createResp });
+        let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe(createResp => {
+          this.dialogRef.close({ userSubmitted: true, newModel: createResp });
           obs.unsubscribe();
         });
       }

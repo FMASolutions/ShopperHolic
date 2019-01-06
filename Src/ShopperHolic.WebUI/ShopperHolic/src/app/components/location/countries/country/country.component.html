@@ -2,27 +2,27 @@
   <div class="container">
       <h3 mat-dialog-title>{{getPageTitle()}}</h3>
       <app-notification></app-notification>
-      <form [formGroup]="countryService.countryForm">
+      <form [formGroup]="service.countryForm">
           <mat-form-field class="maxWidth" appearance="outline">
               <mat-label>Country Code</mat-label>
               <input matInput formControlName="code" type="text">
           </mat-form-field>
           <div class="validationMessages">
-              <div *ngIf="countryService.countryForm.controls.code.touched 
-                          && countryService.countryForm.controls.code.errors 
-                          && countryService.countryForm.controls.code.errors.failedPopulation">
+              <div *ngIf="service.countryForm.controls.code.touched 
+                          && service.countryForm.controls.code.errors 
+                          && service.countryForm.controls.code.errors.failedPopulation">
                   Code is mandatory.
               </div>
               <div *ngIf="
-                          countryService.countryForm.controls.code.touched 
-                          && countryService.countryForm.controls.code.errors 
-                          && countryService.countryForm.controls.code.errors.failedMinLength">
+                          service.countryForm.controls.code.touched 
+                          && service.countryForm.controls.code.errors 
+                          && service.countryForm.controls.code.errors.failedMinLength">
                   Code should be 2 or more characters.
               </div>
               <div *ngIf="
-                          countryService.countryForm.controls.code.touched 
-                          && countryService.countryForm.controls.code.errors 
-                          && countryService.countryForm.controls.code.errors.failedMaxLength">
+                          service.countryForm.controls.code.touched 
+                          && service.countryForm.controls.code.errors 
+                          && service.countryForm.controls.code.errors.failedMaxLength">
                   Code can't be more than 7 characters.
               </div>
           </div>
@@ -31,9 +31,9 @@
               <input matInput formControlName="name" type="text">
           </mat-form-field>
           <div class="validationMessages">
-              <div *ngIf="countryService.countryForm.controls.name.touched 
-                  && countryService.countryForm.controls.name.errors 
-                  && countryService.countryForm.controls.name.errors.failedPopulation">
+              <div *ngIf="service.countryForm.controls.name.touched 
+                  && service.countryForm.controls.name.errors 
+                  && service.countryForm.controls.name.errors.failedPopulation">
                   Name is mandatory.
               </div>
           </div>         

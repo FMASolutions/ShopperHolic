@@ -129,12 +129,9 @@ export class ProductGroupService {
     });
   }
 
-
-
-  /*--------------------- --- Product Group List Helper --- ----------------------*/
+  /*--------------------- --- Product Group Table Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<ProductGroupPreview>;
   textFilter: string = "";
-  displayedColumns: string[] = Globals.PROD_GROUP_PRVW_LIST_COLUMNS;  
 
   public sortTableData(sort: Sort, paginator: MatPaginator){
     const data = this.tableDataSource.filteredData.slice();
@@ -154,10 +151,10 @@ export class ProductGroupService {
   }
 
   public refreshListData(paginator: MatPaginator){
-    let obs = this.getAll().subscribe(prodGroupsResp => {
-      this.setupTableDataSource(prodGroupsResp, paginator);
+    let obs = this.getAll().subscribe(modelResp => {
+      this.setupTableDataSource(modelResp, paginator);
       obs.unsubscribe();
-    })
+    })        
   }
 
   public resetListFilter(){
@@ -174,10 +171,6 @@ export class ProductGroupService {
   }
 
   private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
-
-
-
-  
 }
 
 

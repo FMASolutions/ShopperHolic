@@ -10,6 +10,7 @@ import { CityArea } from 'src/app/models/location/cityAreas/cityArea';
 import { tap } from 'rxjs/operators';
 import { CityAreaPreview } from 'src/app/models/location/cityAreas/cityAreaPreview';
 import { City } from 'src/app/models/location/cities/city';
+import { MatTableDataSource, Sort, MatPaginator } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -135,4 +136,48 @@ export class CityAreaService {
       cityText: model.cityText
     });
   }
+
+  /*--------------------- --- City Area Table Helper --- ----------------------*/
+  tableDataSource: MatTableDataSource<CityAreaPreview>;
+  textFilter: string = "";
+
+  public sortTableData(sort: Sort, paginator: MatPaginator){
+    const data = this.tableDataSource.filteredData.slice();
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+    let sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'ID': return this.compare(a.cityAreaID, b.cityAreaID, isAsc);
+        case 'Code': return this.compare(a.cityAreaCode.toLowerCase(), b.cityAreaCode.toLowerCase(), isAsc);
+        case 'Name': return this.compare(a.cityAreaName.toLowerCase(), b.cityAreaName.toLowerCase(), isAsc);
+        case 'CID': return this.compare(a.cityID, b.cityID, isAsc);
+        default: return 0;
+      }
+    });
+    this.setupTableDataSource(sortedData, paginator);
+  }
+
+  public refreshListData(paginator: MatPaginator){
+    let obs = this.getAll().subscribe(modelResp => {
+      this.setupTableDataSource(modelResp, paginator);
+      obs.unsubscribe();
+    })        
+  }
+
+  public resetListFilter(){
+    this.textFilter = "";
+    this.applyListFilter();
+  }
+
+  public applyListFilter() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
+
+  private setupTableDataSource(data: CityAreaPreview[], paginator: MatPaginator) {
+    this.tableDataSource = new MatTableDataSource(data);
+    this.tableDataSource.paginator = paginator;
+    this.tableDataSource.filter = this.textFilter;
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
 }

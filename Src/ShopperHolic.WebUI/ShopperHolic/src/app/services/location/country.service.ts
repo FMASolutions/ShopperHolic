@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Country } from 'src/app/models/location/countries/country';
 import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { MatTableDataSource, Sort, MatPaginator } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -123,4 +124,47 @@ export class CountryService {
       name: model.countryName,
     });
   }
+
+  /*--------------------- --- Country Table Helper --- ----------------------*/
+  tableDataSource: MatTableDataSource<Country>;
+  textFilter: string = "";
+
+  public sortTableData(sort: Sort, paginator: MatPaginator){
+    const data = this.tableDataSource.filteredData.slice();
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+    let sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'ID': return this.compare(a.countryID, b.countryID, isAsc);
+        case 'Code': return this.compare(a.countryCode.toLowerCase(), b.countryCode.toLowerCase(), isAsc);
+        case 'Name': return this.compare(a.countryName.toLowerCase(), b.countryName.toLowerCase(), isAsc);
+        default: return 0;
+      }
+    });
+    this.setupTableDataSource(sortedData, paginator);
+  }
+
+  public refreshListData(paginator: MatPaginator){
+    let obs = this.getAll().subscribe(modelResp => {
+      this.setupTableDataSource(modelResp, paginator);
+      obs.unsubscribe();
+    })        
+  }
+
+  public resetListFilter(){
+    this.textFilter = "";
+    this.applyListFilter();
+  }
+
+  public applyListFilter() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
+
+  private setupTableDataSource(data: Country[], paginator: MatPaginator) {
+    this.tableDataSource = new MatTableDataSource(data);
+    this.tableDataSource.paginator = paginator;
+    this.tableDataSource.filter = this.textFilter;
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
 }
