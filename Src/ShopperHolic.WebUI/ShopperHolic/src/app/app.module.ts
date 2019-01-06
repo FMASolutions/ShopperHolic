@@ -58,6 +58,24 @@ import { CountryService } from './services/location/country.service';
 import { CityService } from './services/location/city.service';
 import { CityAreaService } from './services/location/city-area.service';
 import { AddressService } from './services/location/address.service';
+import { UserAccountsComponent } from './components/accounts/user-accounts/user-accounts.component';
+import { CustomersComponent } from './components/accounts/customers/customers.component';
+import { SuppliersComponent } from './components/accounts/suppliers/suppliers.component';
+import { UserAccountComponent } from './components/accounts/user-accounts/user-account/user-account.component';
+import { UserAccountListComponent } from './components/accounts/user-accounts/user-account-list/user-account-list.component';
+import { UserAccountSelectorComponent } from './components/accounts/user-accounts/user-account-selector/user-account-selector.component';
+import { SupplierComponent } from './components/accounts/suppliers/supplier/supplier.component';
+import { SupplierListComponent } from './components/accounts/suppliers/supplier-list/supplier-list.component';
+import { SupplierSelectorComponent } from './components/accounts/suppliers/supplier-selector/supplier-selector.component';
+import { CustomerComponent } from './components/accounts/customers/customer/customer.component';
+import { CustomerListComponent } from './components/accounts/customers/customer-list/customer-list.component';
+import { CustomerSelectorComponent } from './components/accounts/customers/customer-selector/customer-selector.component';
+import { OrdersComponent } from './components/ordering/orders/orders.component';
+import { OrderComponent } from './components/ordering/orders/order/order.component';
+import { OrderListComponent } from './components/ordering/orders/order-list/order-list.component';
+import { PurchaseOrdersComponent } from './components/purchasing/purchase-orders/purchase-orders.component';
+import { PurchaseOrderComponent } from './components/purchasing/purchase-orders/purchase-order/purchase-order.component';
+import { PurchaseListComponent } from './components/purchasing/purchase-orders/purchase-list/purchase-list.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +116,24 @@ import { AddressService } from './services/location/address.service';
     AddressComponent,
     AddressListComponent,
     AddressSelectorComponent,
+    UserAccountsComponent,
+    CustomersComponent,
+    SuppliersComponent,
+    UserAccountComponent,
+    UserAccountListComponent,
+    UserAccountSelectorComponent,
+    SupplierComponent,
+    SupplierListComponent,
+    SupplierSelectorComponent,
+    CustomerComponent,
+    CustomerListComponent,
+    CustomerSelectorComponent,
+    OrdersComponent,
+    OrderComponent,
+    OrderListComponent,
+    PurchaseOrdersComponent,
+    PurchaseOrderComponent,
+    PurchaseListComponent,
   ],
   imports: [
     BrowserModule,
