@@ -17,7 +17,7 @@ import { MatTableDataSource, Sort, MatPaginator } from '@angular/material';
 })
 export class AddressService {
 
-  baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/SubGroup/';
+  baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Address/';
   
   constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: GenericValidator) { }
 
@@ -45,6 +45,7 @@ export class AddressService {
   public getAll(): Observable<AddressPreview[]> {
     this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_GET_MESSAGE);
     return this.http.get<AddressPreview[]>(this.baseURL + 'GetAll').pipe(tap(resp => {
+      console.log(resp);
       this.userNotificationService.closeSpinners();
     }, err => {
       this.userNotificationService.informUserError(Globals.ADDRESS_READ_FAILED_MSG);
@@ -108,7 +109,7 @@ export class AddressService {
     } 
     return newModel;
   }
-  public updateSelectedProductGroup(newChildModel: CityArea){
+  public updateSelectedCityArea(newChildModel: CityArea){
     this.addressForm.controls["cityAreaID"].setValue(newChildModel.cityAreaID);
     this.addressForm.controls["cityAreaText"].setValue(newChildModel.cityAreaID + " - " + newChildModel.cityAreaCode + " - " + newChildModel.cityAreaName);
 
@@ -154,7 +155,7 @@ export class AddressService {
     let sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'ID': return this.compare(a.addressID, b.addressID, isAsc);
+        case 'id': return this.compare(a.addressID, b.addressID, isAsc);
         case 'Line1': return this.compare(a.addressLine1.toLowerCase(), b.addressLine1.toLowerCase(), isAsc);
         case 'Line2': return this.compare(a.addressLine2.toLowerCase(), b.addressLine2.toLowerCase(), isAsc);
         case 'CityAreaName': return this.compare(a.cityAreaName.toLowerCase(), b.cityAreaName.toLowerCase(), isAsc);
@@ -166,6 +167,7 @@ export class AddressService {
 
   public refreshListData(paginator: MatPaginator){
     let obs = this.getAll().subscribe(modelResp => {
+      console.log(modelResp);
       this.setupTableDataSource(modelResp, paginator);
       obs.unsubscribe();
     })        

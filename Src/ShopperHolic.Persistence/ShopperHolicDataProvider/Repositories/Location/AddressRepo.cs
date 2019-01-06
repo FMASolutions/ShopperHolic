@@ -38,7 +38,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT AddressLocationID,AddressLine1,AddressLine2,PostCode,ca.CityAreaID,
+                SELECT AddressLocationID AS [AddressID],AddressLine1,AddressLine2,PostCode,ca.CityAreaID,
                     CONVERT(VARCHAR(10),ca.CityAreaID) + ' - ' + ca.CityAreaCode + ' - ' + ca.CityAreaName AS CityAreaText
                 FROM AddressLocations al WITH(NOLOCK)
                 INNER JOIN CityAreas ca WITH(NOLOCK) ON al.CityAreaID = ca.CityAreaID
@@ -59,7 +59,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT AddressLocationID,AddressLine1,AddressLine2,PostCode,CityAreaName
+                SELECT AddressLocationID AS [AddressID],AddressLine1,AddressLine2,PostCode,CityAreaName
                 FROM AddressLocations al WITH(NOLOCK)
                 INNER JOIN CityAreas ca WITH(NOLOCK) ON al.CityAreaID = ca.CityAreaID";
 

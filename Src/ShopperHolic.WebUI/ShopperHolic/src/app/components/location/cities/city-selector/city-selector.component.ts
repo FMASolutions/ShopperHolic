@@ -39,5 +39,4 @@ export class CitySelectorComponent implements OnInit {
   public sortClicked(sort: Sort) { this.service.sortTableData(sort, this.paginator); }
 
   public closeClicked() { this.ownDialog.close(); }
-
 }

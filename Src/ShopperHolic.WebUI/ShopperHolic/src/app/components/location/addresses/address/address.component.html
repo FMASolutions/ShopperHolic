@@ -1,3 +1,69 @@
-<p>
-  address works!
-</p>
+<mat-dialog-content>
+  <div class="container">
+    <h3 mat-dialog-title>{{getPageTitle()}}</h3>
+    <app-notification></app-notification>
+    <form [formGroup]="service.addressForm">
+
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Address Line 1</mat-label>
+        <input matInput formControlName="addressLine1" type="text">
+      </mat-form-field>
+      <div class="validationMessages">
+        <div *ngIf="service.addressForm.controls.addressLine1.touched 
+              && service.addressForm.controls.addressLine1.errors 
+              && service.addressForm.controls.addressLine1.errors.failedPopulation">
+          Address Line 1
+        </div>
+      </div>
+
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Address Line 2</mat-label>
+        <input matInput formControlName="addressLine2" type="text">
+      </mat-form-field>
+      <div class="validationMessages">
+        <div *ngIf="service.addressForm.controls.addressLine2.touched 
+              && service.addressForm.controls.addressLine2.errors 
+              && service.addressForm.controls.addressLine2.errors.failedPopulation">
+          Address Line 1
+        </div>
+      </div>
+
+      <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+        <div fxFlex="50">
+
+          <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openChildSelect()">
+            City Area Selector
+          </button>
+        </div>
+        <div fxFlex="50">
+          <mat-form-field class="maxWidth">
+            <mat-label>Use City Area Button</mat-label>
+            <input matInput formControlName="cityAreaID" type="text" readonly hidden>
+            <input matInput formControlName="cityAreaText" type="text" readonly>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Postcode</mat-label>
+        <input matInput formControlName="postCode" type="text">
+      </mat-form-field>
+      <div class="validationMessages">
+        <div *ngIf="service.addressForm.controls.postCode.touched 
+              && service.addressForm.controls.postCode.errors 
+              && service.addressForm.controls.postCode.errors.failedPopulation">
+          Address Line 1
+        </div>
+      </div>
+
+      <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+        <div fxFlex="50">
+          <button mat-raised-button color="accent" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
+        </div>
+        <div fxFlex="50">
+          <button mat-raised-button color="primary" class="maxWidth" (click)="cancel()">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
