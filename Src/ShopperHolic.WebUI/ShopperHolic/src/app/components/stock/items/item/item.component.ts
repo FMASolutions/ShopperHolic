@@ -22,15 +22,9 @@ export class ItemComponent implements OnInit {
     this.currentMode = this.itemService.InitializeForm(this.currentImageElement, this.data);
   }
 
-  getPageTitle() {
-    if (this.currentMode == Globals.MODE_UPDATE) { return Globals.ITEM_UPDATE_TITLE; }
-    else if (this.currentMode == Globals.MODE_CREATE) { return Globals.ITEM_CREATE_TITLE; }
-  }
+  getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.ITEM_UPDATE_TITLE : Globals.ITEM_CREATE_TITLE; }
 
-  getSubmitButtonText() {
-    if (this.currentMode == Globals.MODE_UPDATE) { return Globals.UPDATE_BUTTON_TEXT }
-    else if (this.currentMode == Globals.MODE_CREATE) { return Globals.CREATE_BUTTON_TEXT }
-  }
+  getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 
   openSubSelect() {
     let dialogRef = this.subDialog.open(SubGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);

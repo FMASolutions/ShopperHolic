@@ -17,15 +17,9 @@ export class SubGroupComponent {
     this.currentMode = this.subGroupService.InitializeForm(data);
   }
 
-  getPageTitle() {
-    if (this.currentMode == Globals.MODE_UPDATE) { return Globals.SUB_GROUP_UPDATE_TITLE; }
-    else if (this.currentMode == Globals.MODE_CREATE) { return Globals.SUB_GROUP_CREATE_TITLE; }
-  }
+  getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.SUB_GROUP_UPDATE_TITLE : Globals.SUB_GROUP_CREATE_TITLE; }
 
-  getSubmitButtonText(){
-    if (this.currentMode == Globals.MODE_UPDATE) { return Globals.UPDATE_BUTTON_TEXT }
-    else if (this.currentMode == Globals.MODE_CREATE) { return Globals.CREATE_BUTTON_TEXT }
-  }
+  getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 
   openProdSelectDialog(){
     let dialogRef = this.prodDialog.open(ProductGroupSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);

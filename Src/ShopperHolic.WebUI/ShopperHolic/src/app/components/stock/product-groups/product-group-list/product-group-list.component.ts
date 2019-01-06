@@ -56,13 +56,18 @@ export class ProductGroupListComponent implements OnInit {
   }
 
   public resetFilterClicked() {
+    this.prodGroupService.textFilter = "";
+    /*
     this.textFilter = "";
+    */
     this.applyFilterClicked();
   }
 
-  public applyFilterClicked() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
+  public applyFilterClicked() { this.prodGroupService.applyListFilter() }
 
   public sortClicked(sort: Sort) {
+    this.prodGroupService.sortTableData(sort, this.paginator);
+    /*
     const data = this.tableDataSource.filteredData.slice();
     if (!sort.active || sort.direction === '') {
       return;
@@ -77,20 +82,25 @@ export class ProductGroupListComponent implements OnInit {
       }
     });
     this.setupTableDataSource(sortedData);
+    */
   }
-
+  /*
   private setupTableDataSource(data: ProductGroupPreview[]) {
     this.tableDataSource = new MatTableDataSource(data);
     this.tableDataSource.paginator = this.paginator;
     this.tableDataSource.filter = this.textFilter;
   }
+  
 
   private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
-
+*/
   private refreshDatasource() {
+    this.prodGroupService.refreshListData(this.paginator);
+    /*
     let obs = this.prodGroupService.getAll().subscribe(prodGroupsResp => {
       this.setupTableDataSource(prodGroupsResp);
       obs.unsubscribe();
     })
+    */
   }
 }

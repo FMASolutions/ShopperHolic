@@ -9,6 +9,7 @@ import { tap } from 'rxjs/operators';
 import { UserNotificationService } from '../generic/user-notification.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { GenericValidator } from '../generic/generic-validator';
+import { MatTableDataSource, Sort, MatPaginator } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -127,4 +128,56 @@ export class ProductGroupService {
       desc: model.productGroupDescription
     });
   }
+
+
+
+  /*--------------------- --- Product Group List Helper --- ----------------------*/
+  tableDataSource: MatTableDataSource<ProductGroupPreview>;
+  textFilter: string = "";
+  displayedColumns: string[] = Globals.PROD_GROUP_PRVW_LIST_COLUMNS;  
+
+  public sortTableData(sort: Sort, paginator: MatPaginator){
+    const data = this.tableDataSource.filteredData.slice();
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+    let sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'ID': return this.compare(a.productGroupID, b.productGroupID, isAsc);
+        case 'Code': return this.compare(a.productGroupCode.toLowerCase(), b.productGroupCode.toLowerCase(), isAsc);
+        case 'Name': return this.compare(a.productGroupName.toLowerCase(), b.productGroupName.toLowerCase(), isAsc);
+        default: return 0;
+      }
+    });
+    this.setupTableDataSource(sortedData, paginator);
+  }
+
+  public refreshListData(paginator: MatPaginator){
+    let obs = this.getAll().subscribe(prodGroupsResp => {
+      this.setupTableDataSource(prodGroupsResp, paginator);
+      obs.unsubscribe();
+    })
+  }
+
+  public resetListFilter(){
+    this.textFilter = "";
+    this.applyListFilter();
+  }
+
+  public applyListFilter() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
+
+  private setupTableDataSource(data: ProductGroupPreview[], paginator: MatPaginator) {
+    this.tableDataSource = new MatTableDataSource(data);
+    this.tableDataSource.paginator = paginator;
+    this.tableDataSource.filter = this.textFilter;
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
+
+
+
+  
 }
+
+

@@ -16,15 +16,9 @@ export class ProductGroupComponent {
     this.currentMode = this.prodService.InitializeForm(data);
   }
 
-  getPageTitle() {
-    if (this.currentMode == Globals.MODE_UPDATE) { return Globals.PROD_GROUP_UPDATE_TITLE; }
-    else if (this.currentMode == Globals.MODE_CREATE) { return Globals.PROD_GROUP_CREATE_TITLE; }
-  }
+  getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.PROD_GROUP_UPDATE_TITLE : Globals.PROD_GROUP_CREATE_TITLE; }
 
-  getSubmitButtonText(){
-    if (this.currentMode == Globals.MODE_UPDATE) { return Globals.UPDATE_BUTTON_TEXT }
-    else if (this.currentMode == Globals.MODE_CREATE) { return Globals.CREATE_BUTTON_TEXT }
-  }
+  getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 
   submit() {
     if (this.prodService.prodForm.valid) {

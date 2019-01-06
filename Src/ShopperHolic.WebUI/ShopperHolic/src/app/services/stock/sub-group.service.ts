@@ -67,7 +67,7 @@ export class SubGroupService {
       this.userNotificationService.informUserComplete(Globals.SUB_GROUP_DELETE_SUCCESS_MSG + id);
     }, err => {
       this.userNotificationService.informUserError(Globals.SUB_GROUP_DELETE_FAILED_MSG + id);
-      this.userNotificationService.informUserError(err.error);
+      this.userNotificationService.informUserError(err.error);      
     }));
   }
 

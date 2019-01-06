@@ -128,7 +128,15 @@ import { AddressSelectorComponent } from './components/location/addresses/addres
     SubGroupComponent,
     SubGroupSelectorComponent,
     ItemComponent,
-    ItemSelectorComponent
+    ItemSelectorComponent,
+    CountryComponent,
+    CountrySelectorComponent,
+    CityComponent,
+    CitySelectorComponent,
+    CityAreaComponent,
+    CityAreaSelectorComponent,
+    AddressComponent,
+    AddressSelectorComponent
   ]
 })
 export class AppModule { }
