@@ -115,7 +115,7 @@ export class CityAreaService {
     let newModel: CreateCityArea = {
       cityAreaCode: this.cityAreaForm.value["code"],
       cityAreaName: this.cityAreaForm.value["name"],
-      cityID: this.cityAreaForm.value["prodID"]
+      cityID: this.cityAreaForm.value["cityID"]
     };
     return newModel;
   }
