@@ -105,6 +105,8 @@ GO
 CUSTOMERS
 Customers
 CustomerTypes
+Suppliers
+
 -------------------------------------*/
 PRINT 'Insert CustomerTypes'
 INSERT INTO CustomerTypes
@@ -122,8 +124,15 @@ VALUES
     (2              ,1                  ,'FMALTD'       ,'FMA Solutions LTD'    ,'07532282222'          ,'faisal@ahmedmail.info'),
     (2              ,2                  ,'ZAL'          ,'Zulkar Ltd'           ,'+92 533 572127'       ,'Zalk@Yahoo.com')
 GO
+
+PRINT 'Insert Suppliers'
+INSERT INTO Suppliers
+    (SupplierCode,  SupplierName    , SupplierContactNumber , SupplierEmailAddress)
+VALUES
+    ('FMASUP'       ,'FMA Supplier' ,'07532282222'          ,'faisal@ahmedmail.info')
+GO
 /*-------------------------------------
-ORDERS:
+ORDERING:
 InvoiceItems (Via Stored Proc)
 InvoiceHeaders (Via Stored Proc)
 DeliveryNotes (Via Stored Proc)
@@ -204,13 +213,75 @@ GO
 PRINT 'Gen Invoice Order 3'
 Exec GenerateInvoiceForOrder 3
 GO
+
+
+
+
+
+
+/*-------------------------------------
+PURCHASING:
+PurchaseInvoiceStatus
+PurchaseOrderStatus
+PurchaseOrderHeaders
+PurchaseOrderItems
+GoodsReceivedNotes
+GoodsReceivedNoteItems
+PurchaseInvoiceHeaders
+PurchaseInvoiceItems
+-------------------------------------*/
+PRINT 'Insert Purchase Order Status'
+INSERT INTO PurchaseOrderStatus
+    (PurchaseOrderStatusValue)
+VALUES
+    ('Tender'),
+    ('Awaiting Delivery'),
+    ('Goods Received'),
+    ('Complete')
+GO
+
+PRINT 'Insert Purchase Invoice Status'
+INSERT INTO PurchaseInvoiceStatus
+    (PurchaseInvoiceStatusValue)
+VALUES
+    ('Received'),
+    ('Paid')
+GO 
+
+PRINT 'Insert Purchase Order Headers'
+INSERT INTO PurchaseOrderHeaders
+    (SupplierID ,AddressID  ,PurchaseOrderStatusID  ,OrderDate                  ,DeliveryDate)
+VALUES
+    (1          ,1          ,1              ,DATEADD(DAY,-3,GetDate())  ,DATEADD(DAY,-2,GetDate())) --Complete Order
+GO
+
+PRINT 'Insert OrderItems'
+INSERT INTO PurchaseOrderItems
+    (PurchaseOrderHeaderID  ,ItemID ,PurchaseOrderItemStatusID  ,OrderItemUnitPrice ,OrderItemUnitPriceAfterDiscount    ,OrderItemQty   ,OrderItemDescription)
+VALUES
+    (1                      ,1      ,1                          ,1.99               ,1.99                               ,1              ,'Blue Wall Panels 5 Pack'),
+    (1                      ,2      ,1                          ,2.99               ,2.99                               ,3              ,'Red Wall Panels 5 Pack')
+GO
+PRINT 'Send Purchase Order 1'
+Exec SendPurchaseOrder 1 
+GO
+PRINT 'Process Goods Received for purchase Order 1'
+Exec ProcessGoodsReceived 1
+GO
+PRINT 'Gen Purchase Invoice 1'
+Exec GeneratePuchaseInvoice 1
+GO
+
+
 /*-------------------------------------
 User Security:
 Users
 UserRoleTypes
 UserClaimTypes
-UserRoles
 UserClaims
+UserRoles
+CustomerLogins --TODO
+SupplierLogins -- TODO
 -------------------------------------*/
 PRINT 'Insert UserClaimTypes'
 INSERT INTO UserClaimTypes
@@ -226,7 +297,6 @@ VALUES
     ('UserCanCreateItem'),
     ('UserCanEditItem'),
     ('UserCanDeleteItem'),
-
     ('UserCanCreateCountry'),
     ('UserCanEditCountry'),
     ('UserCanDeleteCountry'),
@@ -250,62 +320,19 @@ VALUES
     ('TillOperator')
 GO
 
-PRINT 'Insert Users'
-INSERT INTO Users
-    (Username, EncryptedPassword, KnownAs, EmailAddress)
-VALUES
-    ('Faisal', 'ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=', 'chinkey', 'faisal@ahmedmail.info')
-GO
-
-PRINT 'Insert UserClaims'
-INSERT INTO UserClaims
-    (UserClaimTypeID, UserID, ClaimValue)
-VALUES
-    (1,1,'true'), -- IsAdminUser / Faisal 
-    (2,1,'true'), -- UserCanCreateProductGroup / Faisal
-    (3,1,'true'), -- UserCanEditProductGroup / Faisal
-    (4,1,'true'), -- UserCanDeleteProductGroup / Faisal
-    (5,1,'true'), -- UserCanCreateSubGroup / Faisal
-    (6,1,'true'), -- UserCanEditSubGroup / Faisal
-    (7,1,'true'), -- UserCanDeleteSubGroup / Faisal
-    (8,1,'true'), -- UserCanCreateItem / Faisal
-    (9,1,'true'), -- UserCanEditItem / Faisal
-    (10,1,'true'), -- USerCanDeleteItem / Faisal
-    (11,1,'true'), -- UserCanCreateCountry / Faisal
-    (12,1,'true'), -- UserCanEditCountry / Faisal
-    (13,1,'true'), -- UserCanDeleteCountry / Faisal
-    (14,1,'true'), -- UserCanCreateCity / Faisal
-    (15,1,'true'), -- UserCanEditCity / Faisal
-    (16,1,'true'), -- UserCanDeleteCity / Faisal
-    (17,1,'true'), -- UserCanCreateCityArea / Faisal
-    (18,1,'true'), -- UserCanEditCityArea / Faisal
-    (19,1,'true'), -- UserCanDeleteCityArea / Faisal
-    (20,1,'true'), -- UserCanCreateAddress / Faisal
-    (21,1,'true'), -- UserCanEditAddress / Faisal
-    (22,1,'true') -- UserCanDeleteAddress / Faisal
-GO
-
-PRINT 'Insert UserRoles'
-INSERT INTO UserRoles
-    (UserRoleTypeID,UserID)
-VALUES
-    (1,1), --Administrator / Faisal
-    (1,2), -- Administrator / Zulkar
-    (2,3), -- Customer / TestCustomer
-    (3,4) -- TillOperator / Minaccess
+PRINT 'Create Test Users'
+Exec CreateNewUser 'Faisal', 'ZUCU6YavUNL89WSjagV1kPkiIL3e5FCEwc1YONXUn5Y=', 'chinkey', 'faisal@ahmedmail.info', 1 
 GO
 
 PRINT 'Insert CustomerLogins'
 INSERT INTO CustomerLogins
     (CustomerID, UserID)
 VALUES
-    (2,1), -- FMASolutionsLtd / Faisal
-    (3,2)   -- Zulkar Ltd / Zulkar
+    (2,1) -- FMASolutionsLtd / Faisal
 GO
 /*-------------------------------------
 App Security:
 AuthorizedApplications
-RefreshTokens
 -------------------------------------*/
 PRINT 'Insert AuthorizedApplications'
 INSERT INTO AuthorizedApplications
@@ -314,12 +341,6 @@ VALUES
     ('MirpurPVC','ThisIsAVeryLongSecretForTestingPurposesOnlyChangedOnLiveServerAlsoEncryptAtSomePoint')
 GO
 
-PRINT 'Insert RefreshTokens'
-INSERT INTO RefreshTokens
-    (AppID, RefreshToken)
-VALUES
-    (1, NewID())
-GO
 /*----------------------------------
 RETRIEVE DATA FOR VIEWING PLEASURE
 ----------------------------------*/
@@ -352,7 +373,5 @@ SELECT * FROM UserClaims
 SELECT * FROM CustomerLogins
 
 SELECT * FROM AuthorizedApplications
-SELECT * FROM RefreshTokens
-SELECT * FROM Tokens
 SELECT * FROM AccessKeys
 GO

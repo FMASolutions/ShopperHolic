@@ -1,3 +1,4 @@
+A) Complete User creation procedure to implement correct claim types for the given roles
 1) Add Item Selector in UI
 2) Allow user registration as a basic user.
 3) Change to Async db  and api calls

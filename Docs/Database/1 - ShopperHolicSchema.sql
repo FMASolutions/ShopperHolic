@@ -24,6 +24,16 @@ DROP TABLE InvoiceStatus
 DROP TABLE CustomerLogins
 DROP TABLE Customers
 DROP TABLE CustomerTypes
+DROP TABLE PurchaseInvoiceItems
+DROP TABLE PurchaseInvoiceHeaders
+DROP TABLE GoodsReceivedNoteItems
+DROP TABLE GoodsReceivedNotes
+DROP TABLE PurchaseOrderItems
+DROP TABLE PurchaseOrderHeaders
+DROP TABLE PurchaseOrderStatus
+DROP TABLE PurchaseInvoiceStatus
+DROP TABLE SupplierLogins
+DROP TABLE Suppliers
 DROP TABLE AddressLocations
 DROP TABLE CityAreas
 DROP TABLE Cities
@@ -31,7 +41,6 @@ DROP TABLE Countries
 DROP TABLE Items
 DROP TABLE SubGroups
 DROP TABLE ProductGroups
-DROP TABLE RefreshTokens
 DROP TABLE AuthorizedApplications
 DROP TABLE AccessKeys
 DROP TABLE UserRoles
@@ -41,10 +50,6 @@ DROP TABLE UserClaimTypes
 DROP TABLE Users
 DROP TABLE AuditLogs
 DROP TABLE AuditLogTypes
-DROP PROCEDURE dbo.DeliverExistingItems
-DROP PROCEDURE dbo.GenerateInvoiceForOrder
-DROP PROCEDURE dbo.AuthenticateUserAndGetExchangeKey
-DROP PROCEDURE dbo.VerifyAccessKey
 
 
 CREATE TABLE ProductGroups
@@ -190,6 +195,78 @@ CREATE TABLE DeliveryNoteItems
     DeliveryNoteID INT FOREIGN KEY REFERENCES DeliveryNotes(DeliveryNoteID),
     OrderItemID INT FOREIGN KEY REFERENCES OrderItems(OrderItemID)
 )
+CREATE TABLE Suppliers
+(
+    SupplierID INT IDENTITY(1,1) PRIMARY KEY,
+    SupplierCode VARCHAR(7) NOT NULL UNIQUE,
+    SupplierName VARCHAR(250) NOT NULL,
+    SupplierContactNumber VARCHAR(30) NOT NULL,
+    SupplierEmailAddress VARCHAR(250) NULL
+)
+GO
+CREATE TABLE PurchaseOrderStatus
+(
+    PurchaseOrderStatusID INT IDENTITY(1,1) PRIMARY KEY,
+    PurchaseOrderStatusValue VARCHAR(20) NOT NULL
+)
+GO
+CREATE TABLE PurchaseInvoiceStatus
+(
+    PurchaseInvoiceStatusID INT IDENTITY(1,1) PRIMARY KEY,
+    PurchaseInvoiceStatusValue VARCHAR(20) NOT NULL
+)
+GO
+CREATE TABLE PurchaseOrderHeaders
+(
+    PurchaseOrderHeaderID INT IDENTITY(1,1) PRIMARY KEY,
+    SupplierID INT FOREIGN KEY REFERENCES Suppliers(SupplierID),
+    AddressID INT FOREIGN KEY REFERENCES AddressLocations(AddressLocationID),
+    PurchaseOrderStatusID INT FOREIGN KEY REFERENCES PurchaseOrderStatus(PurchaseOrderStatusID),
+    OrderDate DATETIME NOT NULL,
+    DeliveryDate DATETIME NOT NULL
+)
+GO
+CREATE TABLE PurchaseOrderItems
+(
+    PurchaseOrderItemID INT IDENTITY(1,1) PRIMARY KEY,
+    PurchaseOrderHeaderID INT FOREIGN KEY REFERENCES PurchaseOrderHeaders(PurchaseOrderHeaderID),
+    ItemID INT FOREIGN KEY REFERENCES Items(ItemID),
+    PurchaseOrderItemStatusID INT FOREIGN KEY REFERENCES PurchaseOrderStatus(PurchaseOrderStatusID),
+    OrderItemUnitPrice DECIMAL(12,4) NOT NULL,
+    OrderItemUnitPriceAfterDiscount DECIMAL(12,4) NOT NULL,
+    OrderItemQty INT NOT NULL,
+    OrderItemDescription VARCHAR(100) NOT NULL
+)
+GO
+CREATE TABLE PurchaseInvoiceHeaders
+(
+    PurchaseInvoiceHeaderID INT IDENTITY(1,1) PRIMARY KEY,
+    PurchaseOrderHeaderID INT FOREIGN KEY REFERENCES PurchaseOrderHeaders(PurchaseOrderHeaderID),
+    PurchaseInvoiceStatusID INT FOREIGN KEY REFERENCES PurchaseInvoiceStatus(PurchaseInvoiceStatusID),
+    InvoiceDate DATETIME NOT NULL
+)
+GO
+CREATE TABLE PurchaseInvoiceItems
+(
+    PurchaseInvoiceItemID INT IDENTITY(1,1) PRIMARY KEY,
+    PurchaseInvoiceHeaderID INT FOREIGN KEY REFERENCES PurchaseInvoiceHeaders(PurchaseInvoiceHeaderID),
+    PurchaseOrderItemID INT FOREIGN KEY REFERENCES PurchaseOrderItems(PurchaseOrderItemID),
+    PurchaseInvoiceItemStatusID INT FOREIGN KEY REFERENCES PurchaseInvoiceStatus(PurchaseInvoiceStatusID),
+    InvoiceItemQty INT NOT NULL
+)
+GO
+CREATE TABLE GoodsReceivedNotes
+(
+    GoodsReceivedNoteID INT IDENTITY(1,1) PRIMARY KEY,
+    PurchaseOrderHeaderID INT FOREIGN KEY REFERENCES PurchaseOrderHeaders(PurchaseOrderHeaderID),
+    GoodsReceivedDate DATETIME NOT NULL
+)
+CREATE TABLE GoodsReceivedNoteItems
+(
+    GoodsReceivedNoteItemID INT IDENTITY(1,1) PRIMARY KEY,
+    GoodsReceivedNoteID INT FOREIGN KEY REFERENCES GoodsReceivedNotes(GoodsReceivedNoteID),
+    PurchaseOrderItemID INT FOREIGN KEY REFERENCES PurchaseOrderItems(PurchaseOrderItemID)
+)
 CREATE TABLE AuditLogTypes
 (
     AuditLogTypeID INT IDENTITY(1,1) PRIMARY KEY,
@@ -251,6 +328,11 @@ CREATE TABLE CustomerLogins
     UserID INT FOREIGN KEY REFERENCES Users(UserID)
 )
 GO
+CREATE TABLE SupplierLogins
+(
+    SupplierLoginID INT IDENTITY(1,1) PRIMARY KEY,
+
+)
 CREATE TABLE AuthorizedApplications
 (
     AppID INT IDENTITY(1,1) PRIMARY KEY,
@@ -265,160 +347,4 @@ CREATE TABLE AccessKeys
     AccessKeyIssueDate DATETIME NOT NULL,
     AccessKeyExpiryDate DATETIME NOT NULL
 )
-CREATE TABLE RefreshTokens
-(
-    RefreshTokenID INT IDENTITY(1,1) PRIMARY KEY,
-    AppID INT FOREIGN KEY REFERENCES AuthorizedApplications(AppID),
-    RefreshToken VARCHAR(MAX) NOT NULL
-)
-GO
-CREATE PROCEDURE dbo.DeliverExistingItems
-    @OrderHeaderID INT
-AS
-IF EXISTS(SELECT 1
-FROM OrderItems
-WHERE OrderHeaderID = @OrderHeaderID and OrderItemStatusID = 1)
-BEGIN
-    INSERT INTO DeliveryNotes
-        (OrderHeaderID,DeliveryDate)
-    VALUES(@OrderHeaderID, GetDate())
-
-    DECLARE @CurrentDeliveryNoteID INT
-    SET @CurrentDeliveryNoteID = (SELECT TOP 1
-        DeliveryNoteID
-    FROM DeliveryNotes
-    WHERE OrderHeaderID = @OrderHeaderID
-    ORDER BY DeliveryNoteID DESC)
-
-    INSERT INTO DeliveryNoteItems
-        (DeliveryNoteID, OrderItemID)
-    SELECT @CurrentDeliveryNoteID, OrderItemID
-    FROM OrderItems
-    WHERE OrderHeaderID = @OrderHeaderID
-        AND OrderItemStatusID = 1
-
-    UPDATE i
-	SET i.ItemAvailableQty = i.ItemAvailableQty - oi.OrderItemQty
-	FROM OrderItems oi
-        INNER JOIN Items i on oi.ItemID = i.ItemID
-	WHERE oi.OrderHeaderID = @OrderHeaderID
-        AND oi.OrderItemStatusID = 1
-
-    UPDATE OrderItems
-	SET OrderItemStatusID = 2
-	WHERE OrderHeaderID = @OrderHeaderID
-        AND OrderItemStatusID = 1
-
-    UPDATE OrderHeaders
-	SET OrderStatusID = 2
-	WHERE OrderHeaderID = @OrderHeaderID
-
-    SELECT @CurrentDeliveryNoteID
-END
-ELSE
-BEGIN
-    SELECT 0
-END
-GO
-
-CREATE PROCEDURE [dbo].[GenerateInvoiceForOrder]
-    @OrderHeaderID INT
-AS
-IF EXISTS(SELECT 1
-FROM OrderItems
-WHERE OrderHeaderID = @OrderHeaderID and OrderItemStatusID = 2)
-BEGIN
-    INSERT INTO InvoiceHeaders
-        (OrderHeaderID,InvoiceDate,InvoiceStatusID)
-    VALUES(@OrderHeaderID, GetDate(), 1)
-
-    DECLARE @CurrentInvoiceID INT
-    SET @CurrentInvoiceID = (SELECT TOP 1
-        InvoiceHeaderID
-    FROM InvoiceHeaders
-    WHERE OrderHeaderID = @OrderHeaderID
-    ORDER BY InvoiceHeaderID DESC)
-
-    INSERT INTO InvoiceItems
-        (InvoiceHeaderID, OrderItemID, InvoiceItemStatusID, InvoiceItemQty)
-    SELECT @CurrentInvoiceID, OrderItemID, 1, OrderItemQty
-    FROM OrderItems
-    WHERE OrderHeaderID = @OrderHeaderID
-        AND OrderItemStatusID = 2
-
-    UPDATE OrderItems
-	SET OrderItemStatusID = 3
-	WHERE OrderHeaderID = @OrderHeaderID
-        AND OrderItemStatusID = 2
-
-    UPDATE OrderHeaders
-	SET OrderStatusID = 3
-	WHERE OrderHeaderID = @OrderHeaderID
-
-    SELECT @CurrentInvoiceID
-END
-ELSE
-BEGIN
-    SELECT 0
-END
-GO
-
-CREATE PROCEDURE [dbo].AuthenticateUserAndGetExchangeKey
-	@UsernameInput VARCHAR(100), @EncryptedPasswordInput VARCHAR(MAX)
-AS
-	DECLARE @UserID INT;
-	DECLARE @AccessKeyGenerated VARCHAR(MAX);
-	DECLARE @AccessKeyID INT
-	SET @UserID = 0;
-	SET @AccessKeyGenerated = '';
-	SET @AccessKeyID = 0;
-
-	IF EXISTS(
-		SELECT 1
-		FROM Users
-		WHERE Username = @UsernameInput
-		AND EncryptedPassword = @EncryptedPasswordInput
-	)
-	BEGIN
-		SELECT @UserID = UserID
-		FROM Users
-		WHERE Username = @UsernameInput
-		AND EncryptedPassword = @EncryptedPasswordInput
-	
-		INSERT INTO AccessKeys(UserID, AccessKey, AccessKeyIssueDate, AccessKeyExpiryDate)
-		VALUES(@UserID, NewID(), GetDate(), DATEADD(MINUTE,1,GetDate()));
-	
-		SET @AccessKeyID = (SELECT SCOPE_IDENTITY());
-		SET @AccessKeyGenerated = (SELECT AccessKey FROM AccessKeys WHERE AccessKeyID = @AccessKeyID);
-	END
-	ELSE
-	BEGIN
-		SET @AccessKeyGenerated = ''
-	END
-
-    SELECT @AccessKeyGenerated
-GO
-
-CREATE PROCEDURE [dbo].VerifyAccessKey
-	@AccessKeyInput VARCHAR(MAX)
-AS
-	DECLARE @Success INT;
-	SET @Success = 0;
-	IF EXISTS(
-		SELECT 1
-		FROM AccessKeys
-		WHERE AccessKey = @AccessKeyInput
-		AND AccessKeyExpiryDate > GetDate()
-	)
-	BEGIN
-		SET @Success = 1
-        DELETE FROM AccessKeys 
-        WHERE AccessKey = @AccessKeyInput
-	END
-	ELSE
-	BEGIN
-		SET @Success = 0
-	END
-
-	SELECT @Success
 GO
