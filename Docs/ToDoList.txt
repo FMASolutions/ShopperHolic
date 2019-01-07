@@ -1,5 +1,10 @@
-A) Complete User creation procedure to implement correct claim types for the given roles
-1) Add Item Selector in UI
+1) Complete User creation procedure to implement correct claim types for the given roles
 2) Allow user registration as a basic user.
 3) Change to Async db  and api calls
 4) Improve image creation by only submitting form if a image has been selcted for upload.
+5) Implement Accounts in all Layers (Persistence / Infrastructure / Business / API / WebUI)
+6) Implement Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
+6) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
+7) Implement Automation I.E Emails when low stock etc....
+8) Implement Reporting
+9) Implement OAuth2 / OPenIDConnect using a IdentityServer
