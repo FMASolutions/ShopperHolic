@@ -79,6 +79,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SET AddressLine1 = @AddressLine1
                 ,AddressLine2 = @AddressLine2
                 ,PostCode = @PostCode
+                ,CityAreaID = @CityAreaID
                 WHERE AddressLocationID = @AddressLocationID";
 
                 var queryParameters = new DynamicParameters();
@@ -86,7 +87,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@AddressLine2", updatedRecord.AddressLine2);
                 queryParameters.Add("@PostCode", updatedRecord.PostCode);
                 queryParameters.Add("@CityAreaID", updatedRecord.CityAreaID);
-
+                queryParameters.Add("@AddressLocationID", updatedRecord.AddressID);
                 int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
                 return (rowsUpdated > 0) ? GetByID(updatedRecord.AddressID) : throw noRecordEX;
             }
