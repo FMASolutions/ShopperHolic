@@ -13,6 +13,9 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         ICityRepo CityRepo {get;}
         ICityAreaRepo CityAreaRepo {get;}
         IAddressRepo AddressRepo {get;}
+        IUserRepo UserRepo {get;}
+        ICustomerRepo CustomerRepo {get;}
+        ISupplierRepo SupplierRepo {get;}
         void SaveChanges();
         void RollbackChanges(bool createFollowUpTransaction = true);
     }

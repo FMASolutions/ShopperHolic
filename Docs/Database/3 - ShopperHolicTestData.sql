@@ -308,7 +308,13 @@ VALUES
     ('UserCanDeleteCityArea'),
     ('UserCanCreateAddress'),
     ('UserCanEditAddress'),
-    ('UserCanDeleteAddress')
+    ('UserCanDeleteAddress'),
+    ('UserCanCreateCustomer'),
+    ('UserCanEditCustomer'),
+    ('UserCanDeleteCustomer'),
+    ('UserCanCreateSupplier'),
+    ('UserCanEditSupplier'),
+    ('UserCanDeleteSupplier')
 GO
 
 PRINT 'Insert UserRolesTypes'

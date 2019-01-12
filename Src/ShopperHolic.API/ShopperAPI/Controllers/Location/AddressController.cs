@@ -42,7 +42,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [Authorize(Policy = "UserCanEditIAddress")]
+        [Authorize(Policy = "UserCanEditAddress")]
         [HttpPut]
         public ActionResult<AddressDTO> Update([FromBody] AddressDTO newModel)
         {

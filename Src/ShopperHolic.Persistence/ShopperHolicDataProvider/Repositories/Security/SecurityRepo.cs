@@ -17,7 +17,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT UserID, Username, EmailAddress, EncryptedPassword
+                SELECT UserID, Username, EmailAddress, EncryptedPassword, KnownAs
                 FROM Users WITH(NOLOCK)
                 WHERE Username = @Username";
                 

@@ -32,12 +32,12 @@ namespace ShopperHolic.API.ShopperAPI
         {
             //Dependency Injection
             MvcServiceCollectionExtensions.AddMvc(services);
-            
+
             //Add JWTSettings into the service collection for dependency injection.
             JWTSettings jwtSettings = GetJWTSettings();
             services.AddSingleton<JWTSettings>(jwtSettings);
             services.AddSingleton<EncSettings>(GetEncSettings());
-            
+
             //Configure Authentication to use JwtBearer and set the Allowed parameters.
             services.AddAuthentication(options =>
             {
@@ -83,14 +83,20 @@ namespace ShopperHolic.API.ShopperAPI
                 config.AddPolicy("UserCanEditCityArea", policyBuilder => policyBuilder.RequireClaim("UserCanEditCityArea", "true"));
                 config.AddPolicy("UserCanDeleteCityArea", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCityArea", "true"));
                 config.AddPolicy("UserCanCreateAddress", policyBuilder => policyBuilder.RequireClaim("UserCanCreateAddress", "true"));
-                config.AddPolicy("UserCanEditIAddress", policyBuilder => policyBuilder.RequireClaim("UserCanEditAddress", "true"));
+                config.AddPolicy("UserCanEditAddress", policyBuilder => policyBuilder.RequireClaim("UserCanEditAddress", "true"));
                 config.AddPolicy("UserCanDeleteAddress", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteAddress", "true"));
+                config.AddPolicy("UserCanCreateCustomer", policyBuilder => policyBuilder.RequireClaim("UserCanCreateCustomer", "true"));
+                config.AddPolicy("UserCanEditCustomer", policyBuilder => policyBuilder.RequireClaim("UserCanEditCustomer", "true"));
+                config.AddPolicy("UserCanDeleteCustomer", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCustomer", "true"));
+                config.AddPolicy("UserCanCreateSupplier", policyBuilder => policyBuilder.RequireClaim("UserCanCreateSupplier", "true"));
+                config.AddPolicy("UserCanEditSupplier", policyBuilder => policyBuilder.RequireClaim("UserCanEditSupplier", "true"));
+                config.AddPolicy("UserCanDeleteSupplier", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteSupplier", "true"));
             });
 
             //Compatibility and Cors
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors();
-            
+
             //Add Service Dependency Injection
             string connectionString = Configuration["ShopperHolicDBConnection"];
             services.AddTransient<ISecurityService>(s => new SecurityService(connectionString));
@@ -101,6 +107,9 @@ namespace ShopperHolic.API.ShopperAPI
             services.AddTransient<ICityService>(s => new CityService(connectionString));
             services.AddTransient<ICityAreaService>(s => new CityAreaService(connectionString));
             services.AddTransient<IAddressService>(s => new AddressService(connectionString));
+            services.AddTransient<ICustomerService>(s => new CustomerService(connectionString));
+            services.AddTransient<ISupplierService>(s => new SupplierService(connectionString));
+            services.AddTransient<IUserService>(s => new UserService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -130,7 +139,7 @@ namespace ShopperHolic.API.ShopperAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-           
+
         }
 
         private JWTSettings GetJWTSettings()

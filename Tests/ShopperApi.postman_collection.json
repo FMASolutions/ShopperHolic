@@ -2662,6 +2662,1098 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "1 - GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{customerController}}/GetAll",
+							"host": [
+								"{{customerController}}"
+							],
+							"path": [
+								"GetAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - CreateNew",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c0a2985-4dda-4333-b3c7-0c4a56e1780f",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"CreatedCustomerID\",data.customerID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CustomerTypeID\" : 1,\n    \"DefaultAddressID\" : 1,\n    \"CustomerCode\" : \"CSTCODE\",\n    \"CustomerName\" : \"New Customer Name\",\n    \"CustomerContactNumber\" : \"07532282222\",\n    \"CustomerEmailAddress\" : \"faisal@ahmedmail.info\"\n}"
+						},
+						"url": {
+							"raw": "{{customerController}}/Create",
+							"host": [
+								"{{customerController}}"
+							],
+							"path": [
+								"Create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - GetByID for Created",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{customerController}}/GetByID?id={{CreatedCustomerID}}",
+							"host": [
+								"{{customerController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedCustomerID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - UpdateCreated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"CustomerID\" : {{CreatedCustomerID}},\n\t\"CustomerTypeID\" : 2,\n    \"DefaultAddressID\" : 2,\n    \"CustomerCode\" : \"UPDCODE\",\n    \"CustomerName\" : \"Updated Customer Name\",\n    \"CustomerContactNumber\" : \"97532282222\",\n    \"CustomerEmailAddress\" : \"aaisal@ahmedmail.info\"\n}"
+						},
+						"url": {
+							"raw": "{{customerController}}/Update",
+							"host": [
+								"{{customerController}}"
+							],
+							"path": [
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 - GetByID After Update",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{customerController}}/GetByID?id={{CreatedCustomerID}}",
+							"host": [
+								"{{customerController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedCustomerID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 - DeleteCreated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{customerController}}/Delete?id={{CreatedCustomerID}}",
+							"host": [
+								"{{customerController}}"
+							],
+							"path": [
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedCustomerID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 - GetByID After Delete",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{customerController}}/GetByID?id={{CreatedCustomerID}}",
+							"host": [
+								"{{customerController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedCustomerID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - GetByID Specific ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{customerController}}/GetByID?id=1",
+							"host": [
+								"{{customerController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Suppliers",
+			"item": [
+				{
+					"name": "1 - GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{supplierController}}/GetAll",
+							"host": [
+								"{{supplierController}}"
+							],
+							"path": [
+								"GetAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - CreateNew",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c0a2985-4dda-4333-b3c7-0c4a56e1780f",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"CreatedSupplierID\",data.supplierID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"supplierCode\": \"SUPCODE\",\n    \"supplierName\": \"New Supplier\",\n    \"supplierEmailAddress\": \"faisal@ahmedmail.info\",\n    \"supplierContactNumber\": \"07532282222\"\n}"
+						},
+						"url": {
+							"raw": "{{supplierController}}/Create",
+							"host": [
+								"{{supplierController}}"
+							],
+							"path": [
+								"Create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - GetByID for Created",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{supplierController}}/GetByID?id={{CreatedSupplierID}}",
+							"host": [
+								"{{supplierController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedSupplierID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - UpdateCreated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"supplierID\" : {{CreatedSupplierID}},\n\t\"supplierCode\": \"UPDSUP\",\n    \"supplierName\": \"Updated Supplier\",\n    \"supplierEmailAddress\": \"zfaisal@ahmedmail.info\",\n    \"supplierContactNumber\": \"907532282222\"\n}"
+						},
+						"url": {
+							"raw": "{{supplierController}}/Update",
+							"host": [
+								"{{supplierController}}"
+							],
+							"path": [
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 - GetByID After Update",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{supplierController}}/GetByID?id={{CreatedSupplierID}}",
+							"host": [
+								"{{supplierController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedSupplierID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 - DeleteCreated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{supplierController}}/Delete?id={{CreatedSupplierID}}",
+							"host": [
+								"{{supplierController}}"
+							],
+							"path": [
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedSupplierID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 - GetByID After Delete",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{supplierController}}/GetByID?id={{CreatedSupplierID}}",
+							"host": [
+								"{{supplierController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedSupplierID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - GetByID Specific ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{supplierController}}/GetByID?id=1",
+							"host": [
+								"{{supplierController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "1 - GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/GetAll",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"GetAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - CreateNew",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c0a2985-4dda-4333-b3c7-0c4a56e1780f",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"CreatedUserID\",data.userID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Username\" : \"testuser\",\n    \"EmailAddress\" : \"test@testuser.com\",\n    \"Password\" : \"testpassword\",\n    \"KnownAs\" : \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{userController}}/Create",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"Create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - GetByID for Created",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/GetByID?id={{CreatedUserID}}",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedUserID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - UpdateCreated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserID\" : {{CreatedUserID}},\n\t\"Username\" : \"updTester\",\n    \"EmailAddress\" : \"test@testuser.com\",\n    \"Password\" : \"newPassword\",\n    \"KnownAs\" : \"upd test\"\n}"
+						},
+						"url": {
+							"raw": "{{userController}}/Update",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 - GetByID After Update",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/GetByID?id={{CreatedUserID}}",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedUserID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 - DeleteCreated",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/Delete?id={{CreatedUserID}}",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedUserID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 - GetByID After Delete",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/GetByID?id={{CreatedUserID}}",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{CreatedUserID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8 - GetByID Specific ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/GetByID?id=1",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"GetByID"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

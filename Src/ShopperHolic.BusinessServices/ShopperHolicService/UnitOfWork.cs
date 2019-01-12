@@ -23,10 +23,13 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         public IProductGroupRepo ProductGroupRepo { get { return _productGroupRepo ?? (_productGroupRepo = new ProductGroupRepo(_transaction)); } }
         public ISubGroupRepo SubGroupRepo { get { return _subGroupRepo ?? (_subGroupRepo = new SubGroupRepo(_transaction)); } }
         public IItemRepo ItemRepo { get { return _itemRepo ?? (_itemRepo = new ItemRepo(_transaction)); } }
-        public ICountryRepo CountryRepo {get {return _countryRepo ?? (_countryRepo = new CountryRepo(_transaction));}}
-        public ICityRepo CityRepo {get {return _cityRepo ?? (_cityRepo = new CityRepo(_transaction));}}
-        public ICityAreaRepo CityAreaRepo {get {return _cityAreaRepo ?? (_cityAreaRepo = new CityAreaRepo(_transaction));}}
-        public IAddressRepo AddressRepo {get {return _addressRepo ?? (_addressRepo = new AddressRepo(_transaction));}}
+        public ICountryRepo CountryRepo { get { return _countryRepo ?? (_countryRepo = new CountryRepo(_transaction)); } }
+        public ICityRepo CityRepo { get { return _cityRepo ?? (_cityRepo = new CityRepo(_transaction)); } }
+        public ICityAreaRepo CityAreaRepo { get { return _cityAreaRepo ?? (_cityAreaRepo = new CityAreaRepo(_transaction)); } }
+        public IAddressRepo AddressRepo { get { return _addressRepo ?? (_addressRepo = new AddressRepo(_transaction)); } }
+        public IUserRepo UserRepo { get { return _userRepo ?? (_userRepo = new UserRepo(_transaction)); } }
+        public ICustomerRepo CustomerRepo { get { return _customerRepo ?? (_customerRepo = new CustomerRepo(_transaction)); } }
+        public ISupplierRepo SupplierRepo { get { return _supplierRepo ?? (_supplierRepo = new SupplierRepo(_transaction)); } }
 
         bool _disposing = false;
 
@@ -91,6 +94,9 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             _cityRepo = null;
             _cityAreaRepo = null;
             _addressRepo = null;
+            _userRepo = null;
+            _customerRepo = null;
+            _supplierRepo = null;
         }
         private ISecurityRepo _securityRepo;
         private IProductGroupRepo _productGroupRepo;
@@ -100,5 +106,8 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         private ICityRepo _cityRepo;
         private ICityAreaRepo _cityAreaRepo;
         private IAddressRepo _addressRepo;
+        private IUserRepo _userRepo;
+        private ICustomerRepo _customerRepo;
+        private ISupplierRepo _supplierRepo;
     }
 }

@@ -5,7 +5,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 {
     public interface IUserRepo
     {
-        int Create(UserCreateDTO entityToCreate);
+        int Create(UserCreateDTO entityToCreate,string encryptedPassword);
         UserProfileDTO GetByID(int id);
         IEnumerable<UserPreviewDTO> GetAllPreview();
         UserProfileDTO Update(UserProfileDTO updatedRecord);
