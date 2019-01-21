@@ -13,7 +13,7 @@ export class CustomerSelectorComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  columnList: string[] = Globals.SUPPLIER_PRVW_SELECT_COLUMNS;
+  columnList: string[] = Globals.CUSTOMER_PRVW_SELECT_COLUMNS;
 
   constructor(private service: CustomerService, public childDialog: MatDialog, public ownDialog: MatDialogRef<CustomerSelectorComponent>) { }
 

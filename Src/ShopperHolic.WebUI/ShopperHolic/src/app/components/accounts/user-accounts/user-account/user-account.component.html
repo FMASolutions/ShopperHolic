@@ -79,6 +79,9 @@
 
       <ng-container *ngIf="isUpdateMode">
         <h1>Linked Supplier Details:</h1>
+        <button mat-flat-button color="primary" id="linkSupplier" class="maxWidth" (click)="linkSupplierClicked()">
+          Link A Supplier
+        </button>
         <form>
           <mat-form-field class="maxWidth" appearance="outline">
             <mat-label>Filter</mat-label>
@@ -125,6 +128,9 @@
         </button>
 
         <h1>Linked Customer Details:</h1>
+        <button mat-flat-button color="primary" id="linkCustomer" class="maxWidth" (click)="linkCustomerClicked()">
+          Link A Customer
+        </button>
         <form>
           <mat-form-field class="maxWidth" appearance="outline">
             <mat-label>Filter</mat-label>

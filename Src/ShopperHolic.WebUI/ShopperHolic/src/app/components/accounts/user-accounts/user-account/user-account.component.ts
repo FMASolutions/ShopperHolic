@@ -3,6 +3,8 @@ import { UserAccountService } from 'src/app/services/accounts/user-account.servi
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatPaginator, MatSort, Sort } from '@angular/material';
 import { UserAccountsComponent } from '../user-accounts.component';
 import { Globals } from 'src/globals';
+import { CustomerSelectorComponent } from '../../customers/customer-selector/customer-selector.component';
+import { SupplierSelectorComponent } from '../../suppliers/supplier-selector/supplier-selector.component';
 
 @Component({
   selector: 'app-user-account',
@@ -62,6 +64,24 @@ export class UserAccountComponent {
     if (confirm(Globals.SUPPLIER_DELETE_CONFIRM_MSG + id)) {
       this.service.removeSupplierForCurrentUser(id);
     }
+  }
+
+  public linkCustomerClicked(){
+    let dialogRef = this.childDialog.open(CustomerSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    dialogRef.afterClosed().subscribe(resp => {
+      if (resp && resp.selectedModel) {
+        this.service.addCustomerForCurrentUser(resp.selectedModel.customerID);
+      }
+    })
+  }
+
+  public linkSupplierClicked(){
+    let dialogRef = this.childDialog.open(SupplierSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
+    dialogRef.afterClosed().subscribe(resp => {
+      if (resp && resp.selectedModel) {
+        this.service.addSupplierForCurrentUser(resp.selectedModel.supplierID);
+      }
+    })
   }
 
   public sortSupplierClicked(sort: Sort) { this.service.sortSupplierTableData(sort, this.supplierPaginator); }

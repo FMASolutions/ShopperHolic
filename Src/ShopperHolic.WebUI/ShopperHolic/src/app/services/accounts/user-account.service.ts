@@ -25,7 +25,7 @@ export class UserAccountService {
   currentUserID: number = 0;
 
   constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: GenericValidator) {
-    let obs = this.getAvailableUserRoles().subscribe(resp =>{
+    let obs = this.getAvailableUserRoles().subscribe(resp => {
       this.availableUserRoles = resp;
       obs.unsubscribe();
     })
@@ -137,7 +137,7 @@ export class UserAccountService {
     }));;
   }
 
-  /*--------------------- --- City Popup Helper --- ----------------------*/
+  /*--------------------- --- Form Helper --- ----------------------*/
   public userForm: FormGroup;
 
   public InitializeForm(id?: any, customerPageinator?: MatPaginator, supplierPaginator?: MatPaginator): string {
@@ -154,6 +154,7 @@ export class UserAccountService {
     let currentMode = this.determinMode(id);
 
     if (currentMode == Globals.MODE_UPDATE) {
+      this.currentUserID = id;
       let obs = this.getUserDetailed(id).subscribe(respData => {
         obs.unsubscribe();
         this.populateFormFromModel(respData);
@@ -208,7 +209,7 @@ export class UserAccountService {
     });
   }
 
-  /*--------------------- --- City Table Helper --- ----------------------*/
+  /*--------------------- --- Table Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<UserAccountPreview>;
   textFilter: string = "";
 
@@ -276,7 +277,7 @@ export class UserAccountService {
   }
 
   public refreshSupplierListData(paginator: MatPaginator, logins: SupplierLogin[]) {
-      this.setupSupplierTableDataSource(logins, paginator);
+    this.setupSupplierTableDataSource(logins, paginator);
   }
 
   public resetSupplierListFilter() {
@@ -286,26 +287,28 @@ export class UserAccountService {
 
   public applySupplierListFilter() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
 
-  public removeSupplierForCurrentUser(supplierID: number)
-  {
-
+  public removeSupplierForCurrentUser(supplierID: number) {
+    let obs = this.removeSupplierLogin(this.currentUserID, supplierID).subscribe(resp => {
+      let index = this.supplierTableDataSource.data.findIndex(x => x.supplierID == supplierID);
+      this.supplierTableDataSource.data.splice(index);
+      this.supplierTableDataSource = new MatTableDataSource(this.supplierTableDataSource.data);
+      obs.unsubscribe();
+    })
   }
 
-  public removeCustomerForCurrentUser(customerID: number)
-  {
-
+  public addSupplierForCurrentUser(supplierID: number) {
+    let obs = this.addSupplierLogin(this.currentUserID, supplierID).subscribe(resp =>{
+      obs.unsubscribe
+      this.supplierTableDataSource.data.push(resp);
+      this.supplierTableDataSource = new MatTableDataSource(this.supplierTableDataSource.data);
+    })
   }
+
   private setupSupplierTableDataSource(data: SupplierLogin[], paginator: MatPaginator) {
     this.supplierTableDataSource = new MatTableDataSource(data);
     this.supplierTableDataSource.paginator = paginator;
     this.supplierTableDataSource.filter = this.supplierTextFilter;
   }
-
-
-
-
-
-
 
   /*--------------------- --- Customer Helper --- ----------------------*/
   customerTableDataSource: MatTableDataSource<CustomerLogin>;
@@ -338,6 +341,23 @@ export class UserAccountService {
   }
 
   public applyCustomerListFilter() { this.tableDataSource.filter = this.textFilter.trim().toLowerCase(); }
+
+  public removeCustomerForCurrentUser(customerID: number) {
+    let obs = this.removeCustomerLogin(this.currentUserID, customerID).subscribe(resp => {
+      let index = this.customerTableDataSource.data.findIndex(x => x.customerID == customerID);
+      this.customerTableDataSource.data.splice(index);
+      this.customerTableDataSource = new MatTableDataSource(this.customerTableDataSource.data);
+      obs.unsubscribe();
+    })
+  }
+  
+  public addCustomerForCurrentUser(customerID: number) {
+    let obs = this.addCustomerLogin(this.currentUserID, customerID).subscribe(resp =>{
+      obs.unsubscribe
+      this.customerTableDataSource.data.push(resp);
+      this.customerTableDataSource = new MatTableDataSource(this.customerTableDataSource.data);
+    })
+  }
 
   private setupCustomerTableDataSource(data: CustomerLogin[], paginator: MatPaginator) {
     this.customerTableDataSource = new MatTableDataSource(data);
