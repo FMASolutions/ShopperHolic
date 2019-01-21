@@ -5,6 +5,8 @@ import { UserAccountsComponent } from '../user-accounts.component';
 import { Globals } from 'src/globals';
 import { CustomerSelectorComponent } from '../../customers/customer-selector/customer-selector.component';
 import { SupplierSelectorComponent } from '../../suppliers/supplier-selector/supplier-selector.component';
+import { CustomerLogin } from 'src/app/models/security/customerLogin';
+import { SupplierLogin } from 'src/app/models/security/supplierLogin';
 
 @Component({
   selector: 'app-user-account',
@@ -15,6 +17,7 @@ export class UserAccountComponent {
 
   currentMode: string = "";
   isUpdateMode: boolean = false;
+  public updatePasswordRequested: boolean = false;
 
   @ViewChild(MatPaginator) supplierPaginator: MatPaginator;
   @ViewChild(MatSort) supplierSort: MatSort;
@@ -67,25 +70,32 @@ export class UserAccountComponent {
   }
 
   public linkCustomerClicked(){
+    let newLogin: CustomerLogin = new CustomerLogin();
     let dialogRef = this.childDialog.open(CustomerSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     dialogRef.afterClosed().subscribe(resp => {
       if (resp && resp.selectedModel) {
-        this.service.addCustomerForCurrentUser(resp.selectedModel.customerID);
+        newLogin.customerCode = resp.selectedModel.customerCode;
+        newLogin.customerName = resp.selectedModel.customerName;
+        newLogin.customerID = resp.selectedModel.customerID;
+        this.service.addCustomerForCurrentUser(newLogin);
       }
     })
   }
 
   public linkSupplierClicked(){
+    let newLogin: SupplierLogin = new SupplierLogin();
     let dialogRef = this.childDialog.open(SupplierSelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     dialogRef.afterClosed().subscribe(resp => {
+      newLogin.supplierID = resp.selectedModel.supplierID;
+      newLogin.supplierCode = resp.selectedModel.supplierCode;
+      newLogin.supplierName = resp.selectedModel.supplierName;
       if (resp && resp.selectedModel) {
-        this.service.addSupplierForCurrentUser(resp.selectedModel.supplierID);
+        this.service.addSupplierForCurrentUser(newLogin);
       }
     })
   }
 
+  public updatePasswordChanged(){ this.updatePasswordRequested = !this.updatePasswordRequested;}
   public sortSupplierClicked(sort: Sort) { this.service.sortSupplierTableData(sort, this.supplierPaginator); }
   public sortCustomerClicked(sort: Sort) { this.service.sortCustomerTableData(sort, this.customerPaginator); }
-
-
 }

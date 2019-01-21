@@ -141,19 +141,11 @@ export class UserAccountService {
   public userForm: FormGroup;
 
   public InitializeForm(id?: any, customerPageinator?: MatPaginator, supplierPaginator?: MatPaginator): string {
-    this.userForm = this.fb.group({
-      id: [0, []],
-      username: [null, [this.validator.validateCodeForCreate]],
-      emailAddress: [null, [this.validator.basicValidation]],
-      password: [null, [this.validator.basicValidation]],
-      confirmPassword: [null, [this.validator.basicValidation]],
-      knownAs: [null, [this.validator.basicValidation]],
-      selectedRole: [null, [this.validator.basicValidation]]
-    });
-
+    
     let currentMode = this.determinMode(id);
 
     if (currentMode == Globals.MODE_UPDATE) {
+      this.setupFormForUpdate();
       this.currentUserID = id;
       let obs = this.getUserDetailed(id).subscribe(respData => {
         obs.unsubscribe();
@@ -161,6 +153,9 @@ export class UserAccountService {
         this.refreshSupplierListData(supplierPaginator, respData.supplierLogins);
         this.refreshCustomerListData(customerPageinator, respData.customerLogins);
       })
+    }
+    else{
+      this.setupFormForCreate();
     }
 
     return currentMode;
@@ -186,8 +181,33 @@ export class UserAccountService {
       knownAs: this.userForm.value["knownAs"],
       userRoleTypeID: this.userForm.value["selectedRole"]
     };
-    console.log(newModel);
     return newModel;
+  }
+
+  private setupFormForUpdate(){
+    this.userForm = this.fb.group({
+      id: [0, []],
+      username: [null, [this.validator.basicValidation,this.validator.minLength3]],
+      emailAddress: [null, [this.validator.basicValidation]],
+      password: "",
+      confirmPassword: "",
+      knownAs: [null, [this.validator.basicValidation]],
+      updateCurrentPassword: false,
+      selectedRole: [null, [this.validator.basicValidation]]
+    }, { validator: this.validator.checkPasswords});
+  }
+
+  private setupFormForCreate(){
+    this.userForm = this.fb.group({
+      id: [0, []],
+      username: [null, [this.validator.basicValidation,this.validator.minLength3]],
+      emailAddress: [null, [this.validator.basicValidation]],
+      password: ["", [this.validator.basicValidation, this.validator.minLength3]],
+      confirmPassword: "",
+      knownAs: [null, [this.validator.basicValidation]],
+      updateCurrentPassword: false,
+      selectedRole: [null, [this.validator.basicValidation]]
+    }, { validator: this.validator.checkPasswords});
   }
 
   private determinMode(id?: any): string {
@@ -205,7 +225,8 @@ export class UserAccountService {
       password: "",
       confirmPassword: "",
       knownAs: model.knownAs,
-      selectedRole: model.userRoleTypeID
+      selectedRole: model.userRoleTypeID,
+      updateCurrentPassword: false
     });
   }
 
@@ -296,10 +317,10 @@ export class UserAccountService {
     })
   }
 
-  public addSupplierForCurrentUser(supplierID: number) {
-    let obs = this.addSupplierLogin(this.currentUserID, supplierID).subscribe(resp =>{
+  public addSupplierForCurrentUser(newSupplierLogin: SupplierLogin) {
+    let obs = this.addSupplierLogin(this.currentUserID, newSupplierLogin.supplierID).subscribe(resp =>{
       obs.unsubscribe
-      this.supplierTableDataSource.data.push(resp);
+      this.supplierTableDataSource.data.push(newSupplierLogin);
       this.supplierTableDataSource = new MatTableDataSource(this.supplierTableDataSource.data);
     })
   }
@@ -351,10 +372,10 @@ export class UserAccountService {
     })
   }
   
-  public addCustomerForCurrentUser(customerID: number) {
-    let obs = this.addCustomerLogin(this.currentUserID, customerID).subscribe(resp =>{
+  public addCustomerForCurrentUser(newLogin: CustomerLogin) {
+    let obs = this.addCustomerLogin(this.currentUserID, newLogin.customerID).subscribe(resp =>{
       obs.unsubscribe
-      this.customerTableDataSource.data.push(resp);
+      this.customerTableDataSource.data.push(newLogin);
       this.customerTableDataSource = new MatTableDataSource(this.customerTableDataSource.data);
     })
   }

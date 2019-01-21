@@ -30,7 +30,6 @@ export class CustomerService {
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNew(newModel: CreateCustomer): Observable<Customer> {
-    console.log(newModel);
     this.userNotificationService.informUserStart(Globals.CUSTOMER_CREATE_ATTEMPT_MSG + newModel.customerCode, Globals.SPINNER_CREATE_MESSAGE);
     return this.http.post<Customer>(this.baseURL + 'Create', newModel).pipe(tap(resp => {
       this.userNotificationService.informUserComplete(Globals.CUSTOMER_CREATE_SUCCESS_MSG + resp.customerCode);
@@ -134,8 +133,6 @@ export class CustomerService {
   }
 
   public updateSelectedDefaultAddress(newChildModel: Address){
-    console.log("Address Received");
-    console.log(newChildModel);
     this.customerForm.controls["defaultAddress"].setValue(newChildModel.addressID);
     this.customerForm.controls["defaultAddressText"].setValue(newChildModel.addressLine1 + " - " + newChildModel.addressLine2);
   }

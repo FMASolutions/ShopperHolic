@@ -89,5 +89,62 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 
             return returnProfile;
         }
+
+        public bool AddSupplierLogin(SupplierLoginDTO newEntity)
+        {
+            try
+            {
+                bool success = UOW.UserRepo.AddSupplierLogin(newEntity);
+                UOW.SaveChanges();
+                return success;
+            }
+            catch (Exception ex)
+            {
+                UOW.RollbackChanges();
+                throw ex;
+            }
+        }
+        public bool AddCustomerLogin(CustomerLoginDTO newEntity)
+        {
+            try
+            {
+                bool success = UOW.UserRepo.AddCustomerLogin(newEntity);
+                UOW.SaveChanges();
+                return success;
+            }
+            catch (Exception ex)
+            {
+                UOW.RollbackChanges();
+                throw ex;
+            }
+        }
+        public bool RemoveSupplierLogin(SupplierLoginDTO removeEntity)
+        {
+            try
+            {
+                bool success = UOW.UserRepo.RemoveSupplierLogin(removeEntity);
+                UOW.SaveChanges();
+                return success;
+            }
+            catch (Exception ex)
+            {
+                UOW.RollbackChanges();
+                throw ex;
+            }
+        }
+        public bool RemoveCustomerLogin(CustomerLoginDTO removeEntity)
+        {
+            try
+            {
+                bool success = UOW.UserRepo.RemoveCustomerLogin(removeEntity);
+                UOW.SaveChanges();
+                return success;
+            }
+            catch (Exception ex)
+            {
+                UOW.RollbackChanges();
+                throw ex;
+            }
+        }
     }
 }

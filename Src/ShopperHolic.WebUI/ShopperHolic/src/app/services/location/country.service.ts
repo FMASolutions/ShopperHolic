@@ -67,7 +67,6 @@ export class CountryService {
     }, err => {
       this.userNotificationService.informUserError(Globals.COUNTRY_DELETE_FAILED_MSG + id);
       this.userNotificationService.informUserError(err.error);
-      console.log(err.error);
     }));
   }
 

@@ -176,5 +176,93 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
+
+        public bool AddCustomerLogin(CustomerLoginDTO createEntity)
+        {
+            try
+            {
+                string query = @"
+                INSERT INTO CustomerLogins(UserID, CustomerID)
+                VALUES (@UserID, @CustomerID)
+                
+                SELECT SCOPE_IDENTITY()";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@UserID", createEntity.UserID);
+                queryParameters.Add("@CustomerID", createEntity.CustomerID);
+
+                var returnID = Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
+                return returnID > 0;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public bool RemoveCustomerLogin(CustomerLoginDTO removeEntity)
+        {
+            try
+            {
+                string query = @"
+                DELETE FROM CustomerLogins
+                WHERE UserID = @UserID AND CustomerID = @CustomerID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@UserID", removeEntity.UserID);
+                queryParameters.Add("@CustomerID", removeEntity.CustomerID);
+
+                int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsDeleted > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public bool AddSupplierLogin(SupplierLoginDTO createEntity)
+        {
+            try
+            {
+                string query = @"
+                INSERT INTO SupplierLogins(UserID, SupplierID)
+                VALUES (@UserID, @SupplierID)
+                
+                SELECT SCOPE_IDENTITY()";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@UserID", createEntity.UserID);
+                queryParameters.Add("@SupplierID", createEntity.SupplierID);
+
+                var returnID = Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
+                return returnID > 0;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public bool RemoveSupplierLogin(SupplierLoginDTO removeEntity)
+        {
+            try
+            {
+                string query = @"
+                DELETE FROM SupplierLogins
+                WHERE UserID = @UserID AND SupplierID = @SupplierID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@UserID", removeEntity.UserID);
+                queryParameters.Add("@SupplierID", removeEntity.SupplierID);
+
+                int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsDeleted > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
     }
 }

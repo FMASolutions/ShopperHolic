@@ -9,7 +9,7 @@ using ShopperHolic.API.ShopperAPI.Models.Security;
 
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
-    [Authorize(Policy="IsAdminUser")]
+    [Authorize(Policy = "IsAdminUser")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -33,7 +33,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<UserProfileDTO> GetByID([FromQuery] int id)
         {
-            try { return  _userManager.GetyByID(id); }
+            try { return _userManager.GetyByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
@@ -54,7 +54,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpDelete]
         public ActionResult<bool> Delete([FromQuery] int id)
         {
-            try{return _userManager.Delete(id);}
+            try { return _userManager.Delete(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
@@ -68,7 +68,35 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<UserDetailedDTO> GetDetailedUser([FromQuery] int id)
         {
-            try { return  _userManager.GetDetailedUser(id); }
+            try { return _userManager.GetDetailedUser(id); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpGet]
+        public ActionResult<bool> AddCustomerLogin([FromQuery] int userID, [FromQuery] int customerID)
+        {
+            try { return _userManager.AddCustomerLogin(userID, customerID); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpGet]
+        public ActionResult<bool> RemoveCustomerLogin([FromQuery] int userID, [FromQuery] int customerID)
+        {
+            try { return _userManager.RemoveCustomerLogin(userID, customerID); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpGet]
+        public ActionResult<bool> AddSupplierLogin([FromQuery] int userID, [FromQuery] int supplierID)
+        {
+            try { return _userManager.AddSupplierLogin(userID, supplierID); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpGet]
+        public ActionResult<bool> RemoveSupplierLogin([FromQuery] int userID, [FromQuery] int supplierID)
+        {
+            try { return _userManager.RemoveSupplierLogin(userID, supplierID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
     }

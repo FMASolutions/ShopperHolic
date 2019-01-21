@@ -60,6 +60,35 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
             return _UserService.GetDetailedUser(userID);
         }
 
+        public bool AddSupplierLogin(int userID, int supplierID)
+        {
+            var supplierLogin = new SupplierLoginDTO();
+            supplierLogin.SupplierID = supplierID;
+            supplierLogin.UserID = userID;
+            return _UserService.AddSupplierLogin(supplierLogin);
+        }
+        public bool AddCustomerLogin(int userID, int customerID)
+        {
+            var customerLogin = new CustomerLoginDTO();
+            customerLogin.CustomerID = customerID;
+            customerLogin.UserID = userID;
+            return _UserService.AddCustomerLogin(customerLogin);
+        }
+        public bool RemoveSupplierLogin(int userID, int supplierID)
+        {
+            var supplierLogin = new SupplierLoginDTO();
+            supplierLogin.SupplierID = supplierID;
+            supplierLogin.UserID = userID;
+            return _UserService.RemoveSupplierLogin(supplierLogin);
+        }
+        public bool RemoveCustomerLogin(int userID, int customerID)
+        {
+            var customerLogin = new CustomerLoginDTO();
+            customerLogin.CustomerID = customerID;
+            customerLogin.UserID = userID;
+            return _UserService.RemoveCustomerLogin(customerLogin);
+        }
+
 
     }
 }

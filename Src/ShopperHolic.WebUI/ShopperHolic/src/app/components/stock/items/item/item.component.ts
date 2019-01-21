@@ -53,7 +53,6 @@ export class ItemComponent implements OnInit {
         let obs = this.service.update(this.service.getUpdateModelFromForm()).subscribe(updateResp => {
           obs.unsubscribe();
           if (this.currentSelectedFile) { //Only perform upload if a new file has been selected.
-            console.log("uploading file");
             let obsUpload = this.service.imageUpload(this.currentSelectedFile, updateResp.itemID).subscribe(resp => {
               obsUpload.unsubscribe();
               this.ownDialog.close({ userSubmitted: true, newModel: updateResp  });

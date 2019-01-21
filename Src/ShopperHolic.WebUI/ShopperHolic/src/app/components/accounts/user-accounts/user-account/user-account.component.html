@@ -21,46 +21,47 @@
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" type="text">
       </mat-form-field>
-      <div class="validationMessages">
-        <div *ngIf="service.userForm.controls.username.touched 
-                  && service.userForm.controls.username.errors 
-                  && service.userForm.controls.username.errors.failedPopulation">
-          Name is mandatory.
+      <div class="validationMessages" *ngIf="service.userForm.controls.username.touched && service.userForm.controls.username.errors">
+        <div *ngIf="service.userForm.controls.username.errors.failedPopulation">
+          Username is mandatory.
+        </div>
+        <div *ngIf="service.userForm.controls.username.errors.failedMinLength">
+          Username must be 3 or more characters.
         </div>
       </div>
 
-      <mat-form-field class="maxWidth" appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="text">
-      </mat-form-field>
-      <div class="validationMessages">
-        <div *ngIf="service.userForm.controls.password.touched 
-                && service.userForm.controls.password.errors 
-                && service.userForm.controls.password.errors.failedPopulation">
-          Password is mandatory.
-        </div>
-      </div>
+      <mat-checkbox *ngIf="isUpdateMode" formcontrolname="updateCurrentPassword" (change)="updatePasswordChanged()">Update
+        Password</mat-checkbox>
+      <ng-container *ngIf="updatePasswordRequested || !isUpdateMode ">
 
-      <mat-form-field class="maxWidth" appearance="outline">
-        <mat-label>Confirm Password</mat-label>
-        <input matInput formControlName="confirmPassword" type="text">
-      </mat-form-field>
-      <div class="validationMessages">
-        <div *ngIf="service.userForm.controls.confirmPassword.touched 
-              && service.userForm.controls.confirmPassword.errors 
-              && service.userForm.controls.confirmPassword.errors.failedPopulation">
-          Conirm Password is mandatory.
+        <mat-form-field class="maxWidth" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="text" type="password">
+        </mat-form-field>
+        <div class="validationMessages" *ngIf="service.userForm.controls.password.touched && service.userForm.controls.password.errors">
+          <div *ngIf="service.userForm.controls.password.errors.failedPopulation">
+            Password is mandatory.
+          </div>
         </div>
-      </div>
+
+        <mat-form-field class="maxWidth" appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" type="text" type="password">
+        </mat-form-field>
+        <div class="validationMessages" *ngIf="service.userForm.hasError('failedMatch')">
+          <div>
+            Passwords must match.
+          </div>
+
+        </div>
+      </ng-container>
 
       <mat-form-field class="maxWidth" appearance="outline">
         <mat-label>Known As</mat-label>
         <input matInput formControlName="knownAs" type="text">
       </mat-form-field>
-      <div class="validationMessages">
-        <div *ngIf="service.userForm.controls.knownAs.touched 
-            && service.userForm.controls.knownAs.errors 
-            && service.userForm.controls.knownAs.errors.failedPopulation">
+      <div class="validationMessages" *ngIf="service.userForm.controls.knownAs.touched && service.userForm.controls.knownAs.errors">
+        <div *ngIf="service.userForm.controls.knownAs.errors.failedPopulation">
           Known As is mandatory.
         </div>
       </div>
@@ -69,17 +70,15 @@
         <mat-label>Email Address</mat-label>
         <input matInput formControlName="emailAddress" type="text">
       </mat-form-field>
-      <div class="validationMessages">
-        <div *ngIf="service.userForm.controls.emailAddress.touched 
-          && service.userForm.controls.emailAddress.errors 
-          && service.userForm.controls.emailAddress.errors.failedPopulation">
+      <div class="validationMessages" *ngIf="service.userForm.controls.emailAddress.touched && service.userForm.controls.emailAddress.errors">
+        <div *ngIf="service.userForm.controls.emailAddress.errors.failedPopulation">
           Email Address is mandatory.
         </div>
       </div>
 
       <ng-container *ngIf="isUpdateMode">
         <h1>Linked Supplier Details:</h1>
-        <button mat-flat-button color="primary" id="linkSupplier" class="maxWidth" (click)="linkSupplierClicked()">
+        <button mat-flat-button color="accent" id="linkSupplier" class="maxWidth" (click)="linkSupplierClicked()">
           Link A Supplier
         </button>
         <form>
@@ -123,12 +122,12 @@
           </table>
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         </div>
-        <button mat-flat-button color="primary" id="bottomReset" class="maxWidth" (click)="service.resetSupplierListFilter()">
+        <button mat-flat-button color="primary" id="supplierBottomReset" class="maxWidth" (click)="service.resetSupplierListFilter()">
           Reset Filters
         </button>
 
         <h1>Linked Customer Details:</h1>
-        <button mat-flat-button color="primary" id="linkCustomer" class="maxWidth" (click)="linkCustomerClicked()">
+        <button mat-flat-button color="accent" id="linkCustomer" class="maxWidth" (click)="linkCustomerClicked()">
           Link A Customer
         </button>
         <form>

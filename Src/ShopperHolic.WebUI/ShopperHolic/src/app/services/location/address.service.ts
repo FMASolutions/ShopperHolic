@@ -45,7 +45,6 @@ export class AddressService {
   public getAll(): Observable<AddressPreview[]> {
     this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_GET_MESSAGE);
     return this.http.get<AddressPreview[]>(this.baseURL + 'GetAll').pipe(tap(resp => {
-      console.log(resp);
       this.userNotificationService.closeSpinners();
     }, err => {
       this.userNotificationService.informUserError(Globals.ADDRESS_READ_FAILED_MSG);
@@ -167,7 +166,6 @@ export class AddressService {
 
   public refreshListData(paginator: MatPaginator){
     let obs = this.getAll().subscribe(modelResp => {
-      console.log(modelResp);
       this.setupTableDataSource(modelResp, paginator);
       obs.unsubscribe();
     })        

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { visitSiblingRenderNodes } from '@angular/core/src/view/util';
 
 @Injectable({
     providedIn: 'root'
@@ -16,14 +17,14 @@ export class GenericValidator {
             if (currentValue.length < 2) {
                 return { isError: true, failedMinLength: true }
             }
-            if(currentValue.length > 7){
+            if (currentValue.length > 7) {
                 return { isError: true, failedMaxLength: true }
             }
         }
         return null;
     }
 
-    public basicValidation(control: AbstractControl){
+    public basicValidation(control: AbstractControl) {
         if (control) {
             if (control.value == null || control.value == "") {
                 return { isError: true, failedPopulation: true }
@@ -32,8 +33,24 @@ export class GenericValidator {
         return null;
     }
 
-    public postCodeValidator(control: AbstractControl){
+    public minLength3(control: AbstractControl){
+        if(control){
+            if(control.value != null && control.value.length < 3)
+                return { isError: true, failedMinLength: true}
+        }
+
+        return null;
+    }
+
+    public postCodeValidator(control: AbstractControl) {
         //TODO CREATE POSTCODE VALIDATION
         return null;
     }
+
+    public checkPasswords(group: FormGroup){
+        let password = group.controls["password"].value;
+        let confirmPassword = group.controls["confirmPassword"].value;
+    
+        return password === confirmPassword ? null : { isError:true, failedMatch: true}
+      }
 }

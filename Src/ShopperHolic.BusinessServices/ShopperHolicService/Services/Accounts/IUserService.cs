@@ -12,5 +12,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         bool Delete(int id);
         IEnumerable<UserRoleTypeDTO> GetAvailableRoles();
         UserDetailedDTO GetDetailedUser(int userID);
+
+        bool AddSupplierLogin(SupplierLoginDTO newEntity);
+        bool AddCustomerLogin(CustomerLoginDTO newEntity);
+        bool RemoveSupplierLogin(SupplierLoginDTO removeEntity);
+        bool RemoveCustomerLogin(CustomerLoginDTO removeEntity);
     }
 }

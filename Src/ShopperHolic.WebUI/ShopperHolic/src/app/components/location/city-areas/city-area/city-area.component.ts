@@ -39,9 +39,7 @@ export class CityAreaComponent {
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
-        console.log(this.service.getCreateModelFromForm())
         let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe(createResp => {
-          
           this.ownDialog.close({ userSubmitted: true, newModel: createResp });
           obs.unsubscribe();
         });
