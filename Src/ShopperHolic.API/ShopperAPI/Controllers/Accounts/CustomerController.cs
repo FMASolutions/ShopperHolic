@@ -31,7 +31,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<CustomerDTO> GetByID([FromQuery] int id)
         {
-            try { return  _customerManager.GetyByID(id); }
+            try { return _customerManager.GetyByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
@@ -54,7 +54,14 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpDelete]
         public ActionResult<bool> Delete([FromQuery] int id)
         {
-            try{return _customerManager.Delete(id);}
+            try { return _customerManager.Delete(id); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpGet]
+        public ActionResult<List<CustomerTypeDTO>> GetCustomerTypes()
+        {
+            try { return _customerManager.GetCustomerTypes(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
     }

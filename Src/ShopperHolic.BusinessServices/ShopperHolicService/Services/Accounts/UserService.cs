@@ -63,5 +63,31 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 throw ex;
             }
         }
+
+        public IEnumerable<UserRoleTypeDTO> GetAvailableRoles()
+        {
+            return UOW.UserRepo.GetAvailableRoles();
+        }
+
+        public UserDetailedDTO GetDetailedUser(int userID)
+        {
+            var profile = UOW.UserRepo.GetByID(userID);
+            var customerLogins = UOW.UserRepo.GetLinkedCustomers(userID);
+            var supplierLogins = UOW.UserRepo.GetLinkedSuppliers(userID);
+            var returnProfile = new UserDetailedDTO();
+
+            foreach(var item in supplierLogins)
+                returnProfile.SupplierLogins.Add(item);
+            foreach(var item in customerLogins)
+                returnProfile.CustomerLogins.Add(item);
+            
+            returnProfile.EmailAddress = profile.EmailAddress;
+            returnProfile.KnownAs = profile.KnownAs;
+            returnProfile.UserID = profile.UserID;
+            returnProfile.UserRoleTypeID = profile.UserRoleTypeID;
+            returnProfile.Username = profile.Username;
+
+            return returnProfile;
+        }
     }
 }

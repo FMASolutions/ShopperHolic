@@ -57,5 +57,19 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             try{return _userManager.Delete(id);}
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
+
+        [HttpGet]
+        public ActionResult<List<UserRoleTypeDTO>> GetAvailableRoles()
+        {
+            try { return _userManager.GetAvailableRoles(); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpGet]
+        public ActionResult<UserDetailedDTO> GetDetailedUser([FromQuery] int id)
+        {
+            try { return  _userManager.GetDetailedUser(id); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
     }
 }

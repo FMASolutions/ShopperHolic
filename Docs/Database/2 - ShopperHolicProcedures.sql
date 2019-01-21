@@ -315,8 +315,8 @@ AS
 	DECLARE @Success INT;
 	SET @Success = 0;
 	
-    INSERT INTO Users(Username, EncryptedPassword, KnownAs, EmailAddress)
-    VALUES(@Username, @EncryptedPassword, @KnownAs, @EmailAddress)
+    INSERT INTO Users(Username, EncryptedPassword, KnownAs, EmailAddress, UserRoleTypeID)
+    VALUES(@Username, @EncryptedPassword, @KnownAs, @EmailAddress, @UserRoleTypeID)
 
     DECLARE @NewUserID INT
     SET @NewUserID = (
@@ -324,9 +324,6 @@ AS
         FROM USERS 
         WHERE Username = @Username AND EncryptedPassword = @EncryptedPassword
     )
-
-    INSERT INTO UserRoles(UserRoleTypeID,UserID)
-    VALUES(@UserRoleTypeID, @NewUserID)
 
     INSERT INTO UserClaims (UserClaimTypeID,UserID,ClaimValue)
     SELECT UserClaimTypeID, @NewUserID, 'false'

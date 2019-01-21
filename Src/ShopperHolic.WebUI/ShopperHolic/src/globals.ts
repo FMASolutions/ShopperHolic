@@ -34,13 +34,13 @@ export class Globals {
     public static get SPINNER_SORT_MESSAGE(): string { return "Sorting Data.." }
     public static get SPINNER_FILTER_MESSAGE(): string { return "Applying Filter.." }
     public static get SPINNER_GET_MESSAGE(): string { return "Fetching Data.." }
-    public static get SPINNER_UPLOAD_MESSAGE(): string {return "Performing image upload"}
+    public static get SPINNER_UPLOAD_MESSAGE(): string { return "Performing image upload" }
     public static get LOGIN_FAILED_MSG(): string { return "Login failed for user: "; }
     public static get LOGIN_SUCCESS_MSG(): string { return "Login success for user: "; }
     public static get LOGIN_ATTEMPT_MSG(): string { return "Attempting login for user: "; }
     public static get MODE_UPDATE(): string { return "Update"; }
     public static get MODE_CREATE(): string { return "Create"; }
-    
+
 
     //Product Group Specific Text
     public static get PROD_GROUP_UPDATE_TITLE(): string { return "Product Group Update"; }
@@ -73,8 +73,8 @@ export class Globals {
     public static get SUB_GROUP_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete sub group: "; }
     public static get SUB_GROUP_DELETE_SUCCESS_MSG(): string { return "Successfully deleted sub group: "; }
     public static get SUB_GROUP_DELETE_FAILED_MSG(): string { return "Failed to delete sub group: "; }
-    public static get SUB_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','PID', 'View', 'Del']; }
-    public static get SUB_GROUP_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','PID', 'Select']; }
+    public static get SUB_GROUP_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'PID', 'View', 'Del']; }
+    public static get SUB_GROUP_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'PID', 'Select']; }
 
     //Item Specific Text
     public static get ITEM_UPDATE_TITLE(): string { return "Item Update"; }
@@ -90,8 +90,8 @@ export class Globals {
     public static get ITEM_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete item: "; }
     public static get ITEM_DELETE_SUCCESS_MSG(): string { return "Successfully deleted item: "; }
     public static get ITEM_DELETE_FAILED_MSG(): string { return "Failed to delete item: "; }
-    public static get ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'View', 'Del']; }
-    public static get ITEM_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','SID', 'Select']; }
+    public static get ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'SID', 'View', 'Del']; }
+    public static get ITEM_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'SID', 'Select']; }
 
     //Country Specific Text
     public static get COUNTRY_UPDATE_TITLE(): string { return "Country Update"; }
@@ -124,8 +124,8 @@ export class Globals {
     public static get CITY_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete city: "; }
     public static get CITY_DELETE_SUCCESS_MSG(): string { return "Successfully deleted city: "; }
     public static get CITY_DELETE_FAILED_MSG(): string { return "Failed to delete city: "; }
-    public static get CITY_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','CID', 'View', 'Del']; }
-    public static get CITY_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','CID', 'Select']; }
+    public static get CITY_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'CID', 'View', 'Del']; }
+    public static get CITY_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'CID', 'Select']; }
 
     //CityArea Specific Text
     public static get CITYAREA_UPDATE_TITLE(): string { return "City Area Update"; }
@@ -141,8 +141,8 @@ export class Globals {
     public static get CITYAREA_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete city area: "; }
     public static get CITYAREA_DELETE_SUCCESS_MSG(): string { return "Successfully deleted city area: "; }
     public static get CITYAREA_DELETE_FAILED_MSG(): string { return "Failed to delete city area: "; }
-    public static get CITYAREA_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name','CID', 'View', 'Del']; }
-    public static get CITYAREA_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','CID', 'Select']; }
+    public static get CITYAREA_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'CID', 'View', 'Del']; }
+    public static get CITYAREA_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'CID', 'Select']; }
 
     //Address Specific Text
     public static get ADDRESS_UPDATE_TITLE(): string { return "Address Update"; }
@@ -158,8 +158,62 @@ export class Globals {
     public static get ADDRESS_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete address: "; }
     public static get ADDRESS_DELETE_SUCCESS_MSG(): string { return "Successfully deleted address: "; }
     public static get ADDRESS_DELETE_FAILED_MSG(): string { return "Failed to delete address: "; }
-    public static get ADDRESS_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Line1', 'Line2','CityAreaName', 'View', 'Del']; }
-    public static get ADDRESS_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Line1', 'Line2','CityAreaName', 'Select']; }
+    public static get ADDRESS_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Line1', 'Line2', 'CityAreaName', 'View', 'Del']; }
+    public static get ADDRESS_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Line1', 'Line2', 'CityAreaName', 'Select']; }
+
+    //Supplier Specific Text
+    public static get SUPPLIER_UPDATE_TITLE(): string { return "Supplier Update"; }
+    public static get SUPPLIER_CREATE_TITLE(): string { return "Create New Supplier"; }
+    public static get SUPPLIER_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new supplier: "; }
+    public static get SUPPLIER_CREATE_SUCCESS_MSG(): string { return "Successfully created supplier: "; }
+    public static get SUPPLIER_CREATE_FAILED_MSG(): string { return "Failed to create supplier: "; }
+    public static get SUPPLIER_READ_FAILED_MSG(): string { return "Failed to retrieve supplier data: "; }
+    public static get SUPPLIER_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update supplier: "; }
+    public static get SUPPLIER_UPDATE_SUCCESS_MSG(): string { return "Successfully updated supplier: "; }
+    public static get SUPPLIER_UPDATE_FAILED_MSG(): string { return "Failed to update supplier: "; }
+    public static get SUPPLIER_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete supplier: "; }
+    public static get SUPPLIER_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete supplier: "; }
+    public static get SUPPLIER_DELETE_SUCCESS_MSG(): string { return "Successfully deleted supplier: "; }
+    public static get SUPPLIER_DELETE_FAILED_MSG(): string { return "Failed to delete supplier: "; }
+    public static get SUPPLIER_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'Tel', 'View', 'Del']; }
+    public static get SUPPLIER_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'Tel', 'Select']; }
+
+
+    //Customer Specific Text
+    public static get CUSTOMER_UPDATE_TITLE(): string { return "Customer Update"; }
+    public static get CUSTOMER_CREATE_TITLE(): string { return "Create New Customer"; }
+    public static get CUSTOMER_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new customer: "; }
+    public static get CUSTOMER_CREATE_SUCCESS_MSG(): string { return "Successfully created customer: "; }
+    public static get CUSTOMER_CREATE_FAILED_MSG(): string { return "Failed to create customer: "; }
+    public static get CUSTOMER_READ_FAILED_MSG(): string { return "Failed to retrieve customer data: "; }
+    public static get CUSTOMER_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update customer: "; }
+    public static get CUSTOMER_UPDATE_SUCCESS_MSG(): string { return "Successfully updated customer: "; }
+    public static get CUSTOMER_UPDATE_FAILED_MSG(): string { return "Failed to update customer: "; }
+    public static get CUSTOMER_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete customer: "; }
+    public static get CUSTOMER_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete customer: "; }
+    public static get CUSTOMER_DELETE_SUCCESS_MSG(): string { return "Successfully deleted customer: "; }
+    public static get CUSTOMER_DELETE_FAILED_MSG(): string { return "Failed to delete customer: "; }
+    public static get CUSTOMER_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'Tel', 'View', 'Del']; }
+    public static get CUSTOMER_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'Tel', 'Select']; }
+
+
+    //User Specific Text
+    public static get USER_UPDATE_TITLE(): string { return "User Update"; }
+    public static get USER_CREATE_TITLE(): string { return "Create New User"; }
+    public static get USER_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new user: "; }
+    public static get USER_CREATE_SUCCESS_MSG(): string { return "Successfully created user: "; }
+    public static get USER_CREATE_FAILED_MSG(): string { return "Failed to create user: "; }
+    public static get USER_READ_FAILED_MSG(): string { return "Failed to retrieve user data: "; }
+    public static get USER_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update user: "; }
+    public static get USER_UPDATE_SUCCESS_MSG(): string { return "Successfully updated user: "; }
+    public static get USER_UPDATE_FAILED_MSG(): string { return "Failed to update user: "; }
+    public static get USER_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete user: "; }
+    public static get USER_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete user: "; }
+    public static get USER_DELETE_SUCCESS_MSG(): string { return "Successfully deleted user: "; }
+    public static get USER_DELETE_FAILED_MSG(): string { return "Failed to delete user: "; }
+    public static get USER_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Name', 'Email', 'View', 'Del']; }
+    public static get USER_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Name', 'Email', 'Select']; }
+    public static get USER_LINKED_ACCT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','Del']; }
 
 }
 

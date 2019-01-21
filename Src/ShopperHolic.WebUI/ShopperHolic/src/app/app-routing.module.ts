@@ -12,6 +12,9 @@ import { CountriesComponent } from './components/location/countries/countries.co
 import { CitiesComponent } from './components/location/cities/cities.component';
 import { CityAreasComponent } from './components/location/city-areas/city-areas.component';
 import { AddressesComponent } from './components/location/addresses/addresses.component';
+import { CustomersComponent } from './components/accounts/customers/customers.component';
+import { SuppliersComponent } from './components/accounts/suppliers/suppliers.component';
+import { UserAccountsComponent } from './components/accounts/user-accounts/user-accounts.component';
 
 const routes: Routes = [
   {
@@ -69,6 +72,24 @@ const routes: Routes = [
   {
     path: 'addresses',
     component: AddressesComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'customers',
+    component: CustomersComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'suppliers',
+    component: SuppliersComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'users',
+    component: UserAccountsComponent,
     canActivate: [AuthGuard],
     data: { claimType: 'IsAdminUser' }
   },

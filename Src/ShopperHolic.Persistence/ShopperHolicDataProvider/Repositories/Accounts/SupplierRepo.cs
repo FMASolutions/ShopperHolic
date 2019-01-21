@@ -57,7 +57,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT  SupplierID,SupplierCode,SupplierName,SupplierEmailAddress
+                SELECT  SupplierID,SupplierCode,SupplierName,SupplierContactNumber
                 FROM Suppliers";
 
                 return Connection.Query<SupplierPreviewDTO>(query, transaction: CurrentTrans);

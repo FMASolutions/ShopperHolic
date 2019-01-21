@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Material from "@angular/material";
 import {MatSortModule} from '@angular/material/sort';
+import {MatRadioModule} from '@angular/material/radio'
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import {MatSortModule} from '@angular/material/sort';
     Material.MatMenuModule,
     Material.MatBottomSheetModule,
     Material.MatProgressSpinnerModule,
+    MatRadioModule,
   ],
   exports: [
     Material.MatToolbarModule,
@@ -50,6 +52,7 @@ import {MatSortModule} from '@angular/material/sort';
     Material.MatMenuModule,
     Material.MatBottomSheetModule,
     Material.MatProgressSpinnerModule,
+    MatRadioModule
   ],
   declarations: []
 })

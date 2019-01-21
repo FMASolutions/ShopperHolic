@@ -10,5 +10,6 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         IEnumerable<CustomerPreviewDTO> GetAllPreview();
         CustomerDTO Update(CustomerDTO newModel);
         bool Delete(int id);
+        IEnumerable<CustomerTypeDTO> GetCustomerTypes();
     }
 }

@@ -4,6 +4,10 @@
         <app-notification></app-notification>
         <form [formGroup]="service.prodForm">
             <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Product Group ID</mat-label>
+                <input matInput formControlName="id" type="text" readonly>
+            </mat-form-field>
+            <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Product Group Code</mat-label>
                 <input matInput formControlName="code" type="text">
             </mat-form-field>

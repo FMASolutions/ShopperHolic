@@ -63,7 +63,6 @@ import { CustomersComponent } from './components/accounts/customers/customers.co
 import { SuppliersComponent } from './components/accounts/suppliers/suppliers.component';
 import { UserAccountComponent } from './components/accounts/user-accounts/user-account/user-account.component';
 import { UserAccountListComponent } from './components/accounts/user-accounts/user-account-list/user-account-list.component';
-import { UserAccountSelectorComponent } from './components/accounts/user-accounts/user-account-selector/user-account-selector.component';
 import { SupplierComponent } from './components/accounts/suppliers/supplier/supplier.component';
 import { SupplierListComponent } from './components/accounts/suppliers/supplier-list/supplier-list.component';
 import { SupplierSelectorComponent } from './components/accounts/suppliers/supplier-selector/supplier-selector.component';
@@ -76,6 +75,8 @@ import { OrderListComponent } from './components/ordering/orders/order-list/orde
 import { PurchaseOrdersComponent } from './components/purchasing/purchase-orders/purchase-orders.component';
 import { PurchaseOrderComponent } from './components/purchasing/purchase-orders/purchase-order/purchase-order.component';
 import { PurchaseListComponent } from './components/purchasing/purchase-orders/purchase-list/purchase-list.component';
+import { CustomerService } from './services/accounts/customer.service';
+import { SupplierService } from './services/accounts/supplier.service';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,6 @@ import { PurchaseListComponent } from './components/purchasing/purchase-orders/p
     SuppliersComponent,
     UserAccountComponent,
     UserAccountListComponent,
-    UserAccountSelectorComponent,
     SupplierComponent,
     SupplierListComponent,
     SupplierSelectorComponent,
@@ -161,7 +161,9 @@ import { PurchaseListComponent } from './components/purchasing/purchase-orders/p
     CountryService,
     CityService,
     CityAreaService,
-    AddressService
+    AddressService,
+    CustomerService,
+    SupplierService,
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -180,7 +182,12 @@ import { PurchaseListComponent } from './components/purchasing/purchase-orders/p
     CityAreaComponent,
     CityAreaSelectorComponent,
     AddressComponent,
-    AddressSelectorComponent
+    AddressSelectorComponent,
+    SupplierComponent,
+    SupplierSelectorComponent,
+    CustomerComponent,
+    CustomerSelectorComponent,
+    UserAccountComponent,
   ]
 })
 export class AppModule { }

@@ -3,7 +3,10 @@
     <h3 mat-dialog-title>{{getPageTitle()}}</h3>
     <app-notification></app-notification>
     <form [formGroup]="service.addressForm">
-
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Address ID</mat-label>
+        <input matInput formControlName="id" type="text" readonly>
+      </mat-form-field>
       <mat-form-field class="maxWidth" appearance="outline">
         <mat-label>Address Line 1</mat-label>
         <input matInput formControlName="addressLine1" type="text">

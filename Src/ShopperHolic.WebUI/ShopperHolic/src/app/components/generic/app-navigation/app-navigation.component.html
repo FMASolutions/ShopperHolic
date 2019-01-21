@@ -33,7 +33,7 @@
                   <ol class="hide">
                       <li class="appLink"><a mat-list-item routerLink="/customers">Manage Customers</a></li>
                       <li class="appLink"><a mat-list-item routerLink="/suppliers">Manage Suppliers</a></li>
-                      <li class="appLink"><a mat-list-item routerLink="/accounts">Manage User Accounts</a></li>
+                      <li class="appLink"><a mat-list-item routerLink="/users">Manage User Accounts</a></li>
                   </ol>
                 </li>
                 <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Settings <mat-icon>arrow_right</mat-icon></a>
@@ -94,7 +94,7 @@
             <mat-menu #account="matMenu">
                 <button mat-menu-item routerLink="/customers">Manage Customers</button>
                 <button mat-menu-item routerLink="/suppliers">Manage Suppliers</button>
-                <button mat-menu-item routerLink="/accounts">Manage User Accounts</button>
+                <button mat-menu-item routerLink="/users">Manage User Accounts</button>
             </mat-menu>
 
             <mat-menu #settings="matMenu">

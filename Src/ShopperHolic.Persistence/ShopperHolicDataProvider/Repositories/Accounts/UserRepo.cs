@@ -15,8 +15,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                INSERT INTO Users(Username, EncryptedPassword, KnownAs, EmailAddress)
-                VALUES (@Username, @EncryptedPassword, @KnownAs,@EmailAddress)
+                INSERT INTO Users(Username, EncryptedPassword, KnownAs, EmailAddress,UserRoleTypeID)
+                VALUES (@Username, @EncryptedPassword, @KnownAs,@EmailAddress, @UserRoleTypeID)
                 
                 SELECT SCOPE_IDENTITY()";
 
@@ -25,6 +25,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@EncryptedPassword", encryptedPassword);
                 queryParameters.Add("@KnownAs", entityToCreate.KnownAs);
                 queryParameters.Add("@EmailAddress", entityToCreate.EmailAddress);
+                queryParameters.Add("@UserRoleTypeID",entityToCreate.UserRoleTypeID);
 
                 return Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
             }
@@ -38,7 +39,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT UserID, Username, EmailAddress, EncryptedPassword, KnownAs
+                SELECT UserID, Username, EmailAddress, EncryptedPassword, KnownAs, UserRoleTypeID
                 FROM Users
                 WHERE UserID = @UserID";
 
@@ -76,7 +77,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SET Username = @Username, 
                 EncryptedPassword = @EncryptedPassword, 
                 KnownAs = @KnownAs, 
-                EmailAddress = @EmailAddress
+                EmailAddress = @EmailAddress,
+                UserRoleTypeID = @UserRoleTypeID
                 WHERE UserID = @UserID";
 
                 var queryParameters = new DynamicParameters();
@@ -85,6 +87,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@KnownAs", updatedRecord.KnownAs);
                 queryParameters.Add("@EmailAddress", updatedRecord.EmailAddress);
                 queryParameters.Add("@UserID", updatedRecord.UserID);
+                queryParameters.Add("@UserRoleTypeID", updatedRecord.UserRoleTypeID);
 
                 int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
                 return (rowsUpdated > 0) ? GetByID(updatedRecord.UserID) : throw noRecordEX;
@@ -107,6 +110,66 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 
                 int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
                 return (rowsDeleted > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<UserRoleTypeDTO> GetAvailableRoles()
+        {
+             try
+            {
+                string query = @"
+                SELECT  UserRoleTypeID, UserRoleName
+                FROM UserRoleTypes";
+
+                return Connection.Query<UserRoleTypeDTO>(query, transaction: CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<CustomerLoginDTO> GetLinkedCustomers(int userid)
+        {
+            try
+            {
+                string query = @"
+                SELECT c.CustomerID, c.CustomerName, c.CustomerCode
+                FROM Users u
+                INNER JOIN CustomerLogins cl ON cl.UserID = u.UserID
+                INNER JOIN Customers c ON c.CustomerID = cl.CustomerID
+                WHERE u.UserID = @UserID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@UserID", userid);
+
+                return Connection.Query<CustomerLoginDTO>(query, queryParameters, CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<SupplierLoginDTO> GetLinkedSuppliers(int userid)
+        {
+            try
+            {
+                string query = @"
+                SELECT s.SupplierID, s.SupplierName, s.SupplierCode
+                FROM Users u
+                INNER JOIN SupplierLogins sl ON sl.supplierID = u.UserID
+                INNER JOIN Suppliers s ON s.SupplierID = sl.SupplierID
+                WHERE u.UserID = @UserID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@UserID", userid);
+
+                return Connection.Query<SupplierLoginDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {

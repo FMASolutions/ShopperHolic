@@ -10,5 +10,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         IEnumerable<UserPreviewDTO> GetAllPreview();
         UserProfileDTO Update(UserProfileDTO updatedRecord);
         bool Delete(int id);
+        IEnumerable<UserRoleTypeDTO> GetAvailableRoles();
+        IEnumerable<SupplierLoginDTO> GetLinkedSuppliers(int userid);
+        IEnumerable<CustomerLoginDTO> GetLinkedCustomers(int userid);
     }
 }

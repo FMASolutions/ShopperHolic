@@ -38,10 +38,10 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         public CustomerDTO GetByID(int id)
         {
             try
-            {
+            {   //CONSIDER DEFAULTADDRESSTEXT BEING SENT BACK HERE.......
                 string query = @"
                 SELECT CustomerID,c.CustomerTypeID,CONVERT(VARCHAR(10),ct.CustomerTypeID)+ ' - ' + ct.CustomerTypeCode + ' - ' + ct.CustomerTypeName AS [CustomerTypeText],
-                    DefaultAddressID,a.AddressLine1 + ' ' + a.AddressLine2 + ' ' +  ca.CityAreaName + ' ' + ci.CityName AS DefaultAddressText,
+                    DefaultAddressID,a.AddressLine1 + ' - ' + a.AddressLine2 + ' - ' +  ca.CityAreaName + ' - ' + ci.CityName AS DefaultAddressText,
                     CustomerCode,CustomerName,CustomerContactNumber,CustomerEmailAddress
                 FROM Customers c
                 INNER JOIN CustomerTypes ct on c.CustomerTypeID = ct.CustomerTypeID
@@ -65,7 +65,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT CustomerID,CustomerCode,CustomerName, CustomerEmailAddress
+                SELECT CustomerID,CustomerCode,CustomerName, CustomerContactNumber
                 FROM Customers c";
 
                 return Connection.Query<CustomerPreviewDTO>(query, transaction: CurrentTrans);
@@ -119,6 +119,22 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 
                 int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
                 return (rowsDeleted > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<CustomerTypeDTO> GetCustomerTypes()
+        {
+            try
+            {
+                string query = @"
+                SELECT CustomerTypeID, CustomerTypeName
+                FROM CustomerTypes";
+
+                return Connection.Query<CustomerTypeDTO>(query, transaction: CurrentTrans);
             }
             catch (Exception ex)
             {

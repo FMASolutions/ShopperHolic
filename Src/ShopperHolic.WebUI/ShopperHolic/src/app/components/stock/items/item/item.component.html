@@ -3,6 +3,10 @@
         <h3 mat-dialog-title>{{getPageTitle()}}</h3>
         <app-notification></app-notification>
         <form [formGroup]="service.itemForm">
+            <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Item ID</mat-label>
+                <input matInput formControlName="id" type="text" readonly>
+            </mat-form-field>
 
             <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Item Code</mat-label>

@@ -1,3 +1,105 @@
-<p>
-  customer works!
-</p>
+<mat-dialog-content>
+    <div class="container">
+        <h3 mat-dialog-title>{{getPageTitle()}}</h3>
+        <app-notification></app-notification>
+        <form [formGroup]="service.customerForm">
+            <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Customer ID</mat-label>
+                <input matInput formControlName="id" type="text" readonly>
+            </mat-form-field>
+
+            <div>
+                <label>Customer Type: </label>
+                <mat-radio-group class="custTypeGroup" formControlName="selectedCustomerType">
+                    <mat-radio-button class="custType" *ngFor="let custType of service.customerTypes" [value]="custType.customerTypeID">
+                        {{custType.customerTypeName}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Customer Code</mat-label>
+                <input matInput formControlName="code" type="text">
+            </mat-form-field>
+            <div class="validationMessages">
+                <div *ngIf="service.customerForm.controls.code.touched 
+                          && service.customerForm.controls.code.errors 
+                          && service.customerForm.controls.code.errors.failedPopulation">
+                    Code is mandatory.
+                </div>
+                <div *ngIf="
+                          service.customerForm.controls.code.touched 
+                          && service.customerForm.controls.code.errors 
+                          && service.customerForm.controls.code.errors.failedMinLength">
+                    Code should be 2 or more characters.
+                </div>
+                <div *ngIf="
+                          service.customerForm.controls.code.touched 
+                          && service.customerForm.controls.code.errors 
+                          && service.customerForm.controls.code.errors.failedMaxLength">
+                    Code can't be more than 7 characters.
+                </div>
+            </div>
+            <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Customer Name</mat-label>
+                <input matInput formControlName="name" type="text">
+            </mat-form-field>
+            <div class="validationMessages">
+                <div *ngIf="service.customerForm.controls.name.touched 
+                  && service.customerForm.controls.name.errors 
+                  && service.customerForm.controls.name.errors.failedPopulation">
+                    Name is mandatory.
+                </div>
+            </div>
+
+            <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Customer Email Address</mat-label>
+                <input matInput formControlName="email" type="text">
+            </mat-form-field>
+            <div class="validationMessages">
+                <div *ngIf="service.customerForm.controls.email.touched 
+                    && service.customerForm.controls.email.errors 
+                    && service.customerForm.controls.email.errors.failedPopulation">
+                    Email is mandatory.
+                </div>
+            </div>
+            <mat-form-field class="maxWidth" appearance="outline">
+                <mat-label>Customer Contact Number</mat-label>
+                <input matInput formControlName="tel" type="text">
+            </mat-form-field>
+            <div class="validationMessages">
+                <div *ngIf="service.customerForm.controls.tel.touched 
+                  && service.customerForm.controls.tel.errors 
+                  && service.customerForm.controls.tel.errors.failedPopulation">
+                    Contact Number is mandatory.
+                </div>
+            </div>
+
+            <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+                <div fxFlex="50">
+
+                    <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openChildSelect()">
+                        Default Address Selector
+                    </button>
+                </div>
+                <div fxFlex="50">
+                    <mat-form-field class="maxWidth">
+                        <mat-label>Use Default Address Selector Button</mat-label>
+                        <input matInput formControlName="defaultAddress" type="text" readonly hidden>
+                        <input matInput formControlName="defaultAddressText" type="text" readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+                <div fxFlex="50">
+                    <button mat-raised-button color="accent" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
+                </div>
+                <div fxFlex="50">
+                    <button mat-raised-button color="primary" class="maxWidth" (click)="cancel()">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

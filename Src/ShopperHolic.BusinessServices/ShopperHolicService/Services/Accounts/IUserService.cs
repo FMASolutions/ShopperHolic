@@ -10,5 +10,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         IEnumerable<UserPreviewDTO> GetAllPreview();
         UserProfileDTO Update(UserProfileDTO newModel, string key, string IV);
         bool Delete(int id);
+        IEnumerable<UserRoleTypeDTO> GetAvailableRoles();
+        UserDetailedDTO GetDetailedUser(int userID);
     }
 }

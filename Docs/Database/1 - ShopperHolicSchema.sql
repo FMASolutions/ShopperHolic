@@ -43,11 +43,10 @@ DROP TABLE SubGroups
 DROP TABLE ProductGroups
 DROP TABLE AuthorizedApplications
 DROP TABLE AccessKeys
-DROP TABLE UserRoles
 DROP TABLE UserClaims
-DROP TABLE UserRoleTypes
 DROP TABLE UserClaimTypes
 DROP TABLE Users
+DROP TABLE UserRoleTypes
 DROP TABLE AuditLogs
 DROP TABLE AuditLogTypes
 
@@ -304,6 +303,7 @@ CREATE TABLE Users
     EncryptedPassword VARCHAR(MAX) NOT NULL,
     KnownAs VARCHAR(100) NOT NULL,
     EmailAddress VARCHAR(150) NOT NULL UNIQUE,
+    UserRoleTypeID INT FOREIGN KEY REFERENCES UserRoleTypes(UserRoleTypeID)
 )
 GO
 CREATE TABLE UserClaims
@@ -312,13 +312,6 @@ CREATE TABLE UserClaims
     UserClaimTypeID INT FOREIGN KEY REFERENCES UserClaimTypes(UserClaimTypeID),
     UserID INT FOREIGN KEY REFERENCES Users(UserID),
     ClaimValue VARCHAR(50)
-)
-GO
-CREATE TABLE UserRoles
-(
-    UserRoleID INT IDENTITY(1,1) PRIMARY KEY,
-    UserRoleTypeID INT FOREIGN KEY REFERENCES UserRoleTypes(UserRoleTypeID),
-    UserID INT FOREIGN KEY REFERENCES Users(UserID)
 )
 GO
 CREATE TABLE CustomerLogins
@@ -331,6 +324,8 @@ GO
 CREATE TABLE SupplierLogins
 (
     SupplierLoginID INT IDENTITY(1,1) PRIMARY KEY,
+    SupplierID INT FOREIGN KEY REFERENCES Suppliers(SupplierID),
+    UserID INT FOREIGN KEY REFERENCES Users(UserID)
 
 )
 CREATE TABLE AuthorizedApplications

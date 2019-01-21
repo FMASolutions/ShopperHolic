@@ -1,0 +1,8 @@
+.custTypeGroup {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  
+  .custType {
+    margin: 7px;
+  }

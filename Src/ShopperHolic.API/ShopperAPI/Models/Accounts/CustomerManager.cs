@@ -45,5 +45,13 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _customerService.Delete(id);
         }
+
+        public List<CustomerTypeDTO> GetCustomerTypes()
+        {
+            var returnList = new List<CustomerTypeDTO>();
+            foreach(var current in _customerService.GetCustomerTypes())
+                returnList.Add(current);
+            return returnList;
+        }
     }
 }

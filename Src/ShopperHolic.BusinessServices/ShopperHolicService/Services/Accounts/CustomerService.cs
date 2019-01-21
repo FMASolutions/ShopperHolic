@@ -60,5 +60,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 throw ex;
             }
         }
+
+        public IEnumerable<CustomerTypeDTO> GetCustomerTypes()
+        {
+            return UOW.CustomerRepo.GetCustomerTypes();
+        }
     }
 }

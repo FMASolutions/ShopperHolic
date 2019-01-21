@@ -1,3 +1,184 @@
-<p>
-  user-account works!
-</p>
+<mat-dialog-content>
+  <div class="container">
+    <h3 mat-dialog-title>{{getPageTitle()}}</h3>
+    <app-notification></app-notification>
+    <form [formGroup]="service.userForm">
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>User ID</mat-label>
+        <input matInput formControlName="id" type="text" readonly>
+      </mat-form-field>
+
+      <div>
+        <label>User Role: </label>
+        <mat-radio-group class="userRoles" formControlName="selectedRole">
+          <mat-radio-button class="userRole" *ngFor="let role of service.availableUserRoles" [value]="role.userRoleTypeID">
+            {{role.userRoleName}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" type="text">
+      </mat-form-field>
+      <div class="validationMessages">
+        <div *ngIf="service.userForm.controls.username.touched 
+                  && service.userForm.controls.username.errors 
+                  && service.userForm.controls.username.errors.failedPopulation">
+          Name is mandatory.
+        </div>
+      </div>
+
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="text">
+      </mat-form-field>
+      <div class="validationMessages">
+        <div *ngIf="service.userForm.controls.password.touched 
+                && service.userForm.controls.password.errors 
+                && service.userForm.controls.password.errors.failedPopulation">
+          Password is mandatory.
+        </div>
+      </div>
+
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput formControlName="confirmPassword" type="text">
+      </mat-form-field>
+      <div class="validationMessages">
+        <div *ngIf="service.userForm.controls.confirmPassword.touched 
+              && service.userForm.controls.confirmPassword.errors 
+              && service.userForm.controls.confirmPassword.errors.failedPopulation">
+          Conirm Password is mandatory.
+        </div>
+      </div>
+
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Known As</mat-label>
+        <input matInput formControlName="knownAs" type="text">
+      </mat-form-field>
+      <div class="validationMessages">
+        <div *ngIf="service.userForm.controls.knownAs.touched 
+            && service.userForm.controls.knownAs.errors 
+            && service.userForm.controls.knownAs.errors.failedPopulation">
+          Known As is mandatory.
+        </div>
+      </div>
+
+      <mat-form-field class="maxWidth" appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="emailAddress" type="text">
+      </mat-form-field>
+      <div class="validationMessages">
+        <div *ngIf="service.userForm.controls.emailAddress.touched 
+          && service.userForm.controls.emailAddress.errors 
+          && service.userForm.controls.emailAddress.errors.failedPopulation">
+          Email Address is mandatory.
+        </div>
+      </div>
+
+      <ng-container *ngIf="isUpdateMode">
+        <h1>Linked Supplier Details:</h1>
+        <form>
+          <mat-form-field class="maxWidth" appearance="outline">
+            <mat-label>Filter</mat-label>
+            <mat-icon matSuffix *ngIf="service.supplierTextFilter" (click)="service.resetSupplierListFilter()">close</mat-icon>
+            <input matInput [(ngModel)]="service.supplierTextFilter" name="supplierTextFilter" type="search" id="supplierTextFilterID">
+          </mat-form-field>
+          <button mat-flat-button color="primary" class="maxWidth" (click)="service.applySupplierListFilter()">Apply
+            Filters</button>
+        </form>
+        <div class="mat-elevation-z4">
+          <table mat-table [dataSource]="service.supplierTableDataSource" matSort (matSortChange)="sortSupplierClicked($event)"
+            class="maxWidth">
+            <ng-container matColumnDef="ID">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header="ID">ID</th>
+              <td mat-cell *matCellDef="let row">{{row.supplierID}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Code">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header="Code">Code</th>
+              <td mat-cell *matCellDef="let row">{{row.supplierCode}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header="Name">Name</th>
+              <td mat-cell *matCellDef="let row">{{row.supplierName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Del">
+              <th mat-header-cell *matHeaderCellDef>Remove</th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="deleteSupplierClicked(row.supplierID)">
+                  <mat-icon aria-label="Del">delete_forever</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="supplierColumnList"></tr>
+            <tr mat-row *matRowDef="let row; columns: supplierColumnList"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+        <button mat-flat-button color="primary" id="bottomReset" class="maxWidth" (click)="service.resetSupplierListFilter()">
+          Reset Filters
+        </button>
+
+        <h1>Linked Customer Details:</h1>
+        <form>
+          <mat-form-field class="maxWidth" appearance="outline">
+            <mat-label>Filter</mat-label>
+            <mat-icon matSuffix *ngIf="service.customerTextFilter" (click)="service.resetCustomerListFilter()">close</mat-icon>
+            <input matInput [(ngModel)]="service.customerTextFilter" name="customerTextFilter" type="search" id="customerTextFilterID">
+          </mat-form-field>
+          <button mat-flat-button color="primary" class="maxWidth" (click)="service.applyCustomerListFilter()">Apply
+            Filters</button>
+        </form>
+        <div class="mat-elevation-z4">
+          <table mat-table [dataSource]="service.customerTableDataSource" matSort (matSortChange)="sortCustomerClicked($event)"
+            class="maxWidth">
+            <ng-container matColumnDef="ID">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header="ID">ID</th>
+              <td mat-cell *matCellDef="let row">{{row.customerID}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Code">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header="Code">Code</th>
+              <td mat-cell *matCellDef="let row">{{row.customerCode}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header="Name">Name</th>
+              <td mat-cell *matCellDef="let row">{{row.customerName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Del">
+              <th mat-header-cell *matHeaderCellDef>Remove</th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="deleteCustomerClicked(row.customerID)">
+                  <mat-icon aria-label="Del">delete_forever</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="customerColumnList"></tr>
+            <tr mat-row *matRowDef="let row; columns: customerColumnList"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+        <button mat-flat-button color="primary" id="bottomReset" class="maxWidth" (click)="service.resetCustomerListFilter()">
+          Reset Filters
+        </button>
+      </ng-container>
+
+      <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+        <div fxFlex="50">
+          <button mat-raised-button color="accent" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
+        </div>
+        <div fxFlex="50">
+          <button mat-raised-button color="primary" class="maxWidth" (click)="cancel()">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

@@ -46,5 +46,20 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _UserService.Delete(id);
         }
+
+        public List<UserRoleTypeDTO> GetAvailableRoles()
+        {
+            var returnList = new List<UserRoleTypeDTO>();
+            foreach(var item in _UserService.GetAvailableRoles())
+                returnList.Add(item);
+            return returnList;
+        }
+
+        public UserDetailedDTO GetDetailedUser(int userID)
+        {
+            return _UserService.GetDetailedUser(userID);
+        }
+
+
     }
 }

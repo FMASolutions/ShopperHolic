@@ -280,7 +280,7 @@ UserRoleTypes
 UserClaimTypes
 UserClaims
 UserRoles
-CustomerLogins --TODO
+CustomerLogins
 SupplierLogins -- TODO
 -------------------------------------*/
 PRINT 'Insert UserClaimTypes'
@@ -335,6 +335,13 @@ INSERT INTO CustomerLogins
     (CustomerID, UserID)
 VALUES
     (2,1) -- FMASolutionsLtd / Faisal
+GO
+
+PRINT 'Insert SupplierLogins'
+INSERT INTO SupplierLogins
+    (SupplierID, UserID)
+VALUES
+    (1,1)
 GO
 /*-------------------------------------
 App Security:

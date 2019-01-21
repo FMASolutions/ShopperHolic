@@ -8,3 +8,9 @@
 7) Implement Automation I.E Emails when low stock etc....
 8) Implement Reporting
 9) Implement OAuth2 / OPenIDConnect using a IdentityServer
+10) Add CustomerTYpes to the Customer Test suite.
+11) Rename UI Service comments to make them service name agnostic (eg Form helper)
+13) Consider Bringing used icons local to the server?
+14) Implement some more security for role checking in the UI layer.
+15) Implement Password Confirm policy to encure password and confirm password matches....
+16) Allow association of user account to supplier and customer.

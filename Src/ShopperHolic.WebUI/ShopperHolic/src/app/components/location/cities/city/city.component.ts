@@ -21,10 +21,10 @@ export class CityComponent {
 
   getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 
-  openChildSelect(){
+  openChildSelect() {
     let dialogRef = this.childDialog.open(CountrySelectorComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
     dialogRef.afterClosed().subscribe(resp => {
-      if(resp && resp.selectedModel) {
+      if (resp && resp.selectedModel) {
         this.service.updateSelectedCountry(resp.selectedModel);
       }
     })
@@ -34,7 +34,7 @@ export class CityComponent {
     if (this.service.cityForm.valid) {
       if (this.currentMode == Globals.MODE_UPDATE) {
         let obs = this.service.update(this.service.getUpdateModelFromForm()).subscribe(updateResp => {
-          this.ownDialog.close({ userSubmitted: true, newModel: updateResp  });
+          this.ownDialog.close({ userSubmitted: true, newModel: updateResp });
           obs.unsubscribe();
         });
 
