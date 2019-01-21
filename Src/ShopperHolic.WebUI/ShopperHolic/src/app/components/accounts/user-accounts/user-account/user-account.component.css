@@ -1,0 +1,8 @@
+.userRoles {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  
+  .userRole {
+    margin: 7px;
+  }
