@@ -162,7 +162,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 string query = @"
                 SELECT s.SupplierID, s.SupplierName, s.SupplierCode
                 FROM Users u
-                INNER JOIN SupplierLogins sl ON sl.supplierID = u.UserID
+                INNER JOIN SupplierLogins sl ON sl.UserID = u.UserID
                 INNER JOIN Suppliers s ON s.SupplierID = sl.SupplierID
                 WHERE u.UserID = @UserID";
 

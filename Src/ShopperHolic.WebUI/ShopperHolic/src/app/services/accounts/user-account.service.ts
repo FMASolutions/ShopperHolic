@@ -311,8 +311,9 @@ export class UserAccountService {
   public removeSupplierForCurrentUser(supplierID: number) {
     let obs = this.removeSupplierLogin(this.currentUserID, supplierID).subscribe(resp => {
       let index = this.supplierTableDataSource.data.findIndex(x => x.supplierID == supplierID);
-      this.supplierTableDataSource.data.splice(index);
-      this.supplierTableDataSource = new MatTableDataSource(this.supplierTableDataSource.data);
+      let newData = this.supplierTableDataSource.data;
+      newData.splice(index,1);
+      this.supplierTableDataSource.data = newData;
       obs.unsubscribe();
     })
   }
@@ -320,8 +321,9 @@ export class UserAccountService {
   public addSupplierForCurrentUser(newSupplierLogin: SupplierLogin) {
     let obs = this.addSupplierLogin(this.currentUserID, newSupplierLogin.supplierID).subscribe(resp =>{
       obs.unsubscribe
-      this.supplierTableDataSource.data.push(newSupplierLogin);
-      this.supplierTableDataSource = new MatTableDataSource(this.supplierTableDataSource.data);
+      let newData = this.supplierTableDataSource.data;
+      newData.push(newSupplierLogin);
+      this.supplierTableDataSource.data = newData
     })
   }
 
@@ -366,8 +368,9 @@ export class UserAccountService {
   public removeCustomerForCurrentUser(customerID: number) {
     let obs = this.removeCustomerLogin(this.currentUserID, customerID).subscribe(resp => {
       let index = this.customerTableDataSource.data.findIndex(x => x.customerID == customerID);
-      this.customerTableDataSource.data.splice(index);
-      this.customerTableDataSource = new MatTableDataSource(this.customerTableDataSource.data);
+      let newData = this.customerTableDataSource.data;
+      newData.splice(index,1);
+      this.customerTableDataSource.data = newData;
       obs.unsubscribe();
     })
   }
@@ -375,8 +378,9 @@ export class UserAccountService {
   public addCustomerForCurrentUser(newLogin: CustomerLogin) {
     let obs = this.addCustomerLogin(this.currentUserID, newLogin.customerID).subscribe(resp =>{
       obs.unsubscribe
-      this.customerTableDataSource.data.push(newLogin);
-      this.customerTableDataSource = new MatTableDataSource(this.customerTableDataSource.data);
+      let newData = this.customerTableDataSource.data;
+      newData.push(newLogin);
+      this.customerTableDataSource.data = newData;
     })
   }
 
