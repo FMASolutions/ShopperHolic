@@ -264,5 +264,55 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
+
+        public bool SetUserClaim(int userID, string claimType, string claimValue)
+        {
+            try
+            {
+                string query = @"
+                UPDATE uc
+                SET uc.ClaimValue = @ClaimValue
+                FROM UserClaims uc
+                INNER JOIN UserClaimTypes uct ON uct.UserClaimTypeID = uc.UserClaimTypeID
+                INNER JOIN Users u on u.UserID = uc.UserID
+                WHERE uct.UserClaimTypeName = @ClaimType
+                AND u.UserID = @UserID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@ClaimValue", claimValue);
+                queryParameters.Add("@ClaimType", claimType);
+                queryParameters.Add("@UserID", userID);
+
+                return (Connection.Execute(query, queryParameters, CurrentTrans) > 0);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public bool ResetUserClaims(int userID)
+        {
+            try
+            {
+                string query = @"
+                DELETE FROM UserClaims
+                WHERE UserID = @UserID
+                
+                INSERT INTO UserClaims (UserClaimTypeID,UserID,ClaimValue)
+                SELECT UserClaimTypeID, @UserID, 'false'
+                FROM UserClaimTypes";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@UserID", userID);
+
+                int rowsAffected = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsAffected > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
     }
 }

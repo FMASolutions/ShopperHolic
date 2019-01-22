@@ -17,5 +17,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         bool RemoveSupplierLogin(SupplierLoginDTO removeEntity);
         bool AddCustomerLogin(CustomerLoginDTO createEntity);
         bool RemoveCustomerLogin(CustomerLoginDTO removeEntity);
+        bool SetUserClaim(int userID, string claimType, string claimValue);
+        bool ResetUserClaims(int userID);
     }
 }

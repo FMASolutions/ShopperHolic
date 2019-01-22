@@ -17,6 +17,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 string encryptedPassword = CryptoService.Encrypt(modelToCreate.Password, key, IV);
                 int newID = UOW.UserRepo.Create(modelToCreate, encryptedPassword);
                 var createResult = UOW.UserRepo.GetByID(newID);
+                SetupUserClaims(createResult.UserID, createResult.UserRoleTypeID);
                 UOW.SaveChanges();
                 return createResult;
             }
@@ -38,7 +39,17 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         {
             try
             {
-                newModel.EncryptedPassword = CryptoService.Encrypt(newModel.Password, key, IV);
+                var currentModel = GetByID(newModel.UserID);
+
+                if (!string.IsNullOrEmpty(newModel.Password) && !string.IsNullOrWhiteSpace(newModel.Password))
+                    newModel.EncryptedPassword = CryptoService.Encrypt(newModel.Password, key, IV);
+                
+                else
+                    newModel.EncryptedPassword = currentModel.EncryptedPassword;
+
+                if (newModel.UserRoleTypeID != currentModel.UserRoleTypeID)
+                    SetupUserClaims(newModel.UserID, newModel.UserRoleTypeID);
+                
                 var returnModel = UOW.UserRepo.Update(newModel);
                 UOW.SaveChanges();
                 return returnModel;
@@ -76,11 +87,11 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
             var supplierLogins = UOW.UserRepo.GetLinkedSuppliers(userID);
             var returnProfile = new UserDetailedDTO();
 
-            foreach(var item in supplierLogins)
+            foreach (var item in supplierLogins)
                 returnProfile.SupplierLogins.Add(item);
-            foreach(var item in customerLogins)
+            foreach (var item in customerLogins)
                 returnProfile.CustomerLogins.Add(item);
-            
+
             returnProfile.EmailAddress = profile.EmailAddress;
             returnProfile.KnownAs = profile.KnownAs;
             returnProfile.UserID = profile.UserID;
@@ -145,6 +156,52 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 UOW.RollbackChanges();
                 throw ex;
             }
+        }
+
+        private void SetupUserClaims(int userID, int userRoleTypeID)
+        {
+            EUserRoles userRole = (EUserRoles)userRoleTypeID;
+            ResetUserClaims(userID);
+            switch (userRole)
+            {
+                case EUserRoles.Administrator:
+                    SetupAdminUser(userID);
+                    break;
+                case EUserRoles.Customer:
+                    SetupCustomerUser(userID);
+                    break;
+                case EUserRoles.TillOperator:
+                    SetupTillOperatorUser(userID);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(userRoleTypeID.ToString());
+            }
+        }
+
+        private void ResetUserClaims(int userid)
+        {
+            UOW.UserRepo.ResetUserClaims(userid);
+        }
+
+        private void SetupAdminUser(int userid)
+        {
+            var allClaims = Enum.GetValues(typeof(EClaimTypes));
+                foreach(var claim in allClaims)
+                    UOW.UserRepo.SetUserClaim(userid, claim.ToString(), "true");
+        }
+
+        private void SetupCustomerUser(int userid)
+        {
+            var customerClaims = Enum.GetValues(typeof(ECustomerClaims));
+                foreach(var claim in customerClaims)
+                    UOW.UserRepo.SetUserClaim(userid, claim.ToString(), "true");
+        }
+
+        private void SetupTillOperatorUser(int userid)
+        {
+            var tillOperatorClaims = Enum.GetValues(typeof(ETillOperatorClaims));
+                foreach(var claim in tillOperatorClaims)
+                    UOW.UserRepo.SetUserClaim(userid, claim.ToString(), "true");
         }
     }
 }

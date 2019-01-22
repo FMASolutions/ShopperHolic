@@ -381,7 +381,6 @@ SELECT * FROM InvoiceItems
 SELECT * FROM UserClaimTypes
 SELECT * FROM UserRoleTypes
 SELECT * FROM Users
-SELECT * FROM UserRoles
 SELECT * FROM UserClaims
 SELECT * FROM CustomerLogins
 
