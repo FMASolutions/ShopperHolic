@@ -25,10 +25,5 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         {
           throw new NotImplementedException();
         }
-        
-        public bool Delete(int id)
-        {
-          throw new NotImplementedException();
-        }
     }
 }

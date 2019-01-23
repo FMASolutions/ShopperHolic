@@ -8,6 +8,5 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         int InvoiceOrder(int orderID);
         InvoiceDTO GetByID(int id);
         IEnumerable<InvoicePreviewDTO> GetAllPreview();       
-        bool Delete(int id);
     }
 }

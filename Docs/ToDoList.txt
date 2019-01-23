@@ -16,3 +16,4 @@
 16) Allow association of user account to supplier and customer.
 17) Implement Add/Remove for Customer and Supplier Logins within API and backend
 18) Implement new User Create logic to check user role and add user claims based on the selected user role.....
+19) Move Delivery Date to Item Record & Have DeliveryDueDate on the Header.

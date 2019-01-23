@@ -10,25 +10,63 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
     public class DeliveryNoteRepo : BaseRepo, IDeliveryNoteRepo
     {
         public DeliveryNoteRepo(IDbTransaction transaction) : base(transaction) { }
-        
+
         public int DeliverOrder(int orderID)
         {
-          throw new NotImplementedException();
+            try
+            {
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@OrderHeaderID", orderID);
+                int deliveryNoteID = Connection.QueryFirst<int>("DeliverExistingItems", queryParameters, CurrentTrans, commandType: CommandType.StoredProcedure);
+                return deliveryNoteID;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
         }
-        
-        public DeliveryNoteDTO GetByID(int id)
+
+        public IEnumerable<DeliveryNoteDTO> GetByID(int id)
         {
-          throw new NotImplementedException();
+            try
+            {
+                string query = @"
+                SELECT DeliveryNoteItemID,dn.DeliveryNoteID,oh.OrderHeaderID,dn.DeliveryDate,
+                  oi.OrderItemID,oi.OrderItemDescription,oi.OrderItemQty,c.CustomerName
+                FROM DeliveryNotes dn
+                INNER JOIN DeliveryNoteItems dni ON dn.DeliveryNoteID = dni.DeliveryNoteID
+                INNER JOIN OrderItems oi ON oi.OrderItemID = dni.OrderItemID
+                INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = oi.OrderHeaderID
+                INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
+                WHERE oh.OrderHeaderID = @OrderID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@OrderID", id);
+
+                return Connection.Query<DeliveryNoteDTO>(query, queryParameters, CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
         }
-        
+
         public IEnumerable<DeliveryNotePreviewDTO> GetAllPreview()
         {
-          throw new NotImplementedException();
-        }
-        
-        public bool Delete(int id)
-        {
-          throw new NotImplementedException();
+            try
+            {
+                string query = @"
+                SELECT dn.DeliveryNoteID,oh.OrderHeaderID,dn.DeliveryDate,c.CustomerName
+                FROM DeliveryNotes dn
+                INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = dn.OrderHeaderID
+                INNER JOIN Customers c ON c.CustomerID = oh.CustomerID";
+
+                return Connection.Query<DeliveryNotePreviewDTO>(query, transaction: CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
         }
     }
 }
