@@ -30,6 +30,9 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         public IUserRepo UserRepo { get { return _userRepo ?? (_userRepo = new UserRepo(_transaction)); } }
         public ICustomerRepo CustomerRepo { get { return _customerRepo ?? (_customerRepo = new CustomerRepo(_transaction)); } }
         public ISupplierRepo SupplierRepo { get { return _supplierRepo ?? (_supplierRepo = new SupplierRepo(_transaction)); } }
+        public IOrderRepo OrderRepo { get { return _orderRepo ?? (_orderRepo = new OrderRepo(_transaction)); } }
+        public IInvoiceRepo InvoiceRepo { get { return _invoiceRepo ?? (_invoiceRepo = new InvoiceRepo(_transaction)); } }
+        public IDeliveryNoteRepo DeliveryNoteRepo { get { return _deliveryNoteRepo ?? (_deliveryNoteRepo = new DeliveryNoteRepo(_transaction)); } }
 
         bool _disposing = false;
 
@@ -97,7 +100,11 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             _userRepo = null;
             _customerRepo = null;
             _supplierRepo = null;
+            _orderRepo = null;
+            _invoiceRepo = null;
+            _deliveryNoteRepo = null;
         }
+
         private ISecurityRepo _securityRepo;
         private IProductGroupRepo _productGroupRepo;
         private ISubGroupRepo _subGroupRepo;
@@ -109,5 +116,8 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         private IUserRepo _userRepo;
         private ICustomerRepo _customerRepo;
         private ISupplierRepo _supplierRepo;
+        private IOrderRepo _orderRepo;
+        private IInvoiceRepo _invoiceRepo;
+        private IDeliveryNoteRepo _deliveryNoteRepo;
     }
 }

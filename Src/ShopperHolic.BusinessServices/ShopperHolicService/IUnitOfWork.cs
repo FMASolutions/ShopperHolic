@@ -16,6 +16,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         IUserRepo UserRepo {get;}
         ICustomerRepo CustomerRepo {get;}
         ISupplierRepo SupplierRepo {get;}
+        IOrderRepo OrderRepo {get;}
+        IInvoiceRepo InvoiceRepo {get;}
+        IDeliveryNoteRepo DeliveryNoteRepo {get;}
+
         void SaveChanges();
         void RollbackChanges(bool createFollowUpTransaction = true);
     }
