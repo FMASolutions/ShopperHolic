@@ -15,7 +15,7 @@ export class CustomerSelectorComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   columnList: string[] = Globals.CUSTOMER_PRVW_SELECT_COLUMNS;
 
-  constructor(private service: CustomerService, public childDialog: MatDialog, public ownDialog: MatDialogRef<CustomerSelectorComponent>) { }
+  constructor(public service: CustomerService, public childDialog: MatDialog, public ownDialog: MatDialogRef<CustomerSelectorComponent>) { }
 
   ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 

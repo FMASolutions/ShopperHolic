@@ -15,7 +15,7 @@ export class CountrySelectorComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   columnList: string[] = Globals.COUNTRY_PRVW_SELECT_COLUMNS;
 
-  constructor(private service: CountryService, public childDialog: MatDialog, public ownDialog: MatDialogRef<CountrySelectorComponent>) { }
+  constructor(public service: CountryService, public childDialog: MatDialog, public ownDialog: MatDialogRef<CountrySelectorComponent>) { }
 
   ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
