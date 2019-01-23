@@ -6,12 +6,13 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
     public interface IOrderRepo
     {
         int Create(CreateOrderDTO entityToCreate);
-        OrderDTO GetByID(int id);        
-        IEnumerable<OrderPreviewDTO> GetAllPreview();       
+        OrderDTO GetByID(int id);
+        IEnumerable<OrderPreviewDTO> GetAllPreview();
         OrderDTO Update(OrderDTO updatedRecord);
         bool Delete(int id);
         IEnumerable<OrderItemDTO> GetItemsForOrder(int id);
-        OrderItemDTO AddItemToOrder(CreateOrderItemDTO entityToCreate);
+        int AddItemToOrder(CreateOrderItemDTO entityToCreate);
         bool RemoveItemFromOrder(int orderItemID);
+        OrderItemDTO GetOrderItemByID(int orderItemID);
     }
 }

@@ -5,7 +5,7 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
     {
         public int InvoiceID { get; set; }
         public int InvoiceItemID { get; set; }
-        public int OrderHeaderID { get; set; }
+        public int OrderID { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string ItemDescription { get; set; }
         public int ItemQty { get; set; }
