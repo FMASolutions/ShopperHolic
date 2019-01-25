@@ -102,6 +102,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
+                DELETE FROM UserClaims
+                WHERE UserID = @UserID
                 DELETE FROM Users
                 WHERE UserID = @UserID";
 

@@ -3433,6 +3433,44 @@
 					"response": []
 				},
 				{
+					"name": "1a - Get Available Roles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/GetAvailableRoles",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"GetAvailableRoles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "2 - CreateNew",
 					"event": [
 						{
@@ -3469,7 +3507,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"Username\" : \"testuser\",\n    \"EmailAddress\" : \"test@testuser.com\",\n    \"Password\" : \"testpassword\",\n    \"KnownAs\" : \"test\"\n}"
+							"raw": "{\n\t\"Username\" : \"testuser\",\n    \"EmailAddress\" : \"test@testuser.com\",\n    \"Password\" : \"testpassword\",\n    \"KnownAs\" : \"test\",\n    \"UserRoleTypeID\": 1\n}"
 						},
 						"url": {
 							"raw": "{{userController}}/Create",
@@ -3531,6 +3569,146 @@
 					"response": []
 				},
 				{
+					"name": "3a - Add Customer Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/AddCustomerLogin?userID={{CreatedUserID}}&customerID=1",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"AddCustomerLogin"
+							],
+							"query": [
+								{
+									"key": "userID",
+									"value": "{{CreatedUserID}}"
+								},
+								{
+									"key": "customerID",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3b - Add Supplier Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/AddSupplierLogin?userID={{CreatedUserID}}&supplierID=1",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"AddSupplierLogin"
+							],
+							"query": [
+								{
+									"key": "userID",
+									"value": "{{CreatedUserID}}"
+								},
+								{
+									"key": "supplierID",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3c - Get Detailed User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/GetDetailedUser?id=1",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"GetDetailedUser"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "4 - UpdateCreated",
 					"request": {
 						"auth": {
@@ -3554,7 +3732,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"UserID\" : {{CreatedUserID}},\n\t\"Username\" : \"updTester\",\n    \"EmailAddress\" : \"test@testuser.com\",\n    \"Password\" : \"newPassword\",\n    \"KnownAs\" : \"upd test\"\n}"
+							"raw": "{\n\t\"UserID\" : {{CreatedUserID}},\n\t\"Username\" : \"updTester\",\n    \"EmailAddress\" : \"test@testuser.com\",\n    \"Password\" : \"newPassword\",\n    \"KnownAs\" : \"upd test\",\n    \"UserRoleTypeID\": 1\n}"
 						},
 						"url": {
 							"raw": "{{userController}}/Update",
@@ -3616,7 +3794,103 @@
 					"response": []
 				},
 				{
-					"name": "6 - DeleteCreated",
+					"name": "6 - Delete Customer Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/RemoveCustomerLogin?userID={{CreatedUserID}}&customerID=1",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"RemoveCustomerLogin"
+							],
+							"query": [
+								{
+									"key": "userID",
+									"value": "{{CreatedUserID}}"
+								},
+								{
+									"key": "customerID",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6a - Delete Supplier Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{userController}}/RemoveSupplierLogin?userID={{CreatedUserID}}&supplierID=1",
+							"host": [
+								"{{userController}}"
+							],
+							"path": [
+								"RemoveSupplierLogin"
+							],
+							"query": [
+								{
+									"key": "userID",
+									"value": "{{CreatedUserID}}"
+								},
+								{
+									"key": "supplierID",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6b - DeleteCreatedUser",
 					"request": {
 						"auth": {
 							"type": "bearer",

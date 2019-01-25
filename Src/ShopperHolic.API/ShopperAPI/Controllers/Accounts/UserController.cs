@@ -72,28 +72,28 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult<bool> AddCustomerLogin([FromQuery] int userID, [FromQuery] int customerID)
         {
             try { return _userManager.AddCustomerLogin(userID, customerID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [HttpGet]
+        [HttpDelete]
         public ActionResult<bool> RemoveCustomerLogin([FromQuery] int userID, [FromQuery] int customerID)
         {
             try { return _userManager.RemoveCustomerLogin(userID, customerID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult<bool> AddSupplierLogin([FromQuery] int userID, [FromQuery] int supplierID)
         {
             try { return _userManager.AddSupplierLogin(userID, supplierID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
-        [HttpGet]
+        [HttpDelete]
         public ActionResult<bool> RemoveSupplierLogin([FromQuery] int userID, [FromQuery] int supplierID)
         {
             try { return _userManager.RemoveSupplierLogin(userID, supplierID); }

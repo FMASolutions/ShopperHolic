@@ -17,3 +17,4 @@
 17) Implement Add/Remove for Customer and Supplier Logins within API and backend
 18) Implement new User Create logic to check user role and add user claims based on the selected user role.....
 19) Move Delivery Date to Item Record & Have DeliveryDueDate on the Header.
+20) Ensuer all API Endpoint CRUD operations correspond to the HTTP Verbs (Create = POST, Read = GET, Update = PUT, Delete = DELETE ) (I believe supplier login and add customer login should be POST)
