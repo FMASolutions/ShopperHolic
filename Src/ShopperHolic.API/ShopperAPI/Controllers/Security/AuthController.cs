@@ -50,11 +50,5 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             else
                 return BadRequest();
         }
-
-        [Authorize]
-        public ActionResult<bool> Logout()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

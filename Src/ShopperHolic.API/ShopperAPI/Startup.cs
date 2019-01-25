@@ -16,6 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 using ShopperHolic.BusinessServices.ShopperHolicService.Services;
 using ShopperHolic.BusinessServices.ShopperHolicService;
 using ShopperHolic.Persistence.ShopperHolicDataProvider;
+using ShopperHolic.Infrastructure.ShopperHolicDTO;
+
 namespace ShopperHolic.API.ShopperAPI
 {
     public class Startup
@@ -63,34 +65,9 @@ namespace ShopperHolic.API.ShopperAPI
             //Add Claim based Authorization (NOTE; Claim Type And Claim Value and BOTH CASE SENSITIVE)
             services.AddAuthorization(config =>
             {
-                config.AddPolicy("IsAdminUser", policyBuilder => policyBuilder.RequireClaim("IsAdminUser", "true"));
-                config.AddPolicy("UserCanCreateProductGroup", policyBuilder => policyBuilder.RequireClaim("UserCanCreateProductGroup", "true"));
-                config.AddPolicy("UserCanEditProductGroup", policyBuilder => policyBuilder.RequireClaim("UserCanEditProductGroup", "true"));
-                config.AddPolicy("UserCanDeleteProductGroup", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteProductGroup", "true"));
-                config.AddPolicy("UserCanCreateSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanCreateSubGroup", "true"));
-                config.AddPolicy("UserCanEditSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanEditSubGroup", "true"));
-                config.AddPolicy("UserCanDeleteSubGroup", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteSubGroup", "true"));
-                config.AddPolicy("UserCanCreateItem", policyBuilder => policyBuilder.RequireClaim("UserCanCreateItem", "true"));
-                config.AddPolicy("UserCanEditItem", policyBuilder => policyBuilder.RequireClaim("UserCanEditItem", "true"));
-                config.AddPolicy("UserCanDeleteItem", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteItem", "true"));
-                config.AddPolicy("UserCanCreateCountry", policyBuilder => policyBuilder.RequireClaim("UserCanCreateCountry", "true"));
-                config.AddPolicy("UserCanEditCountry", policyBuilder => policyBuilder.RequireClaim("UserCanEditCountry", "true"));
-                config.AddPolicy("UserCanDeleteCountry", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCountry", "true"));
-                config.AddPolicy("UserCanCreateCity", policyBuilder => policyBuilder.RequireClaim("UserCanCreateCity", "true"));
-                config.AddPolicy("UserCanEditCity", policyBuilder => policyBuilder.RequireClaim("UserCanEditCity", "true"));
-                config.AddPolicy("UserCanDeleteCity", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCity", "true"));
-                config.AddPolicy("UserCanCreateCityArea", policyBuilder => policyBuilder.RequireClaim("UserCanCreateCityArea", "true"));
-                config.AddPolicy("UserCanEditCityArea", policyBuilder => policyBuilder.RequireClaim("UserCanEditCityArea", "true"));
-                config.AddPolicy("UserCanDeleteCityArea", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCityArea", "true"));
-                config.AddPolicy("UserCanCreateAddress", policyBuilder => policyBuilder.RequireClaim("UserCanCreateAddress", "true"));
-                config.AddPolicy("UserCanEditAddress", policyBuilder => policyBuilder.RequireClaim("UserCanEditAddress", "true"));
-                config.AddPolicy("UserCanDeleteAddress", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteAddress", "true"));
-                config.AddPolicy("UserCanCreateCustomer", policyBuilder => policyBuilder.RequireClaim("UserCanCreateCustomer", "true"));
-                config.AddPolicy("UserCanEditCustomer", policyBuilder => policyBuilder.RequireClaim("UserCanEditCustomer", "true"));
-                config.AddPolicy("UserCanDeleteCustomer", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteCustomer", "true"));
-                config.AddPolicy("UserCanCreateSupplier", policyBuilder => policyBuilder.RequireClaim("UserCanCreateSupplier", "true"));
-                config.AddPolicy("UserCanEditSupplier", policyBuilder => policyBuilder.RequireClaim("UserCanEditSupplier", "true"));
-                config.AddPolicy("UserCanDeleteSupplier", policyBuilder => policyBuilder.RequireClaim("UserCanDeleteSupplier", "true"));
+                var allClaims = Enum.GetValues(typeof(EClaimTypes));
+                foreach (var claim in allClaims)
+                    config.AddPolicy(claim.ToString(), policyBuilder => policyBuilder.RequireClaim(claim.ToString(), "true"));
             });
 
             //Compatibility and Cors
@@ -110,6 +87,9 @@ namespace ShopperHolic.API.ShopperAPI
             services.AddTransient<ICustomerService>(s => new CustomerService(connectionString));
             services.AddTransient<ISupplierService>(s => new SupplierService(connectionString));
             services.AddTransient<IUserService>(s => new UserService(connectionString));
+            services.AddTransient<IOrderService>(s => new OrderService(connectionString));
+            services.AddTransient<IDeliveryNoteService>(s => new DeliveryNoteService(connectionString));
+            services.AddTransient<IInvoiceService>(s => new InvoiceService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

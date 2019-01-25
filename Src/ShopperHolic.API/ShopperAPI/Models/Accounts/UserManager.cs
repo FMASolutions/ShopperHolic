@@ -24,7 +24,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _UserService.Create(createModel, settings.Key, settings.IV);
         }
-        public UserProfileDTO GetyByID(int id)
+        public UserProfileDTO GetByID(int id)
         {
             return _UserService.GetByID(id);
         }
@@ -32,14 +32,14 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         public List<UserPreviewDTO> GetAllPreview()
         {
             var returnList = new List<UserPreviewDTO>();
-            foreach(var current in _UserService.GetAllPreview())
+            foreach (var current in _UserService.GetAllPreview())
                 returnList.Add(current);
             return returnList;
         }
 
         public UserProfileDTO Update(UserProfileDTO newModel, EncSettings settings)
         {
-            return _UserService.Update(newModel,settings.Key,settings.IV);
+            return _UserService.Update(newModel, settings.Key, settings.IV);
         }
 
         public bool Delete(int id)
@@ -50,7 +50,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         public List<UserRoleTypeDTO> GetAvailableRoles()
         {
             var returnList = new List<UserRoleTypeDTO>();
-            foreach(var item in _UserService.GetAvailableRoles())
+            foreach (var item in _UserService.GetAvailableRoles())
                 returnList.Add(item);
             return returnList;
         }
@@ -62,31 +62,19 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         public bool AddSupplierLogin(int userID, int supplierID)
         {
-            var supplierLogin = new SupplierLoginDTO();
-            supplierLogin.SupplierID = supplierID;
-            supplierLogin.UserID = userID;
-            return _UserService.AddSupplierLogin(supplierLogin);
+            return _UserService.AddSupplierLogin(new SupplierLoginDTO() { SupplierID = supplierID, UserID = userID });
         }
         public bool AddCustomerLogin(int userID, int customerID)
         {
-            var customerLogin = new CustomerLoginDTO();
-            customerLogin.CustomerID = customerID;
-            customerLogin.UserID = userID;
-            return _UserService.AddCustomerLogin(customerLogin);
+            return _UserService.AddCustomerLogin(new CustomerLoginDTO() { CustomerID = customerID, UserID = userID });
         }
         public bool RemoveSupplierLogin(int userID, int supplierID)
         {
-            var supplierLogin = new SupplierLoginDTO();
-            supplierLogin.SupplierID = supplierID;
-            supplierLogin.UserID = userID;
-            return _UserService.RemoveSupplierLogin(supplierLogin);
+            return _UserService.RemoveSupplierLogin(new SupplierLoginDTO() { SupplierID = supplierID, UserID = userID });
         }
         public bool RemoveCustomerLogin(int userID, int customerID)
         {
-            var customerLogin = new CustomerLoginDTO();
-            customerLogin.CustomerID = customerID;
-            customerLogin.UserID = userID;
-            return _UserService.RemoveCustomerLogin(customerLogin);
+            return _UserService.RemoveCustomerLogin(new CustomerLoginDTO() { CustomerID = customerID, UserID = userID });
         }
 
 

@@ -7,6 +7,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
     {
         int DeliverOrder(int orderID);
         IEnumerable<DeliveryNoteDTO> GetByID(int id);
-        IEnumerable<DeliveryNotePreviewDTO> GetAllPreview();       
+        IEnumerable<DeliveryNotePreviewDTO> GetAllPreview();
     }
 }

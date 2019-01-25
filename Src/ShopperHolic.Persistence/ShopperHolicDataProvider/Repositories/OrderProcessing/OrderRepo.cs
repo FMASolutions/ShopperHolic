@@ -134,6 +134,30 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
+        public OrderItemDTO GetOrderItemByID(int orderItemID)
+        {
+            try
+            {
+                string query = @"
+                SELECT OrderItemID, oi.OrderHeaderID AS [OrderID], ItemID, OrderItemStatusID, 
+                  OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, 
+                  OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
+                  oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal]
+                FROM OrderItems oi
+                INNER JOIN OrderStatus os ON os.OrderStatusID = oi.OrderItemStatusID
+                WHERE oh.OrderItemID = @OrderItemID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@OrderItemID", orderItemID);
+
+                return Connection.QueryFirst<OrderItemDTO>(query, queryParameters, CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
         public IEnumerable<OrderItemDTO> GetItemsForOrder(int id)
         {
             try
@@ -177,30 +201,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@OrderItemDescription", entityToCreate.OrderItemDescription);
 
                 return Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
-            }
-            catch (Exception ex)
-            {
-                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
-            }
-        }
-
-        public OrderItemDTO GetOrderItemByID(int orderItemID)
-        {
-            try
-            {
-                string query = @"
-                SELECT OrderItemID, oi.OrderHeaderID AS [OrderID], ItemID, OrderItemStatusID, 
-                  OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, 
-                  OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
-                  oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal]
-                FROM OrderItems oi
-                INNER JOIN OrderStatus os ON os.OrderStatusID = oi.OrderItemStatusID
-                WHERE oh.OrderItemID = @OrderItemID";
-
-                var queryParameters = new DynamicParameters();
-                queryParameters.Add("@OrderItemID", orderItemID);
-
-                return Connection.QueryFirst<OrderItemDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {

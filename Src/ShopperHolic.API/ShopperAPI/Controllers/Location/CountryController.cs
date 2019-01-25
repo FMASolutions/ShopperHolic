@@ -29,7 +29,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<CountryDTO> GetByID([FromQuery] int id)
         {
-            try { return  _countryManager.GetyByID(id); }
+            try { return  _countryManager.GetByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 

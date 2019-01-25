@@ -31,7 +31,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<ProductGroupDTO> GetByID([FromQuery] int id)
         {
-            try { return  _prodGroupManager.GetyByID(id); }
+            try { return  _prodGroupManager.GetByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 

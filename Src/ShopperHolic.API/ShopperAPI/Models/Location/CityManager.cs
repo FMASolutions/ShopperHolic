@@ -23,7 +23,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _cityService.Create(createModel);
         }
-        public CityDTO GetyByID(int id)
+        public CityDTO GetByID(int id)
         {
             return _cityService.GetByID(id);
         }

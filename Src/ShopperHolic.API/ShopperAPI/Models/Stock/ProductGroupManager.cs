@@ -23,7 +23,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _prodGroupService.Create(createModel);
         }
-        public ProductGroupDTO GetyByID(int id)
+        public ProductGroupDTO GetByID(int id)
         {
             return _prodGroupService.GetByID(id);
         }

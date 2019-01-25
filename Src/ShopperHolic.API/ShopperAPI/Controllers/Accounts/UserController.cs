@@ -33,7 +33,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<UserProfileDTO> GetByID([FromQuery] int id)
         {
-            try { return _userManager.GetyByID(id); }
+            try { return _userManager.GetByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 

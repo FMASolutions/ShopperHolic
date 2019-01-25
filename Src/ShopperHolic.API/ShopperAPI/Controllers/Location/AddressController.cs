@@ -31,7 +31,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<AddressDTO> GetByID([FromQuery] int id)
         {
-            try { return  _addressManager.GetyByID(id); }
+            try { return  _addressManager.GetByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
