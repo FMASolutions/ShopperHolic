@@ -71,7 +71,7 @@ export class SupplierService {
     }));
   }
 
-  /*--------------------- --- City Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public supplierForm: FormGroup;
 
   public InitializeForm(id?: any) : string{
@@ -133,7 +133,7 @@ export class SupplierService {
     });
   }
 
-  /*--------------------- --- City Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<SupplierPreview>;
   textFilter: string = "";
 

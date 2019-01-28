@@ -72,7 +72,7 @@ export class SubGroupService {
     }));
   }
 
-  /*--------------------- --- SubGroup Group Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public subForm: FormGroup;
 
   public InitializeForm(id?: any) : string{
@@ -142,7 +142,7 @@ export class SubGroupService {
     });
   }
 
-  /*--------------------- --- Sub Group Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<SubGroupPreview>;
   textFilter: string = "";
 

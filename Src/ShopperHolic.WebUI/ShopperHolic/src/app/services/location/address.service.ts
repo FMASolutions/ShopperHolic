@@ -72,13 +72,13 @@ export class AddressService {
     }));
   }
 
-  /*--------------------- --- SubGroup Group Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public addressForm: FormGroup;
 
   public InitializeForm(id?: any) : string{
     this.addressForm = this.fb.group({
       id: [0, []],
-      postCode: [null, [this.validator.postCodeValidator]],
+      postCode: [null, [this.validator.basicValidation]],
       addressLine1: [null, [this.validator.basicValidation]],
       addressLine2: [null, [this.validator.basicValidation]],
       cityAreaID: [null, [this.validator.basicValidation]],
@@ -142,7 +142,7 @@ export class AddressService {
     });
   }
 
-  /*--------------------- --- Address Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helperr --- ----------------------*/
   tableDataSource: MatTableDataSource<AddressPreview>;
   textFilter: string = "";
 

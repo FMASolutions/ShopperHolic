@@ -72,7 +72,7 @@ export class CityAreaService {
     }));
   }
 
-  /*--------------------- --- SubGroup Group Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public cityAreaForm: FormGroup;
 
   public InitializeForm(id?: any) : string{
@@ -137,7 +137,7 @@ export class CityAreaService {
     });
   }
 
-  /*--------------------- --- City Area Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<CityAreaPreview>;
   textFilter: string = "";
 

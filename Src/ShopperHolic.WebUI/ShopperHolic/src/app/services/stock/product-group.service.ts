@@ -71,7 +71,7 @@ export class ProductGroupService {
     }));
   }
 
-  /*--------------------- --- Product Group Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public prodForm: FormGroup;
 
   public InitializeForm(id?: any) : string{
@@ -129,7 +129,7 @@ export class ProductGroupService {
     });
   }
 
-  /*--------------------- --- Product Group Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<ProductGroupPreview>;
   textFilter: string = "";
 

@@ -5,7 +5,4 @@
 5) Implement Automation I.E Emails when low stock etc....
 6) Implement Reporting
 7) Implement OAuth2 / OPenIDConnect using a IdentityServer
-8) Rename UI Service comments to make them service name agnostic (eg Form helper)
-9) Consider Bringing used icons local to the server?
-10) Implement some more security for role checking in the UI layer.
-11) Move Delivery Date to Item Record & Have DeliveryDueDate on the Header.
+8) Implement some more security for role checking in the UI layer.

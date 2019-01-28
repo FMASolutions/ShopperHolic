@@ -72,7 +72,7 @@ export class CityService {
     }));
   }
 
-  /*--------------------- --- City Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public cityForm: FormGroup;
 
   public InitializeForm(id?: any) : string{
@@ -137,7 +137,7 @@ export class CityService {
     });
   }
 
-  /*--------------------- --- City Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<CityPreview>;
   textFilter: string = "";
 

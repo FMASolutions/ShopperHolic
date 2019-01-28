@@ -86,7 +86,7 @@ export class ItemService {
     }))
   }
 
-  /*--------------------- --- Item Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public itemForm: FormGroup;
 
   public InitializeForm(currentImageElement: any, id?: any) : string{
@@ -187,7 +187,7 @@ export class ItemService {
     });
   }
 
-  /*--------------------- --- Item Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<ItemPreview>;
   textFilter: string = "";
 

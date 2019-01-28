@@ -51,7 +51,6 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         public bool UploadFileAndItem(IFormFile file, int id, IHostingEnvironment env)
         {
-            //TODO Potentially ship this logic out to the service layer.
             var upload = Path.Combine(env.ContentRootPath + "\\wwwroot\\", "uploads");
             if (file.Length > 0)
             {

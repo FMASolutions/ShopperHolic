@@ -89,7 +89,7 @@ export class CustomerService {
     }))
   }
   
-  /*--------------------- --- Customer Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public customerForm: FormGroup;
   
   public InitializeForm(id?: any) : string{
@@ -169,7 +169,7 @@ export class CustomerService {
     });
   }
 
-  /*--------------------- --- City Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<CustomerPreview>;
   textFilter: string = "";
 

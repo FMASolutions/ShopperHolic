@@ -137,7 +137,7 @@ export class UserAccountService {
     }));;
   }
 
-  /*--------------------- --- Form Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public userForm: FormGroup;
 
   public InitializeForm(id?: any, customerPageinator?: MatPaginator, supplierPaginator?: MatPaginator): string {
@@ -230,7 +230,7 @@ export class UserAccountService {
     });
   }
 
-  /*--------------------- --- Table Helper --- ----------------------*/
+  /*--------------------- --- User List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<UserAccountPreview>;
   textFilter: string = "";
 

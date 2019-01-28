@@ -41,12 +41,7 @@ export class GenericValidator {
 
         return null;
     }
-
-    public postCodeValidator(control: AbstractControl) {
-        //TODO CREATE POSTCODE VALIDATION
-        return null;
-    }
-
+    
     public checkPasswords(group: FormGroup){
         let password = group.controls["password"].value;
         let confirmPassword = group.controls["confirmPassword"].value;

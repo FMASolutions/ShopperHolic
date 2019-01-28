@@ -70,7 +70,7 @@ export class CountryService {
     }));
   }
 
-  /*--------------------- --- Country Popup Helper --- ----------------------*/
+  /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public countryForm: FormGroup;
 
   public InitializeForm(id?: any) : string{
@@ -124,7 +124,7 @@ export class CountryService {
     });
   }
 
-  /*--------------------- --- Country Table Helper --- ----------------------*/
+  /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<Country>;
   textFilter: string = "";
 
