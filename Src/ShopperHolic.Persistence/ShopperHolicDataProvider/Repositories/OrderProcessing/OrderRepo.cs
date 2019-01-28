@@ -81,7 +81,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
-        public OrderDTO Update(OrderDTO updatedRecord)
+        public OrderDTO Update(UpdatedOrderDTO updatedRecord)
         {
             try
             {
@@ -89,7 +89,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 UPDATE OrderHeaders
                 SET CustomerID = @CustomerID,
                   AddressID = @AddressID,
-                  OrderStatusID = @OrderStatusID,
                   OrderDate = @OrderDate,
                   DeliveryDate = @DeliveryDate
                 WHERE OrderHeaderID = @OrderID";
@@ -97,7 +96,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@CustomerID", updatedRecord.CustomerID);
                 queryParameters.Add("@AddressID", updatedRecord.AddressID);
-                queryParameters.Add("@OrderStatusID", updatedRecord.OrderStatusID);
                 queryParameters.Add("@OrderDate", updatedRecord.OrderDate);
                 queryParameters.Add("@DeliveryDate", updatedRecord.DeliveryDate);
                 queryParameters.Add("@OrderID", updatedRecord.OrderID);
@@ -145,7 +143,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                   oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal]
                 FROM OrderItems oi
                 INNER JOIN OrderStatus os ON os.OrderStatusID = oi.OrderItemStatusID
-                WHERE oh.OrderItemID = @OrderItemID";
+                WHERE oi.OrderItemID = @OrderItemID";
 
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@OrderItemID", orderItemID);

@@ -20,7 +20,8 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
 
         private InvoiceManager _invoiceManager;
 
-        [HttpGet]
+        [Authorize(Policy = "UserCanInvoiceOrder")]
+        [HttpPut]
         public ActionResult<List<InvoiceDTO>> InvoiceOrder([FromQuery] int orderID)
         {
             try { return _invoiceManager.InvoiceOrder(orderID); }
@@ -35,7 +36,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<InvoicePreviewDTO>> GetAllPreview()
+        public ActionResult<List<InvoicePreviewDTO>> GetAll()
         {
             try { return _invoiceManager.GetAllPreview(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }

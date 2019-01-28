@@ -5,6 +5,9 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         UserCanCreateAddress,
         UserCanEditAddress,
         UserCanCreateCustomer,
-        UserCanEditCustomer
+        UserCanEditCustomer,
+        UserCanDeleteOrder,
+        UserCanDeliverOrder,
+        UserCanInvoiceOrder
     }
 }

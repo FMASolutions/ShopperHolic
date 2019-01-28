@@ -15,8 +15,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
             {
                 int newID = UOW.OrderRepo.Create(entityToCreate);
                 UOW.SaveChanges();
-                var returnDTO = new OrderDetailedDTO();
-                returnDTO.Header = UOW.OrderRepo.GetByID(newID);
+                var returnDTO = GetByID(newID);
 
                 return returnDTO;
             }
@@ -39,7 +38,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         {
             return UOW.OrderRepo.GetAllPreview();
         }
-        public OrderDetailedDTO Update(OrderDTO updatedRecord)
+        public OrderDetailedDTO Update(UpdatedOrderDTO updatedRecord)
         {
             try
             {

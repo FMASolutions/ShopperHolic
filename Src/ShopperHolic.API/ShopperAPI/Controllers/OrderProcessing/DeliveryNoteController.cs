@@ -20,7 +20,8 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
 
         private DeliveryNoteManager _deliveryNoteManager;
 
-        [HttpGet]
+        [Authorize(Policy = "UserCanDeliverOrder")]
+        [HttpPut]
         public ActionResult<List<DeliveryNoteDTO>> DeliverOrder([FromQuery] int orderID)
         {
             try { return _deliveryNoteManager.DeliverOrder(orderID); }
@@ -35,7 +36,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<DeliveryNotePreviewDTO>> GetAllPreview()
+        public ActionResult<List<DeliveryNotePreviewDTO>> GetAll()
         {
             try { return _deliveryNoteManager.GetAllPreview(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }

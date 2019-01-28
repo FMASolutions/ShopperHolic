@@ -314,7 +314,10 @@ VALUES
     ('UserCanDeleteCustomer'),
     ('UserCanCreateSupplier'),
     ('UserCanEditSupplier'),
-    ('UserCanDeleteSupplier')
+    ('UserCanDeleteSupplier'),
+    ('UserCanDeleteOrder'),
+    ('UserCanDeliverOrder'),
+    ('UserCanInvoiceOrder')
 GO
 
 PRINT 'Insert UserRolesTypes'

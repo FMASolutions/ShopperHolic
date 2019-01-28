@@ -38,10 +38,10 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 INNER JOIN OrderItems oi ON oi.OrderItemID = dni.OrderItemID
                 INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = oi.OrderHeaderID
                 INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
-                WHERE oh.OrderHeaderID = @OrderID";
+                WHERE dn.DeliveryNoteID = @DeliveryNoteID";
 
                 var queryParameters = new DynamicParameters();
-                queryParameters.Add("@OrderID", id);
+                queryParameters.Add("@DeliveryNoteID", id);
 
                 return Connection.Query<DeliveryNoteDTO>(query, queryParameters, CurrentTrans);
             }

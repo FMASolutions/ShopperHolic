@@ -35,7 +35,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
                 returnList.Add(current);
             return returnList;
         }
-        public OrderDetailedDTO Update(OrderDTO updatedRecord)
+        public OrderDetailedDTO Update(UpdatedOrderDTO updatedRecord)
         {
             return _orderService.Update(updatedRecord);
         }
@@ -45,7 +45,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         }
         public OrderItemDTO GetOrderItemByID(int orderItemID)
         {
-            return GetOrderItemByID(orderItemID);
+            return _orderService.GetOrderItemByID(orderItemID);
         }
         public List<OrderItemDTO> GetItemsForOrder(int id)
         {

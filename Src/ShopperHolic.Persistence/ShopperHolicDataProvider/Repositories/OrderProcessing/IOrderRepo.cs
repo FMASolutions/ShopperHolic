@@ -8,7 +8,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         int Create(CreateOrderDTO entityToCreate);
         OrderDTO GetByID(int id);
         IEnumerable<OrderPreviewDTO> GetAllPreview();
-        OrderDTO Update(OrderDTO updatedRecord);
+        OrderDTO Update(UpdatedOrderDTO updatedRecord);
         bool Delete(int id);
         OrderItemDTO GetOrderItemByID(int orderItemID);
         IEnumerable<OrderItemDTO> GetItemsForOrder(int id);

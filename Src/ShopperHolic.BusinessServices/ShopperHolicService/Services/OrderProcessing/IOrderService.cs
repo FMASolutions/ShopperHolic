@@ -8,7 +8,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         OrderDetailedDTO Create(CreateOrderDTO entityToCreate);
         OrderDetailedDTO GetByID(int id);
         IEnumerable<OrderPreviewDTO> GetAllPreview();
-        OrderDetailedDTO Update(OrderDTO updatedRecord);
+        OrderDetailedDTO Update(UpdatedOrderDTO updatedRecord);
         bool Delete(int id);
         OrderItemDTO GetOrderItemByID(int orderItemID);
         IEnumerable<OrderItemDTO> GetItemsForOrder(int id);

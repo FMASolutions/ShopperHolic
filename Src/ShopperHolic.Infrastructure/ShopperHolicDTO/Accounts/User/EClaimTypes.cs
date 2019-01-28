@@ -29,6 +29,9 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         UserCanDeleteCustomer,
         UserCanCreateSupplier,
         UserCanEditSupplier,
-        UserCanDeleteSupplier
+        UserCanDeleteSupplier,
+        UserCanDeleteOrder,
+        UserCanDeliverOrder,
+        UserCanInvoiceOrder
     }
 }

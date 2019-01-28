@@ -1,20 +1,11 @@
-1) Complete User creation procedure to implement correct claim types for the given roles
-2) Allow user registration as a basic user.
-3) Change to Async db  and api calls
-4) Improve image creation by only submitting form if a image has been selcted for upload.
-5) Implement Accounts in all Layers (Persistence / Infrastructure / Business / API / WebUI)
-6) Implement Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
-6) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
-7) Implement Automation I.E Emails when low stock etc....
-8) Implement Reporting
-9) Implement OAuth2 / OPenIDConnect using a IdentityServer
-10) Add CustomerTYpes to the Customer Test suite.
-11) Rename UI Service comments to make them service name agnostic (eg Form helper)
-13) Consider Bringing used icons local to the server?
-14) Implement some more security for role checking in the UI layer.
-15) Implement Password Confirm policy to encure password and confirm password matches....
-16) Allow association of user account to supplier and customer.
-17) Implement Add/Remove for Customer and Supplier Logins within API and backend
-18) Implement new User Create logic to check user role and add user claims based on the selected user role.....
-19) Move Delivery Date to Item Record & Have DeliveryDueDate on the Header.
-20) Ensuer all API Endpoint CRUD operations correspond to the HTTP Verbs (Create = POST, Read = GET, Update = PUT, Delete = DELETE ) (I believe supplier login and add customer login should be POST)
+1) Change to Async db  and api calls
+2) Improve image creation by only submitting form if a image has been selcted for upload.
+3) Implement Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
+4) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
+5) Implement Automation I.E Emails when low stock etc....
+6) Implement Reporting
+7) Implement OAuth2 / OPenIDConnect using a IdentityServer
+8) Rename UI Service comments to make them service name agnostic (eg Form helper)
+9) Consider Bringing used icons local to the server?
+10) Implement some more security for role checking in the UI layer.
+11) Move Delivery Date to Item Record & Have DeliveryDueDate on the Header.
