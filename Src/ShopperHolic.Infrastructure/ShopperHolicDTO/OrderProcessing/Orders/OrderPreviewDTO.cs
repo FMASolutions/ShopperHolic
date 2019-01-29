@@ -6,6 +6,6 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public int OrderID {get;set;}
         public string CustomerName {get;set;}
         public string OrderStatusText {get;set;}
-        public string DeliveryDate {get;set;}
+        public DateTime DeliveryDate {get;set;}
     }
 }
