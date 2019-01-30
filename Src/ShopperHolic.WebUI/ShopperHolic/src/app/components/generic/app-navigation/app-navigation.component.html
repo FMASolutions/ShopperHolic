@@ -10,7 +10,16 @@
       <!--Admin Sidebar Navigation-->
       <ng-container *ngFor="let currentClaim of currentUser.userClaims">
         <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
-          <a mat-list-item routerLink="/orders">Order Management</a>
+          <ol>
+            <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Orders<mat-icon>arrow_right</mat-icon></a>
+              <ol class="hide">
+                  <li class="appLink"><a mat-list-item routerLink="/orders">Order Management</a></li>
+                  <li class="appLink"><a mat-list-item (click)="openCreateOrder()">Create Order</a></li>
+                  <li class="appLink"><a mat-list-item routerLink="/deliveryNotes">Delivery Notes</a></li>
+                  <li class="appLink"><a mat-list-item routerLink="/invoies">Invoices</a></li>
+                </ol>
+            </li>
+          </ol>
           <ol>
             <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Admin <mat-icon>arrow_right</mat-icon></a>
               <ol class="hide">
@@ -23,17 +32,17 @@
                 </li>
                 <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Location <mat-icon>arrow_right</mat-icon></a>
                   <ol class="hide">
-                      <li class="appLink"><a mat-list-item routerLink="/addresses">Manage Addresses</a></li>
-                      <li class="appLink"><a mat-list-item routerLink="/cityAreas">Manage CityAreas</a></li>
-                      <li class="appLink"><a mat-list-item routerLink="/cities">Manage Cities</a></li>
-                      <li class="appLink"><a mat-list-item routerLink="/countries">Manage Countries</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/addresses">Manage Addresses</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/cityAreas">Manage CityAreas</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/cities">Manage Cities</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/countries">Manage Countries</a></li>
                   </ol>
                 </li>
                 <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Accounts <mat-icon>arrow_right</mat-icon></a>
                   <ol class="hide">
-                      <li class="appLink"><a mat-list-item routerLink="/customers">Manage Customers</a></li>
-                      <li class="appLink"><a mat-list-item routerLink="/suppliers">Manage Suppliers</a></li>
-                      <li class="appLink"><a mat-list-item routerLink="/users">Manage User Accounts</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/customers">Manage Customers</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/suppliers">Manage Suppliers</a></li>
+                    <li class="appLink"><a mat-list-item routerLink="/users">Manage User Accounts</a></li>
                   </ol>
                 </li>
                 <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Settings <mat-icon>arrow_right</mat-icon></a>
@@ -69,7 +78,16 @@
         <!--Admin Navigation Menu-->
         <ng-container *ngFor="let currentClaim of currentUser.userClaims">
           <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
-            <button mat-flat-button color="primary" routerLink="/orders">Order Management</button>
+              <button mat-button [matMenuTriggerFor]="orderPanel">Order Processing</button>
+
+              <mat-menu #orderPanel="matMenu">
+                  <button mat-menu-item routerLink="/orders">Orders</button>
+                  <button mat-menu-item (click)="openCreateOrder()">Create Order</button>
+                  <button mat-menu-item routerLink="/deliveryNotes">Delivery Notes</button>
+                  <button mat-menu-item routerLink="/invoices">Invoices</button>
+              </mat-menu>
+
+              
             <button mat-button [matMenuTriggerFor]="adminPanel">Admin</button>
 
             <mat-menu #adminPanel="matMenu">
@@ -86,16 +104,16 @@
             </mat-menu>
 
             <mat-menu #location="matMenu">
-                <button mat-menu-item routerLink="/addresses">Manage Addresses</button>
-                <button mat-menu-item routerLink="/cityAreas">Manage CityAreas</button>
-                <button mat-menu-item routerLink="/cities">Manage Cities</button>
-                <button mat-menu-item routerLink="/countries">Manage Countries</button>
+              <button mat-menu-item routerLink="/addresses">Manage Addresses</button>
+              <button mat-menu-item routerLink="/cityAreas">Manage CityAreas</button>
+              <button mat-menu-item routerLink="/cities">Manage Cities</button>
+              <button mat-menu-item routerLink="/countries">Manage Countries</button>
             </mat-menu>
 
             <mat-menu #account="matMenu">
-                <button mat-menu-item routerLink="/customers">Manage Customers</button>
-                <button mat-menu-item routerLink="/suppliers">Manage Suppliers</button>
-                <button mat-menu-item routerLink="/users">Manage User Accounts</button>
+              <button mat-menu-item routerLink="/customers">Manage Customers</button>
+              <button mat-menu-item routerLink="/suppliers">Manage Suppliers</button>
+              <button mat-menu-item routerLink="/users">Manage User Accounts</button>
             </mat-menu>
 
             <mat-menu #settings="matMenu">

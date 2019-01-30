@@ -51,6 +51,7 @@ export class OrderDetailComponent {
       } else if (this.currentMode == Globals.MODE_CREATE) {
         let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe(createResp => {
           this.ownDialog.close({ userSubmitted: true, newModel: createResp });
+          this.service.goToOrderPage(createResp.header.orderID);
           obs.unsubscribe();
         });
       }

@@ -19,12 +19,6 @@ export class OrdersComponent implements OnInit {
 
   public createClicked(){
     let dialogRef = this.childDialog.open(OrderDetailComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS);
-    let obs = dialogRef.afterClosed().subscribe((resp) => {
-      if (resp && resp.userSubmitted) { 
-        this.service.goToOrderPage(resp.newModel.header.orderID);
-      }
-      obs.unsubscribe();
-    });
   }
 
 }

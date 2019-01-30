@@ -12,6 +12,7 @@ import { UserActivityComponent } from '../../../components/generic/user-activity
 import { ProductGroupComponent } from '../../../components/stock/product-groups/product-group/product-group.component';
 import { SubGroupComponent } from '../../stock/sub-groups/sub-group/sub-group.component';
 import { ItemComponent } from '../../stock/items/item/item.component';
+import { OrderDetailComponent } from '../../orderProcessing/orders/order-detail/order-detail.component';
 
 @Component({
   selector: 'app-navigation',
@@ -38,11 +39,7 @@ export class AppNavigationComponent {
 
   openUserActivity() { this.userActivity.open(UserActivityComponent) }
 
-  openNewProductGroup() { this.matDialog.open(ProductGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS); }
-
-  openNewSubGroup() { this.matDialog.open(SubGroupComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS); }
-
-  openNewItem() { this.matDialog.open(ItemComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS); }
+  openCreateOrder() { this.matDialog.open(OrderDetailComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS); }
 
   toggleChildVisibility(event: MouseEvent) {
     let childOrderedList = event.srcElement.parentElement.parentElement.children.item(1);
