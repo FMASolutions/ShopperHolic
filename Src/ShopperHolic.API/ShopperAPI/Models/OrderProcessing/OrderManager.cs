@@ -59,6 +59,11 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _orderService.AddItemToOrder(entityToCreate);
         }
+
+        public OrderItemDTO UpdateOrderItem(UpdateOrderItemDTO updatedRecord)
+        {
+            return _orderService.UpdateOrderItem(updatedRecord);
+        }
         public bool RemoveItemFromOrder(int orderItemID)
         {
             return _orderService.RemoveItemFromOrder(orderItemID);

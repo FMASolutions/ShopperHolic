@@ -69,14 +69,16 @@ import { SupplierSelectorComponent } from './components/accounts/suppliers/suppl
 import { CustomerComponent } from './components/accounts/customers/customer/customer.component';
 import { CustomerListComponent } from './components/accounts/customers/customer-list/customer-list.component';
 import { CustomerSelectorComponent } from './components/accounts/customers/customer-selector/customer-selector.component';
-import { OrdersComponent } from './components/ordering/orders/orders.component';
-import { OrderComponent } from './components/ordering/orders/order/order.component';
-import { OrderListComponent } from './components/ordering/orders/order-list/order-list.component';
+import { OrdersComponent } from './components/orderProcessing/orders/orders.component';
+import { OrderComponent } from './components/orderProcessing/orders/order/order.component';
+import { OrderListComponent } from './components/orderProcessing/orders/order-list/order-list.component';
 import { PurchaseOrdersComponent } from './components/purchasing/purchase-orders/purchase-orders.component';
 import { PurchaseOrderComponent } from './components/purchasing/purchase-orders/purchase-order/purchase-order.component';
 import { PurchaseListComponent } from './components/purchasing/purchase-orders/purchase-list/purchase-list.component';
 import { CustomerService } from './services/accounts/customer.service';
 import { SupplierService } from './services/accounts/supplier.service';
+import { OrderItemDetailComponent } from './components/orderProcessing/orders/order-item-detail/order-item-detail.component';
+import { OrderDetailComponent } from './components/orderProcessing/orders/order-detail/order-detail.component'
 
 @NgModule({
   declarations: [
@@ -134,6 +136,8 @@ import { SupplierService } from './services/accounts/supplier.service';
     PurchaseOrdersComponent,
     PurchaseOrderComponent,
     PurchaseListComponent,
+    OrderItemDetailComponent,
+    OrderDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -188,6 +192,8 @@ import { SupplierService } from './services/accounts/supplier.service';
     CustomerComponent,
     CustomerSelectorComponent,
     UserAccountComponent,
+    OrderDetailComponent,
+    OrderItemDetailComponent
   ]
 })
 export class AppModule { }

@@ -64,7 +64,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 UOW.SaveChanges();
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UOW.RollbackChanges();
                 throw ex;
@@ -86,12 +86,28 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 UOW.SaveChanges();
                 return UOW.OrderRepo.GetOrderItemByID(orderItemID);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UOW.RollbackChanges();
                 throw ex;
             }
         }
+
+        public OrderItemDTO UpdateOrderItem(UpdateOrderItemDTO updatedRecord)
+        {
+            try
+            {
+                OrderItemDTO returnModel = UOW.OrderRepo.UpdateOrderItem(updatedRecord);
+                UOW.SaveChanges();
+                return returnModel;
+            }
+            catch (Exception ex)
+            {
+                UOW.RollbackChanges();
+                throw ex;
+            }
+        }
+
         public bool RemoveItemFromOrder(int orderItemID)
         {
             try
@@ -100,7 +116,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 UOW.SaveChanges();
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 UOW.RollbackChanges();
                 throw ex;

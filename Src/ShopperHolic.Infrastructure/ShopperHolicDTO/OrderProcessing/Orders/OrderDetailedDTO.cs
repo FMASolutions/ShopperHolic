@@ -8,7 +8,7 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         {
             Header = new OrderDTO();
         }
-        public OrderDTO Header {get;set;}
-        public IEnumerable<OrderItemDTO> Items {get;set;}
+        public OrderDTO Header { get; set; }
+        public IEnumerable<OrderItemDTO> Items { get; set; }
     }
 }

@@ -1,0 +1,67 @@
+<mat-dialog-content>
+    <div class="container">
+      <h3 mat-dialog-title>{{getPageTitle()}}</h3>
+      <app-notification></app-notification>
+      <form [formGroup]="service.orderHeaderForm">
+  
+        <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+          <div fxFlex="50">
+  
+            <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openCustomerSelector()">
+              Customer Selector
+            </button>
+          </div>
+          <div fxFlex="50">
+            <mat-form-field class="maxWidth">
+              <mat-label>Use Customer Selector Button</mat-label>
+              <input matInput formControlName="customerID" type="text" readonly hidden>
+              <input matInput formControlName="customerText" type="text" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+          <div fxFlex="50">
+  
+            <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openAddressSelector()">
+              Address Selector
+            </button>
+          </div>
+          <div fxFlex="50">
+            <mat-form-field class="maxWidth">
+              <mat-label>Use Address Selector Button</mat-label>
+              <input matInput formControlName="addressID" type="text" readonly hidden>
+              <input matInput formControlName="addressText" type="text" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+        <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+          <div fxFlex="50">
+            <mat-form-field class="maxWidth">
+              <input matInput [matDatepicker]="orderDatePicker" placeholder="Order Date" formControlName="orderDate">
+              <mat-datepicker-toggle matSuffix [for]="orderDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #orderDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex="50">
+            <mat-form-field class="maxWidth">
+              <input matInput [matDatepicker]="picker" placeholder="Delivery Date" formControlName="deliveryDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+  
+  
+  
+        <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+          <div fxFlex="50">
+            <button mat-raised-button color="accent" type="submit" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
+          </div>
+          <div fxFlex="50">
+            <button mat-raised-button color="primary" class="maxWidth" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>

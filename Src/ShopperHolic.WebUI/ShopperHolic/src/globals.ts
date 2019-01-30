@@ -27,6 +27,7 @@ export class Globals {
     //Generic Text
     public static get UPDATE_BUTTON_TEXT(): string { return "Update"; }
     public static get CREATE_BUTTON_TEXT(): string { return "Create New" }
+    public static get ADD_BUTTON_TEXT(): string { return "Add"}
     public static get SPINNER_LOGIN_MSG(): string { return "Requesting Login..." }
     public static get SPINNER_UPDATE_MESSAGE(): string { return "Requesting Update.." }
     public static get SPINNER_CREATE_MESSAGE(): string { return "Requesting Create.." }
@@ -213,7 +214,36 @@ export class Globals {
     public static get USER_DELETE_FAILED_MSG(): string { return "Failed to delete user: "; }
     public static get USER_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Name', 'Email', 'View', 'Del']; }
     public static get USER_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Name', 'Email', 'Select']; }
-    public static get USER_LINKED_ACCT_COLUMNS(): string[] { return ['ID', 'Code', 'Name','Del']; }
+    public static get USER_LINKED_ACCT_COLUMNS(): string[] { return ['ID', 'Code', 'Name', 'Del']; }
+
+    //Order Specific Text
+    public static get ORDER_UPDATE_TITLE(): string { return "Order Update"; }
+    public static get ORDER_CREATE_TITLE(): string { return "Create New Order"; }
+    public static get ORDER_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new order: "; }
+    public static get ORDER_CREATE_SUCCESS_MSG(): string { return "Successfully created order: "; }
+    public static get ORDER_CREATE_FAILED_MSG(): string { return "Failed to create order: "; }
+    public static get ORDER_READ_FAILED_MSG(): string { return "Failed to retrieve order data: "; }
+    public static get ORDER_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update order: "; }
+    public static get ORDER_UPDATE_SUCCESS_MSG(): string { return "Successfully updated order: "; }
+    public static get ORDER_UPDATE_FAILED_MSG(): string { return "Failed to update order: "; }
+    public static get ORDER_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete order: "; }
+    public static get ORDER_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete order: "; }
+    public static get ORDER_DELETE_SUCCESS_MSG(): string { return "Successfully deleted order: "; }
+    public static get ORDER_DELETE_FAILED_MSG(): string { return "Failed to delete order: "; }
+    public static get ORDER_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Customer', 'Status', 'DeliveryDate', 'View', 'Del']; }
+    
+    
+    public static get ORDER_ITEM_UPDATE_TITLE(): string { return "Update Order Item"; }
+    public static get ORDER_ITEM_ADD_TITLE(): string { return "Add Order Item"; }
+    public static get ORDER_ITEM_LIST_COUMNS(): string[] { return ['Name', 'Status', 'Price', 'Qty', 'View', 'Del']; }
+    public static get ORDER_ITEM_CREATE_ATTEMPT_MSG(): string { return "Adding new item: "; }
+    public static get ORDER_ITEM_CREATE_FAILED_MSG(): string { return 'Failed to add new item: '; }
+    public static get ORDER_ITEM_DELETE_ATTEMPT_MSG(): string { return 'Removing item: ';}
+    public static get ORDER_ITEM_DELETE_SUCCESS_MSG(): string { return 'Successfully removed item: ';}
+    public static get ORDER_ITEM_DELETE_FAILED_MSG(): string { return 'Error removing item:  ';}
+    public static get ORDER_ITEM_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update order item: "; }
+    public static get ORDER_ITEM_UPDATE_SUCCESS_MSG(): string { return "Successfully updated order item: "; }
+    public static get ORDER_ITEM_UPDATE_FAILED_MSG(): string { return "Failed to update order item: "; }
 
 }
 

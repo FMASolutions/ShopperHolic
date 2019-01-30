@@ -10,7 +10,7 @@
       <!--Admin Sidebar Navigation-->
       <ng-container *ngFor="let currentClaim of currentUser.userClaims">
         <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
-
+          <a mat-list-item routerLink="/orders">Order Management</a>
           <ol>
             <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Admin <mat-icon>arrow_right</mat-icon></a>
               <ol class="hide">
@@ -69,6 +69,7 @@
         <!--Admin Navigation Menu-->
         <ng-container *ngFor="let currentClaim of currentUser.userClaims">
           <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
+            <button mat-flat-button color="primary" routerLink="/orders">Order Management</button>
             <button mat-button [matMenuTriggerFor]="adminPanel">Admin</button>
 
             <mat-menu #adminPanel="matMenu">

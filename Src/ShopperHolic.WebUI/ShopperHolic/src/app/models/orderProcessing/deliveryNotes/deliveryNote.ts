@@ -1,5 +1,4 @@
 export class DeliveryNote {
-
     deliveryNoteItemID: number = 0;
     deliveryNoteID: number = 0;
     orderHeaderID: number = 0;
@@ -8,5 +7,4 @@ export class DeliveryNote {
     orderItemDescription: string = "";
     orderItemQty: number = 0
     customerName: string = ""
-    
 }

@@ -13,6 +13,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         OrderItemDTO GetOrderItemByID(int orderItemID);
         IEnumerable<OrderItemDTO> GetItemsForOrder(int id);
         OrderItemDTO AddItemToOrder(CreateOrderItemDTO entityToCreate);
+        OrderItemDTO UpdateOrderItem(UpdateOrderItemDTO updatedRecord);
         bool RemoveItemFromOrder(int orderItemID);
     }
 }

@@ -206,6 +206,36 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
+        public OrderItemDTO UpdateOrderItem(UpdateOrderItemDTO updatedRecord)
+        {
+            try
+            {
+                string query = @"
+                UPDATE OrderItems
+                SET ItemID = @ItemID,
+                    OrderItemUnitPrice = @OrderItemUnitPrice,
+                    OrderItemUnitPriceAfterDiscount = @OrderItemUnitPriceAfterDiscount,
+                    OrderItemQty = @OrderItemQty,
+                    OrderItemDescription = @OrderItemDescription
+                WHERE OrderItemID = @OrderItemID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@ItemID", updatedRecord.ItemID);
+                queryParameters.Add("@OrderItemDescription", updatedRecord.OrderItemDescription);
+                queryParameters.Add("@OrderItemID", updatedRecord.OrderItemID);
+                queryParameters.Add("@OrderItemQty", updatedRecord.OrderItemQty);
+                queryParameters.Add("@OrderItemUnitPrice", updatedRecord.OrderItemUnitPrice);
+                queryParameters.Add("@OrderItemUnitPriceAfterDiscount", updatedRecord.OrderItemUnitPriceAfterDiscount);
+
+                int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
+                return (rowsUpdated > 0) ? GetOrderItemByID(updatedRecord.OrderItemID) : throw noRecordEX;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
         public bool RemoveItemFromOrder(int orderItemID)
         {
             try

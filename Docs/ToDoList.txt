@@ -2,6 +2,7 @@
 2) Improve image creation by only submitting form if a image has been selcted for upload.
 3) Implement Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
 4) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
+5) Implement Shopping cart
 5) Implement Automation I.E Emails when low stock etc....
 6) Implement Reporting
 7) Implement OAuth2 / OPenIDConnect using a IdentityServer

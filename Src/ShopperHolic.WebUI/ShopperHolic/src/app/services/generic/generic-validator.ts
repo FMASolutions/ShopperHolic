@@ -48,4 +48,11 @@ export class GenericValidator {
     
         return password === confirmPassword ? null : { isError:true, failedMatch: true}
       }
+    
+    public compareToUnitPrice(control: AbstractControl){
+        //TODO Ensure orderitemunitpriceafter discount isn't less than the orderitemunit price
+        //the orderitemunit price is actually the itemunitpriceaftermaxdiscount, used to make sure employees don't sell things too cheap while allowing
+        //them the ability to give customers a discount. TP to the MAX!
+        return null;
+    }
 }

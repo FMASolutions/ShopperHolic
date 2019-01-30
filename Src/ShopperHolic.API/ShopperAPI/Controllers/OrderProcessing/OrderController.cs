@@ -31,7 +31,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpGet]
         public ActionResult<OrderDetailedDTO> GetByID(int id)
         {
-            try { return  _orderManager.GetByID(id); }
+            try { return _orderManager.GetByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
@@ -53,35 +53,42 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         [HttpDelete]
         public ActionResult<bool> Delete(int id)
         {
-            try{return _orderManager.Delete(id);}
+            try { return _orderManager.Delete(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
         public ActionResult<OrderItemDTO> GetOrderItemByID(int orderItemID)
         {
-            try { return  _orderManager.GetOrderItemByID(orderItemID); }
+            try { return _orderManager.GetOrderItemByID(orderItemID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
         public ActionResult<List<OrderItemDTO>> GetItemsForOrder(int id)
         {
-            try { return  _orderManager.GetItemsForOrder(id); }
+            try { return _orderManager.GetItemsForOrder(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpPost]
         public ActionResult<OrderItemDTO> AddItemToOrder(CreateOrderItemDTO entityToCreate)
         {
-            try { return  _orderManager.AddItemToOrder(entityToCreate); }
+            try { return _orderManager.AddItemToOrder(entityToCreate); }
+            catch (BaseCustomException ex) { return BadRequest(ex.Message); }
+        }
+
+        [HttpPut]
+        public ActionResult<OrderItemDTO> UpdateOrderItem(UpdateOrderItemDTO updatedRecord)
+        {
+            try { return _orderManager.UpdateOrderItem(updatedRecord); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpDelete]
         public ActionResult<bool> RemoveItemFromOrder(int orderItemID)
         {
-            try { return  _orderManager.RemoveItemFromOrder(orderItemID); }
+            try { return _orderManager.RemoveItemFromOrder(orderItemID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
     }

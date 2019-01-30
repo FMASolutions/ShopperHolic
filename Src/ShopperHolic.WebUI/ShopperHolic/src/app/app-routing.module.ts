@@ -15,6 +15,8 @@ import { AddressesComponent } from './components/location/addresses/addresses.co
 import { CustomersComponent } from './components/accounts/customers/customers.component';
 import { SuppliersComponent } from './components/accounts/suppliers/suppliers.component';
 import { UserAccountsComponent } from './components/accounts/user-accounts/user-accounts.component';
+import { OrdersComponent } from './components/orderProcessing/orders/orders.component';
+import { OrderComponent } from './components/orderProcessing/orders/order/order.component';
 
 const routes: Routes = [
   {
@@ -92,6 +94,16 @@ const routes: Routes = [
     component: UserAccountsComponent,
     canActivate: [AuthGuard],
     data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'order',
+    component: OrderComponent
   },
   {
     path: '',
