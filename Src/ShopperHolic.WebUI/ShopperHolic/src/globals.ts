@@ -1,3 +1,5 @@
+import { environment } from './environments/environment';
+
 export class AppSettings {
     APP_TITLE: string;
     APP_TITLE_SHORT: string;
@@ -18,7 +20,7 @@ export class Globals {
                 autoFocus: true,
                 data: null
             },
-            BASE_API_URL: "https://localhost:5001/api"
+            BASE_API_URL: environment.base_api_url
         }
         let copy = new AppSettings();
         Object.assign(copy, original);
