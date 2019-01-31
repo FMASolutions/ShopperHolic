@@ -95,10 +95,11 @@ namespace ShopperHolic.API.ShopperAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            string callingWebsite = Configuration["CallingWebsite"];
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(builder => builder.WithOrigins(callingWebsite).AllowAnyHeader().AllowAnyMethod());
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -139,6 +140,5 @@ namespace ShopperHolic.API.ShopperAPI
             settings.Key = Configuration["EncSettings:Key"];
             return settings;
         }
-
     }
 }
