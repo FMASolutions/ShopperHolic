@@ -9,7 +9,7 @@ using ShopperHolic.Infrastructure.ShopperExceptions;
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
     [Authorize]
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class InvoiceController : ControllerBase
     {

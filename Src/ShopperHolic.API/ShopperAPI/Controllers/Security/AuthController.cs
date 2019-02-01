@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {

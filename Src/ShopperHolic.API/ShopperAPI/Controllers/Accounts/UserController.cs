@@ -10,7 +10,7 @@ using ShopperHolic.API.ShopperAPI.Models.Security;
 namespace ShopperHolic.API.ShopperAPI.Controllers
 {
     [Authorize(Policy = "IsAdminUser")]
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {

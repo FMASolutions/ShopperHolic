@@ -104,11 +104,11 @@ namespace ShopperHolic.API.ShopperAPI
             {
                 routes.MapRoute(
                     name: "ActionApi",
-                    template: "api/{controller}/{action}/{id}"
+                    template: "{controller}/{action}/{id}"
                 );
                 routes.MapRoute(
                     name: "default",
-                    template: "api/{controller}/{id}"
+                    template: "{controller}/{id}"
                 );
             });
             if (env.IsDevelopment())
