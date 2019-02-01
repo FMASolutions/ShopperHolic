@@ -34,7 +34,7 @@ namespace ShopperHolic.API.ShopperAPI
         {
             //Dependency Injection
             MvcServiceCollectionExtensions.AddMvc(services);
-
+            
             //Add JWTSettings into the service collection for dependency injection.
             JWTSettings jwtSettings = GetJWTSettings();
             services.AddSingleton<JWTSettings>(jwtSettings);
@@ -96,6 +96,7 @@ namespace ShopperHolic.API.ShopperAPI
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             string callingWebsite = Configuration["CallingWebsite"];
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();

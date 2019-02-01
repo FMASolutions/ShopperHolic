@@ -18,7 +18,8 @@ import { MatTableDataSource, MatPaginator, Sort } from '@angular/material';
 export class ItemService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Item/';
-  imageLocationPrefix: string = "http://localhost:5000/uploads/";
+  imageLocationPrefix: string = Globals.APP_SETTINGS.BASE_API_URL + "/uploads/";
+  
   imageSrc: string = "";
   
   constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: GenericValidator,) { }
