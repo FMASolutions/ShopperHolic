@@ -1,5 +1,5 @@
 1) Change to Async db  and api calls
-2) Improve image creation by only submitting form if a image has been selcted for upload.
+2) Improve image upload by reducing size / compression. Not sure if in .net core API or Angular UI.
 3) Implement Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
 4) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
 5) Implement Shopping cart
@@ -7,3 +7,5 @@
 6) Implement Reporting
 7) Implement OAuth2 / OPenIDConnect using a IdentityServer
 8) Implement some more security for role checking in the UI layer.
+9) Tables too wide on mobile devices.
+10) Stock creation doesn't allow qty, create with 0 Qty ALWAYS., stock addition through PO / return process. stock minus through delivery notes / return PO. add Stock adjustment feature which requires a "note", the note will be read by the stock history feature
