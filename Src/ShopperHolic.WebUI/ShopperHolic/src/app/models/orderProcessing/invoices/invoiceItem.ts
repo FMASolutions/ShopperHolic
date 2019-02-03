@@ -1,4 +1,4 @@
-export class Invoice {
+export class InvoiceItem {
     invoiceID: number = 0;
     invoiceItemID: number = 0;
     orderID: number = 0;

@@ -17,6 +17,8 @@ import { SuppliersComponent } from './components/accounts/suppliers/suppliers.co
 import { UserAccountsComponent } from './components/accounts/user-accounts/user-accounts.component';
 import { OrdersComponent } from './components/orderProcessing/orders/orders.component';
 import { OrderComponent } from './components/orderProcessing/orders/order/order.component';
+import { AllDeliveryNotesComponent } from './components/orderProcessing/delivery-notes/all-delivery-notes/all-delivery-notes.component';
+import { DeliveryNoteComponent } from './components/orderProcessing/delivery-notes/delivery-note/delivery-note.component';
 
 const routes: Routes = [
   {
@@ -104,6 +106,14 @@ const routes: Routes = [
   {
     path: 'order',
     component: OrderComponent
+  },
+  {
+    path: 'deliveryNotes',
+    component: AllDeliveryNotesComponent
+  },
+  {
+    path: 'deliveryNote',
+    component: DeliveryNoteComponent
   },
   {
     path: '',

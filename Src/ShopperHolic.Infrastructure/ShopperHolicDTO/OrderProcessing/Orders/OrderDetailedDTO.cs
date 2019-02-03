@@ -10,5 +10,7 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         }
         public OrderDTO Header { get; set; }
         public IEnumerable<OrderItemDTO> Items { get; set; }
+        public IEnumerable<DeliveryNotePreviewDTO> DeliveryNotes {get; set;}
+        public IEnumerable<InvoicePreviewDTO> Invoices {get; set;}
     }
 }

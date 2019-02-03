@@ -9,7 +9,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         public InvoiceService(string connectionString) : base(connectionString) { }
         internal InvoiceService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
-        public IEnumerable<InvoiceDTO> InvoiceOrder(int orderID)
+        public IEnumerable<InvoiceItemDTO> InvoiceOrder(int orderID)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 throw ex;
             }
         }
-        public IEnumerable<InvoiceDTO> GetByID(int id)
+        public IEnumerable<InvoiceItemDTO> GetByID(int id)
         {
             return UOW.InvoiceRepo.GetByID(id);
         }

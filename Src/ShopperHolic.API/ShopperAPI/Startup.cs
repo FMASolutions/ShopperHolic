@@ -109,7 +109,7 @@ namespace ShopperHolic.API.ShopperAPI
                 );
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{id}"
+                    template: "{controller}/{action}/{id}"
                 );
             });
             if (env.IsDevelopment())

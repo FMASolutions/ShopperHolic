@@ -26,7 +26,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
-        public IEnumerable<DeliveryNoteDTO> GetByID(int id)
+        public IEnumerable<DeliveryNoteItemDTO> GetByID(int id)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@DeliveryNoteID", id);
 
-                return Connection.Query<DeliveryNoteDTO>(query, queryParameters, CurrentTrans);
+                return Connection.Query<DeliveryNoteItemDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -62,6 +62,28 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 INNER JOIN Customers c ON c.CustomerID = oh.CustomerID";
 
                 return Connection.Query<DeliveryNotePreviewDTO>(query, transaction: CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<DeliveryNotePreviewDTO> GetDeliveryNotesForOrder(int orderID)
+        {
+            try
+            {
+                string query = @"
+                SELECT dn.DeliveryNoteID,oh.OrderHeaderID,dn.DeliveryDate,c.CustomerName
+                FROM DeliveryNotes dn
+                INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = dn.OrderHeaderID
+                INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
+                WHERE oh.OrderHeaderID = @OrderID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@OrderID", orderID);
+
+                return Connection.Query<DeliveryNotePreviewDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {

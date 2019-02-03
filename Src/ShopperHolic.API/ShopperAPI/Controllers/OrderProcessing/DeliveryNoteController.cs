@@ -22,16 +22,16 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
 
         [Authorize(Policy = "UserCanDeliverOrder")]
         [HttpPut]
-        public ActionResult<List<DeliveryNoteDTO>> DeliverOrder([FromQuery] int orderID)
+        public ActionResult<List<DeliveryNoteItemDTO>> DeliverOrder([FromQuery]int orderID)
         {
             try { return _deliveryNoteManager.DeliverOrder(orderID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<List<DeliveryNoteDTO>> GetByID([FromQuery] int id)
+        public ActionResult<List<DeliveryNoteItemDTO>> GetByID([FromQuery] int deliveryNoteID)
         {
-            try { return _deliveryNoteManager.GetByID(id); }
+            try { return _deliveryNoteManager.GetByID(deliveryNoteID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 

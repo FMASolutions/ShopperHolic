@@ -78,7 +78,10 @@ import { PurchaseListComponent } from './components/purchasing/purchase-orders/p
 import { CustomerService } from './services/accounts/customer.service';
 import { SupplierService } from './services/accounts/supplier.service';
 import { OrderItemDetailComponent } from './components/orderProcessing/orders/order-item-detail/order-item-detail.component';
-import { OrderDetailComponent } from './components/orderProcessing/orders/order-detail/order-detail.component'
+import { OrderDetailComponent } from './components/orderProcessing/orders/order-detail/order-detail.component';
+import { DeliveryNotesComponent } from './components/orderProcessing/delivery-notes/delivery-notes.component';
+import { DeliveryNoteComponent } from './components/orderProcessing/delivery-notes/delivery-note/delivery-note.component';
+import { AllDeliveryNotesComponent } from './components/orderProcessing/delivery-notes/all-delivery-notes/all-delivery-notes.component'
 
 @NgModule({
   declarations: [
@@ -138,6 +141,9 @@ import { OrderDetailComponent } from './components/orderProcessing/orders/order-
     PurchaseListComponent,
     OrderItemDetailComponent,
     OrderDetailComponent,
+    DeliveryNotesComponent,
+    DeliveryNoteComponent,
+    AllDeliveryNotesComponent,
   ],
   imports: [
     BrowserModule,

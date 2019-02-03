@@ -1,4 +1,4 @@
-export class DeliveryNote {
+export class DeliveryNoteItem {
     deliveryNoteItemID: number = 0;
     deliveryNoteID: number = 0;
     orderHeaderID: number = 0;

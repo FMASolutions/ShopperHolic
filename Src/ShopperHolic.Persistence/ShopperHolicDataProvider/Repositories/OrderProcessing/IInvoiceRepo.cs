@@ -6,7 +6,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
     public interface IInvoiceRepo
     {
         int InvoiceOrder(int orderID);
-        IEnumerable<InvoiceDTO> GetByID(int id);
+        IEnumerable<InvoiceItemDTO> GetByID(int id);
         IEnumerable<InvoicePreviewDTO> GetAllPreview();
+        IEnumerable<InvoicePreviewDTO> GetInvoicesForOrder(int orderID);
     }
 }

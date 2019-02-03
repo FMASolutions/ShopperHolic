@@ -233,7 +233,9 @@ export class Globals {
     public static get ORDER_DELETE_SUCCESS_MSG(): string { return "Successfully deleted order: "; }
     public static get ORDER_DELETE_FAILED_MSG(): string { return "Failed to delete order: "; }
     public static get ORDER_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Customer', 'Status', 'DeliveryDate', 'View', 'Del']; }
-    
+    public static get ORDER_DELIVERY_ATTEMPT(): string { return "Attempting to deliver order: "; }
+    public static get ORDER_DELIVERY_SUCCESS(): string { return "Successfully delivered order: "; }
+    public static get ORDER_DELIVERY_FAILED(): string { return "Failed to deliver order: "; }
     
     public static get ORDER_ITEM_UPDATE_TITLE(): string { return "Update Order Item"; }
     public static get ORDER_ITEM_ADD_TITLE(): string { return "Add Order Item"; }
@@ -246,6 +248,10 @@ export class Globals {
     public static get ORDER_ITEM_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update order item: "; }
     public static get ORDER_ITEM_UPDATE_SUCCESS_MSG(): string { return "Successfully updated order item: "; }
     public static get ORDER_ITEM_UPDATE_FAILED_MSG(): string { return "Failed to update order item: "; }
+
+    public static get DELIVERY_NOTE_READ_FAILED_MSG(): string { return "Failed to retrieve delivery note data: "; }
+    public static get DELIVERY_NOTE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'DeliveryDate','View']; }
+    public static get DELIVERY_NOTE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Qty']; }
 
 }
 

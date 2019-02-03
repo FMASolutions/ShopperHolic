@@ -18,6 +18,8 @@ import { OrderItem } from 'src/app/models/orderProcessing/orders/orderItem';
 import { CreateOrderItem } from 'src/app/models/orderProcessing/orders/createOrderItem';
 import { Item } from 'src/app/models/stock/items/item';
 import { UpdateOrderItem } from 'src/app/models/orderProcessing/orders/updateOrderItem';
+import { AppNavigationService } from '../generic/app-navigation.service';
+import { DeliveryNoteService } from './delivery-note.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,8 @@ export class OrderService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Order/';
 
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private fbOrderDetailed: FormBuilder, private validator: GenericValidator, private router: Router) { }
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, 
+    private fbOrderDetailed: FormBuilder, private validator: GenericValidator, private navService: AppNavigationService, private delService: DeliveryNoteService) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNew(newModel: CreateOrder): Observable<OrderDetailed> {
@@ -129,6 +132,13 @@ export class OrderService {
     }));
   }
 
+  public deliverOrderAndDisplayDeliveryNote(orderID: number){
+    let obs = this.delService.deliverOrder(orderID).subscribe(resp =>{
+      this.navService.goToDeliveryNotePage(resp[0].deliveryNoteID);
+      obs.unsubscribe();
+    })
+  }
+
 
   /*--------------------- --- Create / Update Order Detail Form Helper --- ----------------------*/
   public orderHeaderForm: FormGroup;
@@ -176,10 +186,6 @@ export class OrderService {
     return newModel;
   }
 
-  public goToOrderPage(id: number) {
-    console.log("trying to go to order view page");
-    this.router.navigateByUrl('/order?id=' + id.toString());
-  }
 
   public getUpdateModelFromForm(): UpdateOrder {
     let newModel: UpdateOrder = {
@@ -214,7 +220,7 @@ export class OrderService {
   /*--------------------- ---Order Detail Form Helper --- ----------------------*/
   public detailedOrderForm: FormGroup;
 
-  public initalizeDetailedOrderForm(id: number, paginator: MatPaginator) {
+  public initalizeDetailedOrderForm() {
     this.detailedOrderForm = this.fbOrderDetailed.group({
       orderID: 0,
       customerID: 0,
@@ -229,16 +235,10 @@ export class OrderService {
       country: '',
       orderDate: new Date(),
       deliveryDate: new Date(),
-    });
-
-    let obs = this.getByID(id).subscribe(model => {
-      obs.unsubscribe();
-      this.populateDetailedOrderFormFromModel(model);
-      this.refreshItemListData(paginator, model.items);
-    })
+    });      
   }
 
-  public populateDetailedOrderFormFromModel(model: OrderDetailed) {
+  public populateDetailedOrderFormFromModel(model: OrderDetailed, paginator: MatPaginator) {
     this.detailedOrderForm.setValue({
       orderID: model.header.orderID,
       customerID: model.header.customerID,
@@ -255,6 +255,7 @@ export class OrderService {
       deliveryDate: model.header.deliveryDate,
     });
     this.detailedOrderForm.updateValueAndValidity();
+    this.refreshItemListData(paginator, model.items);
   }
 
 
@@ -273,7 +274,7 @@ export class OrderService {
         case 'ID': return this.compare(a.orderID, b.orderID, isAsc);
         case 'Customer': return this.compare(a.customerName.toLowerCase(), b.customerName.toLowerCase(), isAsc);
         case 'Status': return this.compare(a.orderStatusText.toLowerCase(), b.orderStatusText.toLowerCase(), isAsc);
-        case 'DeliveryDate': return this.compare(a.deliveryDate.toDateString(), b.deliveryDate.toDateString(), isAsc);
+        case 'DeliveryDate': return this.compare(a.deliveryDate.toString(), b.deliveryDate.toString(), isAsc);
         default: return 0;
       }
     });

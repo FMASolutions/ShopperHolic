@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from 'src/app/services/orderProcessing/order.service';
 import { MatDialog, MatSort, MatPaginator, Sort } from '@angular/material';
 import { Globals } from 'src/globals';
+import { AppNavigationService } from 'src/app/services/generic/app-navigation.service';
 
 @Component({
   selector: 'app-order-list',
@@ -14,12 +15,12 @@ export class OrderListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   columnList: string[] = Globals.ORDER_PRVW_LIST_COLUMNS;
 
-  constructor(public service: OrderService, public childDialog: MatDialog) { }
+  constructor(public service: OrderService, public childDialog: MatDialog, private navService: AppNavigationService) { }
 
   ngOnInit() { setTimeout(() => { this.service.refreshListData(this.paginator); }, 1); }
 
   public editClicked(id: number) {
-    this.service.goToOrderPage(id);
+    this.navService.goToOrderPage(id);
   }
 
   public deleteClicked(id: number) {

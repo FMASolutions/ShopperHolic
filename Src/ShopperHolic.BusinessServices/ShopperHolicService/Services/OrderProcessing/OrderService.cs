@@ -27,12 +27,12 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         }
         public OrderDetailedDTO GetByID(int id)
         {
-            var head = UOW.OrderRepo.GetByID(id);
-            var items = UOW.OrderRepo.GetItemsForOrder(id);
-            var returnOrder = new OrderDetailedDTO();
-            returnOrder.Header = head;
-            returnOrder.Items = items;
-            return returnOrder;
+            return new OrderDetailedDTO() {
+                Header = UOW.OrderRepo.GetByID(id),
+                Items = UOW.OrderRepo.GetItemsForOrder(id),
+                DeliveryNotes = UOW.DeliveryNoteRepo.GetDeliveryNotesForOrder(id),
+                Invoices = UOW.InvoiceRepo.GetInvoicesForOrder(id)
+            };
         }
         public IEnumerable<OrderPreviewDTO> GetAllPreview()
         {
@@ -44,11 +44,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
             {
                 var updateResult = UOW.OrderRepo.Update(updatedRecord);
                 UOW.SaveChanges();
-                var items = UOW.OrderRepo.GetItemsForOrder(updateResult.OrderID);
-                var returnOrder = new OrderDetailedDTO();
-                returnOrder.Header = updateResult;
-                returnOrder.Items = items;
-                return returnOrder;
+                return GetByID(updateResult.OrderID);
             }
             catch (Exception ex)
             {

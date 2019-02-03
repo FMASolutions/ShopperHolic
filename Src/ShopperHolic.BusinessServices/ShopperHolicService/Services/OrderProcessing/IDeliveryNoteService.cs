@@ -5,8 +5,8 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
     public interface IDeliveryNoteService : IDisposable
     {
-        IEnumerable<DeliveryNoteDTO> DeliverOrder(int orderID);
-        IEnumerable<DeliveryNoteDTO> GetByID(int id);
+        IEnumerable<DeliveryNoteItemDTO> DeliverOrder(int orderID);
+        IEnumerable<DeliveryNoteItemDTO> GetByID(int id);
         IEnumerable<DeliveryNotePreviewDTO> GetAllPreview();
     }
 }

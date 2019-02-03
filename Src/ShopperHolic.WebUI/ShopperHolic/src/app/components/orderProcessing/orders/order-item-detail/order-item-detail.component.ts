@@ -31,9 +31,7 @@ export class OrderItemDetailComponent {
   }
 
   submit() {
-    console.log("in submit");
     if (this.service.itemForm.valid) {
-      console.log("form was valid");
       if (this.currentMode == Globals.MODE_UPDATE) {
         let obs = this.service.updateOrderItem(this.service.getUpdateItemModelFromForm()).subscribe(updateResp => {
           this.ownDialog.close({ userSubmitted: true, newModel: updateResp });

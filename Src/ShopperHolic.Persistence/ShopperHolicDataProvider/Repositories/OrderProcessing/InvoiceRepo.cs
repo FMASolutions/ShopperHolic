@@ -26,7 +26,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
-        public IEnumerable<InvoiceDTO> GetByID(int id)
+        public IEnumerable<InvoiceItemDTO> GetByID(int id)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@InvoiceID", id);
 
-                return Connection.Query<InvoiceDTO>(query, queryParameters, CurrentTrans);
+                return Connection.Query<InvoiceItemDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -67,6 +67,32 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 GROUP BY ih.InvoiceHeaderID,ih.OrderHeaderID, ins.InvoiceStatusValue, ih.InvoiceDate";
 
                 return Connection.Query<InvoicePreviewDTO>(query, transaction: CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<InvoicePreviewDTO> GetInvoicesForOrder(int orderID)
+        {
+            try
+            {
+                string query = @"
+                SELECT ih.InvoiceHeaderID AS [InvoiceID], ih.OrderHeaderID AS [OrderID], ins.InvoiceStatusValue AS [InvoiceStatus],ih.InvoiceDate, 
+                  CAST(ROUND(SUM(oi.OrderItemUnitPriceAfterDiscount * ii.InvoiceItemQty),2) AS NUMERIC(36,2)) AS [InvoiceTotal]
+                FROM InvoiceHeaders ih
+                INNER JOIN InvoiceItems ii ON ih.InvoiceHeaderID = ii.InvoiceHeaderID
+                INNER JOIN OrderItems oi ON oi.OrderItemID = ii.OrderItemID
+                INNER JOIN InvoiceStatus ins ON ins.InvoiceStatusID = ih.InvoiceStatusID
+                WHERE ih.OrderHeaderID = @OrderID
+                GROUP BY ih.InvoiceHeaderID,ih.OrderHeaderID, ins.InvoiceStatusValue, ih.InvoiceDate
+                ";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@OrderID", orderID);
+
+                return Connection.Query<InvoicePreviewDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {

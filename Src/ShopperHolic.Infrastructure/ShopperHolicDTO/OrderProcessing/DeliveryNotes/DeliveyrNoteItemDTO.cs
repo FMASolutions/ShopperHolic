@@ -1,7 +1,7 @@
 using System;
 namespace ShopperHolic.Infrastructure.ShopperHolicDTO
 {
-    public class DeliveryNoteDTO
+    public class DeliveryNoteItemDTO
     {
         public int DeliveryNoteItemID {get;set;}
         public int DeliveryNoteID {get;set;}

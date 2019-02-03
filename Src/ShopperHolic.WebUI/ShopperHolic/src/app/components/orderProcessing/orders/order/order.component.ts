@@ -6,6 +6,7 @@ import { Sort, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { Globals } from 'src/globals';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { OrderItemDetailComponent } from '../order-item-detail/order-item-detail.component';
+import { DeliveryNotesComponent } from '../../delivery-notes/delivery-notes.component';
 
 @Component({
   selector: 'app-order',
@@ -16,15 +17,22 @@ export class OrderComponent {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(DeliveryNotesComponent) childDeliveryNotes;
+
   columnList: string[] = Globals.ORDER_ITEM_LIST_COUMNS;
   receivedOrderNumber: number = 0;
 
 
   constructor(public service: OrderService, private route: ActivatedRoute, private router: Router, public childDialog: MatDialog) {
+    this.service.initalizeDetailedOrderForm();
     let id = Number(this.route.snapshot.queryParams['id']);
     if (id > 0 && isNumber(id)) {
       this.receivedOrderNumber = id;
-      this.service.initalizeDetailedOrderForm(id, this.paginator);
+      let obs = this.service.getByID(id).subscribe(modelResp => {
+        this.service.populateDetailedOrderFormFromModel(modelResp, this.paginator);
+        this.childDeliveryNotes.refreshDeliveryNoteTableData(modelResp.deliveryNotes);
+        obs.unsubscribe();
+      })
     };
   }
 
@@ -34,7 +42,7 @@ export class OrderComponent {
     let dialogRef = this.childDialog.open(OrderDetailComponent, modalSettings);
     let obs = dialogRef.afterClosed().subscribe((resp) => {
       if (resp && resp.userSubmitted) {
-        this.service.populateDetailedOrderFormFromModel(resp.newModel);
+        this.service.populateDetailedOrderFormFromModel(resp.newModel, this.paginator);
       }
       obs.unsubscribe();
     });
@@ -43,7 +51,7 @@ export class OrderComponent {
   public deleteOrderClicked() {
     if (confirm(Globals.ORDER_DELETE_CONFIRM_MSG + this.receivedOrderNumber)) {
       let obs = this.service.delete(this.receivedOrderNumber).subscribe(resp => {
-        this.router.navigateByUrl('/orders')
+        this.router.navigateByUrl('/orders');
         obs.unsubscribe();
       });
     }
@@ -54,7 +62,9 @@ export class OrderComponent {
   }
 
   public deliverOrderClicked() {
-
+    if (confirm("Are you sure you wish to delivery outstanding items?")){
+      this.service.deliverOrderAndDisplayDeliveryNote(this.receivedOrderNumber);
+    }
   }
 
   public editItemClicked(id: number) {

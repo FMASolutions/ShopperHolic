@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { CustomerSelectorComponent } from 'src/app/components/accounts/customers/customer-selector/customer-selector.component';
 import { Globals } from 'src/globals';
 import { AddressSelectorComponent } from 'src/app/components/location/addresses/address-selector/address-selector.component';
+import { AppNavigationService } from 'src/app/services/generic/app-navigation.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -14,7 +15,8 @@ export class OrderDetailComponent {
 
   currentMode: string  = "";
 
-  constructor(public service: OrderService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<OrderDetailComponent>, public childDialog: MatDialog) {
+  constructor(public service: OrderService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<OrderDetailComponent>,
+     public childDialog: MatDialog, private navService: AppNavigationService ) {
     this.currentMode = service.initializeHeaderForm(data);
   }
 
@@ -51,7 +53,7 @@ export class OrderDetailComponent {
       } else if (this.currentMode == Globals.MODE_CREATE) {
         let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe(createResp => {
           this.ownDialog.close({ userSubmitted: true, newModel: createResp });
-          this.service.goToOrderPage(createResp.header.orderID);
+          this.navService.goToOrderPage(createResp.header.orderID);
           obs.unsubscribe();
         });
       }

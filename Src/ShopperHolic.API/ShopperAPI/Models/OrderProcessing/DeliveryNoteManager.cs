@@ -19,18 +19,18 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         private IDeliveryNoteService _deliveryNoteService;
 
-        public List<DeliveryNoteDTO> DeliverOrder(int orderID)
+        public List<DeliveryNoteItemDTO> DeliverOrder(int orderID)
         {
             var result = _deliveryNoteService.DeliverOrder(orderID);
-            var returnList = new List<DeliveryNoteDTO>();
+            var returnList = new List<DeliveryNoteItemDTO>();
             foreach (var item in result)
                 returnList.Add(item);
             return returnList;
         }
-        public List<DeliveryNoteDTO> GetByID(int id)
+        public List<DeliveryNoteItemDTO> GetByID(int id)
         {
             var result = _deliveryNoteService.GetByID(id);
-            var returnList = new List<DeliveryNoteDTO>();
+            var returnList = new List<DeliveryNoteItemDTO>();
             foreach (var item in result)
                 returnList.Add(item);
             return returnList;

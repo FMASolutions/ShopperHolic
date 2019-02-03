@@ -22,14 +22,14 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
 
         [Authorize(Policy = "UserCanInvoiceOrder")]
         [HttpPut]
-        public ActionResult<List<InvoiceDTO>> InvoiceOrder([FromQuery] int orderID)
+        public ActionResult<List<InvoiceItemDTO>> InvoiceOrder([FromQuery] int orderID)
         {
             try { return _invoiceManager.InvoiceOrder(orderID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<List<InvoiceDTO>> GetByID([FromQuery] int id)
+        public ActionResult<List<InvoiceItemDTO>> GetByID([FromQuery] int id)
         {
             try { return _invoiceManager.GetByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
