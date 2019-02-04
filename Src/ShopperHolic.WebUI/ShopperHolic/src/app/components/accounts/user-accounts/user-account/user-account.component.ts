@@ -34,7 +34,7 @@ export class UserAccountComponent {
 
   }
 
-  getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.CUSTOMER_UPDATE_TITLE : Globals.CUSTOMER_CREATE_TITLE; }
+  getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.USER_UPDATE_TITLE : Globals.USER_CREATE_TITLE; }
 
   getSubmitButtonText() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.UPDATE_BUTTON_TEXT : Globals.CREATE_BUTTON_TEXT; }
 

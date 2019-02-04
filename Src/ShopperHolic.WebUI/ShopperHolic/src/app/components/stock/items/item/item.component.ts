@@ -15,11 +15,17 @@ export class ItemComponent implements OnInit {
   @ViewChild('currentImage') currentImageElement;
   currentMode: string = "";
   currentSelectedFile: File = null;
+  
 
-  constructor(public service: ItemService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<ItemComponent>, public childDialog: MatDialog) { }
+  constructor(public service: ItemService, @Inject(MAT_DIALOG_DATA) public data: any, public ownDialog: MatDialogRef<ItemComponent>, public childDialog: MatDialog) {
+    this.service.initializeForm();
+  }
 
   ngOnInit() {
-    this.currentMode = this.service.InitializeForm(this.currentImageElement, this.data);
+    setTimeout(() => {
+      this.currentMode = this.service.determinModeAndPopulateForm(this.currentImageElement, this.data);  
+    }, 1);
+    
   }
 
   getPageTitle() { return (this.currentMode == Globals.MODE_UPDATE) ? Globals.ITEM_UPDATE_TITLE : Globals.ITEM_CREATE_TITLE; }
@@ -55,14 +61,14 @@ export class ItemComponent implements OnInit {
           if (this.currentSelectedFile) { //Only perform upload if a new file has been selected.
             let obsUpload = this.service.imageUpload(this.currentSelectedFile, updateResp.itemID).subscribe(resp => {
               obsUpload.unsubscribe();
-              this.ownDialog.close({ userSubmitted: true, newModel: updateResp  });
+              this.ownDialog.close({ userSubmitted: true, newModel: updateResp });
             });
           }
-          else { this.ownDialog.close({ userSubmitted: true, newModel: updateResp  });} 
+          else { this.ownDialog.close({ userSubmitted: true, newModel: updateResp }); }
         });
 
       } else if (this.currentMode == Globals.MODE_CREATE) {
-        if(this.currentSelectedFile) { //Only create file if we have selected a file to upload....
+        if (this.currentSelectedFile) { //Only create file if we have selected a file to upload....
           let obs = this.service.createNew(this.service.getCreateModelFromForm()).subscribe((createResp) => {
             obs.unsubscribe();
             let obsUpload = this.service.imageUpload(this.currentSelectedFile, createResp.itemID).subscribe(resp => {

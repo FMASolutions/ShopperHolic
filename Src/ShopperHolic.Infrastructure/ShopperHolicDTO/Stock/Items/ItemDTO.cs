@@ -13,6 +13,7 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public int ItemAvailableQty { get; set; }
         public int ItemReorderQtyReminder { get; set; }
         public string ItemImageFilename { get; set; }
+        public bool IsFeaturedItem {get; set;}
 
     }
 }

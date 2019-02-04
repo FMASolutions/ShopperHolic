@@ -140,6 +140,7 @@ export class DeliveryNoteService {
     let sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
+        case 'Code': return this.compare(a.itemCode.toLowerCase(), b.itemCode.toLowerCase(), isAsc);
         case 'ItemDesc': return this.compare(a.orderItemDescription.toLowerCase(), b.orderItemDescription.toLowerCase(), isAsc);
         case 'Qty': return this.compare(a.orderItemQty, b.orderItemQty, isAsc);
         default: return 0;

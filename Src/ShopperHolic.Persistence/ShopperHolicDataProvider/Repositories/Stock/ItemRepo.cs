@@ -16,8 +16,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                INSERT INTO Items(ItemCode,SubGroupID,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,ItemReorderQtyReminder,ItemImageFilename)
-                VALUES (@ItemCode,@SubGroupID,@ItemName,@ItemDescription,@ItemUnitPrice,@ItemUnitPriceWithMaxDiscount,@ItemAvailableQty,@ItemReorderQtyReminder,@ItemImageFilename)
+                INSERT INTO Items(ItemCode,SubGroupID,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,ItemReorderQtyReminder,ItemImageFilename,IsFeaturedItem)
+                VALUES (@ItemCode,@SubGroupID,@ItemName,@ItemDescription,@ItemUnitPrice,@ItemUnitPriceWithMaxDiscount,@ItemAvailableQty,@ItemReorderQtyReminder,@ItemImageFilename,@IsFeaturedItem)
                 
                 SELECT SCOPE_IDENTITY()";
 
@@ -31,6 +31,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemAvailableQty", entityToCreate.ItemAvailableQty);
                 queryParameters.Add("@ItemReorderQtyReminder", entityToCreate.ItemReorderQtyReminder);
                 queryParameters.Add("@ItemImageFilename", ""); //Set Image to empty as this is available through the image update function.
+                queryParameters.Add("@IsFeaturedItem", entityToCreate.IsFeaturedItem ? 1 : 0);
 
                 return Connection.QueryFirst<int>(query, queryParameters, CurrentTrans);
             }
@@ -45,7 +46,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT  ItemID ,ItemCode ,s.SubGroupID ,CONVERT(VARCHAR(10),s.SubGroupID) + ' - ' + s.SubGroupCode + ' - ' + s.SubGroupName AS [SubGroupText],
-                    ItemName ,ItemDescription ,ItemUnitPrice ,ItemUnitPriceWithMaxDiscount ,ItemAvailableQty ,ItemReorderQtyReminder ,ItemImageFilename
+                    ItemName ,ItemDescription ,ItemUnitPrice ,ItemUnitPriceWithMaxDiscount ,ItemAvailableQty ,ItemReorderQtyReminder ,ItemImageFilename, IsFeaturedItem
                 FROM Items I WITH(NOLOCK)
                 INNER JOIN SubGroups S WITH(NOLOCK) ON I.SubGroupID = S.SubGroupID
                 WHERE ItemID = @ItemID";
@@ -65,7 +66,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT  ItemID ,ItemCode, ItemName, ItemImageFilename, SubGroupID, ItemUnitPrice
+                SELECT  ItemID ,ItemCode, ItemName, ItemImageFilename, SubGroupID, ItemUnitPrice, IsFeaturedItem
                 FROM Items I WITH(NOLOCK)";
 
                 return Connection.Query<ItemPreviewDTO>(query, transaction: CurrentTrans);
@@ -89,6 +90,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 ,ItemUnitPriceWithMaxDiscount = @ItemUnitPriceWithMaxDiscount
                 ,ItemAvailableQty = @ItemAvailableQty
                 ,ItemReorderQtyReminder = ItemReorderQtyReminder
+                ,IsFeaturedItem = @IsFeaturedItem
                 WHERE ItemID = @ItemID";
 
                 var queryParameters = new DynamicParameters();
@@ -100,6 +102,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemUnitPriceWithMaxDiscount", updatedRecord.ItemUnitPriceWithMaxDiscount);
                 queryParameters.Add("@ItemAvailableQty", updatedRecord.ItemAvailableQty);
                 queryParameters.Add("@ItemReorderQtyReminder", updatedRecord.ItemReorderQtyReminder);
+                queryParameters.Add("@IsFeaturedItem", updatedRecord.IsFeaturedItem ? 1: 0);
                 queryParameters.Add("@ItemID", updatedRecord.ItemID);
 
                 int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
@@ -160,7 +163,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 string query = @"
                 SELECT ItemID,ItemCode,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,
                     ItemReorderQtyReminder,ItemImageFilename,S.SubGroupID,SubGroupCode,SubGroupName,SubGroupDescription,
-                    P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription
+                    P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription, I.IsFeaturedItem
                 FROM Items I WITH(NOLOCK)
                 INNER JOIN SubGroups S WITH(NOLOCK) on S.SubGroupID = I.SubGroupID
                 INNER JOIN ProductGroups P WITH(NOLOCK) on P.ProductGroupID = S.ProductGroupID
@@ -182,7 +185,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 string query = @"
                 SELECT ItemID,ItemCode,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,
                     ItemReorderQtyReminder,ItemImageFilename,S.SubGroupID,SubGroupCode,SubGroupName,SubGroupDescription,
-                    P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription
+                    P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription, I.IsFeaturedItem
                 FROM Items I WITH(NOLOCK)
                 INNER JOIN SubGroups S WITH(NOLOCK) on S.SubGroupID = I.SubGroupID
                 INNER JOIN ProductGroups P WITH(NOLOCK) on P.ProductGroupID = S.ProductGroupID

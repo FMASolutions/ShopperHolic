@@ -10,4 +10,5 @@ export class Item {
      itemAvailableQty: number = 0;
      itemReorderQtyReminder: number = 0;
      itemImageFilename: string = "";
+     isFeaturedItem: boolean = false;
 }

@@ -11,5 +11,6 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public string OrderItemDescription {get;set;}
         public int OrderItemQty {get;set;}
         public string CustomerName {get;set;}
+        public string ItemCode { get; set; }
     }
 }

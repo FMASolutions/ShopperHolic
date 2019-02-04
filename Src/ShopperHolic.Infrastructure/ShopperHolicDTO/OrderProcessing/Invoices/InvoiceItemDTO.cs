@@ -12,6 +12,7 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public decimal ItemPrice { get; set; }
         public decimal ItemTotal { get; set; }
         public string InvoiceItemStatus { get; set; }
-        public string CustomerName {get;set;}
+        public string CustomerName { get; set; }
+        public string ItemCode { get; set; }
     }
 }

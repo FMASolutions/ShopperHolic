@@ -58,7 +58,7 @@ export class OrderService {
     return this.http.get<OrderPreview[]>(this.baseURL + 'GetAll').pipe(tap(resp => {
       this.userNotificationService.closeSpinners();
     }, err => {
-      this.userNotificationService.informUserError(Globals.SUB_GROUP_READ_FAILED_MSG);
+      this.userNotificationService.informUserError(Globals.ORDER_READ_FAILED_MSG);
       this.userNotificationService.informUserError(err.error);
     }));
   }
@@ -323,7 +323,9 @@ export class OrderService {
     let sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
+        case 'Code': return this.compare(a.itemCode.toLowerCase(), b.itemCode.toLowerCase(), isAsc);
         case 'Name': return this.compare(a.orderItemDescription.toLowerCase(), b.orderItemDescription.toLowerCase(), isAsc);
+        case 'Status': return this.compare(a.orderItemStatusText.toLowerCase(), b.orderItemStatusText.toLowerCase(), isAsc);
         case 'Price': return this.compare(a.orderItemUnitPriceAfterDiscount, b.orderItemUnitPriceAfterDiscount, isAsc);
         case 'Qty': return this.compare(a.orderItemQty, b.orderItemQty, isAsc);
         default: return 0;

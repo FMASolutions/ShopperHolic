@@ -8,5 +8,6 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public string ItemImageFilename { get; set; }
         public int SubGroupID { get; set; }
         public decimal ItemUnitPrice { get; set; }
+        public bool IsFeaturedItem {get; set;}
     }
 }

@@ -154,6 +154,7 @@ export class InvoiceService {
     let sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
+        case 'Code': return this.compare(a.itemCode.toLowerCase(), b.itemCode.toLowerCase(), isAsc);
         case 'ItemDesc': return this.compare(a.itemDescription.toLowerCase(), b.itemDescription.toLowerCase(), isAsc);
         case 'Price': return this.compare(a.itemPrice, b.itemPrice, isAsc);
         case 'Qty': return this.compare(a.itemQty, b.itemQty, isAsc);

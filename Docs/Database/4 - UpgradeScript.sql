@@ -1,0 +1,8 @@
+USE ShopperHolic
+GO
+
+ALTER TABLE Items 
+ADD IsFeaturedItem BIT NOT NULL
+CONSTRAINT DefaultFeaturedItem DEFAULT 0
+WITH VALUES
+GO

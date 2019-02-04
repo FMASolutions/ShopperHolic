@@ -8,6 +8,8 @@
                 <input matInput formControlName="id" type="text" readonly>
             </mat-form-field>
 
+            <mat-checkbox [(ngModel)]="service.currentItemIsFeatured" [ngModelOptions]="{standalone: true}">Featured Item?</mat-checkbox>              
+
             <mat-form-field class="maxWidth" appearance="outline">
                 <mat-label>Item Code</mat-label>
                 <input matInput formControlName="code" type="text">

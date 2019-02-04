@@ -5,4 +5,5 @@ export class ItemPreview{
     itemImageFilename: string = "";
     subGroupID: number = 0;
     itemUnitPrice: number = 0;
+    isFeaturedItem: boolean = false;
 }

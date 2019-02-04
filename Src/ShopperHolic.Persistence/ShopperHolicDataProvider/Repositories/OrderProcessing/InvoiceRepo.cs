@@ -35,13 +35,14 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                   ih.InvoiceDate, oi.OrderItemDescription AS [ItemDescription],
                   oi.OrderItemQty AS [ItemQty], oi.OrderItemUnitPriceAfterDiscount AS [ItemPrice],
                   oi.OrderItemUnitPriceAfterDiscount * ii.InvoiceItemQty AS [ItemTotal],
-                  ins.InvoiceStatusValue AS [InvoiceItemStatus], c.CustomerName
+                  ins.InvoiceStatusValue AS [InvoiceItemStatus], c.CustomerName, i.itemCode
                 FROM InvoiceHeaders ih
                 INNER JOIN InvoiceItems ii ON ih.InvoiceHeaderID = ii.InvoiceHeaderID
                 INNER JOIN OrderItems oi ON oi.OrderItemID = ii.OrderItemID
                 INNER JOIN InvoiceStatus ins ON ins.InvoiceStatusID = ii.InvoiceItemStatusID
                 INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = oi.OrderHeaderID
 				INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
+                INNER JOIN Items i ON i.ItemID = oi.ItemID
                 WHERE ih.InvoiceHeaderID = @InvoiceID";
 
                 var queryParameters = new DynamicParameters();

@@ -137,11 +137,12 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT OrderItemID, oi.OrderHeaderID AS [OrderID], ItemID, OrderItemStatusID, 
-                  OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, 
+                SELECT OrderItemID, oi.OrderHeaderID AS [OrderID], i.ItemID, OrderItemStatusID, 
+                  OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, i.ItemCode,
                   OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
                   oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal]
                 FROM OrderItems oi
+                INNER JOIN Items i ON i.ItemID = oi.ItemID
                 INNER JOIN OrderStatus os ON os.OrderStatusID = oi.OrderItemStatusID
                 WHERE oi.OrderItemID = @OrderItemID";
 
@@ -161,11 +162,12 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT OrderItemID, oi.OrderHeaderID AS [OrderID], ItemID, OrderItemStatusID, 
-                  OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, 
+                SELECT OrderItemID, oi.OrderHeaderID AS [OrderID], i.ItemID, OrderItemStatusID, 
+                  OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, i.ItemCode,
                   OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
                   oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal]
                 FROM OrderItems oi
+                INNER JOIN Items i ON i.ItemID = oi.ItemID
                 INNER JOIN OrderStatus os ON os.OrderStatusID = oi.OrderItemStatusID
                 WHERE OrderHeaderID = @OrderID";
 

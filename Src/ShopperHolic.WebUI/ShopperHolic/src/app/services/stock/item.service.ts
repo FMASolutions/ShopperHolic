@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Globals } from 'src/globals';
 import { HttpClient } from '@angular/common/http';
 import { UserNotificationService } from '../generic/user-notification.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CreateItem } from 'src/app/models/stock/items/createItem';
 import { Observable } from 'rxjs';
 import { Item } from 'src/app/models/stock/items/item';
@@ -19,10 +19,10 @@ export class ItemService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Item/';
   imageLocationPrefix: string = Globals.APP_SETTINGS.BASE_API_URL + "/uploads/";
-  
+
   imageSrc: string = "";
-  
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: GenericValidator,) { }
+
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private validator: GenericValidator, ) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNew(newModel: CreateItem): Observable<Item> {
@@ -40,7 +40,7 @@ export class ItemService {
     return this.http.get<Item>(this.baseURL + 'GetByID/?id=' + id.toString()).pipe(tap(resp => {
       this.userNotificationService.closeSpinners();
     }, err => {
-      this.userNotificationService.informUserError(Globals.ITEM_READ_FAILED_MSG + id);  
+      this.userNotificationService.informUserError(Globals.ITEM_READ_FAILED_MSG + id);
       this.userNotificationService.informUserError(err.error);
     }));;
   }
@@ -56,7 +56,7 @@ export class ItemService {
   }
 
   public update(newModel: Item): Observable<Item> {
-    this.userNotificationService.informUserStart(Globals.ITEM_UPDATE_ATTEMPT_MSG + newModel.itemCode,Globals.SPINNER_UPDATE_MESSAGE);
+    this.userNotificationService.informUserStart(Globals.ITEM_UPDATE_ATTEMPT_MSG + newModel.itemCode, Globals.SPINNER_UPDATE_MESSAGE);
     return this.http.put<Item>(this.baseURL + 'Update', newModel).pipe(tap(resp => {
       this.userNotificationService.informUserComplete(Globals.ITEM_UPDATE_SUCCESS_MSG + resp.itemCode);
     }, err => {
@@ -66,7 +66,7 @@ export class ItemService {
   }
 
   public delete(id: number): Observable<boolean> {
-    this.userNotificationService.informUserStart(Globals.ITEM_DELETE_ATTEMPT_MSG + id,Globals.SPINNER_DELETE_MESSAGE);
+    this.userNotificationService.informUserStart(Globals.ITEM_DELETE_ATTEMPT_MSG + id, Globals.SPINNER_DELETE_MESSAGE);
     return this.http.delete<boolean>(this.baseURL + "Delete?id=" + id.toString()).pipe(tap(resp => {
       this.userNotificationService.informUserComplete(Globals.ITEM_DELETE_SUCCESS_MSG + id);
     }, err => {
@@ -75,22 +75,23 @@ export class ItemService {
     }));
   }
 
-  public imageUpload(uploadFile: File, id: number): Observable<string>{
+  public imageUpload(uploadFile: File, id: number): Observable<string> {
     this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_UPLOAD_MESSAGE);
     const formData = new FormData();
     formData.append(uploadFile.name, uploadFile);
     formData.append("id", id.toString());
-    return this.http.post<string>(this.baseURL + 'UploadImage', formData).pipe(tap(() =>{
+    return this.http.post<string>(this.baseURL + 'UploadImage', formData).pipe(tap(() => {
       this.userNotificationService.closeSpinners();
-    },(error) =>{
+    }, (error) => {
       this.userNotificationService.informUserError(error.error);
     }))
   }
 
   /*--------------------- --- Create / Update Form Helper --- ----------------------*/
   public itemForm: FormGroup;
+  public currentItemIsFeatured: boolean = false;
 
-  public InitializeForm(currentImageElement: any, id?: any) : string{
+  public initializeForm() {
     this.itemForm = this.fb.group({
       id: [0, []],
       code: [null, [this.validator.validateCodeForCreate]],
@@ -103,7 +104,9 @@ export class ItemService {
       availableQty: [null, [this.validator.basicValidation]],
       reorderQty: [null, [this.validator.basicValidation]],
     });
+  }
 
+  public determinModeAndPopulateForm(currentImageElement: any, id?: any): string {
     let currentMode = this.determinMode(id);
 
     if (currentMode == Globals.MODE_UPDATE) {
@@ -119,8 +122,8 @@ export class ItemService {
     return currentMode;
   }
 
-  public newFileSelected(newFile: File, currentImageElement: any){
-    
+  public newFileSelected(newFile: File, currentImageElement: any) {
+
     const reader = new FileReader();
     reader.onload = () => {
       this.imageSrc = reader.result.toString();
@@ -130,9 +133,10 @@ export class ItemService {
   }
 
   public getUpdateModelFromForm(): Item {
-      let newModel: Item = {
+    let newModel: Item = {
       itemID: this.itemForm.value["id"],
       subGroupID: this.itemForm.value["subID"],
+      isFeaturedItem: this.currentItemIsFeatured,
       itemCode: this.itemForm.value["code"],
       subGroupText: this.itemForm.value["subText"],
       itemName: this.itemForm.value["name"],
@@ -142,20 +146,20 @@ export class ItemService {
       itemReorderQtyReminder: this.itemForm.value["reorderQty"],
       itemAvailableQty: this.itemForm.value["availableQty"],
       itemImageFilename: "N/A" //This value isn't used when Updating a record, updates to the image are done trhough the api image upload.
-    } 
-    
+    }
+    console.log("updating with mode: ")
+    console.log(newModel);
+    console.log("featured Variable = ");
+    console.log(this.currentItemIsFeatured);
+
     return newModel;
   }
 
-  public updateSelectedSubGroup(newChildModel: SubGroup){
-    this.itemForm.controls["subID"].setValue(newChildModel.subGroupID);
-    this.itemForm.controls["subText"].setValue(newChildModel.subGroupID + " - " + newChildModel.subGroupCode + " - " + newChildModel.subGroupName);
-  }
-
-  public getCreateModelFromForm(): CreateItem{
+  public getCreateModelFromForm(): CreateItem {
     let newModel: CreateItem = {
       subGroupID: this.itemForm.value["subID"],
       itemCode: this.itemForm.value["code"],
+      isFeaturedItem: this.currentItemIsFeatured,
       itemName: this.itemForm.value["name"],
       itemDescription: this.itemForm.value["desc"],
       itemUnitPrice: this.itemForm.value["unitPrice"],
@@ -166,7 +170,14 @@ export class ItemService {
     return newModel;
   }
 
-  private determinMode(id?: any) : string {
+  public updateSelectedSubGroup(newChildModel: SubGroup) {
+    this.itemForm.controls["subID"].setValue(newChildModel.subGroupID);
+    this.itemForm.controls["subText"].setValue(newChildModel.subGroupID + " - " + newChildModel.subGroupCode + " - " + newChildModel.subGroupName);
+  }
+
+
+
+  private determinMode(id?: any): string {
     let returnString = "";
     if (id) { returnString = Globals.MODE_UPDATE; }
     else { returnString = Globals.MODE_CREATE; }
@@ -174,6 +185,11 @@ export class ItemService {
   }
 
   private populateFormFromModel(model: Item) {
+    console.log("populating form with");
+    console.log(model);
+    this.currentItemIsFeatured = model.isFeaturedItem;
+    console.log("featured item var = ");
+    console.log(this.currentItemIsFeatured);
     this.itemForm.setValue({
       id: model.itemID,
       code: model.itemCode,
@@ -185,14 +201,16 @@ export class ItemService {
       unitPriceAD: model.itemUnitPriceWithMaxDiscount,
       availableQty: model.itemAvailableQty,
       reorderQty: model.itemReorderQtyReminder
-    });
+    });    
+    this.itemForm.updateValueAndValidity();
+    
   }
 
   /*--------------------- --- List / Selector View Helper --- ----------------------*/
   tableDataSource: MatTableDataSource<ItemPreview>;
   textFilter: string = "";
 
-  public sortTableData(sort: Sort, paginator: MatPaginator){
+  public sortTableData(sort: Sort, paginator: MatPaginator) {
     const data = this.tableDataSource.filteredData.slice();
     if (!sort.active || sort.direction === '') {
       return;
@@ -210,14 +228,14 @@ export class ItemService {
     this.setupTableDataSource(sortedData, paginator);
   }
 
-  public refreshListData(paginator: MatPaginator){
+  public refreshListData(paginator: MatPaginator) {
     let obs = this.getAll().subscribe(modelResp => {
       this.setupTableDataSource(modelResp, paginator);
       obs.unsubscribe();
-    })        
+    })
   }
 
-  public resetListFilter(){
+  public resetListFilter() {
     this.textFilter = "";
     this.applyListFilter();
   }

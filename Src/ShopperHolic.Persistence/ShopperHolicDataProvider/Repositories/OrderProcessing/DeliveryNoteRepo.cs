@@ -32,12 +32,13 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT DeliveryNoteItemID,dn.DeliveryNoteID,oh.OrderHeaderID,dn.DeliveryDate,
-                  oi.OrderItemID,oi.OrderItemDescription,oi.OrderItemQty,c.CustomerName
+                  oi.OrderItemID,oi.OrderItemDescription,oi.OrderItemQty,c.CustomerName, i.ItemCode
                 FROM DeliveryNotes dn
                 INNER JOIN DeliveryNoteItems dni ON dn.DeliveryNoteID = dni.DeliveryNoteID
                 INNER JOIN OrderItems oi ON oi.OrderItemID = dni.OrderItemID
                 INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = oi.OrderHeaderID
                 INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
+                INNER JOIN Items i ON i.ItemID = oi.ItemID
                 WHERE dn.DeliveryNoteID = @DeliveryNoteID";
 
                 var queryParameters = new DynamicParameters();

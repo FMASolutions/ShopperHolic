@@ -1,6 +1,6 @@
 1) Change to Async db  and api calls
 2) Improve image upload by reducing size / compression. Not sure if in .net core API or Angular UI.
-3) Implement Featured Items along with Home page displaying items.
+3) Implement Home page displaying items.
 4) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
 5) Implement Shopping cart
 5) Implement Automation I.E Emails when low stock etc....
@@ -10,3 +10,4 @@
 9) Tables too wide on mobile devices.
 10) Stock creation doesn't allow qty, create with 0 Qty ALWAYS., stock addition through PO / return process. stock minus through delivery notes / return PO. add Stock adjustment feature which requires a "note", the note will be read by the stock history feature
 11) Get by id should return error if nothing found for invoices / delivery notes
+12) Add Item Code to order item / deli note / invoice, also add featured item column

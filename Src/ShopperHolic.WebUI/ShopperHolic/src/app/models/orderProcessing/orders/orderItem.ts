@@ -9,4 +9,5 @@ export class OrderItem {
     orderItemDescription: string = "";
     orderItemStatusText: string = "";
     orderItemTotal: number = 0;
+    itemCode: string = "";
 }
