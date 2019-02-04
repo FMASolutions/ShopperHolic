@@ -15,17 +15,17 @@ import { InvoicePreview } from 'src/app/models/orderProcessing/invoices/invoiceP
 export class InvoiceService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Invoice/';
-  
+
   constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public invoiceOrder(orderID: number): Observable<InvoiceItem[]> {
     this.userNotificationService.informUserStart(Globals.ORDER_INVOICE_ATTEMPT + orderID, Globals.ORDER_INVOICE_ATTEMPT + orderID);
     return this.http.put<InvoiceItem[]>(this.baseURL + 'InvoiceOrder?orderID=' + orderID, orderID).pipe(tap(resp => {
-      if(resp[0]){
+      if (resp[0]) {
         this.userNotificationService.informUserComplete(Globals.ORDER_INVOICE_SUCCESS + resp[0].orderID);
       }
-      else{
+      else {
         this.userNotificationService.informUserError(Globals.ORDER_INVOICE_FAILED + orderID);
       }
     }, err => {
@@ -78,7 +78,7 @@ export class InvoiceService {
   }
 
   public refreshInvoiceListData(paginator: MatPaginator, itemList: InvoicePreview[]) {
-      this.setupInvoiceTableDataSource(itemList, paginator);
+    this.setupInvoiceTableDataSource(itemList, paginator);
   }
 
   private setupInvoiceTableDataSource(data: InvoicePreview[], paginator: MatPaginator) {
@@ -92,12 +92,12 @@ export class InvoiceService {
     this.invoiceList.data = currentData;
   }
 
-  public resetInvoiceTableFilter(){
+  public resetInvoiceTableFilter() {
     this.textFilter = "";
     this.applyListFilter();
   }
 
-  public applyListFilter(){ this.invoiceList.filter = this.textFilter.trim().toLowerCase(); }
+  public applyListFilter() { this.invoiceList.filter = this.textFilter.trim().toLowerCase(); }
 
   private compare(a: number | string, b: number | string, isAsc: boolean) { return (a < b ? -1 : 1) * (isAsc ? 1 : -1); }
 
@@ -108,7 +108,7 @@ export class InvoiceService {
   public InitializeForm(id?: any) {
     this.invoiceForm = this.fb.group({
       id: 0,
-      orderID: 0, 
+      orderID: 0,
       invoiceDate: '',
       customerName: '',
       invoiceTotal: 0.00
@@ -116,23 +116,30 @@ export class InvoiceService {
   }
 
   public populateFormFromModel(model: InvoiceItem[], paginator: MatPaginator) {
-    let currentInvoiceTotal: number = 0.00;
-    model.forEach(currentItem =>{
+    if (model[0]) {
+      let currentInvoiceTotal: number = this.calcInvoiceTotal(model);
+      this.invoiceForm.setValue({
+        id: model[0].invoiceID,
+        orderID: model[0].orderID,
+        invoiceDate: model[0].invoiceDate,
+        customerName: model[0].customerName,
+        invoiceTotal: currentInvoiceTotal
+      });
+      this.populateItemData(model, paginator);
+    }
+  }
+
+  private populateItemData(items: InvoiceItem[], paginator: MatPaginator) {
+    this.setupInvoiceItemTableDataSource(items, paginator);
+  }
+
+  private calcInvoiceTotal(items: InvoiceItem[]): number {
+    let currentInvoiceTotal: number = 0;
+    items.forEach(currentItem => {
       currentInvoiceTotal += currentItem.itemTotal;
     })
-    this.invoiceForm.setValue({
-      id: model[0].invoiceID,
-      orderID: model[0].orderID,
-      invoiceDate: model[0].invoiceDate,
-      customerName: model[0].customerName,
-      invoiceTotal: currentInvoiceTotal
-    });
 
-    this.populateItemData(model, paginator);
-  }
-  
-  private populateItemData(items: InvoiceItem[], paginator: MatPaginator){
-    this.setupInvoiceItemTableDataSource(items, paginator);
+    return Math.round((currentInvoiceTotal + 0.00001) * 100) / 100
   }
 
   /*--------------------- --- Invoice ITEMS Preview table Helper --- ----------------------*/
@@ -158,7 +165,7 @@ export class InvoiceService {
   }
 
   public refreshInvoiceItemListData(paginator: MatPaginator, itemList: InvoiceItem[]) {
-      this.setupInvoiceItemTableDataSource(itemList, paginator);
+    this.setupInvoiceItemTableDataSource(itemList, paginator);
   }
 
   private setupInvoiceItemTableDataSource(data: InvoiceItem[], paginator: MatPaginator) {
@@ -166,10 +173,10 @@ export class InvoiceService {
     this.invoiceItemList.paginator = paginator;
   }
 
-  public resetInvoiceItemTableFilter(){
+  public resetInvoiceItemTableFilter() {
     this.itemTextFilter = "";
     this.applyItemListFilter();
   }
 
-  public applyItemListFilter(){ this.invoiceItemList.filter = this.textFilter.trim().toLowerCase(); }
+  public applyItemListFilter() { this.invoiceItemList.filter = this.textFilter.trim().toLowerCase(); }
 }

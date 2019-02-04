@@ -1,6 +1,6 @@
 1) Change to Async db  and api calls
 2) Improve image upload by reducing size / compression. Not sure if in .net core API or Angular UI.
-3) Implement Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
+3) Implement Featured Items along with Home page displaying items.
 4) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
 5) Implement Shopping cart
 5) Implement Automation I.E Emails when low stock etc....
