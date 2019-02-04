@@ -17,7 +17,7 @@ export class DeliveryNoteService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/DeliveryNote/';
   
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, private router: Router) { }
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public deliverOrder(orderID: number): Observable<DeliveryNoteItem[]> {
@@ -27,7 +27,7 @@ export class DeliveryNoteService {
       this.userNotificationService.informUserComplete(Globals.ORDER_DELIVERY_SUCCESS + resp[0].orderHeaderID);
       }
       else{
-        this.userNotificationService.informUserError("No items to deliver");
+        this.userNotificationService.informUserError(Globals.ORDER_DELIVERY_FAILED);
       }
     }, err => {
       this.userNotificationService.informUserError(Globals.ORDER_DELIVERY_FAILED + orderID);
@@ -158,7 +158,7 @@ export class DeliveryNoteService {
   }
 
   public resetDeliveryNoteItemTableFilter(){
-    this.textFilter = "";
+    this.itemTextFilter = "";
     this.applyItemListFilter();
   }
 

@@ -19,6 +19,8 @@ import { OrdersComponent } from './components/orderProcessing/orders/orders.comp
 import { OrderComponent } from './components/orderProcessing/orders/order/order.component';
 import { AllDeliveryNotesComponent } from './components/orderProcessing/delivery-notes/all-delivery-notes/all-delivery-notes.component';
 import { DeliveryNoteComponent } from './components/orderProcessing/delivery-notes/delivery-note/delivery-note.component';
+import { AllInvoicesComponent } from './components/orderProcessing/invoices/all-invoices/all-invoices.component';
+import { InvoiceComponent } from './components/orderProcessing/invoices/invoice/invoice.component';
 
 const routes: Routes = [
   {
@@ -114,6 +116,14 @@ const routes: Routes = [
   {
     path: 'deliveryNote',
     component: DeliveryNoteComponent
+  },
+  {
+    path: 'invoices',
+    component: AllInvoicesComponent
+  },
+  {
+    path: 'invoice',
+    component: InvoiceComponent
   },
   {
     path: '',

@@ -8,5 +8,6 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public string InvoiceStatus { get; set; }
         public DateTime InvoiceDate { get; set; }
         public decimal InvoiceTotal { get; set; }
+        public string CustomerName {get;set;}
     }
 }

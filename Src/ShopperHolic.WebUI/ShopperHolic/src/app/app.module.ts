@@ -81,7 +81,10 @@ import { OrderItemDetailComponent } from './components/orderProcessing/orders/or
 import { OrderDetailComponent } from './components/orderProcessing/orders/order-detail/order-detail.component';
 import { DeliveryNotesComponent } from './components/orderProcessing/delivery-notes/delivery-notes.component';
 import { DeliveryNoteComponent } from './components/orderProcessing/delivery-notes/delivery-note/delivery-note.component';
-import { AllDeliveryNotesComponent } from './components/orderProcessing/delivery-notes/all-delivery-notes/all-delivery-notes.component'
+import { AllDeliveryNotesComponent } from './components/orderProcessing/delivery-notes/all-delivery-notes/all-delivery-notes.component';
+import { InvoicesComponent } from './components/orderProcessing/invoices/invoices.component';
+import { AllInvoicesComponent } from './components/orderProcessing/invoices/all-invoices/all-invoices.component';
+import { InvoiceComponent } from './components/orderProcessing/invoices/invoice/invoice.component'
 
 @NgModule({
   declarations: [
@@ -144,6 +147,9 @@ import { AllDeliveryNotesComponent } from './components/orderProcessing/delivery
     DeliveryNotesComponent,
     DeliveryNoteComponent,
     AllDeliveryNotesComponent,
+    InvoicesComponent,
+    AllInvoicesComponent,
+    InvoiceComponent,
   ],
   imports: [
     BrowserModule,

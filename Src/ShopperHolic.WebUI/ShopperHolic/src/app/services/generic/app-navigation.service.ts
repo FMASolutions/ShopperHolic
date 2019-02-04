@@ -17,4 +17,8 @@ export class AppNavigationService {
   public goToOrderPage(id: number) {
     this.router.navigateByUrl('/order?id=' + id.toString());
   }
+
+  public goToInvoicePage(id: number){
+    this.router.navigateByUrl('/invoice?id=' + id.toString());
+  }
 }

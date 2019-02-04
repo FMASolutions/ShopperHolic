@@ -236,6 +236,9 @@ export class Globals {
     public static get ORDER_DELIVERY_ATTEMPT(): string { return "Attempting to deliver order: "; }
     public static get ORDER_DELIVERY_SUCCESS(): string { return "Successfully delivered order: "; }
     public static get ORDER_DELIVERY_FAILED(): string { return "Failed to deliver order: "; }
+    public static get ORDER_INVOICE_ATTEMPT(): string { return "Attempting to generate invoice for order: "; }
+    public static get ORDER_INVOICE_SUCCESS(): string { return "Successfully generate invoice for order: "; }
+    public static get ORDER_INVOICE_FAILED(): string { return "Failed to generate invoice for order: "; }
     
     public static get ORDER_ITEM_UPDATE_TITLE(): string { return "Update Order Item"; }
     public static get ORDER_ITEM_ADD_TITLE(): string { return "Add Order Item"; }
@@ -252,6 +255,10 @@ export class Globals {
     public static get DELIVERY_NOTE_READ_FAILED_MSG(): string { return "Failed to retrieve delivery note data: "; }
     public static get DELIVERY_NOTE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'DeliveryDate','View']; }
     public static get DELIVERY_NOTE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Qty']; }
+
+    public static get INVOICE_READ_FAILED_MSG(): string { return "Failed to retrieve invoice data: "; }
+    public static get INVOICE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'InvoiceDate','Status', 'InvoiceTotal','View']; }
+    public static get INVOICE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Price', 'Qty','Total']; }
 
 }
 

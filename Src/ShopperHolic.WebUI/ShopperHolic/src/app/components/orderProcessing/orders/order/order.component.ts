@@ -7,6 +7,7 @@ import { Globals } from 'src/globals';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { OrderItemDetailComponent } from '../order-item-detail/order-item-detail.component';
 import { DeliveryNotesComponent } from '../../delivery-notes/delivery-notes.component';
+import { InvoicesComponent } from '../../invoices/invoices.component';
 
 @Component({
   selector: 'app-order',
@@ -18,6 +19,7 @@ export class OrderComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(DeliveryNotesComponent) childDeliveryNotes;
+  @ViewChild(InvoicesComponent) childInvoices;
 
   columnList: string[] = Globals.ORDER_ITEM_LIST_COUMNS;
   receivedOrderNumber: number = 0;
@@ -31,6 +33,7 @@ export class OrderComponent {
       let obs = this.service.getByID(id).subscribe(modelResp => {
         this.service.populateDetailedOrderFormFromModel(modelResp, this.paginator);
         this.childDeliveryNotes.refreshDeliveryNoteTableData(modelResp.deliveryNotes);
+        this.childInvoices.refreshInvoiceTableData(modelResp.invoices);
         obs.unsubscribe();
       })
     };
@@ -58,7 +61,9 @@ export class OrderComponent {
   }
 
   public invoiceOrderClicked() {
-
+    if (confirm("Are you sure you wish to invoice outstanding items?")){
+      this.service.invoiceOrderAndDisplayInvoice(this.receivedOrderNumber);
+    }
   }
 
   public deliverOrderClicked() {

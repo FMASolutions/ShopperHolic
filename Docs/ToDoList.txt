@@ -9,3 +9,4 @@
 8) Implement some more security for role checking in the UI layer.
 9) Tables too wide on mobile devices.
 10) Stock creation doesn't allow qty, create with 0 Qty ALWAYS., stock addition through PO / return process. stock minus through delivery notes / return PO. add Stock adjustment feature which requires a "note", the note will be read by the stock history feature
+11) Get by id should return error if nothing found for invoices / delivery notes

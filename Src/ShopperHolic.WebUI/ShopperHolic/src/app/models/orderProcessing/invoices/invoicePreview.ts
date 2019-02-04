@@ -4,4 +4,5 @@ export class InvoicePreview {
     invoiceStatus: string = "";
     invoiceDate: Date = new Date();
     invoiceTotal: number = 0;
+    customerName: string = "";
 }

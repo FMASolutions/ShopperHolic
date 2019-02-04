@@ -8,4 +8,5 @@ export class InvoiceItem {
     itemPrice: number = 0;
     itemTotal: number = 0;
     invoiceItemStatus: string = "";
+    customerName: string = "";
 }

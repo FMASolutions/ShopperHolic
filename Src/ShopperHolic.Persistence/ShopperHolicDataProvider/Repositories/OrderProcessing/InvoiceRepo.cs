@@ -33,13 +33,15 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 string query = @"
                 SELECT ih.InvoiceHeaderID AS [InvoiceID], ii.InvoiceItemID, ih.OrderHeaderID AS [OrderID],
                   ih.InvoiceDate, oi.OrderItemDescription AS [ItemDescription],
-                  oi.OrderItemQty AS [ItemQty], oi.OrderItemUnitPrice AS [ItemPrice],
+                  oi.OrderItemQty AS [ItemQty], oi.OrderItemUnitPriceAfterDiscount AS [ItemPrice],
                   oi.OrderItemUnitPriceAfterDiscount * ii.InvoiceItemQty AS [ItemTotal],
-                  ins.InvoiceStatusValue AS [InvoiceItemStatus]
+                  ins.InvoiceStatusValue AS [InvoiceItemStatus], c.CustomerName
                 FROM InvoiceHeaders ih
                 INNER JOIN InvoiceItems ii ON ih.InvoiceHeaderID = ii.InvoiceHeaderID
                 INNER JOIN OrderItems oi ON oi.OrderItemID = ii.OrderItemID
                 INNER JOIN InvoiceStatus ins ON ins.InvoiceStatusID = ii.InvoiceItemStatusID
+                INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = oi.OrderHeaderID
+				INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
                 WHERE ih.InvoiceHeaderID = @InvoiceID";
 
                 var queryParameters = new DynamicParameters();
@@ -59,12 +61,14 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT ih.InvoiceHeaderID AS [InvoiceID], ih.OrderHeaderID AS [OrderID], ins.InvoiceStatusValue AS [InvoiceStatus],ih.InvoiceDate, 
-                  CAST(ROUND(SUM(oi.OrderItemUnitPriceAfterDiscount * ii.InvoiceItemQty),2) AS NUMERIC(36,2)) AS [InvoiceTotal]
+                  CAST(ROUND(SUM(oi.OrderItemUnitPriceAfterDiscount * ii.InvoiceItemQty),2) AS NUMERIC(36,2)) AS [InvoiceTotal], c.CustomerName
                 FROM InvoiceHeaders ih
                 INNER JOIN InvoiceItems ii ON ih.InvoiceHeaderID = ii.InvoiceHeaderID
                 INNER JOIN OrderItems oi ON oi.OrderItemID = ii.OrderItemID
                 INNER JOIN InvoiceStatus ins ON ins.InvoiceStatusID = ih.InvoiceStatusID
-                GROUP BY ih.InvoiceHeaderID,ih.OrderHeaderID, ins.InvoiceStatusValue, ih.InvoiceDate";
+                INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = oi.OrderHeaderID
+				INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
+                GROUP BY ih.InvoiceHeaderID,ih.OrderHeaderID, ins.InvoiceStatusValue, ih.InvoiceDate, c.CustomerName";
 
                 return Connection.Query<InvoicePreviewDTO>(query, transaction: CurrentTrans);
             }
@@ -80,13 +84,15 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             {
                 string query = @"
                 SELECT ih.InvoiceHeaderID AS [InvoiceID], ih.OrderHeaderID AS [OrderID], ins.InvoiceStatusValue AS [InvoiceStatus],ih.InvoiceDate, 
-                  CAST(ROUND(SUM(oi.OrderItemUnitPriceAfterDiscount * ii.InvoiceItemQty),2) AS NUMERIC(36,2)) AS [InvoiceTotal]
+                  CAST(ROUND(SUM(oi.OrderItemUnitPriceAfterDiscount * ii.InvoiceItemQty),2) AS NUMERIC(36,2)) AS [InvoiceTotal], c.CustomerName
                 FROM InvoiceHeaders ih
                 INNER JOIN InvoiceItems ii ON ih.InvoiceHeaderID = ii.InvoiceHeaderID
                 INNER JOIN OrderItems oi ON oi.OrderItemID = ii.OrderItemID
                 INNER JOIN InvoiceStatus ins ON ins.InvoiceStatusID = ih.InvoiceStatusID
+                INNER JOIN OrderHeaders oh ON oh.OrderHeaderID = oi.OrderHeaderID
+				INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
                 WHERE ih.OrderHeaderID = @OrderID
-                GROUP BY ih.InvoiceHeaderID,ih.OrderHeaderID, ins.InvoiceStatusValue, ih.InvoiceDate
+                GROUP BY ih.InvoiceHeaderID,ih.OrderHeaderID, ins.InvoiceStatusValue, ih.InvoiceDate, c.CustomerName
                 ";
 
                 var queryParameters = new DynamicParameters();

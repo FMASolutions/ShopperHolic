@@ -13,13 +13,13 @@ import { tap } from 'rxjs/operators';
 import { UpdateOrder } from 'src/app/models/orderProcessing/orders/updateOrder';
 import { Customer } from 'src/app/models/accounts/customers/customer';
 import { Address } from 'src/app/models/location/addresses/address';
-import { Router } from '@angular/router';
 import { OrderItem } from 'src/app/models/orderProcessing/orders/orderItem';
 import { CreateOrderItem } from 'src/app/models/orderProcessing/orders/createOrderItem';
 import { Item } from 'src/app/models/stock/items/item';
 import { UpdateOrderItem } from 'src/app/models/orderProcessing/orders/updateOrderItem';
 import { AppNavigationService } from '../generic/app-navigation.service';
 import { DeliveryNoteService } from './delivery-note.service';
+import { InvoiceService } from './invoice.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,8 @@ export class OrderService {
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Order/';
 
   constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, 
-    private fbOrderDetailed: FormBuilder, private validator: GenericValidator, private navService: AppNavigationService, private delService: DeliveryNoteService) { }
+    private fbOrderDetailed: FormBuilder, private validator: GenericValidator, private navService: AppNavigationService, 
+    private delService: DeliveryNoteService, private invoiceService: InvoiceService) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNew(newModel: CreateOrder): Observable<OrderDetailed> {
@@ -135,6 +136,13 @@ export class OrderService {
   public deliverOrderAndDisplayDeliveryNote(orderID: number){
     let obs = this.delService.deliverOrder(orderID).subscribe(resp =>{
       this.navService.goToDeliveryNotePage(resp[0].deliveryNoteID);
+      obs.unsubscribe();
+    })
+  }
+
+  public invoiceOrderAndDisplayInvoice(orderID: number){
+    let obs = this.invoiceService.invoiceOrder(orderID).subscribe(resp =>{
+      this.navService.goToInvoicePage(resp[0].invoiceID);
       obs.unsubscribe();
     })
   }
