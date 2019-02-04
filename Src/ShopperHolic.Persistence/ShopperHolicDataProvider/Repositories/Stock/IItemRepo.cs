@@ -13,5 +13,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         bool UpdateImageNane(int id, string image);
         IEnumerable<ItemDetailedDTO> GetItemsInSubGroup(int subGroupID);
         IEnumerable<ItemDetailedDTO> GetItemsInProductGroup(int productGroupID);
+        IEnumerable<ItemDetailedDTO> GetFeaturedItems();
     }
 }

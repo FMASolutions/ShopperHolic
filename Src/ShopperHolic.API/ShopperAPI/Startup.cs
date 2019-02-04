@@ -34,7 +34,7 @@ namespace ShopperHolic.API.ShopperAPI
         {
             //Dependency Injection
             MvcServiceCollectionExtensions.AddMvc(services);
-            
+
             //Add JWTSettings into the service collection for dependency injection.
             JWTSettings jwtSettings = GetJWTSettings();
             services.AddSingleton<JWTSettings>(jwtSettings);
@@ -90,6 +90,7 @@ namespace ShopperHolic.API.ShopperAPI
             services.AddTransient<IOrderService>(s => new OrderService(connectionString));
             services.AddTransient<IDeliveryNoteService>(s => new DeliveryNoteService(connectionString));
             services.AddTransient<IInvoiceService>(s => new InvoiceService(connectionString));
+            services.AddTransient<IContentService>(s => new ContentService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -38,14 +38,13 @@
 							"raw": "{\n\t\"username\" : \"faisal\",\n\t\"UserInputPasswordPlainText\" : \"testencryptedpassword\"\n}"
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/Auth/AttemptAuthentication",
+							"raw": "https://localhost:5001/Auth/AttemptAuthentication",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "5001",
 							"path": [
-								"api",
 								"Auth",
 								"AttemptAuthentication"
 							]
@@ -87,14 +86,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/Auth/TokenExchange?exchangeKey={{AuthKey}}&username={{testUser}}",
+							"raw": "https://localhost:5001/Auth/TokenExchange?exchangeKey={{AuthKey}}&username={{testUser}}",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
 							"port": "5001",
 							"path": [
-								"api",
 								"Auth",
 								"TokenExchange"
 							],
@@ -2245,9 +2243,8 @@
 									{
 										"key": "Content-Type",
 										"name": "Content-Type",
-										"type": "text",
 										"value": "application/json",
-										"disabled": true
+										"type": "text"
 									}
 								],
 								"body": {
@@ -2292,7 +2289,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{deliveryNoteController}}/GetByID?id={{CreatedDeliveryNoteID}}",
+									"raw": "{{deliveryNoteController}}/GetByID?deliveryNoteID={{CreatedDeliveryNoteID}}",
 									"host": [
 										"{{deliveryNoteController}}"
 									],
@@ -2301,7 +2298,7 @@
 									],
 									"query": [
 										{
-											"key": "id",
+											"key": "deliveryNoteID",
 											"value": "{{CreatedDeliveryNoteID}}"
 										}
 									]
@@ -3257,7 +3254,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"ItemCode\" : \"NEWITM\",\n    \"SubGroupID\" : 1,\n    \"ItemName\" : \"Test Item Name\",\n    \"ItemDescription\" : \"Test Item Description\",\n    \"ItemUnitPrice\" : 4.99,\n    \"ItemUnitPriceWithMaxDiscount\" : 3.99,\n    \"ItemAvailableQty\" : 20,\n    \"ItemReorderQtyReminder\" : 3,\n    \"ItemImageFilename\" : \"NewImageLink.jpeg\"\n}"
+									"raw": "{\n\t\"ItemCode\" : \"NEWITM\",\n    \"SubGroupID\" : 1,\n    \"ItemName\" : \"Test Item Name\",\n    \"ItemDescription\" : \"Test Item Description\",\n    \"ItemUnitPrice\" : 4.99,\n    \"ItemUnitPriceWithMaxDiscount\" : 3.99,\n    \"ItemAvailableQty\" : 20,\n    \"ItemReorderQtyReminder\" : 3,\n    \"ItemImageFilename\" : \"NewImageLink.jpeg\",\n    \"IsFeaturedItem\" : true\n}"
 								},
 								"url": {
 									"raw": "{{itemController}}/Create",
@@ -3342,7 +3339,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"ItemID\" : {{CreatedItemID}},\n\t\"ItemCode\" : \"UPDITM\",\n    \"SubGroupID\" : 2,\n    \"ItemName\" : \"Updated Test Item Name\",\n    \"ItemDescription\" : \"Updated Test Item Description\",\n    \"ItemUnitPrice\" : 5.99,\n    \"ItemUnitPriceWithMaxDiscount\" : 4.99,\n    \"ItemAvailableQty\" : 25,\n    \"ItemReorderQtyReminder\" : 5,\n    \"ItemImageFilename\" : \"UpdatedImageLink.jpeg\"\n}"
+									"raw": "{\n\t\"ItemID\" : {{CreatedItemID}},\n\t\"ItemCode\" : \"UPDITM\",\n    \"SubGroupID\" : 2,\n    \"ItemName\" : \"Updated Test Item Name\",\n    \"ItemDescription\" : \"Updated Test Item Description\",\n    \"ItemUnitPrice\" : 5.99,\n    \"ItemUnitPriceWithMaxDiscount\" : 4.99,\n    \"ItemAvailableQty\" : 25,\n    \"ItemReorderQtyReminder\" : 5,\n    \"ItemImageFilename\" : \"UpdatedImageLink.jpeg\",\n    \"IsFeaturedItem\" : false\n}"
 								},
 								"url": {
 									"raw": "{{itemController}}/Update",
@@ -5008,6 +5005,247 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Content",
+			"item": [
+				{
+					"name": "Get Landing Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{contentController}}/GetLandingPage",
+							"host": [
+								"{{contentController}}"
+							],
+							"path": [
+								"GetLandingPage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get About Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{contentController}}/GetAboutPage",
+							"host": [
+								"{{contentController}}"
+							],
+							"path": [
+								"GetAboutPage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{contentController}}/GetContactPage",
+							"host": [
+								"{{contentController}}"
+							],
+							"path": [
+								"GetContactPage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site Config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{contentController}}/GetSiteConfig",
+							"host": [
+								"{{contentController}}"
+							],
+							"path": [
+								"GetSiteConfig"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Landing Page",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"PageTitle\" : \"Updated Landing Page Title\",\n\t\"PageDescription\" : \"Updated Landing Page Description\",\n    \"PageRoute\" : \"/home\",\n    \"IsHTML\" : false\n}"
+						},
+						"url": {
+							"raw": "{{contentController}}/UpdateLandingPage",
+							"host": [
+								"{{contentController}}"
+							],
+							"path": [
+								"UpdateLandingPage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update About Page",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"PageTitle\" : \"Updated About Page Title\",\n\t\"PageDescription\" : \"Updated About Page Description\",\n    \"PageRoute\" : \"/about\",\n    \"IsHTML\" : false\n}"
+						},
+						"url": {
+							"raw": "{{contentController}}/UpdateAboutPage",
+							"host": [
+								"{{contentController}}"
+							],
+							"path": [
+								"UpdateAboutPage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact Page",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"PageTitle\" : \"Updated Contact Page Title\",\n\t\"PageDescription\" : \"Updated Contact Page Description\",\n    \"PageRoute\" : \"/contact\",\n    \"IsHTML\" : false\n}"
+						},
+						"url": {
+							"raw": "{{contentController}}/UpdateContactPage",
+							"host": [
+								"{{contentController}}"
+							],
+							"path": [
+								"UpdateContactPage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Site Config",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"appTitle\": \"Updated Application Title!\",\n    \"appShortName\": \"U-Title\",\n    \"appSlogan\": \"Catch App Slogan Here\",\n    \"appFooter\": \"App footer information here\"\n}"
+						},
+						"url": {
+							"raw": "{{contentController}}/UpdateSiteConfig",
+							"host": [
+								"{{contentController}}"
+							],
+							"path": [
+								"UpdateSiteConfig"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

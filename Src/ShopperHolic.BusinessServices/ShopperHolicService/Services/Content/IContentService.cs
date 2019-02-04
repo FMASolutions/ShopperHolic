@@ -1,13 +1,13 @@
-using ShopperHolic.Infrastructure.ShopperHolicDTO;
+using System;
 using System.Collections.Generic;
-
-namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
+using ShopperHolic.Infrastructure.ShopperHolicDTO;
+namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
 {
-    public interface IContentRepo
+    public interface IContentService : IDisposable
     {
         AboutPageDTO GetAboutPage();
         ContactPageDTO GetContactPage();
-        LandingPageDTO GetLandingPage();
+        LandingPageWithItemsDTO GetLandingPage();
         SiteConfigDTO GetSiteConfig();
         AboutPageDTO UpdateAboutPage(AboutPageDTO newPage);
         ContactPageDTO UpdateContactPage(ContactPageDTO newPage);

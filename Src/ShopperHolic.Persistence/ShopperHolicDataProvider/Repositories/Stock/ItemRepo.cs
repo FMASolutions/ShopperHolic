@@ -102,7 +102,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@ItemUnitPriceWithMaxDiscount", updatedRecord.ItemUnitPriceWithMaxDiscount);
                 queryParameters.Add("@ItemAvailableQty", updatedRecord.ItemAvailableQty);
                 queryParameters.Add("@ItemReorderQtyReminder", updatedRecord.ItemReorderQtyReminder);
-                queryParameters.Add("@IsFeaturedItem", updatedRecord.IsFeaturedItem ? 1: 0);
+                queryParameters.Add("@IsFeaturedItem", updatedRecord.IsFeaturedItem ? 1 : 0);
                 queryParameters.Add("@ItemID", updatedRecord.ItemID);
 
                 int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
@@ -157,7 +157,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             }
         }
 
-        public IEnumerable<ItemDetailedDTO> GetItemsInSubGroup(int subGroupID){
+        public IEnumerable<ItemDetailedDTO> GetItemsInSubGroup(int subGroupID)
+        {
             try
             {
                 string query = @"
@@ -174,12 +175,14 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 
                 return Connection.Query<ItemDetailedDTO>(query, queryParameters, CurrentTrans);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
-        public IEnumerable<ItemDetailedDTO> GetItemsInProductGroup(int productGroupID){
+
+        public IEnumerable<ItemDetailedDTO> GetItemsInProductGroup(int productGroupID)
+        {
             try
             {
                 string query = @"
@@ -196,7 +199,28 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 
                 return Connection.Query<ItemDetailedDTO>(query, queryParameters, CurrentTrans);
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<ItemDetailedDTO> GetFeaturedItems()
+        {
+            try
+            {
+                string query = @"
+                SELECT ItemID,ItemCode,ItemName,ItemDescription,ItemUnitPrice,ItemUnitPriceWithMaxDiscount,ItemAvailableQty,
+                    ItemReorderQtyReminder,ItemImageFilename,S.SubGroupID,SubGroupCode,SubGroupName,SubGroupDescription,
+                    P.ProductGroupID,ProductGroupCode,ProductGroupName,ProductGroupDescription, I.IsFeaturedItem
+                FROM Items I WITH(NOLOCK)
+                INNER JOIN SubGroups S WITH(NOLOCK) on S.SubGroupID = I.SubGroupID
+                INNER JOIN ProductGroups P WITH(NOLOCK) on P.ProductGroupID = S.ProductGroupID
+                WHERE I.IsFeaturedItem = 1";
+
+                return Connection.Query<ItemDetailedDTO>(query, transaction: CurrentTrans);
+            }
+            catch (Exception ex)
             {
                 throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
