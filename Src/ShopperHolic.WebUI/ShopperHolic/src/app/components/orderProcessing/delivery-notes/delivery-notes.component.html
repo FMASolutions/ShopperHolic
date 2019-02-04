@@ -22,7 +22,7 @@
   
         <ng-container matColumnDef="DeliveryDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="DeliveryDate">Delivery Date</th>
-          <td mat-cell *matCellDef="let row">{{row.deliveryDate}}</td>
+          <td mat-cell *matCellDef="let row">{{row.deliveryDate | date: 'yyyy-MM-dd'}}</td>
         </ng-container>
   
         <ng-container matColumnDef="View">
