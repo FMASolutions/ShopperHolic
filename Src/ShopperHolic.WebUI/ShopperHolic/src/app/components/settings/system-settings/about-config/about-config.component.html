@@ -6,22 +6,22 @@
         [ngModelOptions]="{standalone: true}">
     </mat-form-field>
     <mat-form-field class="maxWidth">
-      <mat-label>Application Short Name</mat-label>
+      <mat-label>Page Text</mat-label>
       <input matInput [(ngModel)]="service.curAboutConfig.pageDescription" type="text" value="{{service.curAboutConfig.pageDescription}}"
         [ngModelOptions]="{standalone: true}">
     </mat-form-field>
     <mat-form-field class="maxWidth">
-      <mat-label>Application Slogan</mat-label>
+      <mat-label>Route</mat-label>
       <input matInput [(ngModel)]="service.curAboutConfig.pageRoute" type="text" value="{{service.curAboutConfig.pageRoute}}"
         [ngModelOptions]="{standalone: true}">
     </mat-form-field>
     <mat-form-field class="maxWidth">
-      <mat-label>Application Footer Text</mat-label>
+      <mat-label>IsHTML</mat-label>
       <input matInput [(ngModel)]="service.curAboutConfig.isHTML" type="text" value="{{service.curAboutConfig.isHTML}}"
         [ngModelOptions]="{standalone: true}">
     </mat-form-field>
     <button mat-flat-button color="accent" id="updateLanding" (click)="updateConfig()" class="maxWidth">
-      Update Config
+      Update Page Info
     </button>
   </form>
 </ng-container>
