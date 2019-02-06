@@ -9,24 +9,15 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         public ContentService(string connectionString) : base(connectionString) { }
         internal ContentService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
-        public AboutPageDTO GetAboutPage()
-        {
-            return UOW.ContentRepo.GetAboutPage();
-        }
-        public ContactPageDTO GetContactPage()
-        {
-            return UOW.ContentRepo.GetContactPage();
-        }
-        public LandingPageWithItemsDTO GetLandingPage()
-        {
-            var returnDTO = new LandingPageWithItemsDTO();
-            returnDTO.PageInfo = UOW.ContentRepo.GetLandingPage();
-            returnDTO.FeaturedItems = UOW.ItemRepo.GetFeaturedItems();
-            return returnDTO;
-        }
         public SiteConfigDTO GetSiteConfig()
         {
-            return UOW.ContentRepo.GetSiteConfig();
+            var returnDTO = new SiteConfigDTO();
+            returnDTO.AppConfig = UOW.ContentRepo.GetBasicSiteConfig();
+            returnDTO.AboutPage = UOW.ContentRepo.GetAboutPage();
+            returnDTO.ContactPage = UOW.ContentRepo.GetContactPage();
+            returnDTO.LandingPage.PageInfo = UOW.ContentRepo.GetLandingPage();
+            returnDTO.LandingPage.FeaturedItems = UOW.ItemRepo.GetFeaturedItems();
+            return returnDTO;
         }
         public AboutPageDTO UpdateAboutPage(AboutPageDTO newPage)
         {
@@ -70,7 +61,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 throw ex;
             }
         }
-        public SiteConfigDTO UpdateSiteConfig(SiteConfigDTO newPage)
+        public BasicSiteConfigDTO UpdateSiteConfig(BasicSiteConfigDTO newPage)
         {
             try
             {

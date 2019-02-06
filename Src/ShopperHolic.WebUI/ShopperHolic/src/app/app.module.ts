@@ -84,7 +84,13 @@ import { DeliveryNoteComponent } from './components/orderProcessing/delivery-not
 import { AllDeliveryNotesComponent } from './components/orderProcessing/delivery-notes/all-delivery-notes/all-delivery-notes.component';
 import { InvoicesComponent } from './components/orderProcessing/invoices/invoices.component';
 import { AllInvoicesComponent } from './components/orderProcessing/invoices/all-invoices/all-invoices.component';
-import { InvoiceComponent } from './components/orderProcessing/invoices/invoice/invoice.component'
+import { InvoiceComponent } from './components/orderProcessing/invoices/invoice/invoice.component';
+import { FeaturedItemsComponent } from './components/stock/items/featured-items/featured-items.component';
+import { SystemSettingsComponent } from './components/settings/system-settings/system-settings.component';
+import { AppConfigComponent } from './components/settings/system-settings/app-config/app-config.component';
+import { LandingConfigComponent } from './components/settings/system-settings/landing-config/landing-config.component';
+import { ContactConfigComponent } from './components/settings/system-settings/contact-config/contact-config.component';
+import { AboutConfigComponent } from './components/settings/system-settings/about-config/about-config.component'
 
 @NgModule({
   declarations: [
@@ -150,6 +156,12 @@ import { InvoiceComponent } from './components/orderProcessing/invoices/invoice/
     InvoicesComponent,
     AllInvoicesComponent,
     InvoiceComponent,
+    FeaturedItemsComponent,
+    SystemSettingsComponent,
+    AppConfigComponent,
+    LandingConfigComponent,
+    ContactConfigComponent,
+    AboutConfigComponent,
   ],
   imports: [
     BrowserModule,

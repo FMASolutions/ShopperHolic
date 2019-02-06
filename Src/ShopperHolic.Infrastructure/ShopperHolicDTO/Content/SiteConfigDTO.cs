@@ -2,9 +2,16 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
 {
     public class SiteConfigDTO
     {
-        public string AppTitle {get;set;}
-        public string AppShortName {get;set;}
-        public string AppSlogan {get;set;}
-        public string AppFooter {get;set;}
+        public SiteConfigDTO()
+        {
+            AppConfig = new BasicSiteConfigDTO();
+            LandingPage = new LandingPageWithItemsDTO();
+            AboutPage = new AboutPageDTO();
+            ContactPage = new ContactPageDTO();
+        }
+        public BasicSiteConfigDTO AppConfig{get;set;}
+        public LandingPageWithItemsDTO LandingPage {get;set;}
+        public AboutPageDTO AboutPage {get;set;}
+        public ContactPageDTO ContactPage {get;set;}
     }
 }

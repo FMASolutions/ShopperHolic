@@ -8,10 +8,10 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         AboutPageDTO GetAboutPage();
         ContactPageDTO GetContactPage();
         LandingPageDTO GetLandingPage();
-        SiteConfigDTO GetSiteConfig();
+        BasicSiteConfigDTO GetBasicSiteConfig();
         AboutPageDTO UpdateAboutPage(AboutPageDTO newPage);
         ContactPageDTO UpdateContactPage(ContactPageDTO newPage);
         LandingPageDTO UpdateLandingPage(LandingPageDTO newPage);
-        SiteConfigDTO UpdateSiteConfig(SiteConfigDTO newPage);
+        BasicSiteConfigDTO UpdateSiteConfig(BasicSiteConfigDTO newPage);
     }
 }

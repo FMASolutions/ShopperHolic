@@ -29,7 +29,7 @@ export class Globals {
     //Generic Text
     public static get UPDATE_BUTTON_TEXT(): string { return "Update"; }
     public static get CREATE_BUTTON_TEXT(): string { return "Create New" }
-    public static get ADD_BUTTON_TEXT(): string { return "Add"}
+    public static get ADD_BUTTON_TEXT(): string { return "Add" }
     public static get SPINNER_LOGIN_MSG(): string { return "Requesting Login..." }
     public static get SPINNER_UPDATE_MESSAGE(): string { return "Requesting Update.." }
     public static get SPINNER_CREATE_MESSAGE(): string { return "Requesting Create.." }
@@ -239,27 +239,42 @@ export class Globals {
     public static get ORDER_INVOICE_ATTEMPT(): string { return "Attempting to generate invoice for order: "; }
     public static get ORDER_INVOICE_SUCCESS(): string { return "Successfully generate invoice for order: "; }
     public static get ORDER_INVOICE_FAILED(): string { return "Failed to generate invoice for order: "; }
-    
+
     public static get ORDER_ITEM_UPDATE_TITLE(): string { return "Update Order Item"; }
     public static get ORDER_ITEM_ADD_TITLE(): string { return "Add Order Item"; }
-    public static get ORDER_ITEM_LIST_COUMNS(): string[] { return ['Code','Name','Status', 'Price', 'Qty', 'View', 'Del']; }
+    public static get ORDER_ITEM_LIST_COUMNS(): string[] { return ['Code', 'Name', 'Status', 'Price', 'Qty', 'View', 'Del']; }
     public static get ORDER_ITEM_CREATE_ATTEMPT_MSG(): string { return "Adding new item: "; }
     public static get ORDER_ITEM_CREATE_FAILED_MSG(): string { return 'Failed to add new item: '; }
-    public static get ORDER_ITEM_DELETE_ATTEMPT_MSG(): string { return 'Removing item: ';}
-    public static get ORDER_ITEM_DELETE_SUCCESS_MSG(): string { return 'Successfully removed item: ';}
-    public static get ORDER_ITEM_DELETE_FAILED_MSG(): string { return 'Error removing item:  ';}
+    public static get ORDER_ITEM_DELETE_ATTEMPT_MSG(): string { return 'Removing item: '; }
+    public static get ORDER_ITEM_DELETE_SUCCESS_MSG(): string { return 'Successfully removed item: '; }
+    public static get ORDER_ITEM_DELETE_FAILED_MSG(): string { return 'Error removing item:  '; }
     public static get ORDER_ITEM_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update order item: "; }
     public static get ORDER_ITEM_UPDATE_SUCCESS_MSG(): string { return "Successfully updated order item: "; }
     public static get ORDER_ITEM_UPDATE_FAILED_MSG(): string { return "Failed to update order item: "; }
 
     public static get DELIVERY_NOTE_READ_FAILED_MSG(): string { return "Failed to retrieve delivery note data: "; }
-    public static get DELIVERY_NOTE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'DeliveryDate','View']; }
-    public static get DELIVERY_NOTE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc','Code', 'Qty']; }
+    public static get DELIVERY_NOTE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'DeliveryDate', 'View']; }
+    public static get DELIVERY_NOTE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Code', 'Qty']; }
 
     public static get INVOICE_READ_FAILED_MSG(): string { return "Failed to retrieve invoice data: "; }
-    public static get INVOICE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'InvoiceDate','Status', 'InvoiceTotal','View']; }
-    public static get INVOICE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc','Code', 'Price', 'Qty','Total']; }
+    public static get INVOICE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'InvoiceDate', 'Status', 'InvoiceTotal', 'View']; }
+    public static get INVOICE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Code', 'Price', 'Qty', 'Total']; }
 
+    public static get CONTENT_UPDATE_ABOUT_ATTEMPT(): string { return "Updating About Page"; }
+    public static get CONTENT_UPDATE_LANDING_ATTEMPT(): string { return "Updating Landing Page"; }
+    public static get CONTENT_UPDATE_CONTACT_ATTEMPT(): string { return "Updating Contact Page"; }
+    public static get CONTENT_UPDATE_SITE_CONFIG_ATTEMPT(): string { return "Updating Site Config"; }
+    public static get CONTENT_UPDATE_ABOUT_SUCCESS(): string { return "Updating About Page Complete"; }
+    public static get CONTENT_UPDATE_LANDING_SUCCESS(): string { return "Updating Landing Page Complete"; }
+    public static get CONTENT_UPDATE_CONTACT_SUCCESS(): string { return "Updating Contact Page Complete"; }
+    public static get CONTENT_UPDATE_SITE_CONFIG_SUCCESS(): string { return "Updating Site Config Complete"; }
+    public static get CONTENT_UPDATE_ABOUT_FAILED(): string { return "Updating About Page Failed: "; }
+    public static get CONTENT_UPDATE_LANDING_FAILED(): string { return "Updating Landing Failed: "; }
+    public static get CONTENT_UPDATE_CONTACT_FAILED(): string { return "Updating Contact Failed: "; }
+    public static get CONTENT_UPDATE_SITE_CONFIG_FAILED(): string { return "Updating Site Config Failed: "; }
+
+    public static get CONTENT_READ_ATTEMPT(): string { return "Getting Page Info..."; }
+    public static get CONTENT_READ_FAILED(): string { return "Failed to read content: "; }
 }
 
 export class CustomModalSettings {

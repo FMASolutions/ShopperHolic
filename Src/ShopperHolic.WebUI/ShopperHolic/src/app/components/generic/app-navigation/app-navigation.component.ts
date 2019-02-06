@@ -9,10 +9,8 @@ import { MatBottomSheet } from '@angular/material';
 import { LoginComponent } from '../../../components/generic/login/login.component';
 import { Globals } from 'src/globals';
 import { UserActivityComponent } from '../../../components/generic/user-activity/user-activity.component';
-import { ProductGroupComponent } from '../../../components/stock/product-groups/product-group/product-group.component';
-import { SubGroupComponent } from '../../stock/sub-groups/sub-group/sub-group.component';
-import { ItemComponent } from '../../stock/items/item/item.component';
 import { OrderDetailComponent } from '../../orderProcessing/orders/order-detail/order-detail.component';
+import { ContentService } from 'src/app/services/generic/content.service';
 
 @Component({
   selector: 'app-navigation',
@@ -24,12 +22,13 @@ export class AppNavigationComponent {
   isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.HandsetPortrait, Breakpoints.Handset, Breakpoints.TabletPortrait]).pipe(map(result => result.matches));
   currentUser: AuthenticatedUserModel = null;
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, public matDialog: MatDialog, private userActivity: MatBottomSheet) {
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, public matDialog: MatDialog, 
+    private userActivity: MatBottomSheet, public service: ContentService) {
     this.currentUser = this.authService.currentUser;
   }
 
-  getAppName() { return Globals.APP_SETTINGS.APP_TITLE; }
-  getAppShortName() { return Globals.APP_SETTINGS.APP_TITLE_SHORT; }
+  getAppName() { return this.service.curAppConfig.appTitle }
+  getAppShortName() { return this.service.curAppConfig.appShortName }
 
   getUserName(): string { return this.authService.currentUser.isAuthenticated ? this.authService.currentUser.username : ""; }
 

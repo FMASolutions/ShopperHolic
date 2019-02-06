@@ -1,0 +1,27 @@
+<ng-container *ngIf="service.curLandingConfig">
+  <form>
+    <mat-form-field class="maxWidth">
+      <mat-label>Page Title</mat-label>
+      <input matInput [(ngModel)]="service.curLandingConfig.pageTitle" type="text" value="{{service.curLandingConfig.pageTitle}}"
+        [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+    <mat-form-field class="maxWidth">
+      <mat-label>Application Short Name</mat-label>
+      <input matInput [(ngModel)]="service.curLandingConfig.pageDescription" type="text" value="{{service.curLandingConfig.pageDescription}}"
+        [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+    <mat-form-field class="maxWidth">
+      <mat-label>Application Slogan</mat-label>
+      <input matInput [(ngModel)]="service.curLandingConfig.pageRoute" type="text" value="{{service.curLandingConfig.pageRoute}}"
+        [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+    <mat-form-field class="maxWidth">
+      <mat-label>Application Footer Text</mat-label>
+      <input matInput [(ngModel)]="service.curLandingConfig.isHTML" type="text" value="{{service.curLandingConfig.isHTML}}"
+        [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+    <button mat-flat-button color="accent" id="updateLanding" (click)="updateConfig()" class="maxWidth">
+      Update Config
+    </button>
+  </form>
+</ng-container>

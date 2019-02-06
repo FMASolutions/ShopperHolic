@@ -21,15 +21,15 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         public AboutPageDTO GetAboutPage()
         {
-            return _contentService.GetAboutPage();
+            return _contentService.GetSiteConfig().AboutPage;
         }
         public ContactPageDTO GetContactPage()
         {
-            return _contentService.GetContactPage();
+            return _contentService.GetSiteConfig().ContactPage;
         }
         public LandingPageWithItemsDTO GetLandingPage()
         {
-            return _contentService.GetLandingPage();
+            return _contentService.GetSiteConfig().LandingPage;
         }
         public SiteConfigDTO GetSiteConfig()
         {
@@ -47,7 +47,7 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
         {
             return _contentService.UpdateLandingPage(newPage);
         }
-        public SiteConfigDTO UpdateSiteConfig(SiteConfigDTO newPage)
+        public BasicSiteConfigDTO UpdateSiteConfig(BasicSiteConfigDTO newPage)
         {
             return _contentService.UpdateSiteConfig(newPage);
         }

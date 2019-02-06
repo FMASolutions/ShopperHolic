@@ -216,7 +216,8 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 FROM Items I WITH(NOLOCK)
                 INNER JOIN SubGroups S WITH(NOLOCK) on S.SubGroupID = I.SubGroupID
                 INNER JOIN ProductGroups P WITH(NOLOCK) on P.ProductGroupID = S.ProductGroupID
-                WHERE I.IsFeaturedItem = 1";
+                WHERE I.IsFeaturedItem = 1
+                ORDER BY P.ProductGroupName asc, S.SubGroupName asc";
 
                 return Connection.Query<ItemDetailedDTO>(query, transaction: CurrentTrans);
             }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentService } from 'src/app/services/generic/content.service';
 
 @Component({
   selector: 'app-contact',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  constructor(public service: ContentService) { }
 
   ngOnInit() {
+    let obs = this.service.getContactPage().subscribe(() =>{
+      obs.unsubscribe();
+    })
   }
 
 }

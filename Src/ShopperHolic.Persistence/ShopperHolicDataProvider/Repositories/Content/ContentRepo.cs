@@ -63,7 +63,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
-        public SiteConfigDTO GetSiteConfig()
+        public BasicSiteConfigDTO GetBasicSiteConfig()
         {
             try
             {
@@ -71,7 +71,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 SELECT AppTitle, AppShortName, AppSlogan, AppFooter 
                 FROM SiteConfig";
 
-                return Connection.QueryFirst<SiteConfigDTO>(query, transaction: CurrentTrans);
+                return Connection.QueryFirst<BasicSiteConfigDTO>(query, transaction: CurrentTrans);
             }
             catch (Exception ex)
             {
@@ -159,7 +159,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
             }
         }
-        public SiteConfigDTO UpdateSiteConfig(SiteConfigDTO newConfig)
+        public BasicSiteConfigDTO UpdateSiteConfig(BasicSiteConfigDTO newConfig)
         {
             try
             {
@@ -176,7 +176,7 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 queryParameters.Add("@AppSlogan", newConfig.AppSlogan);
                 queryParameters.Add("@AppFooter", newConfig.AppFooter);
 
-                return (Connection.Execute(query, queryParameters, CurrentTrans) > 0) ? GetSiteConfig() : throw noRecordEX;
+                return (Connection.Execute(query, queryParameters, CurrentTrans) > 0) ? GetBasicSiteConfig() : throw noRecordEX;
             }
             catch (Exception ex)
             {

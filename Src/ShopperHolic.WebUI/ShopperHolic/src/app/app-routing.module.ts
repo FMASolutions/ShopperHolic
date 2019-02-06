@@ -21,6 +21,7 @@ import { AllDeliveryNotesComponent } from './components/orderProcessing/delivery
 import { DeliveryNoteComponent } from './components/orderProcessing/delivery-notes/delivery-note/delivery-note.component';
 import { AllInvoicesComponent } from './components/orderProcessing/invoices/all-invoices/all-invoices.component';
 import { InvoiceComponent } from './components/orderProcessing/invoices/invoice/invoice.component';
+import { SystemSettingsComponent } from './components/settings/system-settings/system-settings.component';
 
 const routes: Routes = [
   {
@@ -128,6 +129,12 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'systemSettings',
+    component: SystemSettingsComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
   }
 ];
 

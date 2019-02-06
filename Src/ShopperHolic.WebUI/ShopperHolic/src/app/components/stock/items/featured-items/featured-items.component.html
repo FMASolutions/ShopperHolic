@@ -1,0 +1,85 @@
+<mat-tab-group dynamicHeight>
+    <div *ngFor="let prodGroup of productGroups">
+      <mat-tab label="{{prodGroup.prodName}}">
+        <div *ngFor="let subGroup of subGroups">
+          <ng-container *ngIf="prodGroup.prodID == subGroup.prodID">
+            <h1>{{subGroup.subName}}</h1>
+            <h3>{{subGroup.subCode}}</h3>
+            <p>{{subGroup.subDesc}}</p>
+            <div *ngFor="let cardRow of subGroup.cardRows.rows">
+              <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px">
+                <div fxFlex="33">
+                  <ng-container *ngIf="cardRow.cards[0]">
+                    <mat-card class="example-card">
+                      <mat-card-header>
+                        <div mat-card-avatar class="example-header-image" [style.background-image]="cardRow.cards[0].itemInfo.imgSrc"></div>
+                        <mat-card-title>{{cardRow.cards[0].itemInfo.itemName}}</mat-card-title>
+                        <mat-card-subtitle>{{cardRow.cards[0].itemInfo.itemCode}}</mat-card-subtitle>
+                      </mat-card-header>
+                      <img mat-card-image [src]="cardRow.cards[0].itemInfo.imgSrc || 'http://placehold.it/160'">
+                      <mat-card-content>
+                        <p>
+                          {{cardRow.cards[0].itemInfo.itemDesc}}
+                        </p>
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <button mat-button>BUY - {{cardRow.cards[0].itemInfo.itemPrice}} </button>
+                        <button mat-button>MORE INFO</button>
+                      </mat-card-actions>
+                    </mat-card>
+
+                  </ng-container>
+                </div>
+                <div fxFlex="33">
+                  <ng-container *ngIf="cardRow.cards[1]">
+
+                    <mat-card class="example-card">
+                      <mat-card-header>
+                        <div mat-card-avatar class="example-header-image"  [style.background-image]="cardRow.cards[1].itemInfo.imgSrc"></div>
+                        <mat-card-title>{{cardRow.cards[1].itemInfo.itemName}}</mat-card-title>
+                        <mat-card-subtitle>{{cardRow.cards[1].itemInfo.itemCode}}</mat-card-subtitle>
+                      </mat-card-header>
+                      <img mat-card-image [src]="cardRow.cards[1].itemInfo.imgSrc || 'http://placehold.it/160'">
+                      <mat-card-content>
+                        <p>
+                          {{cardRow.cards[1].itemInfo.itemDesc}}
+                        </p>
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <button mat-button>BUY - {{cardRow.cards[1].itemInfo.itemPrice}} </button>
+                        <button mat-button>MORE INFO</button>
+                      </mat-card-actions>
+                    </mat-card>
+
+                  </ng-container>
+                </div>
+                <div fxFlex="33">
+                    <ng-container *ngIf="cardRow.cards[2]">
+  
+                      <mat-card class="example-card">
+                        <mat-card-header>
+                          <div mat-card-avatar class="example-header-image"  [style.background-image]="cardRow.cards[2].itemInfo.imgSrc"></div>
+                          <mat-card-title>{{cardRow.cards[2].itemInfo.itemName}}</mat-card-title>
+                          <mat-card-subtitle>{{cardRow.cards[2].itemInfo.itemCode}}</mat-card-subtitle>
+                        </mat-card-header>
+                        <img mat-card-image [src]="cardRow.cards[2].itemInfo.imgSrc || 'http://placehold.it/160'">
+                        <mat-card-content>
+                          <p>
+                            {{cardRow.cards[2].itemInfo.itemDesc}}
+                          </p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button>BUY - {{cardRow.cards[2].itemInfo.itemPrice}} </button>
+                          <button mat-button>MORE INFO</button>
+                        </mat-card-actions>
+                      </mat-card>
+  
+                    </ng-container>
+                  </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </mat-tab>
+    </div>
+  </mat-tab-group>

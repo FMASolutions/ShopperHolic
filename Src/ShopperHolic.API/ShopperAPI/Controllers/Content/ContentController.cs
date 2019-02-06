@@ -73,7 +73,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
 
         [Authorize(Policy = "IsAdminUser")]
         [HttpPut]
-        public ActionResult<SiteConfigDTO> UpdateSiteConfig([FromBody] SiteConfigDTO newPage)
+        public ActionResult<BasicSiteConfigDTO> UpdateSiteConfig([FromBody] BasicSiteConfigDTO newPage)
         {
             try { return _contentManager.UpdateSiteConfig(newPage); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
