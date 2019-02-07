@@ -11,7 +11,6 @@ import { ItemPreview } from 'src/app/models/stock/items/itemPreview';
 import { SubGroup } from 'src/app/models/stock/subGroups/subGroup';
 import { GenericValidator } from '../generic/generic-validator';
 import { MatTableDataSource, MatPaginator, Sort } from '@angular/material';
-import { ImageService } from '../generic/image.service';
 
 @Injectable({
   providedIn: 'root'
