@@ -70,7 +70,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
             var file = Request.Form.Files[0];
             var id = int.Parse(Request.Form["id"]);
             
-            _itemManager.UploadFileAndItem(file,id,_environment);
+            _itemManager.StoreAndUpdateItemImage(file,id,_environment);
 
             return true;
             }

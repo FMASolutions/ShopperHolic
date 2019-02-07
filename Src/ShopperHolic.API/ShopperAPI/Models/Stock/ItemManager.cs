@@ -5,6 +5,9 @@ using ShopperHolic.Infrastructure.ShopperHolicDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace ShopperHolic.API.ShopperAPI.Models.Stock
 {
@@ -49,22 +52,74 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
             return _itemService.Delete(id);
         }
 
-        public bool UploadFileAndItem(IFormFile file, int id, IHostingEnvironment env)
+        public bool StoreAndUpdateItemImage(IFormFile file, int id, IHostingEnvironment env)
         {
-            var upload = Path.Combine(env.ContentRootPath + "\\wwwroot\\", "uploads");
+            var uploadPath = Path.Combine(env.ContentRootPath + "\\wwwroot\\", "uploads");
             if (file.Length > 0)
             {
-                if (!Directory.Exists(upload))
+                if (!Directory.Exists(uploadPath))
                 {
-                    Directory.CreateDirectory(upload);
+                    Directory.CreateDirectory(uploadPath);
                 }
                 var extension = Path.GetExtension(file.FileName);
-                var currentPath = Path.Combine(upload, id + extension);
+                var currentPath = Path.Combine(uploadPath, id + extension);
+                var resizedPath = Path.Combine(uploadPath, id + "resized" + extension);
                 using (var filestream = new FileStream(currentPath, FileMode.OpenOrCreate))
                 {
                     file.CopyTo(filestream);
-                    _itemService.UpdateImage(id,Path.GetFileName(currentPath));
                 }
+
+                int maxWidth = 1025;
+                const long quality = 100L;
+                Bitmap sourceBitmap = new Bitmap(currentPath);
+
+                double originalWidth = sourceBitmap.Width;
+                double originalHeight = sourceBitmap.Height;
+                double aspectRatio = originalHeight / originalWidth;
+                int newHeight = (int)(maxWidth * aspectRatio);
+
+                
+                var newDrawArea = new Bitmap(maxWidth, newHeight);
+
+                using (var graphicDrawArea = Graphics.FromImage(newDrawArea))
+                {
+                    
+                    graphicDrawArea.CompositingQuality = CompositingQuality.HighSpeed;
+                    graphicDrawArea.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    graphicDrawArea.CompositingMode = CompositingMode.SourceCopy;
+
+                    graphicDrawArea.DrawImage(sourceBitmap, 0, 0, maxWidth, newHeight);
+
+                    using (var output = File.Open(resizedPath, FileMode.Create))
+                    {
+                        var qualityParamID = Encoder.Quality;
+                        var encoderParameters = new EncoderParameters(1);
+                        encoderParameters.Param[0] = new EncoderParameter(qualityParamID, quality);
+                        
+                        var codecs = ImageCodecInfo.GetImageDecoders();
+                        foreach (var codec in codecs)
+                        {
+                            
+                            if (codec.FormatID == ImageFormat.Jpeg.Guid && (extension.Contains("jpg") || extension.Contains("jpeg")))
+                            {
+                                
+                                newDrawArea.Save(output, codec, encoderParameters);
+                                output.Close();
+                                break;
+                            }
+                            else if(codec.FormatID == ImageFormat.Png.Guid && (extension.Contains("png")))
+                            {
+                                newDrawArea.Save(output, codec, encoderParameters);
+                                output.Close();
+                                break;
+                            }
+                        }
+                        graphicDrawArea.Dispose();
+                    }
+                    sourceBitmap.Dispose();
+                    _itemService.UpdateImage(id, Path.GetFileName(resizedPath));
+                }
+                File.Delete(currentPath);
             }
             return true;
         }
