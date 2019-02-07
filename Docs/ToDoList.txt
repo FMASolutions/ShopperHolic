@@ -1,13 +1,12 @@
 1) Change to Async db  and api calls
 2) Improve image upload by reducing size / compression. Not sure if in .net core API or Angular UI.
-3) Implement Home page displaying items.
-4) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI)
+3) Implement return order process to return order items.
+4) Implement Purchase Orders in all Layers (Persistence / Infrastructure / Business / API / WebUI), including purchase order returns
 5) Implement Shopping cart
-5) Implement Automation I.E Emails when low stock etc....
-6) Implement Reporting
-7) Implement OAuth2 / OPenIDConnect using a IdentityServer
-8) Implement some more security for role checking in the UI layer.
-9) Tables too wide on mobile devices.
-10) Stock creation doesn't allow qty, create with 0 Qty ALWAYS., stock addition through PO / return process. stock minus through delivery notes / return PO. add Stock adjustment feature which requires a "note", the note will be read by the stock history feature
-11) Get by id should return error if nothing found for invoices / delivery notes
-12) Add Item Code to order item / deli note / invoice, also add featured item column
+6) Implement Automation I.E Emails when low stock etc....
+7) Implement Reporting
+8) Implement OAuth2 / OPenIDConnect using a IdentityServer
+9) Implement some more security for role checking in the UI layer.
+10) Tables too wide on mobile devices.
+11) Stock creation doesn't allow qty, create with 0 Qty ALWAYS., stock addition through PO / return process. stock minus through delivery notes / return PO. add Stock adjustment feature which requires a "note", the note will be read by the stock history feature
+12) Get by id should return error if nothing found for invoices / delivery notes

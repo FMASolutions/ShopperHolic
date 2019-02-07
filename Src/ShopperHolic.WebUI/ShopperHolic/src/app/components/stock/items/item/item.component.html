@@ -48,8 +48,8 @@
 
 
             <input type="file" #fileSelector style="display: none" (change)="fileSelected($event)" />
-            <button mat-raised-button color="primary" class="maxWidth" (click)="uploadClicked()">Select File</button>
-            <img #currentImage [src]="service.imageSrc || 'http://placehold.it/160'" alt="itemImage" style="max-width: 100%;">
+            <button mat-raised-button color="primary" class="maxWidth" (click)="requestFileSelector()">Select File</button>
+            <img #imagePreview [src]="service.imageSrc || 'http://placehold.it/160'" alt="itemImage" style="max-width: 100%;">
 
 
             <mat-form-field class="maxWidth" appearance="outline">

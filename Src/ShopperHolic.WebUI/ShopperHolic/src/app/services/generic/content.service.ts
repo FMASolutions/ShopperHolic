@@ -19,7 +19,7 @@ export class ContentService {
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/Content/';
   curAboutConfig: AboutPage;
   curContactConfig: ContactPage;
-  curAppConfig: BasicSiteConfig;
+  curAppConfig: BasicSiteConfig = new BasicSiteConfig();
   curLandingConfig: LandingPage;
   curLandingWithItemsConfig: LandingPageWithItems;
 

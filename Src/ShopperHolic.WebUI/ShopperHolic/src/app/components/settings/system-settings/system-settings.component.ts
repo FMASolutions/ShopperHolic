@@ -26,7 +26,6 @@ export class SystemSettingsComponent implements OnInit {
         this.childContactComponent.populateContactTab(resp.contactPage);
         this.childLandingComponent.populateLandingTab(resp.landingPage.pageInfo);
         obs.unsubscribe();
-        console.log(resp);
       })
     }, 1);
   }

@@ -12,7 +12,7 @@ import { SubGroupSelectorComponent } from '../../sub-groups/sub-group-selector/s
 export class ItemComponent implements OnInit {
 
   @ViewChild('fileSelector') fileSelector;
-  @ViewChild('currentImage') currentImageElement;
+  @ViewChild('imagePreview') currentImagePreview;
   currentMode: string = "";
   currentSelectedFile: File = null;
   
@@ -23,7 +23,7 @@ export class ItemComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.currentMode = this.service.determinModeAndPopulateForm(this.currentImageElement, this.data);  
+      this.currentMode = this.service.determinModeAndPopulateForm(this.currentImagePreview, this.data);  
     }, 1);
     
   }
@@ -41,13 +41,13 @@ export class ItemComponent implements OnInit {
     })
   }
 
-  uploadClicked() {
+  requestFileSelector() {
     this.fileSelector.nativeElement.click();
   }
 
   fileSelected(event) {
     if (event.target.files && event.target.files[0]) {
-      this.service.newFileSelected(event.target.files[0], this.currentImageElement);
+      this.service.newFileSelected(event.target.files[0], this.currentImagePreview);
       this.currentSelectedFile = event.target.files[0];
     }
   }

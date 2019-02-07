@@ -20,8 +20,6 @@ export class FeaturedItemsComponent implements OnInit {
   }
 
   refreshItems(featuredItemList: ItemDetailed[]){
-    console.log("populating homepage with:");
-    console.log(featuredItemList);
     this.populateStock(featuredItemList);
   }
 
@@ -91,11 +89,7 @@ export class FeaturedItemsComponent implements OnInit {
           currentSubGroup.cardRows.rows[lastRowIndex].cards.push(newCard);
         }
       }
-      //let index = this.featuredItemList.findIndex(i => i.itemID == currentItem.itemID);
-      //this.featuredItemList[index].itemImageFilename = this.imageLocationPrefix + this.featuredItemList[index].itemImageFilename;
     });
-    console.log("split, end result = ");
-    console.log(this.subGroups);
   }
 
 }

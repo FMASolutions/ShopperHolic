@@ -11,6 +11,7 @@ import { ItemPreview } from 'src/app/models/stock/items/itemPreview';
 import { SubGroup } from 'src/app/models/stock/subGroups/subGroup';
 import { GenericValidator } from '../generic/generic-validator';
 import { MatTableDataSource, MatPaginator, Sort } from '@angular/material';
+import { ImageService } from '../generic/image.service';
 
 @Injectable({
   providedIn: 'root'
@@ -147,11 +148,6 @@ export class ItemService {
       itemAvailableQty: this.itemForm.value["availableQty"],
       itemImageFilename: "N/A" //This value isn't used when Updating a record, updates to the image are done trhough the api image upload.
     }
-    console.log("updating with mode: ")
-    console.log(newModel);
-    console.log("featured Variable = ");
-    console.log(this.currentItemIsFeatured);
-
     return newModel;
   }
 
@@ -185,11 +181,7 @@ export class ItemService {
   }
 
   private populateFormFromModel(model: Item) {
-    console.log("populating form with");
-    console.log(model);
     this.currentItemIsFeatured = model.isFeaturedItem;
-    console.log("featured item var = ");
-    console.log(this.currentItemIsFeatured);
     this.itemForm.setValue({
       id: model.itemID,
       code: model.itemCode,
