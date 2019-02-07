@@ -54,74 +54,81 @@ namespace ShopperHolic.API.ShopperAPI.Models.Stock
 
         public bool StoreAndUpdateItemImage(IFormFile file, int id, IHostingEnvironment env)
         {
-            var uploadPath = Path.Combine(env.ContentRootPath + "\\wwwroot\\", "uploads");
             if (file.Length > 0)
             {
-                if (!Directory.Exists(uploadPath))
-                {
-                    Directory.CreateDirectory(uploadPath);
-                }
+                var uploadPath = Path.Combine(env.ContentRootPath + "\\wwwroot\\", "uploads");
+                CreateDirectory(uploadPath); //Create folder incase it doesn't exist.
                 var extension = Path.GetExtension(file.FileName);
-                var currentPath = Path.Combine(uploadPath, id + extension);
-                var resizedPath = Path.Combine(uploadPath, id + "resized" + extension);
-                using (var filestream = new FileStream(currentPath, FileMode.OpenOrCreate))
-                {
-                    file.CopyTo(filestream);
-                }
-
+                var filenameWithPath = Path.Combine(uploadPath, id + extension);
                 int maxWidth = 1025;
-                const long quality = 100L;
-                Bitmap sourceBitmap = new Bitmap(currentPath);
+                const long quality = 50L;
 
-                double originalWidth = sourceBitmap.Width;
-                double originalHeight = sourceBitmap.Height;
-                double aspectRatio = originalHeight / originalWidth;
-                int newHeight = (int)(maxWidth * aspectRatio);
-
-                
-                var newDrawArea = new Bitmap(maxWidth, newHeight);
-
-                using (var graphicDrawArea = Graphics.FromImage(newDrawArea))
+                Bitmap sourceBitmap = new Bitmap(file.OpenReadStream());
+                if (sourceBitmap.Width > maxWidth)
                 {
-                    
-                    graphicDrawArea.CompositingQuality = CompositingQuality.HighSpeed;
-                    graphicDrawArea.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    graphicDrawArea.CompositingMode = CompositingMode.SourceCopy;
-
-                    graphicDrawArea.DrawImage(sourceBitmap, 0, 0, maxWidth, newHeight);
-
-                    using (var output = File.Open(resizedPath, FileMode.Create))
-                    {
-                        var qualityParamID = Encoder.Quality;
-                        var encoderParameters = new EncoderParameters(1);
-                        encoderParameters.Param[0] = new EncoderParameter(qualityParamID, quality);
-                        
-                        var codecs = ImageCodecInfo.GetImageDecoders();
-                        foreach (var codec in codecs)
-                        {
-                            
-                            if (codec.FormatID == ImageFormat.Jpeg.Guid && (extension.Contains("jpg") || extension.Contains("jpeg")))
-                            {
-                                
-                                newDrawArea.Save(output, codec, encoderParameters);
-                                output.Close();
-                                break;
-                            }
-                            else if(codec.FormatID == ImageFormat.Png.Guid && (extension.Contains("png")))
-                            {
-                                newDrawArea.Save(output, codec, encoderParameters);
-                                output.Close();
-                                break;
-                            }
-                        }
-                        graphicDrawArea.Dispose();
-                    }
-                    sourceBitmap.Dispose();
-                    _itemService.UpdateImage(id, Path.GetFileName(resizedPath));
+                    double originalWidth = sourceBitmap.Width;
+                    double originalHeight = sourceBitmap.Height;
+                    double aspectRatio = originalHeight / originalWidth;
+                    int newHeight = (int)(maxWidth * aspectRatio);
+                    compressAndstoreImage(sourceBitmap, filenameWithPath, maxWidth, newHeight, quality);
                 }
-                File.Delete(currentPath);
+                else
+                    compressAndstoreImage(sourceBitmap, filenameWithPath, sourceBitmap.Width, sourceBitmap.Height, quality);
+
+                _itemService.UpdateImage(id, Path.GetFileName(filenameWithPath));
             }
+            else
+                return false;
             return true;
+        }
+
+        private void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+        }
+
+        private void compressAndstoreImage(Bitmap sourceBitmap, string filenameWithPath, int maxWidth, int newHeight, long quality)
+        {
+            var extension = Path.GetExtension(filenameWithPath);
+
+            var newDrawArea = new Bitmap(maxWidth, newHeight);
+
+            using (var graphicDrawArea = Graphics.FromImage(newDrawArea))
+            {
+                graphicDrawArea.CompositingQuality = CompositingQuality.HighSpeed;
+                graphicDrawArea.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphicDrawArea.CompositingMode = CompositingMode.SourceCopy;
+
+                graphicDrawArea.DrawImage(sourceBitmap, 0, 0, maxWidth, newHeight);
+
+                using (var output = File.Open(filenameWithPath, FileMode.Create))
+                {
+                    var qualityParamID = Encoder.Quality;
+                    var encoderParameters = new EncoderParameters(1);
+                    encoderParameters.Param[0] = new EncoderParameter(qualityParamID, quality);
+
+                    var codecs = ImageCodecInfo.GetImageDecoders();
+                    foreach (var codec in codecs)
+                    {
+
+                        if (codec.FormatID == ImageFormat.Jpeg.Guid && (extension.Contains("jpg") || extension.Contains("jpeg")))
+                        {
+                            newDrawArea.Save(output, codec, encoderParameters);
+                            output.Close();
+                            break;
+                        }
+                        else if (codec.FormatID == ImageFormat.Png.Guid && (extension.Contains("png")))
+                        {
+                            newDrawArea.Save(output, codec, encoderParameters);
+                            output.Close();
+                            break;
+                        }
+                    }
+                    graphicDrawArea.Dispose();
+                }
+                sourceBitmap.Dispose();
+            }
         }
     }
 }
