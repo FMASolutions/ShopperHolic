@@ -51,6 +51,7 @@ export class FeaturedItemsComponent implements OnInit {
         newCard.itemInfo.itemName = currentItem.itemName;
         newCard.itemInfo.imgSrc = this.imageLocationPrefix + currentItem.itemImageFilename;
         newCard.itemInfo.itemPrice = currentItem.itemUnitPrice;
+        newCard.itemInfo.itemQty = currentItem.itemAvailableQty;
         newCardRow.cards.push(newCard);
         
         newSubGroup.cardRows.rows.push(newCardRow);
@@ -66,7 +67,7 @@ export class FeaturedItemsComponent implements OnInit {
         let currentSubGroup = this.subGroups[subSearchIndex];
         let lastRowIndex = currentSubGroup.cardRows.rows.length - 1;
         let lastRow = currentSubGroup.cardRows.rows[lastRowIndex];
-        if (lastRow.cards.length > 2) { // No more than 3 cards per row allowed, new row required
+        if (lastRow.cards.length > 1) { // No more than 2 cards per row allowed, new row required
           let newCardRow: CardRow = new CardRow();
           let newCard: Card = new Card();
           newCard.itemInfo.itemCode = currentItem.itemCode;
@@ -75,6 +76,7 @@ export class FeaturedItemsComponent implements OnInit {
           newCard.itemInfo.itemName = currentItem.itemName;
           newCard.itemInfo.imgSrc = this.imageLocationPrefix + currentItem.itemImageFilename;
           newCard.itemInfo.itemPrice = currentItem.itemUnitPrice;
+          newCard.itemInfo.itemQty = currentItem.itemAvailableQty;
           newCardRow.cards.push(newCard);
           currentSubGroup.cardRows.rows.push(newCardRow);
         }
@@ -86,6 +88,7 @@ export class FeaturedItemsComponent implements OnInit {
           newCard.itemInfo.itemName = currentItem.itemName;
           newCard.itemInfo.imgSrc = this.imageLocationPrefix + currentItem.itemImageFilename;
           newCard.itemInfo.itemPrice = currentItem.itemUnitPrice;
+          newCard.itemInfo.itemQty = currentItem.itemAvailableQty;
           currentSubGroup.cardRows.rows[lastRowIndex].cards.push(newCard);
         }
       }
@@ -100,6 +103,7 @@ class Itm {
   itemCode: string = "";
   itemName: string = "";
   itemDesc: string = "";
+  itemQty: number = 0;
   imgSrc: string = "";
   itemPrice: number = 0;
   titleStyle: string = "";
