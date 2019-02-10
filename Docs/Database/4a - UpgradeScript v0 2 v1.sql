@@ -33,11 +33,10 @@ GO
 CREATE TABLE RMAHeaders
 (
     RMAHeaderID INT IDENTITY(1,1) PRIMARY KEY,    
-    AddressID INT FOREIGN KEY REFERENCES AddressLocations(AddressLocationID),
     RMAStatusID INT FOREIGN KEY REFERENCES RMAStatus(RMAStatusID),
     OrderHeaderID INT FOREIGN KEY REFERENCES OrderHeaders(OrderHeaderID),
     CreatedDate DATETIME NOT NULL,
-    GoodsDueByDate DATETIME NOT NULL
+    ReturnedDate DATETIME NOT NULL
 )
 GO
 CREATE TABLE RMAItems
@@ -73,6 +72,7 @@ CREATE TABLE ReturnNotes
 (
     ReturnNoteID INT IDENTITY(1,1) PRIMARY KEY,
     RMAHeaderID INT FOREIGN KEY REFERENCES RMAHeaders(RMAHeaderID),
+    RequestedDate DATETIME NOT NULL,
     ReturnedDate DATETIME NOT NULL
 )
 CREATE TABLE ReturnNoteItems
