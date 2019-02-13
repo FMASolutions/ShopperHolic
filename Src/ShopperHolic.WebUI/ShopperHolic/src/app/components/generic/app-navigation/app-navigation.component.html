@@ -12,7 +12,7 @@
       <ng-container *ngFor="let currentClaim of currentUser.userClaims">
         <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
           <ol>
-            <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Orders<mat-icon>arrow_right
+            <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Order Processing<mat-icon>arrow_right
                 </mat-icon></a>
               <ol class="hide">
                 <li class="appLink"><a mat-list-item routerLink="/orders">Manage Orders</a></li>
