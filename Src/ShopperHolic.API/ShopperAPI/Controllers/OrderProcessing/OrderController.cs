@@ -29,7 +29,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<OrderDetailedDTO> GetByID(int id)
+        public ActionResult<OrderDetailedDTO> GetByID([FromQuery] int id)
         {
             try { return _orderManager.GetByID(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
@@ -51,21 +51,21 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
 
         [Authorize(Policy = "UserCanDeleteOrder")]
         [HttpDelete]
-        public ActionResult<bool> Delete(int id)
+        public ActionResult<bool> Delete([FromQuery] int id)
         {
             try { return _orderManager.Delete(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<OrderItemDTO> GetOrderItemByID(int orderItemID)
+        public ActionResult<OrderItemDTO> GetOrderItemByID([FromQuery] int orderItemID)
         {
             try { return _orderManager.GetOrderItemByID(orderItemID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
         }
 
         [HttpGet]
-        public ActionResult<List<OrderItemDTO>> GetItemsForOrder(int id)
+        public ActionResult<List<OrderItemDTO>> GetItemsForOrder([FromQuery] int id)
         {
             try { return _orderManager.GetItemsForOrder(id); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
@@ -86,7 +86,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         [HttpDelete]
-        public ActionResult<bool> RemoveItemFromOrder(int orderItemID)
+        public ActionResult<bool> RemoveItemFromOrder([FromQuery] int orderItemID)
         {
             try { return _orderManager.RemoveItemFromOrder(orderItemID); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }

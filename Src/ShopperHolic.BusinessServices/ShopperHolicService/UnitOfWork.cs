@@ -34,6 +34,9 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         public IInvoiceRepo InvoiceRepo { get { return _invoiceRepo ?? (_invoiceRepo = new InvoiceRepo(_transaction)); } }
         public IDeliveryNoteRepo DeliveryNoteRepo { get { return _deliveryNoteRepo ?? (_deliveryNoteRepo = new DeliveryNoteRepo(_transaction)); } }
         public IContentRepo ContentRepo { get { return _contentRepo ?? (_contentRepo = new ContentRepo(_transaction)); } }
+        public IRMARepo RMARepo { get { return _rmaRepo ?? (_rmaRepo = new RMARepo(_transaction)); } }
+        public IReturnNoteRepo ReturnNoteRepo { get { return _returnNoteRepo ?? (_returnNoteRepo = new ReturnNoteRepo(_transaction)); } }
+        public ICreditNoteRepo CreditNoteRepo { get { return _creditNoteRepo ?? (_creditNoteRepo = new CreditNoteRepo(_transaction)); } }
 
         bool _disposing = false;
 
@@ -105,6 +108,9 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
             _invoiceRepo = null;
             _deliveryNoteRepo = null;
             _contentRepo = null;
+            _rmaRepo = null;
+            _returnNoteRepo = null;
+            _creditNoteRepo = null;
         }
 
         private ISecurityRepo _securityRepo;
@@ -122,5 +128,8 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService
         private IInvoiceRepo _invoiceRepo;
         private IDeliveryNoteRepo _deliveryNoteRepo;
         private IContentRepo _contentRepo;
+        private IRMARepo _rmaRepo;
+        private IReturnNoteRepo _returnNoteRepo;
+        private ICreditNoteRepo _creditNoteRepo;
     }
 }

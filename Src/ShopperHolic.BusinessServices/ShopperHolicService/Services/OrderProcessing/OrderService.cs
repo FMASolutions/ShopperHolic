@@ -15,9 +15,7 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
             {
                 int newID = UOW.OrderRepo.Create(entityToCreate);
                 UOW.SaveChanges();
-                var returnDTO = GetByID(newID);
-
-                return returnDTO;
+                return GetByID(newID);
             }
             catch (Exception ex)
             {
@@ -27,7 +25,8 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
         }
         public OrderDetailedDTO GetByID(int id)
         {
-            return new OrderDetailedDTO() {
+            return new OrderDetailedDTO()
+            {
                 Header = UOW.OrderRepo.GetByID(id),
                 Items = UOW.OrderRepo.GetItemsForOrder(id),
                 DeliveryNotes = UOW.DeliveryNoteRepo.GetDeliveryNotesForOrder(id),

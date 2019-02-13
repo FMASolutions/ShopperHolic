@@ -91,6 +91,9 @@ namespace ShopperHolic.API.ShopperAPI
             services.AddTransient<IDeliveryNoteService>(s => new DeliveryNoteService(connectionString));
             services.AddTransient<IInvoiceService>(s => new InvoiceService(connectionString));
             services.AddTransient<IContentService>(s => new ContentService(connectionString));
+            services.AddTransient<IRMAService>(s => new RMAService(connectionString));
+            services.AddTransient<IReturnNoteService>(s => new ReturnNoteService(connectionString));
+            services.AddTransient<ICreditNoteService>(s => new CreditNoteService(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -32,6 +32,9 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         UserCanDeleteSupplier,
         UserCanDeleteOrder,
         UserCanDeliverOrder,
-        UserCanInvoiceOrder
+        UserCanInvoiceOrder,
+        UserCanDeleteRMA,
+        UserCanProcessReturn,
+        UserCanCreditOrder
     }
 }

@@ -2440,6 +2440,447 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "RMA",
+					"item": [
+						{
+							"name": "3 - Process Return",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "039eac89-fc48-49bd-84af-a15290e07a4d",
+										"exec": [
+											"var data = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"CreatedReturnNoteID\",data[0].returnNoteID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{returnNoteController}}/ProcessReturn?rmaID={{CreatedRMAID}}",
+									"host": [
+										"{{returnNoteController}}"
+									],
+									"path": [
+										"ProcessReturn"
+									],
+									"query": [
+										{
+											"key": "rmaID",
+											"value": "{{CreatedRMAID}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4 - Generate Credit Note",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "039eac89-fc48-49bd-84af-a15290e07a4d",
+										"exec": [
+											"var data = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"CreatedCreditNoteID\",data[0].creditNoteID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{creditNoteController}}/CreditRMA?rmaID={{CreatedRMAID}}",
+									"host": [
+										"{{creditNoteController}}"
+									],
+									"path": [
+										"CreditRMA"
+									],
+									"query": [
+										{
+											"key": "rmaID",
+											"value": "{{CreatedRMAID}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pre - Create New Order",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c0a2985-4dda-4333-b3c7-0c4a56e1780f",
+										"exec": [
+											"var data = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"CreatedOrderID\",data.header.orderID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"CustomerID\" : 1,\n    \"AddressID\" : 1,\n    \"OrderDate\" : \"2019-01-27T15:00:00\",\n    \"DeliveryDate\" : \"2019-01-29T15:00:00\"\n}"
+								},
+								"url": {
+									"raw": "{{orderController}}/Create",
+									"host": [
+										"{{orderController}}"
+									],
+									"path": [
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pre - Add Item to Order",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c0a2985-4dda-4333-b3c7-0c4a56e1780f",
+										"exec": [
+											"var data = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"CreatedOrderItemID\",data.orderItemID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"OrderID\" : {{CreatedOrderID}},\n    \"ItemID\" : 1,\n    \"OrderItemUnitPrice\" : \"7.99\",\n    \"OrderItemUnitPriceAfterDiscount\" : \"6.99\",\n    \"OrderItemQty\" : 3,\n    \"OrderItemDescription\" : \"Order Item Description Text New\"\n}"
+								},
+								"url": {
+									"raw": "{{orderController}}/AddItemToOrder",
+									"host": [
+										"{{orderController}}"
+									],
+									"path": [
+										"AddItemToOrder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pre - Deliver Order",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "039eac89-fc48-49bd-84af-a15290e07a4d",
+										"exec": [
+											"var data = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"CreatedDeliveryNoteID\",data[0].deliveryNoteID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{deliveryNoteController}}/DeliverOrder?orderID={{CreatedOrderID}}",
+									"host": [
+										"{{deliveryNoteController}}"
+									],
+									"path": [
+										"DeliverOrder"
+									],
+									"query": [
+										{
+											"key": "orderID",
+											"value": "{{CreatedOrderID}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pre - Invoice Order",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "039eac89-fc48-49bd-84af-a15290e07a4d",
+										"exec": [
+											"var data = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"CreatedInvoiceID\",data[0].invoiceID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{invoiceController}}/invoiceOrder?orderID={{CreatedOrderID}}",
+									"host": [
+										"{{invoiceController}}"
+									],
+									"path": [
+										"invoiceOrder"
+									],
+									"query": [
+										{
+											"key": "orderID",
+											"value": "{{CreatedOrderID}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1 - Create RMA",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c0a2985-4dda-4333-b3c7-0c4a56e1780f",
+										"exec": [
+											"var data = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"CreatedRMAID\",data.header.rmaid);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"OrderHeaderID\" : {{CreatedOrderID}}\n}"
+								},
+								"url": {
+									"raw": "{{rmaController}}/Create",
+									"host": [
+										"{{rmaController}}"
+									],
+									"path": [
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2 - Add Item to RMA",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c0a2985-4dda-4333-b3c7-0c4a56e1780f",
+										"exec": [
+											"var data = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"CreatedRMAItemID\",data.rmaItemID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"RMAID\" : {{CreatedRMAID}},\n    \"OrderItemID\" : {{CreatedOrderItemID}},\n    \"ReturnQty\" : 1,\n    \"ReturnToInventory\" : 1,\n    \"ReturnReason\" : \"Faulty Item\"\n}"
+								},
+								"url": {
+									"raw": "{{rmaController}}/AddItemToRMA",
+									"host": [
+										"{{rmaController}}"
+									],
+									"path": [
+										"AddItemToRMA"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},

@@ -240,6 +240,7 @@ export class Globals {
     public static get ORDER_INVOICE_SUCCESS(): string { return "Successfully generate invoice for order: "; }
     public static get ORDER_INVOICE_FAILED(): string { return "Failed to generate invoice for order: "; }
 
+    //Order Item Text
     public static get ORDER_ITEM_UPDATE_TITLE(): string { return "Update Order Item"; }
     public static get ORDER_ITEM_ADD_TITLE(): string { return "Add Order Item"; }
     public static get ORDER_ITEM_LIST_COUMNS(): string[] { return ['Code', 'Name', 'Status', 'Price', 'Qty', 'View', 'Del']; }
@@ -252,14 +253,17 @@ export class Globals {
     public static get ORDER_ITEM_UPDATE_SUCCESS_MSG(): string { return "Successfully updated order item: "; }
     public static get ORDER_ITEM_UPDATE_FAILED_MSG(): string { return "Failed to update order item: "; }
 
+    //Delivery Note Text
     public static get DELIVERY_NOTE_READ_FAILED_MSG(): string { return "Failed to retrieve delivery note data: "; }
     public static get DELIVERY_NOTE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'DeliveryDate', 'View']; }
     public static get DELIVERY_NOTE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Code', 'Qty']; }
 
+    //Invoice Text
     public static get INVOICE_READ_FAILED_MSG(): string { return "Failed to retrieve invoice data: "; }
     public static get INVOICE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'InvoiceDate', 'Status', 'InvoiceTotal', 'View']; }
     public static get INVOICE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Code', 'Price', 'Qty', 'Total']; }
 
+    //Content Text
     public static get CONTENT_UPDATE_ABOUT_ATTEMPT(): string { return "Updating About Page"; }
     public static get CONTENT_UPDATE_LANDING_ATTEMPT(): string { return "Updating Landing Page"; }
     public static get CONTENT_UPDATE_CONTACT_ATTEMPT(): string { return "Updating Contact Page"; }
@@ -272,9 +276,53 @@ export class Globals {
     public static get CONTENT_UPDATE_LANDING_FAILED(): string { return "Updating Landing Failed: "; }
     public static get CONTENT_UPDATE_CONTACT_FAILED(): string { return "Updating Contact Failed: "; }
     public static get CONTENT_UPDATE_SITE_CONFIG_FAILED(): string { return "Updating Site Config Failed: "; }
-
     public static get CONTENT_READ_ATTEMPT(): string { return "Getting Page Info..."; }
     public static get CONTENT_READ_FAILED(): string { return "Failed to read content: "; }
+
+    //RMA Specific Text
+    public static get RMA_UPDATE_TITLE(): string { return "RMA Update"; }
+    public static get RMA_CREATE_TITLE(): string { return "Create New RMA"; }
+    public static get RMA_CREATE_ATTEMPT_MSG(): string { return "Attempting to create new RMA: "; }
+    public static get RMA_CREATE_SUCCESS_MSG(): string { return "Successfully created RMA: "; }
+    public static get RMA_CREATE_FAILED_MSG(): string { return "Failed to create RMA: "; }
+    public static get RMA_READ_FAILED_MSG(): string { return "Failed to retrieve RMA data: "; }
+    public static get RMA_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update RMA: "; }
+    public static get RMA_UPDATE_SUCCESS_MSG(): string { return "Successfully updated RMA: "; }
+    public static get RMA_UPDATE_FAILED_MSG(): string { return "Failed to update RMA: "; }
+    public static get RMA_DELETE_CONFIRM_MSG(): string { return "--WARNING THIS PROCESS CAN'T BE UN-DONE-- Are you sure you wish to delete RMA: "; }
+    public static get RMA_DELETE_ATTEMPT_MSG(): string { return "Attempting to delete RMA: "; }
+    public static get RMA_DELETE_SUCCESS_MSG(): string { return "Successfully deleted RMA: "; }
+    public static get RMA_DELETE_FAILED_MSG(): string { return "Failed to delete RMA: "; }
+    public static get RMA_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Customer', 'Status', 'Created', 'View', 'Del']; }
+    public static get RMA_DELIVERY_ATTEMPT(): string { return "Attempting to deliver RMA: "; }
+    public static get RMA_DELIVERY_SUCCESS(): string { return "Successfully delivered RMA: "; }
+    public static get RMA_DELIVERY_FAILED(): string { return "Failed to deliver RMA: "; }
+    public static get RMA_INVOICE_ATTEMPT(): string { return "Attempting to generate invoice for RMA: "; }
+    public static get RMA_INVOICE_SUCCESS(): string { return "Successfully generate invoice for RMA: "; }
+    public static get RMA_INVOICE_FAILED(): string { return "Failed to generate invoice for RMA: "; }
+
+    //RMA Item Text
+    public static get RMA_ITEM_UPDATE_TITLE(): string { return "Update RMA Item"; }
+    public static get RMA_ITEM_ADD_TITLE(): string { return "Add RMA Item"; }
+    public static get RMA_ITEM_LIST_COUMNS(): string[] { return ['Code', 'Name', 'Status', 'Re-Stock', 'Reason', 'View', 'Del']; }
+    public static get RMA_ITEM_CREATE_ATTEMPT_MSG(): string { return "Adding new RMA item: "; }
+    public static get RMA_ITEM_CREATE_FAILED_MSG(): string { return 'Failed to add new RMA item: '; }
+    public static get RMA_ITEM_DELETE_ATTEMPT_MSG(): string { return 'Removing RMA item: '; }
+    public static get RMA_ITEM_DELETE_SUCCESS_MSG(): string { return 'Successfully removed RMA item: '; }
+    public static get RMA_ITEM_DELETE_FAILED_MSG(): string { return 'Error removing RMA item:  '; }
+    public static get RMA_ITEM_UPDATE_ATTEMPT_MSG(): string { return "Attempting to update RMA item: "; }
+    public static get RMA_ITEM_UPDATE_SUCCESS_MSG(): string { return "Successfully updated RMA item: "; }
+    public static get RMA_ITEM_UPDATE_FAILED_MSG(): string { return "Failed to update RMA item: "; }
+
+    //Return Note Text
+    public static get RETURN_NOTE_READ_FAILED_MSG(): string { return "Failed to retrieve return note data: "; }
+    public static get RETURN_NOTE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'ReturnDate', 'View']; }
+    public static get RETURN_NOTE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Code', 'Qty']; }
+
+    //Credit Note Text
+    public static get CREDIT_NOTE_READ_FAILED_MSG(): string { return "Failed to retrieve credit note data: "; }
+    public static get CREDIT_NOTE_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'CustomerName', 'CreditDate', 'Status', 'CreditTotal', 'View']; }
+    public static get CREDIT_NOTE_ITEM_PRVW_LIST_COLUMNS(): string[] { return ['ItemDesc', 'Code', 'Price', 'Qty', 'Total']; }
 }
 
 export class CustomModalSettings {

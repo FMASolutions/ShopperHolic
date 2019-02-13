@@ -1,6 +1,6 @@
 namespace ShopperHolic.Infrastructure.ShopperHolicDTO
 {
-    public enum ETillOperatorClaims 
+    public enum ETillOperatorClaims
     {
         UserCanCreateAddress,
         UserCanEditAddress,
@@ -8,6 +8,9 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         UserCanEditCustomer,
         UserCanDeleteOrder,
         UserCanDeliverOrder,
-        UserCanInvoiceOrder
+        UserCanInvoiceOrder,
+        UserCanDeleteRMA,
+        UserCanProcessReturn,
+        UserCanCreditOrder
     }
 }

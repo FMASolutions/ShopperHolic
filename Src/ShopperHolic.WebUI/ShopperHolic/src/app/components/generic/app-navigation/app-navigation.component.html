@@ -1,7 +1,8 @@
 <mat-sidenav-container class="sidenav-container">
   <!--App Draw / Side Bar for small screens-->
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
     <mat-toolbar color="primary">{{getAppShortName()}}</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/home">Home</a>
@@ -11,26 +12,35 @@
       <ng-container *ngFor="let currentClaim of currentUser.userClaims">
         <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
           <ol>
-            <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Orders<mat-icon>arrow_right</mat-icon></a>
+            <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Orders<mat-icon>arrow_right
+                </mat-icon></a>
               <ol class="hide">
-                  <li class="appLink"><a mat-list-item routerLink="/orders">Order Management</a></li>
-                  <li class="appLink"><a mat-list-item (click)="openCreateOrder()">Create Order</a></li>
-                  <li class="appLink"><a mat-list-item routerLink="/deliveryNotes">Delivery Notes</a></li>
-                  <li class="appLink"><a mat-list-item routerLink="/invoices">Invoices</a></li>
-                </ol>
+                <li class="appLink"><a mat-list-item routerLink="/orders">Manage Orders</a></li>
+                <li class="appLink"><a mat-list-item (click)="openCreateOrder()">Create New Order</a></li>
+                <li class="appLink"><a mat-list-item routerLink="/deliveryNotes">Delivery Notes</a></li>
+                <li class="appLink"><a mat-list-item routerLink="/invoices">Invoices</a></li>
+
+                <li class="appLink"><a mat-list-item routerLink="/rmas">Manage Returns</a></li>
+                <li class="appLink"><a mat-list-item (click)="openCreateRMA()">Create New Return</a></li>
+                <li class="appLink"><a mat-list-item routerLink="/returnNotes">Return Notes</a></li>
+                <li class="appLink"><a mat-list-item routerLink="/creditNotes">Credit Notes</a></li>
+              </ol>
             </li>
           </ol>
           <ol>
-            <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Admin <mat-icon>arrow_right</mat-icon></a>
+            <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Admin <mat-icon>arrow_right
+                </mat-icon></a>
               <ol class="hide">
-                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Stock <mat-icon>arrow_right</mat-icon></a>
+                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Stock <mat-icon>arrow_right
+                    </mat-icon></a>
                   <ol class="hide">
                     <li class="appLink"><a mat-list-item routerLink="/productGroups">Manage Product Groups</a></li>
                     <li class="appLink"><a mat-list-item routerLink="/subGroups">Manage Sub Groups</a></li>
                     <li class="appLink"><a mat-list-item routerLink="/items">Manage Items</a></li>
                   </ol>
                 </li>
-                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Location <mat-icon>arrow_right</mat-icon></a>
+                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Location <mat-icon>
+                      arrow_right</mat-icon></a>
                   <ol class="hide">
                     <li class="appLink"><a mat-list-item routerLink="/addresses">Manage Addresses</a></li>
                     <li class="appLink"><a mat-list-item routerLink="/cityAreas">Manage CityAreas</a></li>
@@ -38,14 +48,16 @@
                     <li class="appLink"><a mat-list-item routerLink="/countries">Manage Countries</a></li>
                   </ol>
                 </li>
-                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Accounts <mat-icon>arrow_right</mat-icon></a>
+                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Accounts <mat-icon>
+                      arrow_right</mat-icon></a>
                   <ol class="hide">
                     <li class="appLink"><a mat-list-item routerLink="/customers">Manage Customers</a></li>
                     <li class="appLink"><a mat-list-item routerLink="/suppliers">Manage Suppliers</a></li>
                     <li class="appLink"><a mat-list-item routerLink="/users">Manage User Accounts</a></li>
                   </ol>
                 </li>
-                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Settings <mat-icon>arrow_right</mat-icon></a>
+                <li class="subMenu"><a mat-list-item (click)="toggleChildVisibility($event)">Settings <mat-icon>
+                      arrow_right</mat-icon></a>
                   <ol class="hide">
                     <li class="appLink"><a mat-list-item routerLink="/orderSettings">Order Settings</a></li>
                     <li class="appLink"><a mat-list-item routerLink="/purchaseSettings">Purchase Settings</a></li>
@@ -55,7 +67,6 @@
               </ol>
             </li>
           </ol>
-
         </ng-container>
       </ng-container>
       <!--End Admin Sidebar Navigation-->
@@ -78,16 +89,21 @@
         <!--Admin Navigation Menu-->
         <ng-container *ngFor="let currentClaim of currentUser.userClaims">
           <ng-container *ngIf="currentClaim.claimValue == 'true' && currentClaim.claimType == 'IsAdminUser'">
-              <button mat-button [matMenuTriggerFor]="orderPanel">Order Processing</button>
+            <button mat-button [matMenuTriggerFor]="orderPanel">Order Processing</button>
 
-              <mat-menu #orderPanel="matMenu">
-                  <button mat-menu-item routerLink="/orders">Orders</button>
-                  <button mat-menu-item (click)="openCreateOrder()">Create Order</button>
-                  <button mat-menu-item routerLink="/deliveryNotes">Delivery Notes</button>
-                  <button mat-menu-item routerLink="/invoices">Invoices</button>
-              </mat-menu>
+            <mat-menu #orderPanel="matMenu">
+              <button mat-menu-item routerLink="/orders">Manage Orders</button>
+              <button mat-menu-item (click)="openCreateOrder()">Create New Order</button>
+              <button mat-menu-item routerLink="/deliveryNotes">Delivery Notes</button>
+              <button mat-menu-item routerLink="/invoices">Invoices</button>
 
-              
+              <button mat-menu-item routerLink="/rmas">Manage Returns</button>
+              <button mat-menu-item (click)="openCreateRMA()">Create New Return</button>
+              <button mat-menu-item routerLink="/returnNotes">Return Notes</button>
+              <button mat-menu-item routerLink="/creditNotes">Credit Notes</button>
+            </mat-menu>
+
+
             <button mat-button [matMenuTriggerFor]="adminPanel">Admin</button>
 
             <mat-menu #adminPanel="matMenu">
@@ -129,7 +145,8 @@
       <span class="fill-space"></span>
 
       <div *ngIf="!(isHandset$ | async)">
-        <button mat-flat-button color="primary" (click)="openLoginDialog()" *ngIf="!currentUser.isAuthenticated">Login</button>
+        <button mat-flat-button color="primary" (click)="openLoginDialog()"
+          *ngIf="!currentUser.isAuthenticated">Login</button>
         <button mat-flat-button color="primary" (click)="logout()" *ngIf="currentUser.isAuthenticated">Logout
           ({{getUserName()}})</button>
       </div>
@@ -140,7 +157,8 @@
       </button>
 
 
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
 

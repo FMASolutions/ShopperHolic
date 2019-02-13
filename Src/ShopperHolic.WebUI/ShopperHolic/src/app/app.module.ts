@@ -90,7 +90,18 @@ import { SystemSettingsComponent } from './components/settings/system-settings/s
 import { AppConfigComponent } from './components/settings/system-settings/app-config/app-config.component';
 import { LandingConfigComponent } from './components/settings/system-settings/landing-config/landing-config.component';
 import { ContactConfigComponent } from './components/settings/system-settings/contact-config/contact-config.component';
-import { AboutConfigComponent } from './components/settings/system-settings/about-config/about-config.component'
+import { AboutConfigComponent } from './components/settings/system-settings/about-config/about-config.component';
+import { RmasComponent } from './components/orderProcessing/rmas/rmas.component';
+import { RmaComponent } from './components/orderProcessing/rmas/rma/rma.component';
+import { RmaDetailComponent } from './components/orderProcessing/rmas/rma-detail/rma-detail.component';
+import { RmaItemDetailComponent } from './components/orderProcessing/rmas/rma-item-detail/rma-item-detail.component';
+import { RmaListComponent } from './components/orderProcessing/rmas/rma-list/rma-list.component';
+import { ReturnNotesComponent } from './components/orderProcessing/return-notes/return-notes.component';
+import { AllReturnNotesComponent } from './components/orderProcessing/return-notes/all-return-notes/all-return-notes.component';
+import { ReturnNoteComponent } from './components/orderProcessing/return-notes/return-note/return-note.component';
+import { CreditNotesComponent } from './components/orderProcessing/credit-notes/credit-notes.component';
+import { AllCreditNotesComponent } from './components/orderProcessing/credit-notes/all-credit-notes/all-credit-notes.component';
+import { CreditNoteComponent } from './components/orderProcessing/credit-notes/credit-note/credit-note.component'
 
 @NgModule({
   declarations: [
@@ -162,6 +173,17 @@ import { AboutConfigComponent } from './components/settings/system-settings/abou
     LandingConfigComponent,
     ContactConfigComponent,
     AboutConfigComponent,
+    RmasComponent,
+    RmaComponent,
+    RmaDetailComponent,
+    RmaItemDetailComponent,
+    RmaListComponent,
+    ReturnNotesComponent,
+    AllReturnNotesComponent,
+    ReturnNoteComponent,
+    CreditNotesComponent,
+    AllCreditNotesComponent,
+    CreditNoteComponent,
   ],
   imports: [
     BrowserModule,

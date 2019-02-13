@@ -22,6 +22,12 @@ import { DeliveryNoteComponent } from './components/orderProcessing/delivery-not
 import { AllInvoicesComponent } from './components/orderProcessing/invoices/all-invoices/all-invoices.component';
 import { InvoiceComponent } from './components/orderProcessing/invoices/invoice/invoice.component';
 import { SystemSettingsComponent } from './components/settings/system-settings/system-settings.component';
+import { RmasComponent } from './components/orderProcessing/rmas/rmas.component';
+import { RmaComponent } from './components/orderProcessing/rmas/rma/rma.component';
+import { AllReturnNotesComponent } from './components/orderProcessing/return-notes/all-return-notes/all-return-notes.component';
+import { ReturnNoteComponent } from './components/orderProcessing/return-notes/return-note/return-note.component';
+import { AllCreditNotesComponent } from './components/orderProcessing/credit-notes/all-credit-notes/all-credit-notes.component';
+import { CreditNoteComponent } from './components/orderProcessing/credit-notes/credit-note/credit-note.component';
 
 const routes: Routes = [
   {
@@ -112,7 +118,9 @@ const routes: Routes = [
   },
   {
     path: 'deliveryNotes',
-    component: AllDeliveryNotesComponent
+    component: AllDeliveryNotesComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
   },
   {
     path: 'deliveryNote',
@@ -120,11 +128,43 @@ const routes: Routes = [
   },
   {
     path: 'invoices',
-    component: AllInvoicesComponent
+    component: AllInvoicesComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
   },
   {
     path: 'invoice',
     component: InvoiceComponent
+  },
+  {
+    path: 'rmas',
+    component: RmasComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'rma',
+    component: RmaComponent
+  },
+  {
+    path: 'returnNotes',
+    component: AllReturnNotesComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'returnNote',
+    component: ReturnNoteComponent
+  },
+  {
+    path: 'creditNotes',
+    component: AllCreditNotesComponent,
+    canActivate: [AuthGuard],
+    data: { claimType: 'IsAdminUser' }
+  },
+  {
+    path: 'creditNote',
+    component: CreditNoteComponent
   },
   {
     path: '',

@@ -3,7 +3,7 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
 {
     public class CreditNoteItemDTO
     {
-        public int CrediteNoteID { get; set; }
+        public int CreditNoteID { get; set; }
         public int CreditNoteItemID { get; set; }
         public int OrderID { get; set; }
         public int RMAID { get; set; }
@@ -13,7 +13,7 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public decimal ItemPrice { get; set; }
         public decimal CreditItemTotal { get; set; }
         public string CreditNoteItemStatus { get; set; }
-        public string CreditNoteStatus {get;set;}
+        public string CreditNoteStatus { get; set; }
         public string CustomerName { get; set; }
         public string ItemCode { get; set; }
     }

@@ -11,6 +11,7 @@ import { Globals } from 'src/globals';
 import { UserActivityComponent } from '../../../components/generic/user-activity/user-activity.component';
 import { OrderDetailComponent } from '../../orderProcessing/orders/order-detail/order-detail.component';
 import { ContentService } from 'src/app/services/generic/content.service';
+import { RmaDetailComponent } from '../../orderProcessing/rmas/rma-detail/rma-detail.component';
 
 @Component({
   selector: 'app-navigation',
@@ -39,6 +40,7 @@ export class AppNavigationComponent {
   openUserActivity() { this.userActivity.open(UserActivityComponent) }
 
   openCreateOrder() { this.matDialog.open(OrderDetailComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS); }
+  openCreateRMA() { this.matDialog.open(RmaDetailComponent, Globals.APP_SETTINGS.DEFAULT_MODAL_SETTINGS); }
 
   toggleChildVisibility(event: MouseEvent) {
     let childOrderedList = event.srcElement.parentElement.parentElement.children.item(1);
