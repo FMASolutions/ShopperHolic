@@ -21,4 +21,16 @@ export class AppNavigationService {
   public goToInvoicePage(id: number){
     this.router.navigateByUrl('/invoice?id=' + id.toString());
   }
+
+  public goToReturnNotePage(id: number){
+    this.router.navigateByUrl('/returnNote?id=' + id.toString());
+  }
+
+  public goToCreditNotePage(id: number){
+    this.router.navigateByUrl('/creditNote?id=' + id.toString());
+  }
+
+  public goToRMAPage(id: number){
+    this.router.navigateByUrl('/rma?id=' + id.toString());
+  }
 }

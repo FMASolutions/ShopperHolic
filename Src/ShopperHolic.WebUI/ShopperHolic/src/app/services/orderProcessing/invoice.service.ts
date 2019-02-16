@@ -44,9 +44,9 @@ export class InvoiceService {
     }));;
   }
 
-  public getAll(): Observable<InvoiceItem[]> {
+  public getAll(): Observable<InvoicePreview[]> {
     this.userNotificationService.informUserStartSpinnerOnly(Globals.SPINNER_GET_MESSAGE);
-    return this.http.get<InvoiceItem[]>(this.baseURL + 'GetAll').pipe(tap(resp => {
+    return this.http.get<InvoicePreview[]>(this.baseURL + 'GetAll').pipe(tap(resp => {
       this.userNotificationService.closeSpinners();
     }, err => {
       this.userNotificationService.informUserError(Globals.INVOICE_READ_FAILED_MSG);

@@ -36,7 +36,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ReturnNotePreviewDTO>> GetAllPreview()
+        public ActionResult<List<ReturnNotePreviewDTO>> GetAll()
         {
             try { return _returnNoteManager.GetAllPreview(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }

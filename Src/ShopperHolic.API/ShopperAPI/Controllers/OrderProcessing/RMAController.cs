@@ -35,7 +35,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<RMAPreviewDTO>> GetAllPreview()
+        public ActionResult<List<RMAPreviewDTO>> GetAll()
         {
             try { return _rmaManager.GetAllPreview(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }

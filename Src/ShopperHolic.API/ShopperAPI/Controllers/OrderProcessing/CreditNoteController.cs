@@ -37,7 +37,7 @@ namespace ShopperHolic.API.ShopperAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<CreditNotePreviewDTO>> GetAllPreview()
+        public ActionResult<List<CreditNotePreviewDTO>> GetAll()
         {
             try { return _creditNoteManager.GetAllPreview(); }
             catch (BaseCustomException ex) { return BadRequest(ex.Message); }
