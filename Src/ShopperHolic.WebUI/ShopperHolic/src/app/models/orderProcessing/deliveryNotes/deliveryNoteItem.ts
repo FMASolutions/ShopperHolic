@@ -4,6 +4,7 @@ export class DeliveryNoteItem {
     orderHeaderID: number = 0;
     deliveryDate: Date = new Date();
     orderItemID: number = 0;
+    rmaid: number = 0;
     orderItemDescription: string = "";
     orderItemQty: number = 0;
     customerName: string = "";

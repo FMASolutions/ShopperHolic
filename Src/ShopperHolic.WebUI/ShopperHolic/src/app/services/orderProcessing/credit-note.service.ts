@@ -120,7 +120,7 @@ export class CreditNoteService {
       let currentCreditNoteTotal: number = this.calcCreditNoteTotal(model);
       this.creditNoteForm.setValue({
         id: model[0].creditNoteID,
-        rmaID: model[0].rmaID,
+        rmaID: model[0].rmaid,
         creditNoteDate: model[0].creditDate,
         customerName: model[0].customerName,
         creditTotal: currentCreditNoteTotal

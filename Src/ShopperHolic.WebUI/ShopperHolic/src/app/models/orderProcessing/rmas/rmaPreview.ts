@@ -1,5 +1,5 @@
 export class RMAPreview {
-    rmaID: number = 0;
+    rmaid: number = 0;
     orderID: number = 0;
     customerName: string = "";
     rmaStatusText: string = "";

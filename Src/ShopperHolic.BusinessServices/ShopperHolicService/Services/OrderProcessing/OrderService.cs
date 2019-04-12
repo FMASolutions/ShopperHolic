@@ -30,7 +30,10 @@ namespace ShopperHolic.BusinessServices.ShopperHolicService.Services
                 Header = UOW.OrderRepo.GetByID(id),
                 Items = UOW.OrderRepo.GetItemsForOrder(id),
                 DeliveryNotes = UOW.DeliveryNoteRepo.GetDeliveryNotesForOrder(id),
-                Invoices = UOW.InvoiceRepo.GetInvoicesForOrder(id)
+                Invoices = UOW.InvoiceRepo.GetInvoicesForOrder(id),
+                ReturnNotes = UOW.ReturnNoteRepo.GetReturnNotesForOrder(id),
+                CreditNotes = UOW.CreditNoteRepo.GetCreditNotesForOrder(id),
+                RMAS = UOW.RMARepo.GetRMASForOrder(id)
             };
         }
         public IEnumerable<OrderPreviewDTO> GetAllPreview()

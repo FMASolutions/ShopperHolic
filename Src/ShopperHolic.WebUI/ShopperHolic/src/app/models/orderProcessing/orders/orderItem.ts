@@ -10,4 +10,5 @@ export class OrderItem {
     orderItemStatusText: string = "";
     orderItemTotal: number = 0;
     itemCode: string = "";
+    allowedReturnQty: number = 0;
 }

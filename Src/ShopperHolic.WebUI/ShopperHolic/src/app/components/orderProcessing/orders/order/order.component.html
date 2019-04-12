@@ -67,11 +67,13 @@
                     </form>
                     <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
                         <div fxFlex="50">
-                            <button mat-raised-button color="accent" class="maxWidth" (click)="updateOrderClicked()">Update
+                            <button mat-raised-button color="accent" class="maxWidth"
+                                (click)="updateOrderClicked()">Update
                                 Order Details</button>
                         </div>
                         <div fxFlex="50">
-                            <button mat-raised-button color="primary" class="maxWidth" (click)="deleteOrderClicked()">Delete
+                            <button mat-raised-button color="primary" class="maxWidth"
+                                (click)="deleteOrderClicked()">Delete
                                 Order (including items)</button>
                         </div>
                     </div>
@@ -90,8 +92,8 @@
                         <ng-container matColumnDef="Code">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header="Code">Code</th>
                             <td mat-cell *matCellDef="let row">{{row.itemCode}}</td>
-                          </ng-container>
-                          
+                        </ng-container>
+
                         <ng-container matColumnDef="Name">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header="Name">Name</th>
                             <td mat-cell *matCellDef="let row">{{row.orderItemDescription}}</td>
@@ -139,33 +141,56 @@
                     </table>
                     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
-
                     <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
                         <div fxFlex="50">
-
-                            <button mat-raised-button color="primary" class="maxWidth" (click)="invoiceOrderClicked()">Invoice
-                                Delivered Items</button>
-
+                            <button mat-raised-button color="primary" class="maxWidth"
+                                (click)="deliverOrderClicked()">Deliver
+                                Items</button>
                         </div>
                         <div fxFlex="50">
-
-                            <button mat-raised-button color="primary" class="maxWidth" (click)="deliverOrderClicked()">Deliver
-                                Items</button>
+                            <button mat-raised-button color="primary" class="maxWidth"
+                                (click)="invoiceOrderClicked()">Invoice
+                                Delivered Items</button>
                         </div>
                     </div>
                     <br>
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="Deliveries">
-            <div>
-                <app-delivery-notes></app-delivery-notes>
-            </div>
-        </mat-tab>
-        <mat-tab label="Invoices">
-            <div>
-                <app-invoices></app-invoices>
-            </div>
-        </mat-tab>
+        <ng-container *ngIf='hasDeliveryNotes'>
+            <mat-tab label="Deliveries">
+                <div>
+                    <app-delivery-notes></app-delivery-notes>
+                </div>
+            </mat-tab>
+        </ng-container>
+        <ng-container *ngIf='hasInvoices'>
+            <mat-tab label="Invoices">
+                <div>
+                    <app-invoices></app-invoices>
+                </div>
+            </mat-tab>
+        </ng-container>
+        <ng-container *ngIf='hasRMAs'>
+            <mat-tab label="RMA's">
+                <div>
+                    <app-rma-list></app-rma-list>
+                </div>
+            </mat-tab>
+        </ng-container>
+        <ng-container *ngIf='hasReturnNotes'>
+            <mat-tab label="Return Notes">
+                <div>
+                    <app-return-notes></app-return-notes>
+                </div>
+            </mat-tab>
+        </ng-container>
+        <ng-container *ngIf='hasCreditNotes'>
+            <mat-tab label="Credit Notes">
+                <div>
+                    <app-credit-notes></app-credit-notes>>
+                </div>
+            </mat-tab>
+        </ng-container>
     </mat-tab-group>
 </div>

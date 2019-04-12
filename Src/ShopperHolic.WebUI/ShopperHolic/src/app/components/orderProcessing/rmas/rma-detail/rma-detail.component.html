@@ -1,3 +1,31 @@
-<p>
-  rma-detail works!
-</p>
+<mat-dialog-content>
+    <div class="container">
+      <h3 mat-dialog-title>{{getPageTitle()}}</h3>
+      <app-notification></app-notification>
+      <form [formGroup]="service.rmaHeaderForm">
+  
+        <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+          <div fxFlex="50">
+            <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openOrderSelector()">
+              Order Selector
+            </button>
+          </div>
+          <div fxFlex="50">
+            <mat-form-field class="maxWidth">
+              <mat-label>Use Order Selector Button</mat-label>
+              <input matInput formControlName="orderID" type="text" readonly hidden>
+              <input matInput formControlName="selectedOrderText" type="text" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+        <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+          <div fxFlex="50">
+            <button mat-raised-button color="accent" type="submit" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
+          </div>
+          <div fxFlex="50">
+            <button mat-raised-button color="primary" class="maxWidth" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>

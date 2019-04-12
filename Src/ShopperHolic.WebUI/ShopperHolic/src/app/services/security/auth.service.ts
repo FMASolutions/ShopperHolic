@@ -53,7 +53,7 @@ export class AuthService {
     };
     this.lastUsernameRequested = username;
     return this.http.post<string>(this.authURL + "AttemptAuthentication", authRequestObject).pipe(tap(() => { }, (err) => {
-      this.userNotificationServ.informUserError(Globals.LOGIN_FAILED_MSG);  //Close because error, handle success in key exchange.
+      this.userNotificationServ.informUserError(Globals.LOGIN_FAILED_MSG + " " + username);  //Close because error, handle success in key exchange.
     }));
   }
 

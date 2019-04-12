@@ -102,13 +102,24 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
+                 WITH UnprocessedReturns AS(
+                    SELECT OrderItemID,SUM(ReturnQty) AS ReturnQty
+                    FROM RMAItems
+                    WHERE RMAItemStatusID = 1
+                    AND RMAItemID != @RMAItemID
+                    GROUP BY OrderItemID
+                )
+
+
                 SELECT ri.RMAItemID,ri.OrderItemID,ri.ReturnQty,
                     oi.OrderItemDescription AS OrderItemDescription,
                     rs.RMAStatusValue AS [RMAItemStatus],
-                    ri.ReturnToInventory,ri.ReturnReason
+                    ri.ReturnToInventory,ri.ReturnReason,
+                    oi.OrderItemQty - (oi.TotalReturnedQty + ISNULL(up.ReturnQty,0)) AS AllowedReturnQty
                 FROM RMAItems ri
                 INNER JOIN OrderItems oi ON oi.OrderItemID = ri.OrderItemID
                 INNER JOIN RMAStatus rs ON ri.RMAItemStatusID = rs.RMAStatusID
+                LEFT OUTER JOIN UnprocessedReturns up ON up.OrderItemID = oi.OrderItemID
                 WHERE ri.RMAItemID = @RMAItemID";
 
                 var queryParameters = new DynamicParameters();
@@ -126,13 +137,23 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
+                 WITH UnprocessedReturns AS(
+                    SELECT OrderItemID,SUM(ReturnQty) AS ReturnQty
+                    FROM RMAItems
+                    WHERE RMAItemStatusID = 1
+                    GROUP BY OrderItemID
+                )
+
+
                 SELECT ri.RMAItemID,ri.OrderItemID,ri.ReturnQty,
                     oi.OrderItemDescription AS OrderItemDescription,
                     rs.RMAStatusValue AS [RMAItemStatus],
-                    ri.ReturnToInventory,ri.ReturnReason
+                    ri.ReturnToInventory,ri.ReturnReason,
+                    oi.OrderItemQty - (oi.TotalReturnedQty + ISNULL(up.ReturnQty,0)) AS AllowedReturnQty
                 FROM RMAItems ri
                 INNER JOIN OrderItems oi ON oi.OrderItemID = ri.OrderItemID
                 INNER JOIN RMAStatus rs ON ri.RMAItemStatusID = rs.RMAStatusID
+                LEFT OUTER JOIN UnprocessedReturns up ON up.OrderItemID = oi.OrderItemID
                 WHERE ri.RMAHeaderID = @RMAID";
 
                 var queryParameters = new DynamicParameters();
@@ -177,14 +198,14 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
                 UPDATE RMAItems
                 SET ReturnQty = @ReturnQty,
                     ReturnReason = @ReturnReason,
-                    ReturnToInventory = @ReturnToInventory,
+                    ReturnToInventory = @ReturnToInventory
                 WHERE RMAItemID = @RMAItemID";
 
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@RMAItemID", updatedRecord.RMAItemID);
                 queryParameters.Add("@ReturnQty", updatedRecord.ReturnQty);
                 queryParameters.Add("@ReturnReason", updatedRecord.ReturnReason);
-                queryParameters.Add("@ReturnToInventory", updatedRecord.ReturnToInventory ? 0 : 1);
+                queryParameters.Add("@ReturnToInventory", updatedRecord.ReturnToInventory ? 1 : 0);
 
                 int rowsUpdated = Connection.Execute(query, queryParameters, CurrentTrans);
                 return (rowsUpdated > 0) ? GetRMAItemByID(updatedRecord.RMAItemID) : throw noRecordEX;
@@ -207,6 +228,32 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
 
                 int rowsDeleted = Connection.Execute(query, queryParameters, CurrentTrans);
                 return (rowsDeleted > 0) ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<RMAPreviewDTO> GetRMASForOrder(int orderID)
+        {
+            try
+            {
+                string query = @"
+                SELECT rh.RMAHeaderID AS [RMAID],rh.OrderHeaderID AS [OrderID]
+                    ,rh.CreatedDate,c.CustomerName
+                    ,rs.RMAStatusValue AS [RMAStatusText]
+                FROM RMAHeaders rh 
+                INNER JOIN OrderHeaders oh ON rh.OrderHeaderID = oh.OrderHeaderID
+                INNER JOIN Customers c ON c.CustomerID = oh.CustomerID
+                INNER JOIN RMAStatus rs ON rs.RMAStatusID = rh.RMAStatusID
+                WHERE oh.OrderHeaderID = @OrderID";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@OrderID", orderID);
+
+
+                return Connection.Query<RMAPreviewDTO>(query, queryParameters, CurrentTrans);
             }
             catch (Exception ex)
             {

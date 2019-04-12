@@ -1,3 +1,58 @@
-<p>
-  rma-item-detail works!
-</p>
+<mat-dialog-content>
+  <div class="container">
+    <app-notification></app-notification>
+    <h3 mat-dialog-title>{{getPageTitle()}}</h3>
+  </div>
+  <form [formGroup]="service.itemForm">
+    <mat-form-field class="maxWidth" appearance="outline">
+      <mat-label>RMA Number</mat-label>
+      <input matInput formControlName="rmaID" type="text" readonly>
+    </mat-form-field>
+
+    <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+      <div fxFlex="50">
+        <button mat-raised-button color="primary" type="button" class="maxWidth" (click)="openChildSelect()">
+          Item Selector
+        </button>
+      </div>
+      <div fxFlex="50">
+        <mat-form-field class="maxWidth">
+          <mat-label>Use Item Selector Button</mat-label>
+          <input matInput formControlName="orderItemID" type="text" readonly hidden>
+          <input matInput formControlName="orderItemDescription" type="text">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-form-field class="maxWidth" appearance="outline">
+      <mat-label>Qty</mat-label>
+      <input matInput formControlName="returnQty" type="number" min="1" step="1" max="10000000">
+    </mat-form-field>
+    <div class="validationMessages">
+      <div *ngIf="service.itemForm.hasError('failedPopulation')">
+          Qty is mandatory.
+      </div>
+
+      
+      <div *ngIf="service.itemForm.hasError('invalidQty')">
+          Maximum return quantity allowed is: {{service.currentMaxQty}}
+      </div>
+    </div>
+
+    <mat-form-field class="maxWidth" appearance="outline">
+      <mat-label>Reason</mat-label>
+      <input matInput formControlName="returnReason" type="text">
+    </mat-form-field>
+
+    <mat-checkbox formControlName="returnToInventory">Return Stock to Inventory?</mat-checkbox>       
+
+    <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+      <div fxFlex="50">
+        <button mat-raised-button color="accent" type="submit" class="maxWidth" (click)="submit()">{{getSubmitButtonText()}}</button>
+      </div>
+      <div fxFlex="50">
+        <button mat-raised-button color="primary" class="maxWidth" (click)="cancel()">Close</button>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>

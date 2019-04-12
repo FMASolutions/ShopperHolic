@@ -14,5 +14,6 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public string OrderItemStatusText { get; set; }
         public decimal OrderItemTotal { get; set; }
         public string ItemCode {get;set;}
+        public int AllowedReturnQty {get;set;}
     }
 }

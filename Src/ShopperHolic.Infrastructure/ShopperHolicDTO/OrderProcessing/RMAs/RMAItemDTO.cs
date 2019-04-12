@@ -10,5 +10,6 @@ namespace ShopperHolic.Infrastructure.ShopperHolicDTO
         public string RMAItemStatus { get; set; }
         public bool ReturnToInventory { get; set; }
         public string ReturnReason { get; set; }
+        public int AllowedReturnQty {get;set;}
     }
 }

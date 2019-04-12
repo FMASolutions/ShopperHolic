@@ -6,6 +6,7 @@ export class RMAItem {
     rmaItemStatus: string = "";
     returnToInventory: boolean = true;
     returnReason: string = "";   
+    allowedReturnQty: number = 0;
 }
 
 

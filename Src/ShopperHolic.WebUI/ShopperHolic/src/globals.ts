@@ -233,6 +233,7 @@ export class Globals {
     public static get ORDER_DELETE_SUCCESS_MSG(): string { return "Successfully deleted order: "; }
     public static get ORDER_DELETE_FAILED_MSG(): string { return "Failed to delete order: "; }
     public static get ORDER_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Customer', 'Status', 'DeliveryDate', 'View', 'Del']; }
+    public static get ORDER_PRVW_SELECT_COLUMNS(): string[] { return ['ID', 'Customer', 'Status', 'DeliveryDate', 'Select']; }
     public static get ORDER_DELIVERY_ATTEMPT(): string { return "Attempting to deliver order: "; }
     public static get ORDER_DELIVERY_SUCCESS(): string { return "Successfully delivered order: "; }
     public static get ORDER_DELIVERY_FAILED(): string { return "Failed to deliver order: "; }
@@ -244,6 +245,7 @@ export class Globals {
     public static get ORDER_ITEM_UPDATE_TITLE(): string { return "Update Order Item"; }
     public static get ORDER_ITEM_ADD_TITLE(): string { return "Add Order Item"; }
     public static get ORDER_ITEM_LIST_COUMNS(): string[] { return ['Code', 'Name', 'Status', 'Price', 'Qty', 'View', 'Del']; }
+    public static get ORDER_ITEM_SELECT_COUMNS(): string[] { return ['Code', 'Name', 'Status', 'Price', 'Qty', 'Select']; }
     public static get ORDER_ITEM_CREATE_ATTEMPT_MSG(): string { return "Adding new item: "; }
     public static get ORDER_ITEM_CREATE_FAILED_MSG(): string { return 'Failed to add new item: '; }
     public static get ORDER_ITEM_DELETE_ATTEMPT_MSG(): string { return 'Removing item: '; }
@@ -294,9 +296,9 @@ export class Globals {
     public static get RMA_DELETE_SUCCESS_MSG(): string { return "Successfully deleted RMA: "; }
     public static get RMA_DELETE_FAILED_MSG(): string { return "Failed to delete RMA: "; }
     public static get RMA_PRVW_LIST_COLUMNS(): string[] { return ['ID', 'Order', 'Customer', 'Status', 'Created', 'View', 'Del']; }
-    public static get RMA_RETURN_ATTEMPT(): string { return "Attempting to returned RMA: "; }
-    public static get RMA_RETURN_SUCCESS(): string { return "Successfully returned RMA: "; }
-    public static get RMA_RETURN_FAILED(): string { return "Failed to returned RMA: "; }
+    public static get RMA_RETURN_ATTEMPT(): string { return "Attempting to process return for RMA: "; }
+    public static get RMA_RETURN_SUCCESS(): string { return "Successfully processed return for RMA: "; }
+    public static get RMA_RETURN_FAILED(): string { return "Failed to process return for RMA: "; }
     public static get RMA_CREDIT_NOTE_ATTEMPT(): string { return "Attempting to generate invoice for RMA: "; }
     public static get RMA_CREDIT_NOTE_SUCCESS(): string { return "Successfully generate invoice for RMA: "; }
     public static get RMA_CREDIT_NOTE_FAILED(): string { return "Failed to generate invoice for RMA: "; }
@@ -304,7 +306,7 @@ export class Globals {
     //RMA Item Text
     public static get RMA_ITEM_UPDATE_TITLE(): string { return "Update RMA Item"; }
     public static get RMA_ITEM_ADD_TITLE(): string { return "Add RMA Item"; }
-    public static get RMA_ITEM_LIST_COUMNS(): string[] { return ['Description', 'Status', 'ReStock', 'Reason', 'View', 'Del']; }
+    public static get RMA_ITEM_LIST_COUMNS(): string[] { return ['Description', 'Status', 'Restock','Qty', 'Reason', 'View', 'Del']; }
     public static get RMA_ITEM_CREATE_ATTEMPT_MSG(): string { return "Adding new RMA item: "; }
     public static get RMA_ITEM_CREATE_FAILED_MSG(): string { return 'Failed to add new RMA item: '; }
     public static get RMA_ITEM_DELETE_ATTEMPT_MSG(): string { return 'Removing RMA item: '; }

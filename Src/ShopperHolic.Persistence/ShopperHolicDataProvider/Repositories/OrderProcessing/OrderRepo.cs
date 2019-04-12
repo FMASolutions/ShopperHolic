@@ -137,13 +137,22 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT OrderItemID, oi.OrderHeaderID AS [OrderID], i.ItemID, OrderItemStatusID, 
-                  OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, i.ItemCode,
-                  OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
-                  oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal]
+                WITH UnprocessedReturns AS(
+                    SELECT OrderItemID,SUM(ReturnQty) AS ReturnQty
+                    FROM RMAItems
+                    WHERE RMAItemStatusID = 1
+                    GROUP BY OrderItemID
+                )
+
+                SELECT oi.OrderItemID, oi.OrderHeaderID AS [OrderID], i.ItemID, OrderItemStatusID, 
+                    OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, i.ItemCode,
+                    OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
+                    oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal],
+                    oi.OrderItemQty - (oi.TotalReturnedQty + ISNULL(up.ReturnQty,0)) AS AllowedReturnQty
                 FROM OrderItems oi
                 INNER JOIN Items i ON i.ItemID = oi.ItemID
                 INNER JOIN OrderStatus os ON os.OrderStatusID = oi.OrderItemStatusID
+                LEFT OUTER JOIN UnprocessedReturns up ON up.OrderItemID = oi.OrderItemID
                 WHERE oi.OrderItemID = @OrderItemID";
 
                 var queryParameters = new DynamicParameters();
@@ -162,17 +171,61 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
             try
             {
                 string query = @"
-                SELECT OrderItemID, oi.OrderHeaderID AS [OrderID], i.ItemID, OrderItemStatusID, 
-                  OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, i.ItemCode,
-                  OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
-                  oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal]
+                WITH UnprocessedReturns AS(
+                    SELECT OrderItemID,SUM(ReturnQty) AS ReturnQty
+                    FROM RMAItems
+                    WHERE RMAItemStatusID = 1
+                    GROUP BY OrderItemID
+                )
+
+                SELECT oi.OrderItemID, oi.OrderHeaderID AS [OrderID], i.ItemID, OrderItemStatusID, 
+                    OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, i.ItemCode,
+                    OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
+                    oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal],
+                    oi.OrderItemQty - (oi.TotalReturnedQty + ISNULL(up.ReturnQty,0)) AS AllowedReturnQty
                 FROM OrderItems oi
                 INNER JOIN Items i ON i.ItemID = oi.ItemID
                 INNER JOIN OrderStatus os ON os.OrderStatusID = oi.OrderItemStatusID
+                LEFT OUTER JOIN UnprocessedReturns up ON up.OrderItemID = oi.OrderItemID
                 WHERE OrderHeaderID = @OrderID";
 
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@OrderID", id);
+
+                return Connection.Query<OrderItemDTO>(query, queryParameters, CurrentTrans);
+            }
+            catch (Exception ex)
+            {
+                throw SqlExceptionHandler.HandleSqlException(ex) ?? ex;
+            }
+        }
+
+        public IEnumerable<OrderItemDTO> GetReturnableItemsForOrder(int orderID)
+        {
+            try
+            {
+                string query = @"
+                WITH UnprocessedReturns AS(
+                    SELECT OrderItemID,SUM(ReturnQty) AS ReturnQty
+                    FROM RMAItems
+                    WHERE RMAItemStatusID = 1
+                    GROUP BY OrderItemID
+                )
+
+                SELECT oi.OrderItemID, oi.OrderHeaderID AS [OrderID], i.ItemID, OrderItemStatusID, 
+                    OrderItemUnitPrice, OrderItemUnitPriceAfterDiscount, OrderItemQty, i.ItemCode,
+                    OrderItemDescription, os.OrderstatusValue AS [OrderItemStatusText], 
+                    oi.OrderItemUnitPriceAfterDiscount * oi.OrderItemQty AS [OrderItemTotal],
+                    oi.OrderItemQty - (oi.TotalReturnedQty + ISNULL(up.ReturnQty,0)) AS AllowedReturnQty
+                FROM OrderItems oi
+                INNER JOIN Items i ON i.ItemID = oi.ItemID
+                INNER JOIN OrderStatus os ON os.OrderStatusID = oi.OrderItemStatusID
+                LEFT OUTER JOIN UnprocessedReturns up ON up.OrderItemID = oi.OrderItemID
+                WHERE OrderHeaderID = @OrderID
+                    AND oi.OrderItemQty - (oi.TotalReturnedQty + ISNULL(up.ReturnQty,0)) > 0";
+
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@OrderID", orderID);
 
                 return Connection.Query<OrderItemDTO>(query, queryParameters, CurrentTrans);
             }

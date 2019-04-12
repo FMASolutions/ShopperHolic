@@ -10,3 +10,5 @@
 10) Tables too wide on mobile devices.
 11) Stock creation doesn't allow qty, create with 0 Qty ALWAYS., stock addition through PO / return process. stock minus through delivery notes / return PO. add Stock adjustment feature which requires a "note", the note will be read by the stock history feature
 12) Get by id should return error if nothing found for invoices / delivery notes
+When callaing the rma item detail component, the MAT_DIALOG_DATA injection needs to contain orderID and rmaItemID
+order item and rma item to include the allowedReturnQty 

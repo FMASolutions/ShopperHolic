@@ -373,11 +373,11 @@ export class OrderService {
       orderItemID: 0,
       orderID: [this.detailedOrderForm.value["orderID"], [this.validator.basicValidation]],
       itemID: [0, [this.validator.basicValidation]],
-      orderItemUnitPrice: 0.00,
-      orderItemUnitPriceAfterDiscount: [0.00, [this.validator.compareToUnitPrice]],
+      orderItemUnitPrice: [0.00,[this.validator.basicValidation]],
+      orderItemUnitPriceAfterDiscount: [0.00, [this.validator.basicValidation]],
       orderItemQty: [0, [this.validator.basicValidation]],
       orderItemDescription: ['', [this.validator.basicValidation]],
-    });
+    }, { validator: this.validator.stopUnderSale });
 
     let currentMode = this.determinMode(id);
 

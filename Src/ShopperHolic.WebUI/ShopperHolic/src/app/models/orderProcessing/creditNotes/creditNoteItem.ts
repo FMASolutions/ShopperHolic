@@ -2,7 +2,7 @@ export class CreditNoteItem {
     creditNoteID: number = 0;
     creditNoteItemID: number = 0;
     orderID: number = 0;
-    rmaID: number = 0;
+    rmaid: number = 0;
     creditDate: Date = new Date();
     itemDescription: string = "";
     creditQty: number = 0;

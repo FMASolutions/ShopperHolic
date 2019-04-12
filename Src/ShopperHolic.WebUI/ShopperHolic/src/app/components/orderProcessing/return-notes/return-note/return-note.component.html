@@ -1,3 +1,66 @@
-<p>
-  return-note works!
-</p>
+<div class="container mat-elevation-z8">
+  <app-notification></app-notification>
+  <button mat-flat-button color="accent" id="viewOrder" class="maxWidth" (click)="goToRMAClicked()">
+    View RMA
+  </button>
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="Return Note Details">
+      <div>
+        <h1>Return Note</h1>
+        <form [formGroup]="service.returnNoteForm">
+          <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="center">
+            <div fxFlex="50">
+              <mat-form-field class="maxWidth">
+                <mat-label>Return Note ID</mat-label>
+                <input matInput formControlName="id" type="text" readonly>
+              </mat-form-field>
+
+              <mat-form-field class="maxWidth">
+                <mat-label>RMA ID</mat-label>
+                <input matInput formControlName="rmaID" type="text" readonly>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex="50">
+              <mat-form-field class="maxWidth">
+                <mat-label>Customer Name</mat-label>
+                <input matInput formControlName="customerName" type="text" readonly>
+              </mat-form-field>
+
+              <mat-form-field class="maxWidth">
+                <input matInput [matDatepicker]="returnDatePicker" placeholder="Return Date" formControlName="returnDate"
+                  readonly disabled>
+                <mat-datepicker-toggle matSuffix [for]="returnDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #returnDatePicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+    <mat-tab label="Delivery Note Items">
+      <div>
+        <h1>Returned Items:</h1>
+        <table mat-table [dataSource]="service.returnNoteItemList" matSort (matSortChange)="sortClicked($event)"
+          class="maxWidth">
+          <ng-container matColumnDef="Code">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="Code">Code</th>
+            <td mat-cell *matCellDef="let row">{{row.itemCode}}</td>
+          </ng-container>
+          <ng-container matColumnDef="ItemDesc">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="ItemDesc">Description</th>
+            <td mat-cell *matCellDef="let row">{{row.orderItemDescription}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="Qty">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="Qty">Qty</th>
+            <td mat-cell *matCellDef="let row">{{row.returnQty}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnList"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnList"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -14,5 +14,6 @@ namespace ShopperHolic.Persistence.ShopperHolicDataProvider.Repositories
         int AddItemToRMA(CreateRMAItemDTO entityToCreate);
         RMAItemDTO UpdateRMAItem(UpdateRMAItemDTO updatedRecord);
         bool RemoveItemFromRMA(int rmaItemID);
+        IEnumerable<RMAPreviewDTO> GetRMASForOrder(int orderID);
     }
 }

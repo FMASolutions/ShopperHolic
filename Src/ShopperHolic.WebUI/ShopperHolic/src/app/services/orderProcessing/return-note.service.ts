@@ -115,7 +115,7 @@ export class ReturnNoteService {
   public populateFormFromModel(model: ReturnNoteItem[], paginator: MatPaginator) {
     this.returnNoteForm.setValue({
       id: model[0].returnNoteID,
-      rmaID: model[0].rmaID,
+      rmaID: model[0].rmaid,
       returnDate: model[0].returnedDate,
       customerName: model[0].customerName,
     });

@@ -101,7 +101,9 @@ import { AllReturnNotesComponent } from './components/orderProcessing/return-not
 import { ReturnNoteComponent } from './components/orderProcessing/return-notes/return-note/return-note.component';
 import { CreditNotesComponent } from './components/orderProcessing/credit-notes/credit-notes.component';
 import { AllCreditNotesComponent } from './components/orderProcessing/credit-notes/all-credit-notes/all-credit-notes.component';
-import { CreditNoteComponent } from './components/orderProcessing/credit-notes/credit-note/credit-note.component'
+import { CreditNoteComponent } from './components/orderProcessing/credit-notes/credit-note/credit-note.component';
+import { OrderItemSelecorComponent } from './components/orderProcessing/orders/order-item-selecor/order-item-selecor.component';
+import { OrderSelectorComponent } from './components/orderProcessing/orders/order-selector/order-selector.component'
 
 @NgModule({
   declarations: [
@@ -184,6 +186,8 @@ import { CreditNoteComponent } from './components/orderProcessing/credit-notes/c
     CreditNotesComponent,
     AllCreditNotesComponent,
     CreditNoteComponent,
+    OrderItemSelecorComponent,
+    OrderSelectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -239,7 +243,11 @@ import { CreditNoteComponent } from './components/orderProcessing/credit-notes/c
     CustomerSelectorComponent,
     UserAccountComponent,
     OrderDetailComponent,
-    OrderItemDetailComponent
+    OrderItemDetailComponent,
+    RmaItemDetailComponent,
+    RmaDetailComponent,
+    OrderItemSelecorComponent,
+    OrderSelectorComponent
   ]
 })
 export class AppModule { }

@@ -18,6 +18,14 @@ export class AppNavigationService {
     this.router.navigateByUrl('/order?id=' + id.toString());
   }
 
+  public goToOrdersPage(){
+    this.router.navigateByUrl('/orders');
+  }
+
+  public goToRMAsPage(){
+    this.router.navigateByUrl('/rmas');
+  }
+
   public goToInvoicePage(id: number){
     this.router.navigateByUrl('/invoice?id=' + id.toString());
   }

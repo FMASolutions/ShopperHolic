@@ -33,26 +33,32 @@ export class GenericValidator {
         return null;
     }
 
-    public minLength3(control: AbstractControl){
-        if(control){
-            if(control.value != null && control.value.length < 3)
-                return { isError: true, failedMinLength: true}
+    public minLength3(control: AbstractControl) {
+        if (control) {
+            if (control.value != null && control.value.length < 3)
+                return { isError: true, failedMinLength: true }
         }
 
         return null;
     }
-    
-    public checkPasswords(group: FormGroup){
+
+    public checkPasswords(group: FormGroup) {
         let password = group.controls["password"].value;
         let confirmPassword = group.controls["confirmPassword"].value;
-    
-        return password === confirmPassword ? null : { isError:true, failedMatch: true}
-      }
-    
-    public compareToUnitPrice(control: AbstractControl){
-        //TODO Ensure orderitemunitpriceafter discount isn't less than the orderitemunit price
-        //the orderitemunit price is actually the itemunitpriceaftermaxdiscount, used to make sure employees don't sell things too cheap while allowing
-        //them the ability to give customers a discount. TP to the MAX!
-        return null;
+
+        return password === confirmPassword ? null : { isError: true, failedMatch: true }
+    }
+
+    public stopUnderSale(group: FormGroup) {
+        let orderItemUnitPrice = parseInt(group.controls["orderItemUnitPrice"].value)
+        let orderItemUnitPriceAfterDiscount = parseInt(group.controls["orderItemUnitPriceAfterDiscount"].value)
+        return (orderItemUnitPriceAfterDiscount < orderItemUnitPrice) ? { isError: true, invalidPrice: true } : null
+    }
+
+    public validateRMAItemReturnQty(group: FormGroup) {
+
+        let returnQty = parseInt(group.controls["returnQty"].value);
+        let maxReturnQty = parseInt(group.controls["maxReturnQty"].value);
+        return (returnQty > maxReturnQty) ? { isError: true, invalidQty: true } : null
     }
 }

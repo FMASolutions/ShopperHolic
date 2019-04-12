@@ -15,9 +15,9 @@ import { RMAPreview } from 'src/app/models/orderProcessing/rmas/rmaPreview';
 import { RMAItem } from 'src/app/models/orderProcessing/rmas/rmaItem';
 import { CreateRMAItem } from 'src/app/models/orderProcessing/rmas/createRMAItem';
 import { UpdateRMAItem } from 'src/app/models/orderProcessing/rmas/updateRMAItem';
-import { Order } from 'src/app/models/orderProcessing/orders/order';
 import { MatPaginator, MatTableDataSource, Sort } from '@angular/material';
 import { OrderItem } from 'src/app/models/orderProcessing/orders/orderItem';
+import { OrderDetailed } from 'src/app/models/orderProcessing/orders/orderDetailed';
 
 @Injectable({
   providedIn: 'root'
@@ -26,15 +26,15 @@ export class RmaService {
 
   baseURL: string = Globals.APP_SETTINGS.BASE_API_URL + '/RMA/';
 
-  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder, 
-    private fbRMADetailed: FormBuilder, private validator: GenericValidator, private navService: AppNavigationService, 
+  constructor(private http: HttpClient, private userNotificationService: UserNotificationService, private fb: FormBuilder,
+    private fbRMADetailed: FormBuilder, private validator: GenericValidator, private navService: AppNavigationService,
     private returnNoteService: ReturnNoteService, private creditService: CreditNoteService) { }
 
   /*--------------------- --- API CALLS --- ----------------------*/
   public createNew(newModel: CreateRMA): Observable<RMADetailed> {
     this.userNotificationService.informUserStart(Globals.RMA_CREATE_ATTEMPT_MSG + "Order number: " + newModel.orderHeaderID, Globals.SPINNER_CREATE_MESSAGE);
     return this.http.post<RMADetailed>(this.baseURL + 'Create', newModel).pipe(tap(resp => {
-      this.userNotificationService.informUserComplete(Globals.RMA_CREATE_SUCCESS_MSG + resp.header.rmaID);
+      this.userNotificationService.informUserComplete(Globals.RMA_CREATE_SUCCESS_MSG + resp.header.rmaid);
     }, err => {
       this.userNotificationService.informUserError(Globals.ORDER_CREATE_FAILED_MSG + newModel.orderHeaderID);
       this.userNotificationService.informUserError(err.error);
@@ -121,16 +121,16 @@ export class RmaService {
     }));
   }
 
-  public returnRMAAndDisplayReturnNote(rmaID: number){
-    let obs = this.returnNoteService.processReturn(rmaID).subscribe(resp =>{
+  public returnRMAAndDisplayReturnNote(rmaID: number) {
+    let obs = this.returnNoteService.processReturn(rmaID).subscribe(resp => {
       this.navService.goToReturnNotePage(resp[0].returnNoteID);
       obs.unsubscribe();
     })
   }
 
-  public creditRMAAndDisplayCreditNote(rmaID: number){
-    let obs = this.creditService.creditRMA(rmaID).subscribe(resp =>{
-      this.navService.goToInvoicePage(resp[0].creditNoteID);
+  public creditRMAAndDisplayCreditNote(rmaID: number) {
+    let obs = this.creditService.creditRMA(rmaID).subscribe(resp => {
+      this.navService.goToCreditNotePage(resp[0].creditNoteID);
       obs.unsubscribe();
     })
   }
@@ -156,9 +156,9 @@ export class RmaService {
     return currentMode;
   }
 
-  public updateSelectedOrder(newChildModel: Order) {
-    this.rmaHeaderForm.controls["orderID"].setValue(newChildModel.orderID);
-    this.rmaHeaderForm.controls["selectedOrderText"].setValue(newChildModel.orderID + " - " + newChildModel.customerName);
+  public updateSelectedOrder(newChildModel: OrderDetailed) {
+    this.rmaHeaderForm.controls["orderID"].setValue(newChildModel.header.orderID);
+    this.rmaHeaderForm.controls["selectedOrderText"].setValue(newChildModel.header.orderID + " - " + newChildModel.header.customerName);
   }
 
   public getCreateModelFromForm(): CreateRMA {
@@ -192,13 +192,13 @@ export class RmaService {
       customerName: '',
       rmaStatus: '',
       createdDate: new Date(),
-      returnedDate: new Date(),
-    });      
+      returnedDate: new Date()
+    });
   }
 
   public populateDetailedRMAFormFromModel(model: RMADetailed, paginator: MatPaginator) {
     this.detailedRMAForm.setValue({
-      rmaID: model.header.rmaID,
+      rmaID: model.header.rmaid,
       orderID: model.header.orderID,
       customerName: model.header.customerName,
       rmaStatus: model.header.rmaStatusText,
@@ -222,7 +222,7 @@ export class RmaService {
     let sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'ID': return this.compare(a.rmaID, b.rmaID, isAsc);
+        case 'ID': return this.compare(a.rmaid, b.rmaid, isAsc);
         case 'Order': return this.compare(a.orderID, b.orderID, isAsc);
         case 'Customer': return this.compare(a.customerName.toLowerCase(), b.customerName.toLowerCase(), isAsc);
         case 'Status': return this.compare(a.rmaStatusText.toLowerCase(), b.rmaStatusText.toLowerCase(), isAsc);
@@ -233,11 +233,16 @@ export class RmaService {
     this.setupTableDataSource(sortedData, paginator);
   }
 
-  public refreshListData(paginator: MatPaginator) {
-    let obs = this.getAll().subscribe(modelResp => {
-      this.setupTableDataSource(modelResp, paginator);
-      obs.unsubscribe();
-    })
+  public refreshListData(paginator: MatPaginator, tableData?: RMAPreview[]) {
+    if (tableData) {
+      this.setupTableDataSource(tableData, paginator);
+    }
+    else {
+      let obs = this.getAll().subscribe(modelResp => {
+        this.setupTableDataSource(modelResp, paginator);
+        obs.unsubscribe();
+      })
+    }
   }
 
   public resetListFilter() {
@@ -271,6 +276,7 @@ export class RmaService {
         case 'Status': return this.compare(a.rmaItemStatus.toLowerCase(), b.rmaItemStatus.toLowerCase(), isAsc);
         case 'Restock': return this.compare(a.returnToInventory ? "1" : "0", a.returnToInventory ? "1" : "0", isAsc);
         case 'Reason': return this.compare(a.returnReason, b.returnReason, isAsc);
+        case 'Qty': return this.compare(a.returnQty, b.returnQty, isAsc);
         default: return 0;
       }
     });
@@ -278,15 +284,15 @@ export class RmaService {
   }
 
   public refreshItemListData(paginator: MatPaginator, itemList?: RMAItem[]) {
-    if(itemList){
+    if (itemList) {
       this.setupItemTableDataSource(itemList, paginator);
     }
-    else{
-      let obs = this.getItemsForRMA(this.detailedRMAForm.value["rmaID"]).subscribe(resp =>{
-        this.setupItemTableDataSource(resp,paginator);
+    else {
+      let obs = this.getItemsForRMA(this.detailedRMAForm.value["rmaID"]).subscribe(resp => {
+        this.setupItemTableDataSource(resp, paginator);
         obs.unsubscribe();
       })
-      
+
     }
   }
 
@@ -310,18 +316,19 @@ export class RmaService {
 
   /*--------------------- --- Add / Edit Order Item Form Helper --- ----------------------*/
   public itemForm: FormGroup;
+  public currentMaxQty: number = 0;
 
   public initializeItemForm(id?: any): string {
     this.itemForm = this.fb.group({
       rmaItemID: 0,
       rmaID: [this.detailedRMAForm.value["rmaID"], [this.validator.basicValidation]],
-      orderItemID: [0,[this.validator.basicValidation]],
+      orderItemID: [0, [this.validator.basicValidation]],
       returnQty: [0, [this.validator.basicValidation]],
       returnReason: ['', [this.validator.basicValidation]],
-      returnToInventory: [false, [this.validator.compareToUnitPrice]],
+      returnToInventory: [false, [this.validator.basicValidation]],
       orderItemDescription: ['', [this.validator.basicValidation]],
-      orderItemQty: 0
-    });
+      maxReturnQty: 0
+    }, { validator: this.validator.validateRMAItemReturnQty });
 
     let currentMode = this.determinMode(id);
 
@@ -329,6 +336,7 @@ export class RmaService {
       let obs = this.getRMAItemByID(id).subscribe(respData => {
         obs.unsubscribe();
         this.populateItemFormFromModel(respData);
+        this.currentMaxQty = respData.allowedReturnQty;
       })
     }
 
@@ -338,12 +346,13 @@ export class RmaService {
   public updateSelectedItem(newChildModel: OrderItem) {
     this.itemForm.controls["orderItemID"].setValue(newChildModel.orderItemID);
     this.itemForm.controls["orderItemDescription"].setValue(newChildModel.orderItemDescription);
-    this.itemForm.controls["orderItemQty"].setValue(newChildModel.orderItemQty);
+    this.itemForm.controls["maxReturnQty"].setValue(newChildModel.allowedReturnQty);
+    this.currentMaxQty = newChildModel.allowedReturnQty;
   }
 
   public getCreateItemModelFromForm(): CreateRMAItem {
     let newModel: CreateRMAItem = {
-      rmaID : this.itemForm.value["rmaID"],
+      rmaid: this.itemForm.value["rmaID"],
       orderItemID: this.itemForm.value["orderItemID"],
       returnQty: this.itemForm.value["returnQty"],
       returnToInventory: this.itemForm.value["returnToInventory"],
@@ -365,13 +374,14 @@ export class RmaService {
   private populateItemFormFromModel(model: RMAItem) {
     this.itemForm.setValue({
       rmaItemID: model.rmaItemID,
-      rmaID: [this.detailedRMAForm.value["rmaID"], [this.validator.basicValidation]],
+      rmaID: this.detailedRMAForm.value["rmaID"],
       orderItemID: model.orderItemID,
       returnQty: model.returnQty,
       returnReason: model.returnReason,
       returnToInventory: model.returnToInventory,
       orderItemDescription: model.orderItemDescription,
-      orderItemQty: 0 //NEED TO POPULATE THIS WITH OrderItem.OrderItemQty - OrderItem.ReturnedQty
+      maxReturnQty: model.allowedReturnQty
     });
+    this.itemForm.updateValueAndValidity();
   }
 }
